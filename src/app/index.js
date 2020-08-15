@@ -1,5 +1,5 @@
 import React from "react";
-import PageWrapper from "common/components/PageWrapper";
+import PageLayout from "./page-layout";
 import { withStyles } from "@material-ui/core/styles";
 import { Switch, Route, Redirect } from "react-router-dom";
 import routes from "./config/routes";
@@ -15,14 +15,14 @@ function App({ classes }) {
         <div className={classes.app}>
             <Router>
                 <Switch>
-                    <PageWrapper>
+                    <PageLayout>
                         {routes.map((route) => (
                             <Route path={route.path} exact key={route.title}>
                                 {route.component}
                             </Route>
                         ))}
                         <Redirect to="/" />
-                    </PageWrapper>
+                    </PageLayout>
                 </Switch>
             </Router>
         </div>

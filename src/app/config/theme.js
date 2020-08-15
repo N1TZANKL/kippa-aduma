@@ -4,12 +4,12 @@ import * as muiColors from "@material-ui/core/colors";
 const primaryColor = muiColors.red;
 const secondaryColor = muiColors.lightBlue;
 
-export default createMuiTheme({
+const customTheme = createMuiTheme({
     palette: {
         type: "dark",
         primary: {
             main: primaryColor[600],
-            dark: primaryColor[800],
+            dark: primaryColor[900],
             light: primaryColor[400],
             veryLight: primaryColor[200],
             superLight: primaryColor[100],
@@ -26,6 +26,27 @@ export default createMuiTheme({
             appBackground: muiColors.blueGrey[800],
             appBackgroundDark: muiColors.blueGrey[900],
             appBackgroundHighlight: muiColors.blueGrey[700],
+        },
+    },
+});
+
+export default createMuiTheme({
+    palette: customTheme.palette,
+    overrides: {
+        MuiPaper: {
+            root: {
+                backgroundColor: customTheme.palette.constants.appBackground,
+            },
+        },
+        MuiPopover: {
+            paper: {
+                backgroundColor: customTheme.palette.constants.appBackgroundHighlight,
+            },
+        },
+        MuiIconButton: {
+            root: {
+                padding: 6,
+            },
         },
     },
 });
