@@ -6,7 +6,7 @@ export default [
         title: "Home",
         icon: mdiHome,
         path: "/",
-        component: <div style={{ minHeight: 600 }}>Home</div>,
+        component: <div>Home</div>,
     },
     {
         title: "Passwords",

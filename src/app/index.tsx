@@ -1,16 +1,17 @@
 import React from "react";
 import PageLayout from "./page-layout";
-import { withStyles } from "@material-ui/core/styles";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { withStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import routes from "./config/routes";
-import { BrowserRouter as Router } from "react-router-dom";
 
-const styles = (theme) => ({
+const styles = (theme: Theme) => ({
     app: {
         height: "100%",
     },
 });
-function App({ classes }) {
+function App(props: WithStyles<typeof styles>) {
+    const { classes } = props;
+
     return (
         <div className={classes.app}>
             <Router>

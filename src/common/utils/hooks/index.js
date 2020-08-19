@@ -1,8 +1,8 @@
-import {useState} from "react";
+import { useState } from "react";
 
 export function usePopoverState() {
     const [anchorEl, setAnchorEl] = useState(null);
-    return [anchorEl, e => setAnchorEl(e.currentTarget), () => setAnchorEl(null)];
+    return [anchorEl, (e) => setAnchorEl(e.currentTarget), () => setAnchorEl(null)];
 }
 
 export function useFormState() {

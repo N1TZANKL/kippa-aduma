@@ -12,10 +12,10 @@ const styles = (theme) => ({
         borderRadius: 0,
         height: "100%",
         width: 70,
-        backgroundColor: theme.palette.constants.appBackgroundDark,
-        borderRight: `1px solid ${theme.palette.constants.appBackgroundHighlight}`,
+        backgroundColor: theme.constants.appBackgroundDark,
+        borderRight: `1px solid ${theme.constants.appBackgroundHighlight}`,
         zIndex: 1,
-        boxShadow: `0px 0px 7px 1px ${theme.palette.constants.appBackgroundHighlight}`,
+        boxShadow: `0px 0px 7px 1px ${theme.constants.appBackgroundHighlight}`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -28,9 +28,9 @@ const styles = (theme) => ({
         flexDirection: "column",
         alignItems: "center",
         padding: "15px 0",
-        borderBottom: `1px solid ${theme.palette.constants.appBackgroundHighlight}`,
+        borderBottom: `1px solid ${theme.constants.appBackgroundHighlight}`,
         "&:hover": {
-            backgroundColor: lighten(theme.palette.constants.appBackgroundDark, 0.15),
+            backgroundColor: lighten(theme.constants.appBackgroundDark, 0.15),
         },
     },
     sidebarIcon: {
@@ -48,7 +48,7 @@ function Sidebar(props) {
     const { classes, theme, history } = props;
 
     const currentPath = history.location.pathname;
-    const currentPathHighlightColor = lighten(theme.palette.constants.appBackgroundDark, 0.1);
+    const currentPathHighlightColor = lighten(theme.constants.appBackgroundDark, 0.1);
 
     return (
         <Card className={classes.sidebar}>
