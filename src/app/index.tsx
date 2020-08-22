@@ -9,6 +9,7 @@ const styles = (theme: Theme) => ({
         height: "100%",
     },
 });
+
 function App(props: WithStyles<typeof styles>) {
     const { classes } = props;
 

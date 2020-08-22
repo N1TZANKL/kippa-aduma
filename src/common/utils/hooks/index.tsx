@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 export function usePopoverState() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    return [anchorEl, (e) => setAnchorEl(e.currentTarget), () => setAnchorEl(null)];
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+    return [anchorEl, (e: React.MouseEvent) => setAnchorEl(e.currentTarget), () => setAnchorEl(null)] as const;
 }
 
 export function useFormState() {
@@ -15,5 +15,5 @@ export function useFormState() {
         setErrorMessage("");
     }
 
-    return [errorMessage, setErrorMessage, successMessage, setSuccessMessage, isLoading, setLoading, _clearMessages];
+    return [errorMessage, setErrorMessage, successMessage, setSuccessMessage, isLoading, setLoading, _clearMessages] as const;
 }
