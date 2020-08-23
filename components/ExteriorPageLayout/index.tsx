@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { Children } from "interfaces";
 import Button from "@material-ui/core/Button";
+import { lightBlue } from "@material-ui/core/colors";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -96,13 +97,33 @@ const styles = (theme: Theme) =>
             letterSpacing: 1,
             padding: "5px 35px",
         },
+        subtitle: {
+            fontStyle: "italic",
+            display: "flex",
+        },
+        subtitleLink: {
+            fontWeight: 500,
+            color: lightBlue["A200"],
+            margin: "0 5px",
+            cursor: "pointer",
+            textDecoration: "underline",
+        },
     });
 
-type FormProps = MuiStyles & { title: string; action: string; children: Children[]; submitMessage?: string };
+type SubtitleProps = MuiStyles & { actionName: string; prompt: string; href: string };
 
-export const Form = withStyles(styles)(({ classes, title, action, children, submitMessage }: FormProps) => (
+export const FormSubtitle = withStyles(styles)(({ classes, ...props }: SubtitleProps) => (
+    <Typography variant="subtitle1" className={classes.subtitle}>
+        {props.prompt} Click <div className={classes.subtitleLink}>here</div> to {props.actionName}!
+    </Typography>
+));
+
+type FormProps = MuiStyles & { title: string; action: string; children: Children[]; subtitle?: Children; submitMessage?: string };
+
+export const Form = withStyles(styles)(({ classes, title, action, children, subtitle, submitMessage }: FormProps) => (
     <>
         <Typography variant="h3" className={classes.formTitle} children={title} />
+        {subtitle}
         <Divider className={classes.formTitleDivider} />
         <form action={action} method={"post"} className={classes.form}>
             <div className={classes.formChildren} children={children} />
