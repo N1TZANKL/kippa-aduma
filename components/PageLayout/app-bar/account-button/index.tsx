@@ -2,9 +2,9 @@ import React from "react";
 import { withStyles, Theme, WithStyles, createStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { usePopoverState } from "common/utils/hooks";
+import { usePopoverState } from "utils/hooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import Menu from "common/components/Menu";
+import Menu from "components/Menu";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -28,7 +28,11 @@ function AccountButton(props: WithStyles<typeof styles>) {
 
     return (
         <>
-            <IconButton title="Account Options" children={<AccountCircleIcon className={classes.icon} />} onClick={setAnchorEl} />
+            <IconButton
+                title="Account Options"
+                children={<AccountCircleIcon className={classes.icon} />}
+                onClick={setAnchorEl}
+            />
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}

@@ -19,7 +19,7 @@ const styles = (theme: Theme) =>
         childrenWrapper: {
             borderRadius: 0,
             padding: 20,
-            width: "calc(100% - 70px - 40px)",
+            width: "calc(100% - 70px)",
         },
     });
 

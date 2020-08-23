@@ -1,4 +1,5 @@
 {
+    // Material-UI related
     "Import Material-UI component": {
         "prefix": "muii",
         "body": "import $COMPONENT from '@material-ui/core/$COMPONENT';"
@@ -15,10 +16,6 @@
         "prefix": "muib",
         "body": "import Button from '@material-ui/core/Button';"
     },
-    "Material-UI styles": {
-        "prefix": "muis",
-        "body": "import { styles } from '@material-ui/core/styles';"
-    },
     "Material-UI specific color": {
         "prefix": "muicolor",
         "body": "import { $COLOR } from '@material-ui/core/colors';"
@@ -27,110 +24,12 @@
         "prefix": "muicolors",
         "body": "import * as muiColors from '@material-ui/core/colors';"
     },
-    "Material-UI styled Class Component": {
-        "prefix": "muic",
-        "body": [
-            "import React, { Component } from 'react';",
-            "import PropTypes from 'prop-types';",
-            "import { withStyles } from '@material-ui/core/styles';",
-            "",
-            "const styles = theme => ({});",
-            "",
-            "class ${NAME} extends Component {",
-            "",
-            "\tstate = {};",
-            "",
-            "\trender() {",
-            "",
-            "\t\tconst { classes } = this.props;",
-            "",
-            "\t\treturn null;",
-            "\t}",
-            "}",
-            "",
-            "${NAME}.propTypes = {};",
-            "",
-            "export default withStyles(styles)(${NAME});"
-        ]
+    "Material-UI styles": {
+        "prefix": "muis",
+        "body": "import { withStyles, WithStyles, Theme, createStyles } from '@material-ui/core/styles';"
     },
-    "Material-UI styled Function Component": {
-        "prefix": "muif",
-        "body": [
-            "import React from 'react';",
-            "import PropTypes from 'prop-types';",
-            "import { withStyles } from '@material-ui/core/styles';",
-            "",
-            "const styles = theme => ({});",
-            "",
-            "function ${NAME}(props) {",
-            "",
-            "\tconst { classes } = props;",
-            "",
-            "\treturn null;",
-            "}",
-            "",
-            "${NAME}.propTypes = {};",
-            "",
-            "export default withStyles(styles)(${NAME});"
-        ]
-    },
-    "Material-UI styled Stateful Function Component": {
-        "prefix": "muifs",
-        "body": [
-            "import React, { useState } from 'react';",
-            "import PropTypes from 'prop-types';",
-            "import { withStyles } from '@material-ui/core/styles';",
-            "",
-            "const styles = theme => ({});",
-            "",
-            "function ${NAME}(props) {",
-            "",
-            "\tconst [stateAttr, setStateAttr] = useState(null)",
-            "",
-            "\tconst { classes } = props;",
-            "",
-            "\treturn null;",
-            "}",
-            "",
-            "${NAME}.propTypes = {};",
-            "",
-            "export default withStyles(styles)(${NAME});"
-        ]
-    },
-    "Material-UI styled Error Boundary": {
-        "prefix": "muieb",
-        "body": [
-            "import React, { Component } from 'react';",
-            "import PropTypes from 'prop-types';",
-            "import { withStyles } from '@material-ui/core/styles';",
-            "",
-            "const styles = theme => ({});",
-            "",
-            "class ${NAME} extends Component {",
-            "",
-            "\tstate = { error: false };",
-            "",
-            "\tstatic getDerivedStateFromError(e) {",
-            "\t\treturn { error: e.message };",
-            "\t}",
-            "",
-            "\tcomponentDidCatch(e) {",
-            "\t\tconsole.log('UNCAUGHT ERROR:', e);",
-            "\t}",
-            "",
-            "\trender() {",
-            "",
-            "\t\tconst { classes } = this.props;",
-            "",
-            "\t\treturn this.state.error ? <div /> : this.props.children;",
-            "\t}",
-            "}",
-            "",
-            "${NAME}.propTypes = { children: PropTypes.node.isRequired, };",
-            "",
-            "export default withStyles(styles)(${NAME});"
-        ]
-    },
+
+    // Other
     "Fragment": {
         "prefix": "fr",
         "body": ["<>", "\t${1}", "</>"]
