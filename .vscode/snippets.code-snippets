@@ -28,6 +28,57 @@
         "prefix": "muis",
         "body": "import { withStyles, WithStyles, Theme, createStyles } from '@material-ui/core/styles';"
     },
+    "Material-UI styled Function Component": {
+        "prefix": "muif",
+        "body": [
+            "import React from 'react';",
+            "import { withStyles, Theme, createStyles } from '@material-ui/core/styles';",
+            "import { MuiStyles } from 'interfaces';",
+            "",
+            "const styles = (theme: Theme) => createStyles({});",
+            "",
+            "function ${NAME}(props: MuiStyles) {",
+            "",
+            "\tconst { classes } = props;",
+            "",
+            "\treturn null;",
+            "}",
+            "",
+            "export default withStyles(styles)(${NAME});"
+        ]
+    },
+    "Material-UI styled Error Boundary": {
+        "prefix": "muieb",
+        "body": [
+            "import React, { Component } from 'react';",
+            "import { withStyles, Theme, createStyles } from '@material-ui/core/styles';",
+            "import { MuiStyles, Children } from 'interfaces';",
+            "",
+            "const styles = (theme: Theme) => createStyles({});",
+            "",
+            "class ${NAME} extends Component<MuiStyles & Children> {",
+            "",
+            "\tstate = { error: false };",
+            "",
+            "\tstatic getDerivedStateFromError(e) {",
+            "\t\treturn { error: e.message };",
+            "\t}",
+            "",
+            "\tcomponentDidCatch(e) {",
+            "\t\tconsole.log('UNCAUGHT ERROR:', e);",
+            "\t}",
+            "",
+            "\trender() {",
+            "",
+            "\t\tconst { classes } = this.props;",
+            "",
+            "\t\treturn this.state.error ? <div /> : this.props.children;",
+            "\t}",
+            "}",
+            "",
+            "export default withStyles(styles)(${NAME});"
+        ]
+    },
 
     // Other
     "Fragment": {
@@ -37,5 +88,13 @@
     "TODO": {
         "prefix": "todo",
         "body": "//TODO: ${1}"
+    },
+    "Interface Import": {
+        "prefix": "ifi",
+        "body": "import { $INTERFACE } from 'interfaces'; "
+    },
+    "Custom Component Import": {
+        "prefix": "ci",
+        "body": "import { $COMPONENT } from 'components/$COMPONENT'; "
     }
 }
