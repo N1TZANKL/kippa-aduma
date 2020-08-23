@@ -1,1 +1,4 @@
-export default () => <div>Chat</div>;
+import PageLayout from "components/PageLayout";
+
+const Chat = () => <PageLayout>Chat</PageLayout>;
+export default Chat;

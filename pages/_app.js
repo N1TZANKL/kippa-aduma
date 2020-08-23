@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import theme from "config/theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import PageLayout from "components/PageLayout";
 
 export default function MyApp({ Component, pageProps }) {
     useEffect(() => {
@@ -26,9 +25,7 @@ export default function MyApp({ Component, pageProps }) {
                 }
             `}</style>
             <CssBaseline />
-            <PageLayout>
-                <Component {...pageProps} />
-            </PageLayout>
+            <Component {...pageProps} />
         </ThemeProvider>
     );
 }
