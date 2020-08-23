@@ -1,24 +1,25 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
-        "baseUrl": "src",
-        "module": "esnext",
-        "target": "es2019",
-        "jsx": "react",
-        "lib": ["dom", "dom.iterable", "esnext", "es6"],
+        "baseUrl": ".",
         "allowJs": true,
-        "skipLibCheck": true,
+        "alwaysStrict": true,
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "strict": true,
         "forceConsistentCasingInFileNames": true,
+        "jsx": "preserve",
+        "lib": ["dom", "es2017"],
+        "module": "esnext",
         "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
         "noEmit": true,
+        "noFallthroughCasesInSwitch": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "es2019",
         "noImplicitAny": true,
         "noImplicitThis": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "isolatedModules": true
     },
-    "include": ["src"]
+    "exclude": ["node_modules"],
+    "include": ["**/*.ts", "**/*.tsx"]
 }

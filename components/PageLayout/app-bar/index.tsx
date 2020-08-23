@@ -2,7 +2,8 @@ import React from "react";
 import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core/styles";
 import MuiAppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import AccountButton from "./account-button";
 
 const styles = (theme: Theme) =>
@@ -46,21 +47,24 @@ const styles = (theme: Theme) =>
         },
     });
 
-type AppBarProps = WithStyles<typeof styles> & RouteComponentProps;
+type AppBarProps = WithStyles<typeof styles>;
 
 function AppBar(props: AppBarProps) {
-    const { classes, history } = props;
+    const { classes } = props;
 
-    const currentPath = history.location.pathname;
+    const router = useRouter();
+    const currentPath = router.pathname;
 
     return (
         <MuiAppBar color="primary" className={classes.appBar}>
             <div className={classes.wrapper}>
-                <Link to="/">
+                <Link href="/">
                     <img alt="kippa-aduma-logo" className={classes.logo} src="/favicon.ico" />
                 </Link>
                 <Typography variant="h4" children="Kippa Aduma" className={classes.title} />
-                {currentPath !== "/" && <Typography variant="h5" children={currentPath} className={classes.currentPath} />}
+                {currentPath !== "/" && (
+                    <Typography variant="h5" children={currentPath} className={classes.currentPath} />
+                )}
             </div>
             <div className={classes.wrapper}>
                 <AccountButton />
@@ -69,4 +73,4 @@ function AppBar(props: AppBarProps) {
     );
 }
 
-export default withStyles(styles)(withRouter(AppBar));
+export default withStyles(styles)(AppBar);

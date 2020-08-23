@@ -1,8 +1,9 @@
 import React from "react";
 import { lighten, withStyles, WithStyles, Theme, createStyles, WithTheme } from "@material-ui/core/styles";
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import Card from "@material-ui/core/Card";
-import routes, { Route } from "app/config/routes";
+import routes, { Route } from "config/routes";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import SettingsIcon from "@material-ui/icons/Settings";
 import IconButton from "@material-ui/core/IconButton";
@@ -33,6 +34,7 @@ const styles = (theme: Theme) =>
             "&:hover": {
                 backgroundColor: lighten(theme.constants.appBackgroundDark, 0.15),
             },
+            cursor: "pointer",
         },
         sidebarIcon: {
             fontSize: 28,
@@ -53,7 +55,11 @@ function Sidebar({ classes }: WithStyles<typeof styles>) {
                     return <SidebarBox route={route} />;
                 })}
             </div>
-            <IconButton title="Settings" className={classes.iconButton} children={<SettingsIcon className={classes.icon} />} />
+            <IconButton
+                title="Settings"
+                className={classes.iconButton}
+                children={<SettingsIcon className={classes.icon} />}
+            />
         </Card>
     );
 }
@@ -61,19 +67,20 @@ function Sidebar({ classes }: WithStyles<typeof styles>) {
 export default withStyles(styles)(Sidebar);
 
 type SidebarBoxProps = WithStyles<typeof styles> &
-    WithTheme &
-    RouteComponentProps & {
+    WithTheme & {
         route: Route;
     };
 
 function SidebarBoxComponent(props: SidebarBoxProps) {
-    const { classes, theme, history, route } = props;
+    const { classes, theme, route } = props;
 
-    const currentPath = history.location.pathname;
+    const router = useRouter();
+
+    const currentPath = router.pathname;
     const currentPathHighlightColor = lighten(theme.constants.appBackgroundDark, 0.1);
 
     return (
-        <Link to={route.path} key={route.path}>
+        <Link href={route.path} key={route.path}>
             <div
                 className={classes.sidebarBox}
                 title={route.title}
@@ -87,4 +94,4 @@ function SidebarBoxComponent(props: SidebarBoxProps) {
     );
 }
 
-const SidebarBox = withStyles(styles, { withTheme: true })(withRouter(SidebarBoxComponent));
+const SidebarBox = withStyles(styles, { withTheme: true })(SidebarBoxComponent);
