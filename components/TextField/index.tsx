@@ -2,10 +2,9 @@ import React from "react";
 import MuiTextField, { TextFieldProps } from "@material-ui/core/TextField";
 import { MuiStyles } from "interfaces";
 
-export type CustomTextFieldProps = MuiStyles &
-    TextFieldProps & {
-        errorMessage?: string;
-    };
+export type CustomTextFieldProps = TextFieldProps & {
+    errorMessage?: string;
+};
 
 function TextField(props: CustomTextFieldProps) {
     const { errorMessage, ...otherProps } = props;
