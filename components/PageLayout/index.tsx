@@ -1,8 +1,9 @@
 import React from "react";
-import { withStyles, Theme, createStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import AppBar from "./app-bar";
 import Paper from "@material-ui/core/Paper";
 import Sidebar from "./side-bar";
+import { PageLayoutProps } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -23,9 +24,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-type PageWrapperProps = WithStyles<typeof styles> & { children: React.ReactNode };
-
-function PageWrapper({ classes, children }: PageWrapperProps) {
+function PageLayout({ classes, children }: PageLayoutProps) {
     return (
         <div className={classes.pageRoot}>
             <AppBar />
@@ -37,4 +36,4 @@ function PageWrapper({ classes, children }: PageWrapperProps) {
     );
 }
 
-export default withStyles(styles)(PageWrapper);
+export default withStyles(styles)(PageLayout);

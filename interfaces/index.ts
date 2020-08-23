@@ -1,10 +1,6 @@
-// You can include shared interfaces/types in a separate file
-// and then use them in any component by importing them. For
-// example, to import the interface below do:
-//
-// import User from 'path/to/interfaces';
+import { WithStyles } from "@material-ui/core/styles";
 
-export type User = {
-    id: number;
-    name: string;
-};
+export type MuiStyles = WithStyles<string>;
+export type Children = { children: React.ReactNode };
+
+export type PageLayoutProps = MuiStyles & Children;
