@@ -1,6 +1,14 @@
 import React from "react";
 import { mdiHome, mdiAccountKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiClipboardList } from "@mdi/js";
 
+export type Route = {
+    title: string;
+    icon: string;
+    path: string;
+    component: React.ReactNode;
+    iconStyle?: Object;
+};
+
 export default [
     {
         title: "Home",
