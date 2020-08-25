@@ -18,6 +18,7 @@ const styles = (theme: Theme) =>
             width: "fit-content",
             minWidth: 150,
             margin: 3,
+            marginRight: "13vw",
         },
         nickname: { fontFamily: "monospace", fontSize: 14 },
         content: {
@@ -67,6 +68,8 @@ const styles = (theme: Theme) =>
         currentUserMessage: {
             backgroundColor: lightGreen[200],
             alignSelf: "flex-end",
+            marginRight: 0,
+            marginLeft: "13vw",
         },
         currentUserFileContent: {
             backgroundColor: darken(lightGreen[200], 0.08),
