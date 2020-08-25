@@ -4,6 +4,7 @@ import AppBar from "./app-bar";
 import Paper from "@material-ui/core/Paper";
 import Sidebar from "./side-bar";
 import { PageLayoutProps } from "interfaces";
+import clsx from "clsx";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -22,15 +23,20 @@ const styles = (theme: Theme) =>
             padding: 20,
             width: "calc(100% - 70px)",
         },
+        noPadding: {
+            padding: 0,
+        },
     });
 
-function PageLayout({ classes, children }: PageLayoutProps) {
+function PageLayout(props: PageLayoutProps & { noPadding?: boolean }) {
+    const { classes, children, noPadding } = props;
+
     return (
         <div className={classes.pageRoot}>
             <AppBar />
             <div className={classes.wrapper}>
                 <Sidebar />
-                <Paper className={classes.childrenWrapper} children={children} />
+                <Paper className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)} children={children} />
             </div>
         </div>
     );

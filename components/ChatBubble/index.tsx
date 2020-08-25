@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles, darken } from "@material-ui/core/style
 import { MuiStyles, ChatMessage } from "interfaces";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { grey, lightGreen, lightBlue } from "@material-ui/core/colors";
+import { grey, lightGreen, lightBlue, blue } from "@material-ui/core/colors";
 import moment from "moment";
 import prettyBytes from "pretty-bytes";
 import clsx from "clsx";
@@ -14,7 +14,7 @@ const styles = (theme: Theme) =>
     createStyles({
         root: {
             padding: "10px 10px 6px",
-            backgroundColor: lightGreen[200],
+            backgroundColor: blue[200],
             width: "fit-content",
             minWidth: 150,
             margin: 3,
@@ -39,7 +39,7 @@ const styles = (theme: Theme) =>
         },
         fileContent: {
             cursor: "pointer",
-            backgroundColor: darken(lightGreen[200], 0.08),
+            backgroundColor: darken(blue[200], 0.08),
             padding: 12,
             display: "flex",
             justifyContent: "space-between",
@@ -64,6 +64,13 @@ const styles = (theme: Theme) =>
             fontSize: 24,
             marginLeft: 10,
         },
+        currentUserMessage: {
+            backgroundColor: lightGreen[200],
+            alignSelf: "flex-end",
+        },
+        currentUserFileContent: {
+            backgroundColor: darken(lightGreen[200], 0.08),
+        },
     });
 
 type ChatBubbleProps = MuiStyles & { message: ChatMessage };
@@ -80,13 +87,20 @@ function ChatBubble(props: ChatBubbleProps) {
     // check somewhere here if the message was sent by the current user,
     // and according to this info change the message background color and position
     // (left/right of the chat box)
+    const currentUserNickname = "nitz"; // for testing purposes
 
     return (
-        <Card className={classes.root}>
+        <Card className={clsx(classes.root, message.nickname === currentUserNickname && classes.currentUserMessage)}>
             <Typography component="div" variant="caption">
                 <div className={classes.nickname} style={{ color: message.color }} children={`~${message.nickname}`} />
                 {message.type === "file" ? (
-                    <div className={clsx(classes.content, classes.fileContent)}>
+                    <div
+                        className={clsx(
+                            classes.content,
+                            classes.fileContent,
+                            message.nickname === currentUserNickname && classes.currentUserFileContent
+                        )}
+                    >
                         <div className={classes.flex}>
                             <SvgIcon className={classes.basicFileIcon}>
                                 <path d={mdiFile} />
