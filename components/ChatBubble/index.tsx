@@ -9,6 +9,7 @@ import prettyBytes from "pretty-bytes";
 import clsx from "clsx";
 import { mdiFile, mdiArrowDownBold } from "@mdi/js";
 import SvgIcon from "@material-ui/core/SvgIcon";
+import { CURRENT_USER_NICKNAME } from "utils/constants/tests";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -87,13 +88,8 @@ function ChatBubble(props: ChatBubbleProps) {
         else return `${slicedFilename}...`;
     }
 
-    // check somewhere here if the message was sent by the current user,
-    // and according to this info change the message background color and position
-    // (left/right of the chat box)
-    const currentUserNickname = "nitz"; // for testing purposes
-
     return (
-        <Card className={clsx(classes.root, message.nickname === currentUserNickname && classes.currentUserMessage)}>
+        <Card className={clsx(classes.root, message.nickname === CURRENT_USER_NICKNAME && classes.currentUserMessage)}>
             <Typography component="div" variant="caption">
                 <div className={classes.nickname} style={{ color: message.color }} children={`~${message.nickname}`} />
                 {message.type === "file" ? (
@@ -101,7 +97,7 @@ function ChatBubble(props: ChatBubbleProps) {
                         className={clsx(
                             classes.content,
                             classes.fileContent,
-                            message.nickname === currentUserNickname && classes.currentUserFileContent
+                            message.nickname === CURRENT_USER_NICKNAME && classes.currentUserFileContent
                         )}
                     >
                         <div className={classes.flex}>

@@ -3,6 +3,7 @@ import { withStyles, Theme, createStyles, WithStyles } from "@material-ui/core/s
 import Popover, { PopoverProps } from "@material-ui/core/Popover";
 import MenuItem from "@material-ui/core/MenuItem";
 import { SvgIconComponent } from "@material-ui/icons";
+import { MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -22,7 +23,7 @@ interface MenuItem {
     onClick?: React.MouseEventHandler;
 }
 
-type MenuProps = WithStyles<typeof styles> &
+type MenuProps = MuiStyles &
     PopoverProps & {
         anchorEl: PopoverProps["anchorEl"];
         onClose: PopoverProps["onClose"];
