@@ -1,6 +1,7 @@
 import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
 import { getDb, Collections, DbUser } from "utils/server/database";
+import { LoginErrors } from "interfaces/user";
 
 export default withIronSession(
     async (req, res) => {
@@ -8,16 +9,23 @@ export default withIronSession(
 
         const { username, password } = req.body;
 
-        const db = await getDb();
-        const dbUser = await db.collection(Collections.Users).findOne<DbUser>({ username });
+        if (!username || !password) res.status(400).send(LoginErrors.MissingFields);
 
-        if (!dbUser) return res.status(400).send("User does not exist");
+        try {
+            const db = await getDb();
+            const dbUser = await db.collection(Collections.Users).findOne<DbUser>({ username });
 
-        const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
+            if (!dbUser) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-        if (!hashResult) return res.status(400).send("Password is not correct");
+            const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
 
-        req.session.set("user", { username });
-        await req.session.save();
-        return res.status(201).send("");
+            if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
+
+            req.session.set("user", { username });
+            await req.session.save();
+            return res.status(201).send("");
+        }
+        catch {
+            res.status(500).send(LoginErrors.UnknownError);
+        }
     });
