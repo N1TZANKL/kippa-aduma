@@ -21,16 +21,15 @@ const styles = (theme: Theme) =>
         panel: {
             backgroundColor: theme.constants.appBackgroundHighlight,
             borderRadius: 2,
+            height: "100%",
         },
         leftPanel: {
             flexBasis: "25%",
             minWidth: 300,
-            height: "100%",
         },
         rightPanel: {
             flexBasis: "75%",
             minWidth: 900,
-            height: "100%",
         },
         messagesContainer: {
             display: "flex",

@@ -55,11 +55,7 @@ function Sidebar({ classes }: WithStyles<typeof styles>) {
                     return <SidebarBox key={route.path} route={route} />;
                 })}
             </div>
-            <IconButton
-                title="Settings"
-                className={classes.iconButton}
-                children={<SettingsIcon className={classes.icon} />}
-            />
+            <IconButton title="Settings" className={classes.iconButton} children={<SettingsIcon className={classes.icon} />} />
         </Card>
     );
 }

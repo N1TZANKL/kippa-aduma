@@ -40,7 +40,7 @@ const styles = (theme: Theme) =>
         },
         fileContent: {
             cursor: "pointer",
-            backgroundColor: darken(blue[200], 0.08),
+            backgroundColor: darken(blue[200], 0.05),
             padding: 12,
             display: "flex",
             justifyContent: "space-between",
