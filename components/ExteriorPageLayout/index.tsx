@@ -112,20 +112,20 @@ const styles = (theme: Theme) =>
 
 type SubtitleProps = MuiStyles & { actionName: string; prompt: string; href: string };
 
-export const FormSubtitle = withStyles(styles)(({ classes, ...props }: SubtitleProps) => (
+export const FormSubtitle = withStyles(styles)(({ classes, prompt, actionName, href }: SubtitleProps) => (
     <Typography variant="subtitle1" className={classes.subtitle}>
-        {props.prompt} Click <div className={classes.subtitleLink}>here</div> to {props.actionName}!
+        {prompt} Click <a className={classes.subtitleLink} href={href}>here</a> to {actionName}!
     </Typography>
 ));
 
-type FormProps = MuiStyles & { title: string; action: string; children: Children[]; subtitle?: Children; submitMessage?: string };
+type FormProps = MuiStyles & { title: string; children: Children[]; subtitle?: Children; submitMessage?: string } & React.FormHTMLAttributes<any>;
 
-export const Form = withStyles(styles)(({ classes, title, action, children, subtitle, submitMessage }: FormProps) => (
+export const Form = withStyles(styles)(({ classes, title, children, subtitle, submitMessage, ...formElementProps }: FormProps) => (
     <>
         <Typography variant="h3" className={classes.formTitle} children={title} />
         {subtitle}
         <Divider className={classes.formTitleDivider} />
-        <form action={action} method={"post"} className={classes.form}>
+        <form {...formElementProps} className={classes.form}>
             <div className={classes.formChildren} children={children} />
             <Button type="submit" children={submitMessage || "submit!"} color="secondary" className={classes.submitButton} variant="contained" />
         </form>

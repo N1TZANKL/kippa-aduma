@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { withStyles, Theme, WithStyles, createStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { usePopoverState } from "utils/hooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import Menu from "components/Menu";
+import { useRouter } from "next/router";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -23,6 +24,12 @@ const styles = (theme: Theme) =>
 
 function AccountButton(props: WithStyles<typeof styles>) {
     const { classes } = props;
+
+    const router = useRouter();
+    const signOut = useCallback(async () => {
+        await fetch("/api/user/logout");
+        router.push("/login");
+    }, [router]);
 
     const [anchorEl, setAnchorEl, clearAnchorEl] = usePopoverState();
 
@@ -43,7 +50,7 @@ function AccountButton(props: WithStyles<typeof styles>) {
                 }}
                 items={[
                     { title: "My Profile", icon: AccountCircleIcon },
-                    { title: "Sign Out", icon: LogoutIcon },
+                    { title: "Sign Out", icon: LogoutIcon, onClick: signOut },
                 ]}
             />
         </>

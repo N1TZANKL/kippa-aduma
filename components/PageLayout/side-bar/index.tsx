@@ -52,7 +52,7 @@ function Sidebar({ classes }: WithStyles<typeof styles>) {
         <Card className={classes.sidebar}>
             <div>
                 {routes.map((route) => {
-                    return <SidebarBox route={route} />;
+                    return <SidebarBox key={route.path} route={route} />;
                 })}
             </div>
             <IconButton
@@ -80,7 +80,7 @@ function SidebarBoxComponent(props: SidebarBoxProps) {
     const currentPathHighlightColor = lighten(theme.constants.appBackgroundDark, 0.1);
 
     return (
-        <Link href={route.path} key={route.path}>
+        <Link href={route.path}>
             <div
                 className={classes.sidebarBox}
                 title={route.title}

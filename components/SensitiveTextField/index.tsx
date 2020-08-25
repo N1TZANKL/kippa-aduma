@@ -17,7 +17,7 @@ function SensitiveTextField(props: Props) {
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
-                        <IconButton onClick={() => setInputVisibility((state) => !state)} style={{ padding: 5 }}>
+                        <IconButton onClick={() => setInputVisibility((state) => !state)} style={{ padding: 5 }} tabIndex={-1}>
                             {showInput ? <VisibilityOffIcon /> : <VisibilityIcon />}
                         </IconButton>
                     </InputAdornment>
