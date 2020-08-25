@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles } from "interfaces";
 import { useRouter } from "next/router";
@@ -9,9 +9,10 @@ import SensitiveTextField from "components/SensitiveTextField";
 const styles = (theme: Theme) => createStyles({});
 
 function Login({ classes }: MuiStyles) {
+    const router = useRouter();    
     const usernameInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
-    const router = useRouter();
+    const [formError, setFormError] = useState<string | undefined>();
 
     const onSubmit = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,13 +20,20 @@ function Login({ classes }: MuiStyles) {
         const username = usernameInput.current!.value;
         const password = passwordInput.current!.value;
 
-        const response = await fetch("/api/user/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
-        });
+        try {
+            const response = await fetch("/api/user/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+    
+            if (response.ok) return router.push("/");
 
-        if (response.ok) router.push("/");
+            setFormError(await response.text());
+        }
+        catch {
+            setFormError("an unknown error occurd");
+        }
     }, [usernameInput, passwordInput]);
 
     return (
@@ -33,11 +41,12 @@ function Login({ classes }: MuiStyles) {
             <Form
                 title="login"
                 submitMessage="Enter the dark side!"
+                error={formError}
                 onSubmit={onSubmit}
                 subtitle={<FormSubtitle actionName="register" href="/register" prompt="Don't have a user?" />}
             >
-                <TextField label="Username" inputRef={usernameInput} />
-                <SensitiveTextField label="Password" inputRef={passwordInput} />
+                <TextField label="Username" inputRef={usernameInput} required />
+                <SensitiveTextField label="Password" inputRef={passwordInput} required />
             </Form>
         </ExteriorPageLayout>
     );
