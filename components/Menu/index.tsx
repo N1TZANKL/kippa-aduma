@@ -17,8 +17,9 @@ const styles = (theme: Theme) =>
     });
 
 interface MenuItem {
-    title: String;
+    title: string;
     icon?: SvgIconComponent;
+    onClick?: React.MouseEventHandler;
 }
 
 type MenuProps = WithStyles<typeof styles> &
@@ -37,7 +38,7 @@ function Menu(props: MenuProps) {
                 items.map((menuItem, index) => {
                     const Icon = menuItem.icon;
                     return (
-                        <MenuItem divider={index !== items.length - 1}>
+                        <MenuItem key={menuItem.title} divider={index !== items.length - 1} onClick={menuItem.onClick}>
                             <div className={classes.menuItemWrapper}>
                                 {Icon && <Icon className={classes.menuItemIcon} />} {menuItem.title}
                             </div>
