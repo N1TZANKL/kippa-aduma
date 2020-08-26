@@ -1,7 +1,7 @@
 import React from "react";
 import MuiTextField, { TextFieldProps } from "@material-ui/core/TextField";
 
-export type CustomTextFieldProps = TextFieldProps & {
+export type CustomTextFieldProps = Omit<TextFieldProps, "error"> & {
     errorMessage?: string;
 };
 
