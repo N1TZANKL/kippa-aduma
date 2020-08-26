@@ -10,7 +10,9 @@ export interface DbUser {
     passwordHash: string;
 }
 
-const client = new MongoClient(process.env.DATABASE_URL, {
+const dbUrl = process.env.DATABASE_URL + (process.env.NODE_ENV !== "production" ? "?synchronize=true" : "");
+
+const client = new MongoClient(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });

@@ -58,7 +58,7 @@ function Register({ classes }: MuiStyles) {
                 <TextField label="Username" inputRef={usernameInput} required />
                 <TextField label="Nickname" inputRef={nicknameInput} required />
                 <SensitiveTextField label="Password" inputRef={passwordInput} required />
-                <SensitiveTextField label="Re-type Password" inputRef={retypePasswordInput} required error={!!passwordError} helperText={passwordError} />
+                <SensitiveTextField label="Re-type Password" inputRef={retypePasswordInput} required errorMessage={passwordError} />
             </Form>
         </ExteriorPageLayout>
     );
