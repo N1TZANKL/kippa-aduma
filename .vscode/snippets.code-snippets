@@ -95,6 +95,6 @@
     },
     "Custom Component Import": {
         "prefix": "ci",
-        "body": "import { $COMPONENT } from 'components/$COMPONENT'; "
+        "body": "import $COMPONENT from 'components/$COMPONENT'; "
     }
 }

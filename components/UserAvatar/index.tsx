@@ -17,7 +17,7 @@ const styles = (theme: Theme) =>
             fontWeight: "bold",
             fontFamily: "monospace",
             fontSize: 16,
-            paddingTop: 3,
+            textTransform: "uppercase",
         },
         circledAvatar: {
             borderRadius: "50%",

@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, Theme, createStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Popover, { PopoverProps } from "@material-ui/core/Popover";
 import MenuItem from "@material-ui/core/MenuItem";
 import { SvgIconComponent } from "@material-ui/icons";
@@ -17,11 +17,11 @@ const styles = (theme: Theme) =>
         },
     });
 
-interface MenuItem {
+type MenuItem = {
     title: string;
     icon?: SvgIconComponent;
     onClick?: React.MouseEventHandler;
-}
+};
 
 type MenuProps = MuiStyles &
     PopoverProps & {
