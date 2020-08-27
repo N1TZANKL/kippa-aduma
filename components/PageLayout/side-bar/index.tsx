@@ -22,6 +22,7 @@ const styles = (theme: Theme) =>
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "space-between",
+            position: "fixed",
         },
         sidebarBox: {
             width: 70,

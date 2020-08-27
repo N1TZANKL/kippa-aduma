@@ -10,18 +10,19 @@ const styles = (theme: Theme) =>
     createStyles({
         pageRoot: {
             height: "100%",
+            backgroundColor: theme.constants.appBackground,
         },
         wrapper: {
-            marginTop: 65,
-            height: "calc(100% - 65px)",
+            position: "absolute",
+            paddingTop: 65,
+            height: "inherit",
             display: "flex",
             overflowY: "auto",
-            position: "relative",
         },
         childrenWrapper: {
             borderRadius: 0,
             padding: 20,
-            width: "calc(100% - 70px)",
+            marginLeft: 70,
         },
         noPadding: {
             padding: 0,
