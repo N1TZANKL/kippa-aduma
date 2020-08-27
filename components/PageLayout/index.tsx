@@ -14,10 +14,10 @@ const styles = (theme: Theme) =>
         },
         wrapper: {
             position: "absolute",
-            paddingTop: 65,
+            marginTop: 65,
             height: "inherit",
             display: "flex",
-            overflowY: "auto",
+            overflow: "hidden",
         },
         childrenWrapper: {
             borderRadius: 0,

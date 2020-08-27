@@ -16,7 +16,7 @@ const styles = (theme: Theme) =>
             display: "flex",
             minWidth: 1250,
             height: "100%",
-            minHeight: 600,
+            //minHeight: 600,
             padding: 20,
             "& > *:not(:last-child)": {
                 marginRight: 15,
