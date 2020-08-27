@@ -21,7 +21,6 @@ export default function MyApp({ Component, pageProps }) {
                 div#__next,
                 div#__next > div {
                     height: 100%;
-                    overflow: hidden;
                 }
             `}</style>
             <CssBaseline />
