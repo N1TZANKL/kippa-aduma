@@ -18,11 +18,13 @@ const styles = (theme: Theme) =>
             height: "inherit",
             display: "flex",
             overflow: "hidden",
+            width: "100%",
         },
         childrenWrapper: {
             borderRadius: 0,
             padding: 20,
             marginLeft: 70,
+            width: "100%",
         },
         noPadding: {
             padding: 0,

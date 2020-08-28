@@ -24,7 +24,7 @@ function AccountButton(props: AccountButtonProps) {
 
     return (
         <>
-            <IconButton title="Account Options" onClick={setAnchorEl}>
+            <IconButton title="Account Options" onClick={user ? setAnchorEl : undefined}>
                 {user ? (
                     <UserAvatar variant="circle" withBorder color={user.color} nickname={user.nickname} size={36} />
                 ) : (

@@ -36,9 +36,8 @@ export function withUserSession<T = any>(handler?: GetServerSideProps<T>): GetSe
 function getCurrentUserAndRedirectIfNone(context: GetServerSidePropsContext<ParsedUrlQuery>) {
     const user = context.req.session.get("user");
 
-    if (!user) {
-        context.res.writeHead(302, { Location: "/login" }).end();
-        throw new Error("User not logged in!");
-    }
-    return user;
+    if (user) return user;
+
+    context.res.writeHead(302, { Location: "/login" }).end();
+    throw new Error("User not logged in!");
 }
