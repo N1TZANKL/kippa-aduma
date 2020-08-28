@@ -1,23 +1,20 @@
 import React from "react";
-import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
-import { MuiStyles, UserSessionObject } from "interfaces";
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
 import PageLayout from "components/PageLayout";
-import ChatBubble from "components/ChatBubble";
-import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
-import UserListItem from "components/UserListItem";
-import Typography from "@material-ui/core/Typography";
-import { green } from "@material-ui/core/colors";
-import { DUMMY_CHAT_MESSAGES } from "utils/constants/tests";
 import { withUserSession } from "utils/session";
+import UsersPanel from "./users-panel";
+import MessagesPanel from "./messages-panel";
 
 const styles = (theme: Theme) =>
     createStyles({
         root: {
             display: "flex",
             minWidth: 1250,
-            height: "100%",
-            //minHeight: 600,
+            height: "calc(100% - 65px)",
+            width: "100%",
+            minHeight: 600,
             padding: 20,
             "& > *:not(:last-child)": {
                 marginRight: 15,
@@ -29,77 +26,29 @@ const styles = (theme: Theme) =>
             height: "100%",
         },
         leftPanel: {
-            flexBasis: "25%",
+            flexBasis: "20%",
             minWidth: 300,
             padding: 15,
+            overflow: "auto",
         },
         rightPanel: {
-            flexBasis: "75%",
+            flexBasis: "80%",
             minWidth: 900,
-        },
-        messagesContainer: {
-            display: "flex",
-            flexDirection: "column",
-            padding: 15,
-            boxSizing: "border-box",
-            height: "100%",
-            "& > *:not(:last-child)": {
-                marginBottom: 8,
-            },
-        },
-        usersContainer: {
-            "& > *": {
-                marginTop: 20,
-            },
-        },
-        usersTitleDiv: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingBottom: 10,
-            marginBottom: 3,
-            borderBottom: `1px solid ${lighten(theme.constants.appBackgroundHighlight, 0.08)}`,
-        },
-        onlineTitle: {
-            color: green["A400"],
+            overflow: "auto",
         },
     });
 
-type ChatProps = MuiStyles & { users: Array<UserSessionObject>; user: UserSessionObject };
+export type PanelProps = MuiStyles & { user: UserSessionObject; className: string };
+type ChatProps = MuiStyles & { users: Array<UserSessionObject>; user: UserSessionObject; messages: Array<ChatMessage> };
 
 function Chat(props: ChatProps) {
-    const { classes, users, user } = props;
-
-    const onlineUsersAmount = 1;
-    const allUsersAmount = users.length;
-
-    const usersListWithCurrentUserFirst = [users.find((u) => u.nickname === user.nickname), ...users.filter((u) => u.nickname !== user.nickname)];
+    const { classes, users, user, messages } = props;
 
     return (
         <PageLayout noPadding user={user}>
             <div className={classes.root}>
-                <Paper className={clsx(classes.panel, classes.leftPanel)}>
-                    <div className={classes.usersTitleDiv}>
-                        <Typography variant="caption" children={`Group Members (${allUsersAmount})`} />
-                        <Typography variant="caption" children={`${onlineUsersAmount} Online`} className={classes.onlineTitle} />
-                    </div>
-                    <div className={classes.usersContainer}>
-                        {usersListWithCurrentUserFirst.map((userData) => (
-                            <UserListItem {...userData} key={userData?.username} isCurrentUser={userData?.username === user.username} />
-                        ))}
-                    </div>
-                </Paper>
-                <Paper className={clsx(classes.panel, classes.rightPanel)}>
-                    <div className={classes.messagesContainer}>
-                        {DUMMY_CHAT_MESSAGES.map((message) => (
-                            <ChatBubble
-                                message={message}
-                                isCurrentUser={user.username === message.user.username}
-                                key={`${message.user.username}_${message.timestamp}`}
-                            />
-                        ))}
-                    </div>
-                </Paper>
+                <UsersPanel className={clsx(classes.panel, classes.leftPanel)} user={user} users={users} />
+                <MessagesPanel className={clsx(classes.panel, classes.rightPanel)} user={user} messages={messages} />
             </div>
         </PageLayout>
     );
@@ -108,8 +57,31 @@ function Chat(props: ChatProps) {
 export default withStyles(styles)(Chat);
 
 export const getServerSideProps = withUserSession(async () => {
-    const res = await fetch("http://localhost:3000/api/user/getAll");
-    const users = await res.json();
+    const props: any = {};
 
-    return { props: users };
+    const getAllUsers = fetch("http://localhost:3000/api/user/getAll")
+        .then((res) => res.json())
+        .then((data) => {
+            props["users"] = data;
+            return data;
+        })
+        .catch((e) => {
+            props["users"] = null;
+            return;
+        });
+
+    const getAllMessages = fetch("http://localhost:3000/api/chat/getMessages")
+        .then((res) => res.json())
+        .then((data) => {
+            props["messages"] = data;
+            return data;
+        })
+        .catch((e) => {
+            props["messages"] = null;
+            return;
+        });
+
+    await Promise.all([getAllUsers, getAllMessages]);
+
+    return { props };
 });

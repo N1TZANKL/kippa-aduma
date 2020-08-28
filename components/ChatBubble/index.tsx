@@ -20,7 +20,12 @@ const styles = (theme: Theme) =>
             margin: 3,
             marginRight: "13vw",
         },
-        nickname: { fontFamily: "monospace", fontSize: 14 },
+        nickname: {
+            fontFamily: "monospace",
+            fontSize: 14,
+            fontWeight: "bold",
+            color: blue[700],
+        },
         content: {
             overflowWrap: "break-word",
             whiteSpace: "pre-line",
@@ -48,6 +53,7 @@ const styles = (theme: Theme) =>
             alignItems: "center",
             borderRadius: 3,
             minWidth: 200,
+            maxWidth: 300,
         },
         basicFileIcon: {
             fontSize: 18,
@@ -55,8 +61,9 @@ const styles = (theme: Theme) =>
             marginRight: 6,
             marginTop: 1,
         },
-        flex: {
+        fileContentWrapper: {
             display: "flex",
+            overflow: "hidden",
         },
         downloadButton: {
             borderRadius: "50%",
@@ -75,30 +82,34 @@ const styles = (theme: Theme) =>
         currentUserFileContent: {
             backgroundColor: darken(blue[200], 0.05),
         },
+        fileMessage: {
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+        },
     });
 
 type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean };
 
+// TODO: Chat arrow
 function ChatBubble(props: ChatBubbleProps) {
     const { classes, message, isCurrentUser } = props;
-
-    function getShortenedFilename() {
-        const slicedFilename = message.message.slice(0, 25);
-        if (slicedFilename === message.message) return message.message;
-        else return `${slicedFilename}...`;
-    }
 
     return (
         <Card className={clsx(classes.root, isCurrentUser && classes.currentUserMessage)}>
             <Typography component="div" variant="caption">
-                <div className={classes.nickname} style={{ color: message.user.color }} children={`~${message.user.nickname}`} />
+                <div
+                    className={classes.nickname}
+                    style={{ color: isCurrentUser ? undefined : message.user.color }}
+                    children={`~${message.user.nickname}`}
+                />
                 {message.type === "file" ? (
                     <div className={clsx(classes.content, classes.fileContent, isCurrentUser && classes.currentUserFileContent)}>
-                        <div className={classes.flex}>
+                        <div className={classes.fileContentWrapper}>
                             <SvgIcon className={classes.basicFileIcon}>
                                 <path d={mdiFile} />
                             </SvgIcon>
-                            <div title={message.message} children={getShortenedFilename()} />
+                            <div title={message.message} children={message.message} className={classes.fileMessage} />
                         </div>
                         <SvgIcon className={classes.downloadButton} onClick={() => undefined}>
                             <path d={mdiArrowDownBold} />

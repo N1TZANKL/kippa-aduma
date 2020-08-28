@@ -2,7 +2,7 @@ import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
 import { getDb, Collections } from "utils/server/database";
 import { UserModel } from "utils/server/models";
-import { LoginErrors } from "interfaces/user";
+import { LoginErrors, GeneralErrors } from "utils/server/errors";
 import log, { LogTypes } from "utils/logger";
 
 async function getUser(username: string) {
@@ -30,15 +30,10 @@ export default withIronSession(async (req, res) => {
 
         log(`'${username}' logged into the system)`, LogTypes.SUCCESS);
 
-        return res.status(201).send("Logged in successfully");
+        return res.status(200).send("Logged in successfully");
     } catch (error) {
-        log(
-            `Caught error while attempting login for '${username}': ${error.name} ${error.codeName || error.message || ""} (error code ${
-                error.code || "unknown"
-            })`,
-            LogTypes.ERROR
-        );
+        log(`Caught error while attempting login for '${username}':`, LogTypes.ERROR, error);
 
-        res.status(500).send(LoginErrors.UnknownError);
+        res.status(500).send(GeneralErrors.UnknownError);
     }
 });

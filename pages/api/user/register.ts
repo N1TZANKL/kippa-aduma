@@ -2,7 +2,7 @@ import { getDb, Collections } from "utils/server/database";
 import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
 import { MongoError } from "mongodb";
-import { RegisterErrors } from "interfaces/user";
+import { RegisterErrors, GeneralErrors } from "utils/server/errors";
 import generateRandomColor from "randomcolor";
 import log, { LogTypes } from "utils/logger";
 import { UserModel } from "utils/server/models";
@@ -18,7 +18,7 @@ export default withIronSession(async (req, res) => {
 
     try {
         const passwordHash = await bcrypt.hash(password, 10);
-        const color = generateRandomColor();
+        const color = generateRandomColor(); //TODO: generate better colors?
 
         await addUser({ username, nickname, passwordHash, color });
 
@@ -29,14 +29,9 @@ export default withIronSession(async (req, res) => {
 
         res.status(201).send("User created");
     } catch (error) {
-        log(
-            `Caught error while attempting to add user '${username}': ${error.name} ${error.codeName || error.message || ""} (error code ${
-                error.code || "unknown"
-            })`,
-            LogTypes.ERROR
-        );
+        log(`Caught error while attempting to add user '${username}':`, LogTypes.ERROR, error);
 
         if (error instanceof MongoError && error.code === 11000) res.status(403).send(RegisterErrors.UserAlreadyExists);
-        else res.status(500).send(RegisterErrors.UnknownError);
+        else res.status(500).send(GeneralErrors.UnknownError);
     }
 });

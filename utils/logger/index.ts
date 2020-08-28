@@ -1,6 +1,8 @@
 import chalk from "chalk";
 import { getCurrentTimestamp } from "utils/helpers/dates";
 
+// TODO: Switch to external library?
+
 export enum LogTypes {
     SUCCESS = "success",
     ERROR = "error",
@@ -8,24 +10,29 @@ export enum LogTypes {
     INFO = "info",
 }
 
-const LOG_TYPE_TO_FUNCTION = {
+const LOG_TYPE_TO_FUNCTION: Record<LogTypes, (m: string, e?: ExtendedError) => string> = {
     [LogTypes.SUCCESS]: logSuccess,
     [LogTypes.ERROR]: logError,
     [LogTypes.WARNING]: logWarning,
     [LogTypes.INFO]: logInfo,
 };
 
-export default function log(message: string, type: LogTypes) {
+type ExtendedError = Error & { codeName: string; code: string | number };
+
+export default function log(message: string, type: LogTypes, error?: ExtendedError) {
     const logFunction = LOG_TYPE_TO_FUNCTION[type];
-    console.log(logFunction(`[${getCurrentTimestamp()}] ${message}`));
+    console.log(logFunction(`[${getCurrentTimestamp()}] ${message}`, error));
 }
 
 function logSuccess(message: string) {
     return chalk.green(`[+] ${message}`);
 }
 
-function logError(message: string) {
-    return chalk.red(`[-] ${message}`);
+function logError(message: string, error?: ExtendedError) {
+    const errorMessage = `[-] ${message} ${
+        error ? `${error.name} ${error.codeName || error.message || ""} (error code ${error.code || "unknown"})` : ""
+    }`;
+    return chalk.red(errorMessage);
 }
 
 function logWarning(message: string) {

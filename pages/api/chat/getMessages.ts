@@ -1,22 +1,22 @@
 import { withIronSession } from "utils/session";
 import { getDb, Collections } from "utils/server/database";
-import { UserModel } from "utils/server/models";
 import log, { LogTypes } from "utils/logger";
+import { ChatMessage } from "interfaces";
 import { GeneralErrors } from "utils/server/errors";
 
-async function getAllUsers() {
-    return getDb().then((db) => db.collection(Collections.Users).find<UserModel>({}).toArray()); // TODO: projection?
+async function getAllMessages() {
+    return getDb().then((db) => db.collection(Collections.Chat).find<ChatMessage>({}).toArray());
 }
 
 export default withIronSession(async (req, res) => {
     if (req.method !== "GET") return res.status(404).send("Invalid api call");
 
     try {
-        const users = await getAllUsers();
+        const messages = await getAllMessages(); //TODO: paging
 
-        return res.status(200).json(users.map(({ username, nickname, color }) => ({ username, nickname, color })));
+        return res.status(200).json(messages);
     } catch (error) {
-        log(`Caught error while attempting to fetch users:`, LogTypes.ERROR, error);
+        log(`Caught error while attempting to fetch chat messages:`, LogTypes.ERROR, error);
         res.status(500).send(GeneralErrors.UnknownError);
     }
 });
