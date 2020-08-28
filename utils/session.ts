@@ -1,32 +1,44 @@
 import { withIronSession as wis, SessionOptions } from "next-iron-session";
-import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult } from "next";
+import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, GetServerSidePropsContext } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 export const SESSION_OPTIONS: SessionOptions = {
     cookieName: process.env.SITE_COOKIE,
     cookieOptions: {
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV === "production",
     },
-    password: process.env.SECRET
+    password: process.env.SECRET,
 };
 
 export function withIronSession(handler: NextApiHandler) {
     return wis(handler, SESSION_OPTIONS);
 }
 
-export type WithUser<T> = T & { user: string; };
+export type WithUser<T> = T & { user: string };
 
 export function withUserSession<T = any>(handler?: GetServerSideProps<T>): GetServerSideProps<WithUser<T>> {
-    return wis((async ctx => {
-        const user = ctx.req.session.get("user");
+    return wis(
+        (async (ctx) => {
+            try {
+                const user = getCurrentUserAndRedirectIfNone(ctx);
+                const result: GetServerSidePropsResult<T> = (await handler?.(ctx)) || ({ props: {} } as any);
 
-        if (!user) {
-            ctx.res.writeHead(302, { Location: "/login" }).end();
-            return { props: {} };
-        }
+                (result.props as any).user = user;
+                return result;
+            } catch (e) {
+                return { props: {} };
+            }
+        }) as GetServerSideProps,
+        SESSION_OPTIONS
+    );
+}
 
-        const result: GetServerSidePropsResult<T> = (await handler?.(ctx)) || { props: {} } as any;
+function getCurrentUserAndRedirectIfNone(context: GetServerSidePropsContext<ParsedUrlQuery>) {
+    const user = context.req.session.get("user");
 
-        (result.props as any).user = user;
-        return result;        
-    }) as GetServerSideProps, SESSION_OPTIONS);
+    if (!user) {
+        context.res.writeHead(302, { Location: "/login" }).end();
+        throw new Error("User not logged in!");
+    }
+    return user;
 }

@@ -6,8 +6,9 @@ import LogoutIcon from "@material-ui/icons/ExitToApp";
 import Menu from "components/Menu";
 import { useRouter } from "next/router";
 import UserAvatar from "components/UserAvatar";
+import { UserSessionObject } from "interfaces";
 
-type AccountButtonProps = { nickname: string; color: string };
+type AccountButtonProps = { user?: UserSessionObject };
 
 function AccountButton(props: AccountButtonProps) {
     const [anchorEl, setAnchorEl, clearAnchorEl] = usePopoverState();
@@ -19,13 +20,17 @@ function AccountButton(props: AccountButtonProps) {
         router.push("/login");
     }, [router]);
 
+    const { user } = props;
+
     return (
         <>
-            <IconButton
-                title="Account Options"
-                children={<UserAvatar variant="circle" withBorder color={props.color} nickname={props.nickname} size={36} />}
-                onClick={setAnchorEl}
-            />
+            <IconButton title="Account Options" onClick={setAnchorEl}>
+                {user ? (
+                    <UserAvatar variant="circle" withBorder color={user.color} nickname={user.nickname} size={36} />
+                ) : (
+                    <AccountCircleIcon style={{ fontSize: 36 }} />
+                )}
+            </IconButton>
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}

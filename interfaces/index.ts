@@ -9,8 +9,7 @@ export type ChatMessage = {
     type: "text" | "file";
     message: string; // the message text / file name
     timestamp: string; // TODO: change type to be more specific?
-    color: string; // hex color
-    nickname: string;
+    user: UserSessionObject;
     fileSize?: number;
     fileType?: string;
 };

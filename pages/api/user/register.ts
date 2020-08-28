@@ -29,7 +29,12 @@ export default withIronSession(async (req, res) => {
 
         res.status(201).send("User created");
     } catch (error) {
-        log(`Caught error while attempting to add user '${username}': ${error.name} ${error.codeName} (error code ${error.code})`, LogTypes.ERROR);
+        log(
+            `Caught error while attempting to add user '${username}': ${error.name} ${error.codeName || error.message || ""} (error code ${
+                error.code || "unknown"
+            })`,
+            LogTypes.ERROR
+        );
 
         if (error instanceof MongoError && error.code === 11000) res.status(403).send(RegisterErrors.UserAlreadyExists);
         else res.status(500).send(RegisterErrors.UnknownError);

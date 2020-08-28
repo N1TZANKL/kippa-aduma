@@ -32,7 +32,12 @@ export default withIronSession(async (req, res) => {
 
         return res.status(201).send("Logged in successfully");
     } catch (error) {
-        log(`Caught error while attempting login for '${username}': ${error.name} ${error.codeName} (error code ${error.code})`, LogTypes.ERROR);
+        log(
+            `Caught error while attempting login for '${username}': ${error.name} ${error.codeName || error.message || ""} (error code ${
+                error.code || "unknown"
+            })`,
+            LogTypes.ERROR
+        );
 
         res.status(500).send(LoginErrors.UnknownError);
     }

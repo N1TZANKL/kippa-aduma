@@ -1,10 +1,9 @@
 import React, { MouseEventHandler } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
+import { MuiStyles, UserSessionObject } from "interfaces";
 import clsx from "clsx";
 import Typography from "@material-ui/core/Typography";
 import { grey, green } from "@material-ui/core/colors";
-import { CURRENT_USER_NICKNAME } from "utils/constants/tests";
 import UserAvatar from "components/UserAvatar";
 
 const styles = (theme: Theme) =>
@@ -56,15 +55,15 @@ const styles = (theme: Theme) =>
         },
     });
 
-type UserListItemProps = MuiStyles & {
-    nickname: string;
-    color: string;
-    online?: boolean;
-    onClick?: MouseEventHandler;
-};
+type UserListItemProps = MuiStyles &
+    UserSessionObject & {
+        isCurrentUser?: boolean;
+        online?: boolean;
+        onClick?: MouseEventHandler;
+    };
 
 function UserListItem(props: UserListItemProps) {
-    const { classes, nickname, onClick } = props;
+    const { classes, nickname, onClick, isCurrentUser } = props;
 
     return (
         <div className={clsx(classes.root, onClick && classes.clickable)} onClick={onClick}>
@@ -72,10 +71,10 @@ function UserListItem(props: UserListItemProps) {
                 <UserAvatar color={props.color} nickname={props.nickname} />
                 <div className={classes.nicknameWrapper}>
                     <Typography variant="body1" className={classes.nicknameText} children={nickname} />
-                    {nickname === CURRENT_USER_NICKNAME && <Typography variant="caption" children={"\n(You)"} className={classes.userIndicator} />}
+                    {isCurrentUser && <Typography variant="caption" children={"\n(You)"} className={classes.userIndicator} />}
                 </div>
             </div>
-            {props.online && <div className={classes.onlineIndicator} />}
+            {props.online || (isCurrentUser && <div className={classes.onlineIndicator} />)}
         </div>
     );
 }

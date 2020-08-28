@@ -3,19 +3,18 @@ import { withStyles, Theme, createStyles, darken } from "@material-ui/core/style
 import { MuiStyles, ChatMessage } from "interfaces";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { grey, lightGreen, lightBlue, blue } from "@material-ui/core/colors";
+import { grey, lightBlue, blue, blueGrey } from "@material-ui/core/colors";
 import moment from "moment";
 import prettyBytes from "pretty-bytes";
 import clsx from "clsx";
 import { mdiFile, mdiArrowDownBold } from "@mdi/js";
 import SvgIcon from "@material-ui/core/SvgIcon";
-import { CURRENT_USER_NICKNAME } from "utils/constants/tests";
 
 const styles = (theme: Theme) =>
     createStyles({
         root: {
             padding: "10px 10px 6px",
-            backgroundColor: blue[200],
+            backgroundColor: blueGrey[200],
             width: "fit-content",
             minWidth: 150,
             margin: 3,
@@ -32,7 +31,7 @@ const styles = (theme: Theme) =>
         },
         metadata: {
             marginTop: 5,
-            color: grey[600],
+            color: grey[700],
             fontSize: 12,
             display: "flex",
             flexDirection: "row-reverse",
@@ -41,8 +40,9 @@ const styles = (theme: Theme) =>
         },
         fileContent: {
             cursor: "pointer",
-            backgroundColor: darken(blue[200], 0.05),
+            backgroundColor: darken(blueGrey[200], 0.05),
             padding: 12,
+            margin: "5px 0",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -60,27 +60,27 @@ const styles = (theme: Theme) =>
         },
         downloadButton: {
             borderRadius: "50%",
-            border: `1px solid ${grey[600]}`,
-            color: grey[600],
+            border: `1px solid ${grey[700]}`,
+            color: grey[700],
             padding: 3,
             fontSize: 24,
             marginLeft: 10,
         },
         currentUserMessage: {
-            backgroundColor: lightGreen[200],
+            backgroundColor: blue[200],
             alignSelf: "flex-end",
             marginRight: 0,
             marginLeft: "13vw",
         },
         currentUserFileContent: {
-            backgroundColor: darken(lightGreen[200], 0.08),
+            backgroundColor: darken(blue[200], 0.05),
         },
     });
 
-type ChatBubbleProps = MuiStyles & { message: ChatMessage };
+type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean };
 
 function ChatBubble(props: ChatBubbleProps) {
-    const { classes, message } = props;
+    const { classes, message, isCurrentUser } = props;
 
     function getShortenedFilename() {
         const slicedFilename = message.message.slice(0, 25);
@@ -89,17 +89,11 @@ function ChatBubble(props: ChatBubbleProps) {
     }
 
     return (
-        <Card className={clsx(classes.root, message.nickname === CURRENT_USER_NICKNAME && classes.currentUserMessage)}>
+        <Card className={clsx(classes.root, isCurrentUser && classes.currentUserMessage)}>
             <Typography component="div" variant="caption">
-                <div className={classes.nickname} style={{ color: message.color }} children={`~${message.nickname}`} />
+                <div className={classes.nickname} style={{ color: message.user.color }} children={`~${message.user.nickname}`} />
                 {message.type === "file" ? (
-                    <div
-                        className={clsx(
-                            classes.content,
-                            classes.fileContent,
-                            message.nickname === CURRENT_USER_NICKNAME && classes.currentUserFileContent
-                        )}
-                    >
+                    <div className={clsx(classes.content, classes.fileContent, isCurrentUser && classes.currentUserFileContent)}>
                         <div className={classes.flex}>
                             <SvgIcon className={classes.basicFileIcon}>
                                 <path d={mdiFile} />
