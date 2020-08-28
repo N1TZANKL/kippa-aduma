@@ -14,3 +14,13 @@ export type ChatMessage = {
     fileSize?: number;
     fileType?: string;
 };
+
+export type UserSessionObject = {
+    username: string;
+    nickname: string;
+    color: string;
+};
+
+export type SessionObject = {
+    user: UserSessionObject;
+};

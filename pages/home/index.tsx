@@ -1,4 +1,6 @@
 import PageLayout from "components/PageLayout";
+import { SessionObject } from "interfaces";
 
-const Home = () => <PageLayout>Home</PageLayout>;
-export default Home;
+export default function Home(props: SessionObject) {
+    return <PageLayout>Home</PageLayout>;
+}

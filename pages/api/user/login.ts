@@ -1,31 +1,39 @@
 import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
-import { getDb, Collections, DbUser } from "utils/server/database";
+import { getDb, Collections } from "utils/server/database";
+import { UserModel } from "utils/server/models";
 import { LoginErrors } from "interfaces/user";
+import log, { LogTypes } from "utils/logger";
 
-export default withIronSession(
-    async (req, res) => {
-        if (req.method !== "POST") return res.status(404).send("Invalid api call");
+async function getUser(username: string) {
+    return getDb().then((db) =>
+        db.collection(Collections.Users).findOne<UserModel>({ username })
+    );
+}
 
-        const { username, password } = req.body;
+export default withIronSession(async (req, res) => {
+    if (req.method !== "POST") return res.status(404).send("Invalid api call");
 
-        if (!username || !password) res.status(400).send(LoginErrors.MissingFields);
+    const { username, password } = req.body;
 
-        try {
-            const db = await getDb();
-            const dbUser = await db.collection(Collections.Users).findOne<DbUser>({ username });
+    if (!username || !password) res.status(400).send(LoginErrors.MissingFields);
 
-            if (!dbUser) return res.status(400).send(LoginErrors.InvalidCredentials);
+    try {
+        const dbUser = await getUser(username);
+        if (!dbUser) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-            const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
+        const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
+        if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-            if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
+        req.session.set("user", { username, nickname: dbUser.nickname, color: dbUser.color });
+        await req.session.save();
 
-            req.session.set("user", { username });
-            await req.session.save();
-            return res.status(201).send("");
-        }
-        catch {
-            res.status(500).send(LoginErrors.UnknownError);
-        }
-    });
+        log(`'${username}' logged into the system)`, LogTypes.SUCCESS);
+
+        return res.status(201).send("Logged in successfully");
+    } catch (error) {
+        log(`Caught error while attempting login for '${username}': ${error.name} ${error.codeName} (error code ${error.code})`, LogTypes.ERROR);
+
+        res.status(500).send(LoginErrors.UnknownError);
+    }
+});

@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AccountButton from "./account-button";
+import { CURRENT_USER } from "utils/constants/tests";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -62,12 +63,10 @@ function AppBar(props: AppBarProps) {
                     <img alt="kippa-aduma-logo" className={classes.logo} src="/favicon.ico" />
                 </Link>
                 <Typography variant="h4" children="Kippa Aduma" className={classes.title} />
-                {currentPath !== "/" && (
-                    <Typography variant="h5" children={currentPath} className={classes.currentPath} />
-                )}
+                {currentPath !== "/" && <Typography variant="h5" children={currentPath} className={classes.currentPath} />}
             </div>
             <div className={classes.wrapper}>
-                <AccountButton />
+                <AccountButton nickname={CURRENT_USER.nickname} color={CURRENT_USER.color} />
             </div>
         </MuiAppBar>
     );

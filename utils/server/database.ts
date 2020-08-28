@@ -1,13 +1,7 @@
 import { MongoClient, Db } from "mongodb";
 
 export enum Collections {
-    Users = "users"
-}
-
-export interface DbUser {
-    username: string;
-    nickname: string;
-    passwordHash: string;
+    Users = "users",
 }
 
 const dbUrl = process.env.DATABASE_URL + (process.env.NODE_ENV !== "production" ? "?synchronize=true" : "");

@@ -6,9 +6,10 @@ import LogoutIcon from "@material-ui/icons/ExitToApp";
 import Menu from "components/Menu";
 import { useRouter } from "next/router";
 import UserAvatar from "components/UserAvatar";
-import { CURRENT_USER } from "utils/constants/tests";
 
-function AccountButton() {
+type AccountButtonProps = { nickname: string; color: string };
+
+function AccountButton(props: AccountButtonProps) {
     const [anchorEl, setAnchorEl, clearAnchorEl] = usePopoverState();
 
     const router = useRouter();
@@ -22,7 +23,7 @@ function AccountButton() {
         <>
             <IconButton
                 title="Account Options"
-                children={<UserAvatar variant="circle" withBorder color={CURRENT_USER.color} nickname={CURRENT_USER.nickname} size={36} />}
+                children={<UserAvatar variant="circle" withBorder color={props.color} nickname={props.nickname} size={36} />}
                 onClick={setAnchorEl}
             />
             <Menu
