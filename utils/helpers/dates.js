@@ -13,7 +13,7 @@ export function formatDate(date, withTime = false) {
             lastWeek: "[dddd (MMM DD)]",
             nextWeek: "[Next] dddd",
             sameElse: "MMM DD",
-        }
+        },
     });
 
     const parsedDate = moment(date).calendar();
@@ -22,21 +22,21 @@ export function formatDate(date, withTime = false) {
     else return parsedDate;
 }
 
-export function sortByDate(a, b, sort = "asc") {
+export function sortByDate(a, b, sortType = "asc") {
     const dateA = moment(a);
     const dateB = moment(b);
-    const sort =  dateA.isAfter(dateB) ? 1 : dateA.isBefore(dateB) ? -1 : 0;
-    return sort === "asc" ? sort : (sort * -1);
+    const sort = dateA.isAfter(dateB) ? 1 : dateA.isBefore(dateB) ? -1 : 0;
+    return sortType === "asc" ? sortType : sortType * -1;
 }
 
-export function sortObjectArrayByDate(array, sortKey, sort = "asc") {
+export function sortObjectArrayByDate(array, sortKey, sortType = "asc") {
     const sortedArray = array.sort((a, b) => {
         const dateA = moment(a[sortKey]);
         const dateB = moment(b[sortKey]);
         return dateA.isAfter(dateB) ? 1 : dateA.isBefore(dateB) ? -1 : 0;
     });
 
-    return sort === "asc" ? sortedArray : sortedArray.reverse();
+    return sortType === "asc" ? sortedArray : sortedArray.reverse();
 }
 
 export function calculateDayDifference(a, b) {
@@ -45,4 +45,6 @@ export function calculateDayDifference(a, b) {
     return dateA.diff(dateB, "days");
 }
 
-
+export function getCurrentTimestamp() {
+    return moment(new Date()).locale("en-il").format("L LTS");
+}
