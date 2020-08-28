@@ -13,38 +13,44 @@ function Register({ classes }: MuiStyles) {
 
     const [formError, setFormError] = useState<string | undefined>();
     const [passwordError, setPasswordError] = useState<string | undefined>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const usernameInput = useRef<HTMLInputElement>(null);
     const nicknameInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
     const retypePasswordInput = useRef<HTMLInputElement>(null);
 
-    const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = useCallback(
+        async (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
 
-        const username = usernameInput.current!.value;
-        const nickname = nicknameInput.current!.value;
-        const password = passwordInput.current!.value;
-        const retypePassword = retypePasswordInput.current!.value;
+            const username = usernameInput.current!.value;
+            const nickname = nicknameInput.current!.value;
+            const password = passwordInput.current!.value;
+            const retypePassword = retypePasswordInput.current!.value;
 
-        if (retypePassword !== password) return setPasswordError("passwords must match");
-        else setPasswordError(undefined);
+            if (retypePassword !== password) return setPasswordError("passwords must match");
+            else setPasswordError(undefined);
 
-        try {
-            const response = await fetch("/api/user/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, nickname, password })
-            });
-    
-            if (response.ok) return router.push("/");
-    
-            setFormError(await response.text());
-        }
-        catch {
-            setFormError("an unknown error occured");
-        }
-    }, [usernameInput, nicknameInput, passwordInput, retypePasswordInput, router]);
+            try {
+                setIsLoading(true);
+                const response = await fetch("/api/user/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, nickname, password }),
+                });
+
+                if (response.ok) return router.push("/");
+
+                setFormError(await response.text());
+            } catch {
+                setFormError("an unknown error occured");
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        [usernameInput, nicknameInput, passwordInput, retypePasswordInput, router]
+    );
 
     return (
         <ExteriorPageLayout>
@@ -53,6 +59,7 @@ function Register({ classes }: MuiStyles) {
                 submitMessage="Sign up!"
                 onSubmit={onSubmit}
                 error={formError}
+                loading={isLoading}
                 subtitle={<FormSubtitle actionName="login" href="/login" prompt="Already have a user?" />}
             >
                 <TextField label="Username" inputRef={usernameInput} required />

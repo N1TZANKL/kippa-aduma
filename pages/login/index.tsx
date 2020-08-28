@@ -9,32 +9,38 @@ import SensitiveTextField from "components/SensitiveTextField";
 const styles = (theme: Theme) => createStyles({});
 
 function Login({ classes }: MuiStyles) {
-    const router = useRouter();    
+    const router = useRouter();
     const usernameInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
     const [formError, setFormError] = useState<string | undefined>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const onSubmit = useCallback(async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = useCallback(
+        async (e: React.FormEvent) => {
+            e.preventDefault();
 
-        const username = usernameInput.current!.value;
-        const password = passwordInput.current!.value;
+            const username = usernameInput.current!.value;
+            const password = passwordInput.current!.value;
 
-        try {
-            const response = await fetch("/api/user/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
-            });
-    
-            if (response.ok) return router.push("/");
+            try {
+                setIsLoading(true);
+                const response = await fetch("/api/user/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
 
-            setFormError(await response.text());
-        }
-        catch {
-            setFormError("an unknown error occurd");
-        }
-    }, [usernameInput, passwordInput]);
+                if (response.ok) return router.push("/");
+
+                setFormError(await response.text());
+            } catch {
+                setFormError("an unknown error occurd");
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        [usernameInput, passwordInput]
+    );
 
     return (
         <ExteriorPageLayout>
@@ -44,6 +50,7 @@ function Login({ classes }: MuiStyles) {
                 error={formError}
                 onSubmit={onSubmit}
                 subtitle={<FormSubtitle actionName="register" href="/register" prompt="Don't have a user?" />}
+                loading={isLoading}
             >
                 <TextField label="Username" inputRef={usernameInput} required />
                 <SensitiveTextField label="Password" inputRef={passwordInput} required />

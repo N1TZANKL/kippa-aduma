@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import { Children } from "interfaces";
 import Button from "@material-ui/core/Button";
 import { lightBlue, red } from "@material-ui/core/colors";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -107,6 +108,10 @@ const styles = (theme: Theme) =>
             fontWeight: 500,
             fontFamily: "monospace",
         },
+        progress: {
+            marginRight: 20,
+            color: "white",
+        },
     });
 
 type SubtitleProps = MuiStyles & { actionName: string; prompt: string; href: string };
@@ -127,17 +132,20 @@ type FormProps = MuiStyles &
         subtitle?: Children;
         submitMessage?: string;
         error?: string;
+        loading: boolean;
         children: Children[];
     };
 
-export const Form = withStyles(styles)(({ classes, title, children, subtitle, submitMessage, error, ...formElementProps }: FormProps) => (
+export const Form = withStyles(styles)(({ classes, title, children, subtitle, submitMessage, error, loading, ...formElementProps }: FormProps) => (
     <>
         <Typography variant="h3" className={classes.formTitle} children={title} />
         {subtitle}
         <Divider className={classes.formTitleDivider} />
         <form {...formElementProps} className={classes.form}>
             <div className={classes.formChildren} children={children} />
-            <Button type="submit" children={submitMessage || "submit!"} color="secondary" className={classes.submitButton} variant="contained" />
+            <Button type="submit" color="secondary" className={classes.submitButton} variant="contained" disabled={loading}>
+                {loading && <CircularProgress color="inherit" size={18} className={classes.progress} />} {submitMessage || "submit!"}
+            </Button>
         </form>
         {error && <Typography variant="h6" className={classes.formError} children={error} />}
     </>
