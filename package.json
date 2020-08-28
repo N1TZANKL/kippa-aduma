@@ -14,6 +14,7 @@
         "@mdi/js": "^5.5.55",
         "bcryptjs": "^2.4.3",
         "chalk": "^4.1.0",
+        "express": "^4.17.1",
         "moment": "^2.27.0",
         "mongodb": "^3.6.0",
         "next": "latest",
@@ -21,14 +22,21 @@
         "pretty-bytes": "^5.3.0",
         "randomcolor": "^0.6.2",
         "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react-dom": "^16.12.0",
+        "socket.io": "^2.3.0",
+        "socket.io-client": "^2.3.0"
     },
     "devDependencies": {
         "@types/bcryptjs": "^2.4.2",
+        "@types/express": "^4.17.7",
         "@types/mongodb": "^3.5.26",
         "@types/node": "^12.12.21",
         "@types/react": "^16.9.16",
         "@types/react-dom": "^16.9.4",
+        "@types/socket.io": "^2.1.11",
+        "@types/socket.io-client": "^1.4.33",
+        "install": "^0.13.0",
+        "npm": "^6.14.8",
         "typescript": "^3.9.7"
     },
     "license": "ISC"
