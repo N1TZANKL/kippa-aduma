@@ -52,6 +52,8 @@ const styles = (theme: Theme) =>
         userIndicator: {
             color: grey[500],
             fontSize: 11,
+            pointerEvents: "none",
+            userSelect: "none",
         },
     });
 

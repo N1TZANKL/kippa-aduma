@@ -21,6 +21,8 @@ const styles = (theme: Theme) =>
             paddingBottom: 10,
             marginBottom: 3,
             borderBottom: `1px solid ${lighten(theme.constants.appBackgroundHighlight, 0.08)}`,
+            pointerEvents: "none",
+            userSelect: "none",
         },
         onlineTitle: {
             color: green["A400"],

@@ -6,15 +6,17 @@ import Paper from "@material-ui/core/Paper";
 import ChatBubble from "components/ChatBubble";
 import socketIOClient from "socket.io-client";
 import clsx from "clsx";
-import Typography from "@material-ui/core/Typography";
 import NewMessageLine from "./new-message-line";
 import ContainerTitleBar from "./container-title-bar";
+import { getDatesDifference, areSameDates } from "utils/helpers/dates";
+import ChatDivider from "components/ChatDivider";
 
 const styles = (theme: Theme) =>
     createStyles({
         base: {
-            backgroundColor: lighten(theme.constants.appBackgroundHighlight, 0.08),
             borderRadius: 0,
+            overflow: "hidden",
+            backgroundColor: lighten(theme.constants.appBackgroundHighlight, 0.08),
         },
         containerTitle: {
             height: 50,
@@ -34,13 +36,21 @@ const styles = (theme: Theme) =>
         messagesContainer: {
             display: "flex",
             flexDirection: "column",
-            padding: 15,
+            padding: 25,
             boxSizing: "border-box",
             height: "calc(100% - 115px)",
+            maxHeight: "calc(100% - 115px)",
             "& > *:not(:last-child)": {
                 marginBottom: 8,
             },
             overflow: "auto",
+            backgroundImage: 'url("/favicon-blend.png")',
+            backgroundSize: 600,
+            backgroundBlendMode: "soft-light",
+            backgroundRepeat: "no-repeat",
+            backgroundPositionX: "center",
+            backgroundPositionY: "center",
+            backgroundColor: theme.constants.appBackgroundHighlight,
         },
     });
 
@@ -62,23 +72,64 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
     }
 
     function _sendMessage(message: string) {
+        if (!message) return;
         const newMessageObj = { type: "text", message, user };
-        // send message
+        fetch("/api/chat/postMessage", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: newMessageObj }),
+        });
+    }
+
+    function _shouldAddMarginToMessage(message: ChatMessage, prevMessage: ChatMessage | null) {
+        if (!prevMessage) return true;
+
+        if (!areSameDates(prevMessage.timestamp, message.timestamp)) return true;
+
+        if (getDatesDifference(prevMessage.timestamp, message.timestamp, "minutes") > 30) return true;
+        else return false;
+    }
+
+    function _shouldAddArrowToMessage(message: ChatMessage, prevMessage: ChatMessage | null) {
+        if (!prevMessage) return true;
+
+        // check timestamp
+        if (_shouldAddMarginToMessage(message, prevMessage)) return true;
+
+        // check user
+        if (prevMessage.user.username !== message.user.username) return true;
+
+        return false;
+    }
+
+    function _shouldShowDivider(message: ChatMessage, prevMessage: ChatMessage | null) {
+        if (!prevMessage) return true;
+
+        if (!areSameDates(prevMessage.timestamp, message.timestamp)) return true;
+        else return false;
     }
 
     return (
         <Paper className={className}>
             <ContainerTitleBar className={clsx(classes.base, classes.containerTitle)} />
             <div className={classes.messagesContainer}>
-                {allMessages.map((message) => (
-                    <ChatBubble
-                        message={message}
-                        isCurrentUser={user.username === message.user.username}
-                        key={`${message.user.username}_${message.timestamp}`}
-                    />
-                ))}
+                {allMessages.map((message, index) => {
+                    const prevMessage = index === 0 ? null : allMessages[index - 1];
+
+                    return (
+                        <React.Fragment key={`${message.user.username}_${message.timestamp}`}>
+                            {_shouldShowDivider(message, prevMessage) && <ChatDivider timestamp={message.timestamp} />}
+                            <ChatBubble
+                                message={message}
+                                isCurrentUser={user.username === message.user.username}
+                                withArrow={_shouldAddArrowToMessage(message, prevMessage)}
+                                withMargin={_shouldAddArrowToMessage(message, prevMessage)}
+                            />
+                        </React.Fragment>
+                    );
+                })}
             </div>
-            <NewMessageLine className={clsx(classes.base, classes.messageLine)} />
+            <NewMessageLine className={clsx(classes.base, classes.messageLine)} sendMessage={_sendMessage} />
         </Paper>
     );
 }

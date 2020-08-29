@@ -5,12 +5,12 @@ export function areSameDates(firstDate, secondDate, timeUnit = "date") {
 }
 
 export function formatDate(date, withTime = false) {
-    moment.updateLocal("en", {
+    moment.updateLocale("en", {
         calendar: {
             lastDay: "[Yesterday]",
             sameDay: "[Today]",
             nextDay: "[Tomorrow]",
-            lastWeek: "[dddd (MMM DD)]",
+            lastWeek: "dddd (MMM DD)",
             nextWeek: "[Next] dddd",
             sameElse: "MMM DD",
         },
@@ -18,8 +18,12 @@ export function formatDate(date, withTime = false) {
 
     const parsedDate = moment(date).calendar();
 
-    if (withTime) return `${parsedDate} at ${moment(date).format("HH:mm")}`;
+    if (withTime) return `${parsedDate} at ${formatTime(date)}`;
     else return parsedDate;
+}
+
+export function formatTime(date) {
+    return moment(date).format("HH:mm");
 }
 
 export function sortByDate(a, b, sortType = "asc") {
@@ -39,10 +43,10 @@ export function sortObjectArrayByDate(array, sortKey, sortType = "asc") {
     return sortType === "asc" ? sortedArray : sortedArray.reverse();
 }
 
-export function calculateDayDifference(a, b) {
+export function getDatesDifference(a, b, unitOfTime) {
     const dateA = moment(a);
     const dateB = moment(b);
-    return dateA.diff(dateB, "days");
+    return dateB.diff(dateA, unitOfTime);
 }
 
 export function getCurrentTimestamp() {

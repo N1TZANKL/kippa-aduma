@@ -11,6 +11,8 @@ const styles = (theme: Theme) =>
         title: {
             fontWeight: "bold",
             fontFamily: "monospace",
+            pointerEvents: "none",
+            userSelect: "none",
         },
     });
 

@@ -14,7 +14,7 @@ export default withIronSession(async (req, res) => {
     if (!req.body?.message) return res.status(400).send("Bad message");
 
     try {
-        await createMessage(req.body.message); // sanitize message?
+        await createMessage({ ...req.body.message, timestamp: new Date().toISOString() }); // sanitize message?
         return res.status(200).send("Message added successfully");
     } catch (error) {
         log(`Caught error while attempting to create chat message:`, LogTypes.ERROR, error);

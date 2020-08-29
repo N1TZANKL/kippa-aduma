@@ -4,11 +4,12 @@ import { MuiStyles, ChatMessage } from "interfaces";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { grey, lightBlue, blue, blueGrey } from "@material-ui/core/colors";
-import moment from "moment";
 import prettyBytes from "pretty-bytes";
 import clsx from "clsx";
 import { mdiFile, mdiArrowDownBold } from "@mdi/js";
 import SvgIcon from "@material-ui/core/SvgIcon";
+import { formatTime } from "utils/helpers/dates";
+import cssStyles from "./ChatBubble.module.css";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -19,6 +20,20 @@ const styles = (theme: Theme) =>
             minWidth: 150,
             margin: 3,
             marginRight: "13vw",
+            minHeight: "fit-content",
+            // arrow related CSS
+            position: "relative",
+            overflow: "visible",
+            /* "&:after": {
+                content: " ",
+                position: "absolute",
+                width: 0,
+                height: 0,
+                top: 0,
+                right: -12,
+                border: "7px solid",
+                borderColor: `${blueGrey[200]} transparent transparent ${blueGrey[200]}`,
+            }, */
         },
         nickname: {
             fontFamily: "monospace",
@@ -87,16 +102,24 @@ const styles = (theme: Theme) =>
             overflow: "hidden",
             whiteSpace: "nowrap",
         },
+        marginTop: { marginTop: 20 },
     });
 
-type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean };
+type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean };
 
-// TODO: Chat arrow
 function ChatBubble(props: ChatBubbleProps) {
-    const { classes, message, isCurrentUser } = props;
+    const { classes, message, isCurrentUser, withArrow, withMargin } = props;
 
     return (
-        <Card className={clsx(classes.root, isCurrentUser && classes.currentUserMessage)}>
+        <Card
+            className={clsx(
+                classes.root,
+                isCurrentUser && classes.currentUserMessage,
+                withArrow && cssStyles["tri-right"],
+                withArrow && cssStyles[isCurrentUser ? "right-in" : "left-in"],
+                withMargin && classes.marginTop
+            )}
+        >
             <Typography component="div" variant="caption">
                 <div
                     className={classes.nickname}
@@ -119,7 +142,7 @@ function ChatBubble(props: ChatBubbleProps) {
                     <div className={classes.content} children={message.message} />
                 )}
                 <div className={classes.metadata}>
-                    <div children={moment(message.timestamp).format("HH:mm")} />
+                    <div children={formatTime(message.timestamp)} />
                     {message.type === "file" && (
                         <div>
                             {message.fileType} &bull; {prettyBytes(message.fileSize || 0)}
