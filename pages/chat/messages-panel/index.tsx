@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import { ChatMessage } from "interfaces";
 import { PanelProps } from "..";
@@ -59,11 +59,12 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
 
     const [allMessages, setMessages] = useState(messages);
 
+    const socketRef = useRef(socketIOClient(`http://localhost:${process.env.CHAT_PORT}`));
+
     useEffect(() => {
-        const socket = socketIOClient(`http://localhost:${process.env.CHAT_PORT}`); // TODO: save socket with useRef
-        socket.on("receive message", _onReceiveNewMessage);
+        socketRef.current.on("receive message", _onReceiveNewMessage);
         return () => {
-            socket.disconnect();
+            socketRef.current.disconnect();
         };
     }, []);
 
@@ -74,11 +75,13 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
     function _sendMessage(message: string) {
         if (!message) return;
         const newMessageObj = { type: "text", message, user };
-        fetch("/api/chat/postMessage", {
+        socketRef.current.emit("post message", newMessageObj);
+
+        /* fetch("/api/chat/postMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: newMessageObj }),
-        });
+        }); */
     }
 
     function _shouldAddMarginToMessage(message: ChatMessage, prevMessage: ChatMessage | null) {
