@@ -123,7 +123,7 @@ function ChatBubble(props: ChatBubbleProps) {
             <Typography component="div" variant="caption">
                 <div
                     className={classes.nickname}
-                    style={{ color: isCurrentUser ? undefined : message.user.color }}
+                    style={{ color: isCurrentUser ? undefined : darken(message.user.color, 0.1) }}
                     children={`~${message.user.nickname}`}
                 />
                 {message.type === "file" ? (

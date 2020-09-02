@@ -21,6 +21,7 @@ export function withUserSession<T = any>(handler?: GetServerSideProps<T>): GetSe
         (async (ctx) => {
             try {
                 const user = getCurrentUserAndRedirectIfNone(ctx);
+                // TODO: CHECK THAT THE USER ~ACTUALLY~ EXISTS HERE
                 const result: GetServerSidePropsResult<T> = (await handler?.(ctx)) || ({ props: {} } as any);
 
                 (result.props as any).user = user;

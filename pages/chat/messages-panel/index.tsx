@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import { ChatMessage } from "interfaces";
 import { PanelProps } from "..";
@@ -59,12 +59,11 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
 
     const [allMessages, setMessages] = useState(messages);
 
-    const socketRef = useRef(socketIOClient(`http://localhost:${process.env.CHAT_PORT}`));
-
     useEffect(() => {
-        socketRef.current.on("receive message", _onReceiveNewMessage);
+        const socket = socketIOClient(`http://localhost:${"1337" /* process.env.CHAT_PORT */}`); //TODO: fix
+        socket.on("new message", _onReceiveNewMessage);
         return () => {
-            socketRef.current.disconnect();
+            socket.disconnect();
         };
     }, []);
 
@@ -73,15 +72,13 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
     }
 
     function _sendMessage(message: string) {
-        if (!message) return;
         const newMessageObj = { type: "text", message, user };
-        socketRef.current.emit("post message", newMessageObj);
 
-        /* fetch("/api/chat/postMessage", {
+        fetch("/api/chat/postMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: newMessageObj }),
-        }); */
+        });
     }
 
     function _shouldAddMarginToMessage(message: ChatMessage, prevMessage: ChatMessage | null) {
@@ -120,7 +117,7 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
                     const prevMessage = index === 0 ? null : allMessages[index - 1];
 
                     return (
-                        <React.Fragment key={`${message.user.username}_${message.timestamp}`}>
+                        <React.Fragment key={`${message.user.username}_${message.timestamp}_${index}`}>
                             {_shouldShowDivider(message, prevMessage) && <ChatDivider timestamp={message.timestamp} />}
                             <ChatBubble
                                 message={message}

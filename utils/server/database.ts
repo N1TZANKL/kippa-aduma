@@ -5,9 +5,9 @@ export enum Collections {
     Chat = "chat", //TODO: rename to messages
 }
 
-const dbUrl = process.env.DATABASE_URL + (process.env.NODE_ENV !== "production" ? "?synchronize=true" : "");
+const dbUrl = process.env.DATABASE_URL + (process.env.NODE_ENV === "production" ? "" : "?synchronize=true");
 
-const client = new MongoClient(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(dbUrl, { useNewUrlParser: true, useUnifiedTopology: false });
 
 async function setUpDb(db: Db) {
     await db.collection(Collections.Users).createIndex({ username: 1 }, { unique: true });
