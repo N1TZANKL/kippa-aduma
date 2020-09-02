@@ -41,8 +41,6 @@ function Register({ classes }: MuiStyles) {
                 });
 
                 if (response.ok) return router.push("/");
-
-                setFormError(await response.text());
             } catch {
                 setFormError("an unknown error occured");
             } finally {

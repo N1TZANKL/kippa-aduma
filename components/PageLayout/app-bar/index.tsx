@@ -1,11 +1,12 @@
 import React from "react";
-import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core/styles";
+import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import MuiAppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AccountButton from "./account-button";
 import { CURRENT_USER } from "utils/constants/tests";
+import { MuiStyles, UserSessionObject } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -48,10 +49,10 @@ const styles = (theme: Theme) =>
         },
     });
 
-type AppBarProps = WithStyles<typeof styles>;
+type AppBarProps = MuiStyles & { user?: UserSessionObject };
 
 function AppBar(props: AppBarProps) {
-    const { classes } = props;
+    const { classes, user } = props;
 
     const router = useRouter();
     const currentPath = router.pathname;
@@ -66,7 +67,7 @@ function AppBar(props: AppBarProps) {
                 {currentPath !== "/" && <Typography variant="h5" children={currentPath} className={classes.currentPath} />}
             </div>
             <div className={classes.wrapper}>
-                <AccountButton nickname={CURRENT_USER.nickname} color={CURRENT_USER.color} />
+                <AccountButton user={user} />
             </div>
         </MuiAppBar>
     );

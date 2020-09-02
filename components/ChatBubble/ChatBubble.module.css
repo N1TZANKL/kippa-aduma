@@ -1,0 +1,23 @@
+/* Chat bubble arrow - own messages */
+.tri-right.right-in:after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0;
+    right: -9px;
+    border: 6px solid;
+    border-color: #90caf9 transparent transparent #90caf9;
+}
+
+/* Chat bubble arrow - others messages */
+.tri-right.left-in:after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: -9px;
+    border: 6px solid;
+    border-color: #b0bec5 #b0bec5 transparent transparent;
+}
