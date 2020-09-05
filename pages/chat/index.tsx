@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
-import PageLayout from "components/PageLayout";
+import PageLayout from "components/layouts/MainLayout";
 import clsx from "clsx";
 import { withUserSession } from "utils/session";
 import UsersPanel from "./users-panel";
@@ -60,23 +60,23 @@ export const getServerSideProps = withUserSession(async () => {
     const props: any = {};
 
     const getAllUsers = fetch("http://localhost:3000/api/user/getAll")
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
             props["users"] = data;
             return data;
         })
-        .catch((e) => {
+        .catch(e => {
             props["users"] = null;
             return;
         });
 
     const getAllMessages = fetch("http://localhost:3000/api/chat/getMessages")
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
             props["messages"] = data;
             return data;
         })
-        .catch((e) => {
+        .catch(e => {
             props["messages"] = null;
             return;
         });

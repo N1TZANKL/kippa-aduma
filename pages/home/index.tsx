@@ -1,4 +1,4 @@
-import PageLayout from "components/PageLayout";
+import PageLayout from "components/layouts/MainLayout";
 import { SessionObject } from "interfaces";
 
 export default function Home(props: SessionObject) {

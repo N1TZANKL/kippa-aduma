@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles } from "interfaces";
-import ExteriorPageLayout, { Form, FormSubtitle } from "components/ExteriorPageLayout";
+import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/ExteriorLayout";
 import TextField from "components/TextField";
 import SensitiveTextField from "components/SensitiveTextField";
 import { useRouter } from "next/router";
