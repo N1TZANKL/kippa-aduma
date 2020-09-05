@@ -3,9 +3,9 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { usePopoverState } from "utils/hooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import Menu from "components/Menu";
+import Menu from "components/general/Menu";
 import { useRouter } from "next/router";
-import UserAvatar from "components/UserAvatar";
+import UserAvatar from "components/general/UserAvatar";
 import { UserSessionObject } from "interfaces";
 
 type AccountButtonProps = { user?: UserSessionObject };

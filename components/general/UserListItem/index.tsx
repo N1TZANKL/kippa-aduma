@@ -4,7 +4,7 @@ import { MuiStyles, UserSessionObject } from "interfaces";
 import clsx from "clsx";
 import Typography from "@material-ui/core/Typography";
 import { grey, green } from "@material-ui/core/colors";
-import UserAvatar from "components/UserAvatar";
+import UserAvatar from "components/general/UserAvatar";
 
 const styles = (theme: Theme) =>
     createStyles({

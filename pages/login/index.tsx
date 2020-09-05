@@ -1,14 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import { useRouter } from "next/router";
 import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/ExteriorLayout";
-import TextField from "components/TextField";
-import SensitiveTextField from "components/SensitiveTextField";
+import TextField from "components/general/TextField";
+import SensitiveTextField from "components/general/SensitiveTextField";
 
-const styles = (theme: Theme) => createStyles({});
-
-function Login({ classes }: MuiStyles) {
+function Login() {
     const router = useRouter();
     const usernameInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -59,4 +55,4 @@ function Login({ classes }: MuiStyles) {
     );
 }
 
-export default withStyles(styles)(Login);
+export default Login;

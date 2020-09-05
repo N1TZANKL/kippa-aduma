@@ -1,14 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/ExteriorLayout";
-import TextField from "components/TextField";
-import SensitiveTextField from "components/SensitiveTextField";
+import TextField from "components/general/TextField";
+import SensitiveTextField from "components/general/SensitiveTextField";
 import { useRouter } from "next/router";
 
-const styles = (theme: Theme) => createStyles({});
-
-function Register({ classes }: MuiStyles) {
+function Register() {
     const router = useRouter();
 
     const [formError, setFormError] = useState<string | undefined>();
@@ -69,4 +65,4 @@ function Register({ classes }: MuiStyles) {
     );
 }
 
-export default withStyles(styles)(Register);
+export default Register;

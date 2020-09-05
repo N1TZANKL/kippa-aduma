@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import { UserSessionObject } from "interfaces";
 import Paper from "@material-ui/core/Paper";
-import UserListItem from "components/UserListItem";
+import UserListItem from "components/general/UserListItem";
 import { PanelProps } from "..";
 import Typography from "@material-ui/core/Typography";
 import { green } from "@material-ui/core/colors";
