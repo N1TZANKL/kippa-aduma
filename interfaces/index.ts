@@ -9,7 +9,8 @@ export type ChatMessage = {
     type: "text" | "file";
     message: string; // the message text / file name
     timestamp: string; // TODO: change type to be more specific?
-    user: UserSessionObject;
+    user: UserSessionObject; // TODO: instead of saving the whole user info object,
+    // save the userId only and inflate?
     fileSize?: number;
     fileType?: string;
 };
