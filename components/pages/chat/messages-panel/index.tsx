@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import { ChatMessage } from "interfaces";
-import { PanelProps } from "..";
+import { PanelProps } from "../../../../pages/chat";
 import Paper from "@material-ui/core/Paper";
-import ChatBubble from "components/ChatBubble";
+import ChatBubble from "./chat-bubble";
 import socketIOClient from "socket.io-client";
 import clsx from "clsx";
 import NewMessageLine from "./new-message-line";
 import ContainerTitleBar from "./container-title-bar";
 import { getDatesDifference, areSameDates } from "utils/helpers/dates";
-import ChatDivider from "components/ChatDivider";
+import ChatDivider from "./chat-divider";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -68,7 +68,7 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
     }, []);
 
     function _onReceiveNewMessage(newMessage: ChatMessage) {
-        setMessages((prevMessages) => [...prevMessages, newMessage]); //TODO: read about Mutable
+        setMessages(prevMessages => [...prevMessages, newMessage]); //TODO: read about Mutable
     }
 
     function _sendMessage(message: string) {

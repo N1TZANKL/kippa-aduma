@@ -6,7 +6,7 @@ import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
 import { SvgIconComponent } from "@material-ui/icons";
 import SendIcon from "@material-ui/icons/Send";
 import EmojiIcon from "@material-ui/icons/InsertEmoticon";
-import TextField from "components/TextField";
+import TextField from "components/general/TextField";
 
 const styles = (theme: Theme) =>
     createStyles({

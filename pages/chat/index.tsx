@@ -4,8 +4,8 @@ import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
 import PageLayout from "components/layouts/MainLayout";
 import clsx from "clsx";
 import { withUserSession } from "utils/session";
-import UsersPanel from "./users-panel";
-import MessagesPanel from "./messages-panel";
+import UsersPanel from "components/pages/chat/users-panel";
+import MessagesPanel from "components/pages/chat/messages-panel";
 
 const styles = (theme: Theme) =>
     createStyles({
