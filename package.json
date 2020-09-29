@@ -6,7 +6,8 @@
         "dev": "nodemon",
         "build": "next build",
         "start": "next start",
-        "type-check": "tsc"
+        "type-check": "tsc",
+        "mongo-w": "mongod --port 27017 --bind_ip localhost --dbpath \"C:\\Program Files\\MongoDB\\Server\\4.4\\data\" --replSet rs0"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.0",
