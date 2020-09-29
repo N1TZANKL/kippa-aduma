@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import theme from "config/theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }) {
     useEffect(() => {
@@ -13,18 +14,23 @@ export default function MyApp({ Component, pageProps }) {
     }, []);
 
     return (
-        <ThemeProvider theme={theme}>
-            <style global jsx>{`
-                html,
-                body,
-                body > div:first-child,
-                div#__next,
-                div#__next > div {
-                    height: 100%;
-                }
-            `}</style>
-            <CssBaseline />
-            <Component {...pageProps} />
-        </ThemeProvider>
+        <>
+            <Head>
+                <title>Kippa Aduma</title>
+            </Head>
+            <ThemeProvider theme={theme}>
+                <style global jsx>{`
+                    html,
+                    body,
+                    body > div:first-child,
+                    div#__next,
+                    div#__next > div {
+                        height: 100%;
+                    }
+                `}</style>
+                <CssBaseline />
+                <Component {...pageProps} />
+            </ThemeProvider>
+        </>
     );
 }
