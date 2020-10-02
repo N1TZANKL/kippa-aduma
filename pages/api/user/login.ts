@@ -1,4 +1,5 @@
 import * as bcrypt from "bcryptjs";
+import { WithId } from "mongodb";
 import { withIronSession } from "utils/session";
 import { getDb, Collections } from "utils/server/database";
 import { UserModel } from "utils/server/models";
@@ -7,7 +8,7 @@ import log, { LogTypes } from "utils/logger";
 
 async function getUser(username: string) {
     return getDb().then((db) =>
-        db.collection(Collections.Users).findOne<UserModel>({ username })
+        db.collection(Collections.Users).findOne<WithId<UserModel>>({ username })
     );
 }
 
@@ -25,7 +26,7 @@ export default withIronSession(async (req, res) => {
         const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
         if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-        req.session.set("user", { username, nickname: dbUser.nickname, color: dbUser.color });
+        req.session.set("user", { id: dbUser._id.toString(), username, nickname: dbUser.nickname, color: dbUser.color });
         await req.session.save();
 
         log(`'${username}' logged into the system)`, LogTypes.SUCCESS);

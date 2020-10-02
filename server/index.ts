@@ -16,7 +16,7 @@ const handle = app.getRequestHandler();
 
 let changeStream;
 const watchNewChatMessages = async (db: Db, io: socketIO.Server) => {
-    changeStream = db.collection(Collections.Chat).watch([{ $match: { operationType: "insert" } }], { fullDocument: "updateLookup" });
+    changeStream = db.collection(Collections.Messages).watch([{ $match: { operationType: "insert" } }], { fullDocument: "updateLookup" });
 
     changeStream.on("change", (change) => {
         if (change.operationType === "insert") {

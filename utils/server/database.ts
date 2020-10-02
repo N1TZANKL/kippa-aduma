@@ -2,7 +2,7 @@ import { MongoClient, Db } from "mongodb";
 
 export enum Collections {
     Users = "users",
-    Chat = "chat", //TODO: rename to messages
+    Messages = "messages",
 }
 
 const dbUrl = process.env.DATABASE_URL + (process.env.NODE_ENV === "production" ? "" : "?synchronize=true");
@@ -11,7 +11,7 @@ const client = new MongoClient(dbUrl, { useNewUrlParser: true, useUnifiedTopolog
 
 async function setUpDb(db: Db) {
     await db.collection(Collections.Users).createIndex({ username: 1 }, { unique: true });
-    // TODO: initialize messages DB with timestamp index
+    await db.collection(Collections.Messages).createIndex({ timestamp: 1 });
 }
 
 export async function getDb() {

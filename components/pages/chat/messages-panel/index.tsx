@@ -1,13 +1,15 @@
+import clsx from "clsx";
+import socketIOClient from "socket.io-client";
 import React, { useState, useEffect } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
 import Paper from "@material-ui/core/Paper";
+
+import { getDatesDifference, areSameDates } from "utils/helpers/dates";
+
 import ChatBubble from "./chat-bubble";
-import socketIOClient from "socket.io-client";
-import clsx from "clsx";
 import NewMessageLine from "./new-message-line";
 import ContainerTitleBar from "./container-title-bar";
-import { getDatesDifference, areSameDates } from "utils/helpers/dates";
 import ChatDivider from "./chat-divider";
 
 const styles = (theme: Theme) =>
@@ -73,12 +75,10 @@ function MessagesPanel(props: MessagesPanelProps) {
     }
 
     function _sendMessage(message: string) {
-        const newMessageObj = { type: "text", message, user };
-
         fetch("/api/chat/postMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: newMessageObj }),
+            body: JSON.stringify(message),
         });
     }
 

@@ -20,11 +20,11 @@ export default withIronSession(async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10);
         const color = generateRandomColor(); //TODO: generate better colors?
 
-        await addUser({ username, nickname, passwordHash, color });
+        const result = await addUser({ username, nickname, passwordHash, color });
 
         log(`User '${username} (${nickname})' added successfully!`, LogTypes.SUCCESS);
 
-        req.session.set("user", { username, nickname, color });
+        req.session.set("user", { id: result.insertedId.toString(), username, nickname, color });
         await req.session.save(); // TODO - FUTURE: Implement a "private club" approach and approve a user only when an admin has accepted their request
 
         res.status(201).send("User created");

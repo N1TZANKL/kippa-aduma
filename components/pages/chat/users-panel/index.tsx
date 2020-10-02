@@ -1,10 +1,11 @@
 import React from "react";
+import Paper from "@material-ui/core/Paper";
+import { green } from "@material-ui/core/colors";
+import Typography from "@material-ui/core/Typography";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import { MuiStyles, UserSessionObject } from "interfaces";
-import Paper from "@material-ui/core/Paper";
+
 import UserListItem from "components/general/UserListItem";
-import Typography from "@material-ui/core/Typography";
-import { green } from "@material-ui/core/colors";
 
 const styles = (theme: Theme) =>
     createStyles({

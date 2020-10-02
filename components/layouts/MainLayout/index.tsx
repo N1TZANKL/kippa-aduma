@@ -15,7 +15,7 @@ const styles = (theme: Theme) =>
         wrapper: {
             position: "absolute",
             marginTop: 65,
-            height: "inherit",
+            height: "calc(100% - 65px)",
             display: "flex",
             overflow: "hidden",
             width: "100%",

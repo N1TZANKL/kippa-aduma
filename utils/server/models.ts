@@ -1,10 +1,10 @@
-import { ChatMessage } from "interfaces";
+import { DbChatMessage } from "interfaces";
 
 export type UserModel = {
     username: string;
     nickname: string;
-    passwordHash: string;
     color: string;
+    passwordHash: string;
 };
 
-export type ChatMessageModel = Omit<ChatMessage, "user"> & { username: string };
+export type ChatMessageModel = DbChatMessage;

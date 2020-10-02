@@ -1,9 +1,11 @@
+import clsx from "clsx";
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
-import PageLayout from "components/layouts/MainLayout";
-import clsx from "clsx";
 import { withUserSession } from "utils/session";
+import { getAllMessages } from "pages/api/chat/getMessages";
+import { getAllUsers } from "pages/api/user/getAll";
+import PageLayout from "components/layouts/MainLayout";
 import { UsersPanel, MessagesPanel } from "components/pages/chat";
 
 const styles = (theme: Theme) =>
@@ -56,29 +58,15 @@ export default withStyles(styles)(Chat);
 export const getServerSideProps = withUserSession(async () => {
     const props: any = {};
 
-    const getAllUsers = fetch("http://localhost:3000/api/user/getAll")
-        .then((res) => res.json())
-        .then((data) => {
-            props["users"] = data;
-            return data;
-        })
-        .catch((e) => {
-            props["users"] = null;
-            return;
-        });
+    const allUsersPromise = getAllUsers()
+        .then(data => props.users = data)
+        .catch(e => props.users = null);
 
-    const getAllMessages = fetch("http://localhost:3000/api/chat/getMessages")
-        .then((res) => res.json())
-        .then((data) => {
-            props["messages"] = data;
-            return data;
-        })
-        .catch((e) => {
-            props["messages"] = null;
-            return;
-        });
+    const allMessagesPromise = getAllMessages()
+        .then(data => props.messages = data)
+        .catch(e => props.messages = null);
 
-    await Promise.all([getAllUsers, getAllMessages]);
+    await Promise.all([allUsersPromise, allMessagesPromise]);
 
     return { props };
 });
