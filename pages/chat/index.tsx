@@ -4,8 +4,7 @@ import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
 import PageLayout from "components/layouts/MainLayout";
 import clsx from "clsx";
 import { withUserSession } from "utils/session";
-import UsersPanel from "components/pages/chat/users-panel";
-import MessagesPanel from "components/pages/chat/messages-panel";
+import { UsersPanel, MessagesPanel } from "components/pages/chat";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -37,7 +36,6 @@ const styles = (theme: Theme) =>
         },
     });
 
-export type PanelProps = MuiStyles & { user: UserSessionObject; className: string };
 type ChatProps = MuiStyles & { users: Array<UserSessionObject>; user: UserSessionObject; messages: Array<ChatMessage> };
 
 function Chat(props: ChatProps) {
@@ -59,23 +57,23 @@ export const getServerSideProps = withUserSession(async () => {
     const props: any = {};
 
     const getAllUsers = fetch("http://localhost:3000/api/user/getAll")
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
             props["users"] = data;
             return data;
         })
-        .catch(e => {
+        .catch((e) => {
             props["users"] = null;
             return;
         });
 
     const getAllMessages = fetch("http://localhost:3000/api/chat/getMessages")
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
             props["messages"] = data;
             return data;
         })
-        .catch(e => {
+        .catch((e) => {
             props["messages"] = null;
             return;
         });

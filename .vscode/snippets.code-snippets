@@ -96,5 +96,9 @@
     "Custom Component Import": {
         "prefix": "ci",
         "body": "import $COMPONENT from 'components/$COMPONENT'; "
+    },
+    "One-line Import/Export": {
+        "prefix": "ii",
+        "body": "export {default as $EXPORT_NAME} from '$EXPORT_PATH';"
     }
 }
