@@ -11,6 +11,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import { formatTime } from "utils/helpers/dates";
 import cssStyles from "./ChatBubble.module.css";
 import UserNicknameText from "components/general/UserNicknameText";
+import { before, textEllipsis } from "utils/helpers/css";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -39,9 +40,7 @@ const styles = (theme: Theme) =>
         nickname: {
             fontSize: 14,
             color: blue[700],
-            "&::before": {
-                content: '"~"',
-            },
+            ...before("~"),
         },
         content: {
             overflowWrap: "break-word",
@@ -99,11 +98,7 @@ const styles = (theme: Theme) =>
         currentUserFileContent: {
             backgroundColor: darken(blue[200], 0.05),
         },
-        fileMessage: {
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-        },
+        fileMessage: textEllipsis,
         marginTop: { marginTop: 20 },
     });
 

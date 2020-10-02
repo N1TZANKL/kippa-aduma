@@ -1,21 +1,23 @@
 import React from "react";
-import { withStyles, Theme, createStyles, darken } from "@material-ui/core/styles";
-import { MuiStyles, UserSessionObject } from "interfaces";
+import { darken, makeStyles } from "@material-ui/core/styles";
+import { UserSessionObject } from "interfaces";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import clsx from "clsx";
 
-const styles = (theme: Theme) =>
-    createStyles({
-        root: {
-            fontWeight: "bold",
-            fontFamily: "monospace",
-        },
-    });
+const useStyles = makeStyles({
+    root: {
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        color: (props: any) => props.color,
+    },
+});
 
-type UserNicknameTextProps = MuiStyles & { user: UserSessionObject; noUserColor?: boolean; className?: string } & Omit<TypographyProps, "children">;
+type UserNicknameTextProps = { user: UserSessionObject; noUserColor?: boolean; className?: string } & Omit<TypographyProps, "children">;
 
-function UserNicknameText(props: UserNicknameTextProps) {
-    const { classes, user, noUserColor, className, ...typographyProps } = props;
+export default function UserNicknameText(props: UserNicknameTextProps) {
+    const { user, noUserColor, className, ...typographyProps } = props;
+
+    const classes = useStyles({ color: noUserColor ? undefined : darken(user.color, 0.1) });
 
     return (
         <Typography
@@ -23,10 +25,7 @@ function UserNicknameText(props: UserNicknameTextProps) {
             title={`${user.nickname} (${user.username})`}
             {...typographyProps}
             children={user.nickname}
-            style={{ color: noUserColor ? undefined : darken(user.color, 0.1) }}
             className={clsx(classes.root, className)}
         />
     );
 }
-
-export default withStyles(styles)(UserNicknameText);
