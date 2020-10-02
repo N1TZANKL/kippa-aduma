@@ -10,6 +10,7 @@ import { mdiFile, mdiArrowDownBold } from "@mdi/js";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { formatTime } from "utils/helpers/dates";
 import cssStyles from "./ChatBubble.module.css";
+import UserNicknameText from "components/general/UserNicknameText";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -36,10 +37,11 @@ const styles = (theme: Theme) =>
             }, */
         },
         nickname: {
-            fontFamily: "monospace",
             fontSize: 14,
-            fontWeight: "bold",
             color: blue[700],
+            "&::before": {
+                content: '"~"',
+            },
         },
         content: {
             overflowWrap: "break-word",
@@ -121,11 +123,7 @@ function ChatBubble(props: ChatBubbleProps) {
             )}
         >
             <Typography component="div" variant="caption">
-                <div
-                    className={classes.nickname}
-                    style={{ color: isCurrentUser ? undefined : darken(message.user.color, 0.1) }}
-                    children={`~${message.user.nickname}`}
-                />
+                <UserNicknameText user={message.user} className={classes.nickname} noUserColor={isCurrentUser} />
                 {message.type === "file" ? (
                     <div className={clsx(classes.content, classes.fileContent, isCurrentUser && classes.currentUserFileContent)}>
                         <div className={classes.fileContentWrapper}>
