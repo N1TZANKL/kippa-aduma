@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
-import { ChatMessage } from "interfaces";
-import { PanelProps } from "../../../../pages/chat";
+import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
 import Paper from "@material-ui/core/Paper";
 import ChatBubble from "./chat-bubble";
 import socketIOClient from "socket.io-client";
@@ -54,7 +53,9 @@ const styles = (theme: Theme) =>
         },
     });
 
-function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
+type MessagesPanelProps = MuiStyles & { user: UserSessionObject; className: string; messages: Array<ChatMessage> };
+
+function MessagesPanel(props: MessagesPanelProps) {
     const { classes, messages, user, className } = props;
 
     const [allMessages, setMessages] = useState(messages);
@@ -68,7 +69,7 @@ function MessagesPanel(props: PanelProps & { messages: Array<ChatMessage> }) {
     }, []);
 
     function _onReceiveNewMessage(newMessage: ChatMessage) {
-        setMessages(prevMessages => [...prevMessages, newMessage]); //TODO: read about Mutable
+        setMessages((prevMessages) => [...prevMessages, newMessage]); //TODO: read about Mutable
     }
 
     function _sendMessage(message: string) {
