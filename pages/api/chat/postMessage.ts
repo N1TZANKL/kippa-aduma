@@ -2,28 +2,30 @@ import { ObjectId } from "mongodb";
 import { withIronSession } from "utils/session";
 import { getDb, Collections } from "utils/server/database";
 import log, { LogTypes } from "utils/logger";
-import { DbChatMessage } from "interfaces";
 import { GeneralErrors } from "utils/server/errors";
+import { ChatMessageModel } from "utils/server/models";
 
 type FileMessage = {
     name: string;
     type: string;
     size: number;
-}
+};
 
 async function createMessage(userId: string, message: string | FileMessage) {
-    const dbMessage: DbChatMessage = {
+    const dbMessage: ChatMessageModel = {
         timestamp: new Date().toISOString(),
         user: new ObjectId(userId),
-        ...(typeof message === "string" ? {
-            type: "text",
-            message
-        } : {
-            type: "file",
-            message: message.name,
-            fileType: message.type,
-            fileSize: message.size
-        })
+        ...(typeof message === "string"
+            ? {
+                  type: "text",
+                  message,
+              }
+            : {
+                  type: "file",
+                  message: message.name,
+                  fileType: message.type,
+                  fileSize: message.size,
+              }),
     };
 
     return getDb().then((db) => db.collection(Collections.Messages).insertOne(dbMessage));
