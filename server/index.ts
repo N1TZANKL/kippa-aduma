@@ -7,7 +7,7 @@ import { Db } from "mongodb";
 import http from "http";
 import socketIO from "socket.io";
 import log, { LogTypes } from "../utils/logger";
-import { getDb, Collections } from "../utils/server/database";
+import { getDb, Collections } from "../db";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";

@@ -1,9 +1,9 @@
 import * as bcrypt from "bcryptjs";
 import { WithId } from "mongodb";
 import { withIronSession } from "utils/session";
-import { getDb, Collections } from "utils/server/database";
-import { UserModel } from "utils/server/models";
-import { LoginErrors, GeneralErrors } from "utils/server/errors";
+import { getDb, Collections } from "db";
+import { UserModel } from "db/models";
+import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
 
 async function getUser(username: string) {

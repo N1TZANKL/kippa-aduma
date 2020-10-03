@@ -1,9 +1,9 @@
 import { ObjectId } from "mongodb";
 import { withIronSession } from "utils/session";
-import { getDb, Collections } from "utils/server/database";
+import { getDb, Collections } from "db";
 import log, { LogTypes } from "utils/logger";
-import { GeneralErrors } from "utils/server/errors";
-import { ChatMessageModel } from "utils/server/models";
+import { GeneralErrors } from "server/errors";
+import { ChatMessageModel } from "db/models";
 
 type FileMessage = {
     name: string;

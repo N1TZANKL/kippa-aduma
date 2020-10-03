@@ -1,5 +1,5 @@
 import { WithStyles } from "@material-ui/core/styles";
-import * as DBModels from "utils/server/models";
+import * as DBModels from "db/models";
 
 export type MuiStyles = WithStyles<string>;
 export type Children = React.ReactNode;

@@ -1,11 +1,11 @@
-import { getDb, Collections } from "utils/server/database";
+import { getDb, Collections } from "db";
 import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
 import { MongoError } from "mongodb";
-import { RegisterErrors, GeneralErrors } from "utils/server/errors";
+import { RegisterErrors, GeneralErrors } from "server/errors";
 import generateRandomColor from "randomcolor";
 import log, { LogTypes } from "utils/logger";
-import { UserModel } from "utils/server/models";
+import { UserModel } from "db/models";
 
 async function addUser(userData: UserModel) {
     return getDb().then((db) => db.collection(Collections.Users).insertOne(userData));
