@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AccountButton from "./account-button";
-import { CURRENT_USER } from "utils/constants/tests";
 import { MuiStyles, UserSessionObject } from "interfaces";
 
 const styles = (theme: Theme) =>
