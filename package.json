@@ -39,7 +39,6 @@
         "@types/socket.io": "^2.1.11",
         "@types/socket.io-client": "^1.4.33",
         "clsx": "^1.1.1",
-        "csstype": "^3.0.3",
         "install": "^0.13.0",
         "nodemon": "^2.0.4",
         "npm": "^6.14.8",
