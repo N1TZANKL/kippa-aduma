@@ -61,7 +61,7 @@ export const DUMMY_OPERATION_POSTS = [
         description: LONG_STRING_WITH_LINE_BREAKS + LONG_STRING_WITH_LINE_BREAKS,
         additionalInformation: LONG_STRING_WITH_LINE_BREAKS,
         type: OperationPostTypes.BURN,
-        writtenAt: "2020-08-28T11:42:47.237Z",
+        writtenAt: CURRENT_TIME_STRING,
         happenedAt: "2020-08-28T11:42:47.237Z",
     },
     {
