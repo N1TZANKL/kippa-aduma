@@ -2,7 +2,7 @@ import * as bcrypt from "bcryptjs";
 import { WithId } from "mongodb";
 import { withIronSession } from "utils/session";
 import { getDb, Collections } from "db";
-import { UserModel } from "db/models";
+import { UserModel } from "db/models/user";
 import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
 

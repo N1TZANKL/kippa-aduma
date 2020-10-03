@@ -1,17 +1,10 @@
-import { ObjectId } from "mongodb";
+// This file defines the DB models.
+// Mongoose will take the value of each key and add "s" to it to create the collection name
 
-export type UserModel = {
-    username: string;
-    nickname: string;
-    color: string;
-    passwordHash: string;
-};
+enum Models {
+    SYSTEM_USER = "user",
+    CHAT_MESSAGE = "message",
+    OPERATION_POST = "post",
+}
 
-export type ChatMessageModel = {
-    type: "text" | "file";
-    message: string;
-    timestamp: string; // TODO: change type to be more specific?
-    fileSize?: number;
-    fileType?: string;
-    user: ObjectId;
-};
+export default Models;

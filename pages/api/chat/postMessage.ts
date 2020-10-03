@@ -3,7 +3,7 @@ import { withIronSession } from "utils/session";
 import { getDb, Collections } from "db";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { ChatMessageModel } from "db/models";
+import { ChatMessageModel } from "db/models/message";
 
 type FileMessage = {
     name: string;

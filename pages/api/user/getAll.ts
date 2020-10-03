@@ -1,6 +1,6 @@
 import { withIronSession } from "utils/session";
 import { getDb, Collections } from "db";
-import { UserModel } from "db/models";
+import { UserModel } from "db/models/user";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 

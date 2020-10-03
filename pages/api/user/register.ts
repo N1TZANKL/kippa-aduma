@@ -5,7 +5,7 @@ import { MongoError } from "mongodb";
 import { RegisterErrors, GeneralErrors } from "server/errors";
 import generateRandomColor from "randomcolor";
 import log, { LogTypes } from "utils/logger";
-import { UserModel } from "db/models";
+import { UserModel } from "db/models/user";
 
 async function addUser(userData: UserModel) {
     return getDb().then((db) => db.collection(Collections.Users).insertOne(userData));

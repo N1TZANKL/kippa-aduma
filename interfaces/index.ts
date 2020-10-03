@@ -1,5 +1,5 @@
 import { WithStyles } from "@material-ui/core/styles";
-import * as DBModels from "db/models";
+import { ChatMessageModel } from "db/models/message";
 
 export type MuiStyles = WithStyles<string>;
 export type Children = React.ReactNode;
@@ -15,4 +15,4 @@ export type UserSessionObject = {
 
 export type SessionObject = { user: UserSessionObject };
 
-export type ChatMessage = DBModels.ChatMessageModel & SessionObject;
+export type ChatMessage = ChatMessageModel & SessionObject;
