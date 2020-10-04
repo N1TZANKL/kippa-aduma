@@ -30,6 +30,8 @@ function Register() {
 
             try {
                 setIsLoading(true);
+                setFormError(undefined);
+
                 const response = await fetch("/api/user/register", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -37,6 +39,7 @@ function Register() {
                 });
 
                 if (response.ok) return router.push("/");
+                else setFormError(await response.text());
             } catch {
                 setFormError("an unknown error occured");
             } finally {

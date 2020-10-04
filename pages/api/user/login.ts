@@ -1,15 +1,11 @@
 import * as bcrypt from "bcryptjs";
-import { WithId } from "mongodb";
 import { withIronSession } from "utils/session";
-import { getDb, Collections } from "utils/server/database";
-import { UserModel } from "utils/server/models";
-import { LoginErrors, GeneralErrors } from "utils/server/errors";
+import userModel from "db/models/user";
+import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
 
 async function getUser(username: string) {
-    return getDb().then((db) =>
-        db.collection(Collections.Users).findOne<WithId<UserModel>>({ username })
-    );
+    return userModel.findOne({ username });
 }
 
 export default withIronSession(async (req, res) => {
@@ -29,7 +25,7 @@ export default withIronSession(async (req, res) => {
         req.session.set("user", { id: dbUser._id.toString(), username, nickname: dbUser.nickname, color: dbUser.color });
         await req.session.save();
 
-        log(`'${username}' logged into the system)`, LogTypes.SUCCESS);
+        log(`'${username}' logged into the system`, LogTypes.SUCCESS);
 
         return res.status(200).send("Logged in successfully");
     } catch (error) {
