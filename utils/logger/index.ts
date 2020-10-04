@@ -1,5 +1,4 @@
 import chalk from "chalk";
-
 import { getCurrentTimestamp } from "../helpers/dates";
 
 // TODO: Switch to external library?
@@ -8,7 +7,7 @@ export enum LogTypes {
     SUCCESS = "success",
     ERROR = "error",
     WARNING = "warning",
-    INFO = "info"
+    INFO = "info",
 }
 
 const LOG_TYPE_TO_FUNCTION: Record<LogTypes, (m: string, e?: ExtendedError) => string> = {
@@ -27,20 +26,20 @@ export default function log(message: string, type: LogTypes, error?: ExtendedErr
 }
 
 function logSuccess(message: string) {
-    return chalk.green(`[+] ${message}`);
+    return chalk.green(`[kippa-aduma] ${message}`);
 }
 
 function logError(message: string, error?: ExtendedError) {
-    const errorMessage = `[-] ${message} ${
+    const errorMessage = `[kippa-aduma] ${message} ${
         error ? `${error.name} ${error.codeName || error.message || ""} (error code ${error.code || "unknown"})` : ""
     }`;
     return chalk.red(errorMessage);
 }
 
 function logWarning(message: string) {
-    return chalk.yellow(`[!] ${message}`);
+    return chalk.yellow(`[kippa-aduma] ${message}`);
 }
 
 function logInfo(message: string) {
-    return chalk.cyan(`[*] ${message}`);
+    return chalk.cyan(`[kippa-aduma] ${message}`);
 }
