@@ -1,13 +1,10 @@
 import { withIronSession } from "utils/session";
-import { getDb, Collections } from "db";
-import { UserModel } from "db/models/user";
+import userModel from "db/models/user";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 
 export async function getAllUsers() {
-    return getDb().then((db) =>
-        db.collection(Collections.Users).find<UserModel>({}).project({ _id: 0, username: 1, nickname: 1, color: 1 }).toArray()
-    );
+    return userModel.find({}, "username nickname color -_id").lean();
 }
 
 export default withIronSession(async (req, res) => {

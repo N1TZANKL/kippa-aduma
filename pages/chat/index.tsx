@@ -59,12 +59,12 @@ export const getServerSideProps = withUserSession(async () => {
     const props: any = {};
 
     const allUsersPromise = getAllUsers()
-        .then(data => props.users = data)
-        .catch(e => props.users = null);
+        .then((data) => (props.users = data))
+        .catch((e) => (props.users = null));
 
     const allMessagesPromise = getAllMessages()
-        .then(data => props.messages = data)
-        .catch(e => props.messages = null);
+        .then((data) => (props.messages = data))
+        .catch((e) => (props.messages = null));
 
     await Promise.all([allUsersPromise, allMessagesPromise]);
 

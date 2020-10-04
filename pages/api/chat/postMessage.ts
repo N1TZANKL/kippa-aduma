@@ -1,9 +1,8 @@
-import { ObjectId } from "mongodb";
 import { withIronSession } from "utils/session";
-import { getDb, Collections } from "db";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { ChatMessageModel } from "db/models/message";
+import messageModel, { ChatMessageModel } from "db/models/message";
+import mongoose from "mongoose";
 
 type FileMessage = {
     name: string;
@@ -14,7 +13,7 @@ type FileMessage = {
 async function createMessage(userId: string, message: string | FileMessage) {
     const dbMessage: ChatMessageModel = {
         timestamp: new Date().toISOString(),
-        user: new ObjectId(userId),
+        user: mongoose.Types.ObjectId(userId),
         ...(typeof message === "string"
             ? {
                   type: "text",
@@ -28,7 +27,8 @@ async function createMessage(userId: string, message: string | FileMessage) {
               }),
     };
 
-    return getDb().then((db) => db.collection(Collections.Messages).insertOne(dbMessage));
+    const newMessage = new messageModel(dbMessage);
+    return newMessage.save();
 }
 
 export default withIronSession(async (req, res) => {

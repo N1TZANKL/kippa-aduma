@@ -20,6 +20,8 @@ function Login() {
 
             try {
                 setIsLoading(true);
+                setFormError(undefined);
+
                 const response = await fetch("/api/user/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -27,10 +29,9 @@ function Login() {
                 });
 
                 if (response.ok) return router.push("/");
-
-                setFormError(await response.text());
+                else setFormError(await response.text());
             } catch {
-                setFormError("an unknown error occurd");
+                setFormError("an unknown error occured");
             } finally {
                 setIsLoading(false);
             }

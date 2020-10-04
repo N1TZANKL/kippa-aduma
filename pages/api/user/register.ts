@@ -1,14 +1,13 @@
-import { getDb, Collections } from "db";
 import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
-import { MongoError } from "mongodb";
 import { RegisterErrors, GeneralErrors } from "server/errors";
 import generateRandomColor from "randomcolor";
 import log, { LogTypes } from "utils/logger";
-import { UserModel } from "db/models/user";
+import userModel, { UserModel } from "db/models/user";
 
 async function addUser(userData: UserModel) {
-    return getDb().then((db) => db.collection(Collections.Users).insertOne(userData));
+    const newUser = new userModel(userData);
+    return newUser.save();
 }
 
 export default withIronSession(async (req, res) => {
@@ -24,14 +23,14 @@ export default withIronSession(async (req, res) => {
 
         log(`User '${username} (${nickname})' added successfully!`, LogTypes.SUCCESS);
 
-        req.session.set("user", { id: result.insertedId.toString(), username, nickname, color });
+        req.session.set("user", { id: result._id.toString(), username, nickname, color });
         await req.session.save(); // TODO - FUTURE: Implement a "private club" approach and approve a user only when an admin has accepted their request
 
         res.status(201).send("User created");
     } catch (error) {
         log(`Caught error while attempting to add user '${username}':`, LogTypes.ERROR, error);
 
-        if (error instanceof MongoError && error.code === 11000) res.status(403).send(RegisterErrors.UserAlreadyExists);
+        if (error.name === "MongoError" && error.code === 11000) res.status(403).send(RegisterErrors.UserAlreadyExists);
         else res.status(500).send(GeneralErrors.UnknownError);
     }
 });
