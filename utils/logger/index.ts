@@ -1,4 +1,5 @@
 import chalk from "chalk";
+
 import { getCurrentTimestamp } from "../helpers/dates";
 
 // TODO: Switch to external library?
@@ -7,7 +8,7 @@ export enum LogTypes {
     SUCCESS = "success",
     ERROR = "error",
     WARNING = "warning",
-    INFO = "info",
+    INFO = "info"
 }
 
 const LOG_TYPE_TO_FUNCTION: Record<LogTypes, (m: string, e?: ExtendedError) => string> = {
@@ -19,8 +20,9 @@ const LOG_TYPE_TO_FUNCTION: Record<LogTypes, (m: string, e?: ExtendedError) => s
 
 type ExtendedError = Error & { codeName: string; code: string | number };
 
-export default function log(message: string, type: LogTypes, error?: ExtendedError) {
+export default function log(message: string, type: LogTypes, error?: ExtendedError): void {
     const logFunction = LOG_TYPE_TO_FUNCTION[type];
+    // eslint-disable-next-line no-console
     console.log(logFunction(`[${getCurrentTimestamp()}] ${message}`, error));
 }
 

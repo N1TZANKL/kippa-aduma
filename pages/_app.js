@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import theme from "config/theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Head from "next/head";
+
+import theme from "config/theme";
 
 export default function MyApp({ Component, pageProps }) {
     useEffect(() => {
@@ -19,7 +20,8 @@ export default function MyApp({ Component, pageProps }) {
                 <title>Kippa Aduma</title>
             </Head>
             <ThemeProvider theme={theme}>
-                <style global jsx>{`
+                <style global jsx>
+                    {`
                     html,
                     body,
                     body > div:first-child,
@@ -27,7 +29,8 @@ export default function MyApp({ Component, pageProps }) {
                     div#__next > div {
                         height: 100%;
                     }
-                `}</style>
+                `}
+                </style>
                 <CssBaseline />
                 <Component {...pageProps} />
             </ThemeProvider>

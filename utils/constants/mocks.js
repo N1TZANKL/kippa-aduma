@@ -1,8 +1,8 @@
-import { OperationPostTypes } from "interfaces";
 import * as muiColors from "@material-ui/core/colors";
 
-const LONG_STRING_WITH_LINE_BREAKS =
-    "testing\n 1 2 3\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the";
+import { OperationPostTypes } from "interfaces";
+
+const LONG_STRING_WITH_LINE_BREAKS = "testing\n 1 2 3\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the";
 
 const CURRENT_TIME_STRING = new Date().toISOString();
 

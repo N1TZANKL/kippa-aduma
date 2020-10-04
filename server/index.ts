@@ -1,10 +1,15 @@
-require("dotenv").config({ path: `.env.local` });
+/* eslint-disable import/first */
+/* eslint-disable import/order */
+import dotenv from "dotenv";
 
-import { createServer } from "http";
+dotenv.config({ path: ".env.local" });
+
 import { parse } from "url";
+import http, { createServer } from "http";
+
 import next from "next";
-import http from "http";
 import socketIO from "socket.io";
+
 import log, { LogTypes } from "../utils/logger";
 import { connectToDb } from "../db";
 import messageModel from "../db/models/message";
@@ -33,15 +38,16 @@ app.prepare().then(() => {
     const io = initializeChatSocket();
     distributeNewChatMessages(io);
 
-    //Promise.all([getDb(), initializeChatSocket()]).then(([db, io]) => watchNewChatMessages(db, io));
+    // Promise.all([getDb(), initializeChatSocket()]).then(([db, io]) => watchNewChatMessages(db, io));
 });
 
 function distributeNewChatMessages(io: socketIO.Server) {
     const changeStream = messageModel.watch([{ $match: { operationType: "insert" } }], { fullDocument: "updateLookup" });
 
-    changeStream.on("change", async (change) => {
+    changeStream.on("change", async change => {
         if (change.operationType === "insert") {
-            const populatedDocument = await new messageModel(change.fullDocument).populate("user", "-_id -passwordHash").execPopulate();
+            const populatedDocument = await new messageModel(change.fullDocument)
+                .populate("user", "-_id -passwordHash").execPopulate();
             io.sockets.emit("new message", populatedDocument);
         }
     });
@@ -53,7 +59,7 @@ function initializeChatSocket() {
     const server = http.createServer();
     const io = socketIO(server);
 
-    //io.on("connection", (socket) => { console.log("new connection", socket.conn.remoteAddress); });
+    // io.on("connection", (socket) => { console.log("new connection", socket.conn.remoteAddress); });
 
     server.listen(process.env.CHAT_PORT, () => log(`Chat listening on port ${process.env.CHAT_PORT}`, LogTypes.INFO));
     return io;

@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
+
 import { withIronSession } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import messageModel, { ChatMessageModel } from "db/models/message";
-import mongoose from "mongoose";
 
 type FileMessage = {
     name: string;
@@ -16,15 +17,15 @@ async function createMessage(userId: string, message: string | FileMessage) {
         user: mongoose.Types.ObjectId(userId),
         ...(typeof message === "string"
             ? {
-                  type: "text",
-                  message,
-              }
+                type: "text",
+                message,
+            }
             : {
-                  type: "file",
-                  message: message.name,
-                  fileType: message.type,
-                  fileSize: message.size,
-              }),
+                type: "file",
+                message: message.name,
+                fileType: message.type,
+                fileSize: message.size,
+            }),
     };
 
     const newMessage = new messageModel(dbMessage);
@@ -40,7 +41,7 @@ export default withIronSession(async (req, res) => {
         await createMessage(req.session.get("user").id, req.body); // sanitize message?
         return res.status(200).send("Message added successfully");
     } catch (error) {
-        log(`Caught error while attempting to create chat message:`, LogTypes.ERROR, error);
-        res.status(500).send(GeneralErrors.UnknownError);
+        log("Caught error while attempting to create chat message:", LogTypes.ERROR, error);
+        return res.status(500).send(GeneralErrors.UnknownError);
     }
 });

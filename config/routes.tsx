@@ -1,12 +1,15 @@
 import React from "react";
-import { mdiHome, mdiAccountKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiClipboardList } from "@mdi/js";
+import {
+    mdiHome, mdiAccountKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiClipboardList,
+} from "@mdi/js";
+import { CSSProperties } from "@material-ui/styles";
 
 export type Route = {
     title: string;
     icon: string;
     path: string;
-    component: React.ReactNode;
-    iconStyle?: Object;
+    component: React.ReactElement;
+    iconStyle?: CSSProperties;
 };
 
 export default [
@@ -47,4 +50,4 @@ export default [
         path: "/chat",
         component: <div>Chat</div>,
     },
-];
+] as Route[];

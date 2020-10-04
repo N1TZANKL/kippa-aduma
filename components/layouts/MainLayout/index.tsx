@@ -1,45 +1,48 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import AppBar from "./app-bar";
 import Paper from "@material-ui/core/Paper";
-import Sidebar from "./side-bar";
-import { PageLayoutProps, UserSessionObject } from "interfaces";
 import clsx from "clsx";
 
-const styles = (theme: Theme) =>
-    createStyles({
-        pageRoot: {
-            height: "100%",
-            backgroundColor: theme.constants.appBackground,
-        },
-        wrapper: {
-            position: "absolute",
-            marginTop: 65,
-            height: "calc(100% - 65px)",
-            display: "flex",
-            overflow: "hidden",
-            width: "100%",
-        },
-        childrenWrapper: {
-            borderRadius: 0,
-            padding: 20,
-            marginLeft: 70,
-            width: "100%",
-        },
-        noPadding: {
-            padding: 0,
-        },
-    });
+import { PageLayoutProps, UserSessionObject } from "interfaces";
 
-function PageLayout(props: PageLayoutProps & { noPadding?: boolean; user?: UserSessionObject }) {
-    const { classes, children, noPadding, user } = props;
+import AppBar from "./app-bar";
+import Sidebar from "./side-bar";
 
+const styles = (theme: Theme) => createStyles({
+    pageRoot: {
+        height: "100%",
+        backgroundColor: theme.constants.appBackground,
+    },
+    wrapper: {
+        position: "absolute",
+        marginTop: 65,
+        height: "calc(100% - 65px)",
+        display: "flex",
+        overflow: "hidden",
+        width: "100%",
+    },
+    childrenWrapper: {
+        borderRadius: 0,
+        padding: 20,
+        marginLeft: 70,
+        width: "100%",
+    },
+    noPadding: {
+        padding: 0,
+    },
+});
+
+function PageLayout({
+    classes, children, noPadding, user,
+}: PageLayoutProps & { noPadding?: boolean; user?: UserSessionObject }) {
     return (
         <div className={classes.pageRoot}>
             <AppBar user={user} />
             <div className={classes.wrapper}>
                 <Sidebar />
-                <Paper className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)} children={children} />
+                <Paper className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)}>
+                    {children}
+                </Paper>
             </div>
         </div>
     );

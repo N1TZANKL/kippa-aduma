@@ -6,7 +6,7 @@ export const textEllipsis: CSSProperties = {
     whiteSpace: "nowrap",
 };
 
-export function before(text: string, otherAttributes: Object = {}): CSSProperties {
+export function before(text: string, otherAttributes: CSSProperties = {}): CSSProperties {
     return {
         "&::before": {
             content: `"${text}"`,
@@ -15,7 +15,7 @@ export function before(text: string, otherAttributes: Object = {}): CSSPropertie
     };
 }
 
-export function after(text: string, otherAttributes: Object = {}): CSSProperties {
+export function after(text: string, otherAttributes: CSSProperties = {}): CSSProperties {
     return {
         "&::after": {
             ...otherAttributes,
@@ -24,11 +24,11 @@ export function after(text: string, otherAttributes: Object = {}): CSSProperties
     };
 }
 
-export function notLastChild(attributes: Object = {}): CSSProperties {
+export function notLastChild(attributes: CSSProperties = {}): CSSProperties {
     return { "& > *:not(:last-child)": attributes };
 }
 
-export function notFirstChild(attributes: Object = {}): CSSProperties {
+export function notFirstChild(attributes: CSSProperties = {}): CSSProperties {
     return { "& > *:not(:first-child)": attributes };
 }
 

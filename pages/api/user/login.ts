@@ -1,4 +1,5 @@
 import * as bcrypt from "bcryptjs";
+
 import { withIronSession } from "utils/session";
 import userModel from "db/models/user";
 import { LoginErrors, GeneralErrors } from "server/errors";
@@ -22,7 +23,9 @@ export default withIronSession(async (req, res) => {
         const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
         if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-        req.session.set("user", { id: dbUser._id.toString(), username, nickname: dbUser.nickname, color: dbUser.color });
+        req.session.set("user", {
+            id: dbUser._id.toString(), username, nickname: dbUser.nickname, color: dbUser.color,
+        });
         await req.session.save();
 
         log(`'${username}' logged into the system`, LogTypes.SUCCESS);
@@ -31,6 +34,6 @@ export default withIronSession(async (req, res) => {
     } catch (error) {
         log(`Caught error while attempting login for '${username}':`, LogTypes.ERROR, error);
 
-        res.status(500).send(GeneralErrors.UnknownError);
+        return res.status(500).send(GeneralErrors.UnknownError);
     }
 });

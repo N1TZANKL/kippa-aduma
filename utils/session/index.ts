@@ -1,6 +1,9 @@
-import { withIronSession as wis, SessionOptions } from "next-iron-session";
-import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, GetServerSidePropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
+
+import { withIronSession as wis, SessionOptions } from "next-iron-session";
+import {
+    NextApiHandler, GetServerSideProps, GetServerSidePropsResult, GetServerSidePropsContext,
+} from "next";
 
 export const SESSION_OPTIONS: SessionOptions = {
     cookieName: process.env.SITE_COOKIE,
@@ -10,7 +13,7 @@ export const SESSION_OPTIONS: SessionOptions = {
     password: process.env.SECRET,
 };
 
-export function withIronSession(handler: NextApiHandler) {
+export function withIronSession(handler: NextApiHandler): (...args: any[]) => Promise<void> {
     return wis(handler, SESSION_OPTIONS);
 }
 
@@ -18,7 +21,7 @@ export type WithUser<T> = T & { user: string };
 
 export function withUserSession<T = any>(handler?: GetServerSideProps<T>): GetServerSideProps<WithUser<T>> {
     return wis(
-        (async (ctx) => {
+        (async ctx => {
             try {
                 const user = getCurrentUserAndRedirectIfNone(ctx);
                 // TODO: CHECK THAT THE USER ~ACTUALLY~ EXISTS HERE
@@ -30,7 +33,7 @@ export function withUserSession<T = any>(handler?: GetServerSideProps<T>): GetSe
                 return { props: {} };
             }
         }) as GetServerSideProps,
-        SESSION_OPTIONS
+        SESSION_OPTIONS,
     );
 }
 

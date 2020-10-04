@@ -25,7 +25,7 @@ export function sortObjectArray(array, sortAttribute, reverse = false) {
         const attrA = a[sortAttribute];
         const attrB = b[sortAttribute];
         return attrA < attrB ? -1 : attrA > attrB ? 1 : 0;
-    })
+    });
 
     return reverse ? sortedArray.reverse() : sortedArray;
 }
@@ -35,7 +35,7 @@ export function sortObjectArrayAlphabetically(array, sortAttribute) {
         const textA = a[sortAttribute].toLowerCase();
         const textB = b[sortAttribute].toLowerCase();
         return textA < textB ? -1 : textA > textB ? 1 : 0;
-    })
+    });
 
     return reverse ? sortedArray.reverse() : sortedArray;
 }

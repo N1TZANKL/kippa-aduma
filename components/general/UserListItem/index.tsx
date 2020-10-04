@@ -1,82 +1,81 @@
-import React, { MouseEventHandler } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, UserSessionObject } from "interfaces";
 import clsx from "clsx";
+import React, { MouseEventHandler } from "react";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { grey, green } from "@material-ui/core/colors";
+
+import { MuiStyles, UserSessionObject } from "interfaces";
 import UserAvatar from "components/general/UserAvatar";
 
-const styles = (theme: Theme) =>
-    createStyles({
-        root: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-        },
-        clickable: {
-            cursor: "pointer",
-        },
-        firstLetterBox: {
-            color: "white",
-            borderRadius: 3,
-            height: 38,
-            width: 38,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            fontFamily: "monospace",
-            fontSize: 16,
-            paddingTop: 3,
-        },
-        onlineIndicator: {
-            backgroundColor: green["A400"],
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            marginRight: 5,
-        },
-        flex: {
-            display: "flex",
-            alignItems: "center",
-        },
-        nicknameWrapper: {
-            marginLeft: 12,
-        },
-        nicknameText: {
-            /* whiteSpace: "nowrap",
+const styles = () => createStyles({
+    root: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    clickable: {
+        cursor: "pointer",
+    },
+    firstLetterBox: {
+        color: "white",
+        borderRadius: 3,
+        height: 38,
+        width: 38,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        fontSize: 16,
+        paddingTop: 3,
+    },
+    onlineIndicator: {
+        backgroundColor: green.A400,
+        width: 8,
+        height: 8,
+        borderRadius: "50%",
+        marginRight: 5,
+    },
+    flex: {
+        display: "flex",
+        alignItems: "center",
+    },
+    nicknameWrapper: {
+        marginLeft: 12,
+    },
+    nicknameText: {
+        /* whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis", */
-            lineHeight: 1.1,
-        },
-        userIndicator: {
-            color: grey[500],
-            fontSize: 11,
-            pointerEvents: "none",
-            userSelect: "none",
-        },
-    });
+        lineHeight: 1.1,
+    },
+    userIndicator: {
+        color: grey[500],
+        fontSize: 11,
+        pointerEvents: "none",
+        userSelect: "none",
+    },
+});
 
-type UserListItemProps = MuiStyles &
-    UserSessionObject & {
-        isCurrentUser?: boolean;
-        online?: boolean;
-        onClick?: MouseEventHandler;
-    };
+type UserListItemProps = MuiStyles & UserSessionObject & {
+    isCurrentUser?: boolean;
+    online?: boolean;
+    onClick?: MouseEventHandler;
+};
 
-function UserListItem(props: UserListItemProps) {
-    const { classes, nickname, onClick, isCurrentUser } = props;
-
+function UserListItem({
+    classes, online, color, nickname, onClick, isCurrentUser,
+}: UserListItemProps) {
     return (
         <div className={clsx(classes.root, onClick && classes.clickable)} onClick={onClick}>
             <div className={classes.flex}>
-                <UserAvatar color={props.color} nickname={props.nickname} />
+                <UserAvatar color={color} nickname={nickname} />
                 <div className={classes.nicknameWrapper}>
-                    <Typography variant="body1" className={classes.nicknameText} children={nickname} />
-                    {isCurrentUser && <Typography variant="caption" children={"\n(You)"} className={classes.userIndicator} />}
+                    <Typography variant="body1" className={classes.nicknameText}>{nickname}</Typography>
+                    {isCurrentUser && <Typography variant="caption" className={classes.userIndicator}>{"\n(You)"}</Typography>}
                 </div>
             </div>
-            {props.online || (isCurrentUser && <div className={classes.onlineIndicator} />)}
+            {online || (isCurrentUser && <div className={classes.onlineIndicator} />)}
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import Models from "db/models";
 
 export type UserModel = {
@@ -18,4 +19,5 @@ const userSchema = new mongoose.Schema({
     passwordHash: String,
 });
 
-export default mongoose.models[Models.SYSTEM_USER] || mongoose.model<UserModel & mongoose.Document>(Models.SYSTEM_USER, userSchema);
+export default mongoose.models[Models.SYSTEM_USER]
+    || mongoose.model<UserModel & mongoose.Document>(Models.SYSTEM_USER, userSchema);

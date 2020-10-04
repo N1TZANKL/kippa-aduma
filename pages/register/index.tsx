@@ -1,8 +1,9 @@
 import React, { useCallback, useRef, useState } from "react";
+import { useRouter } from "next/router";
+
 import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/ExteriorLayout";
 import TextField from "components/general/TextField";
 import SensitiveTextField from "components/general/SensitiveTextField";
-import { useRouter } from "next/router";
 
 function Register() {
     const router = useRouter();
@@ -26,7 +27,7 @@ function Register() {
             const retypePassword = retypePasswordInput.current!.value;
 
             if (retypePassword !== password) return setPasswordError("passwords must match");
-            else setPasswordError(undefined);
+            setPasswordError(undefined);
 
             try {
                 setIsLoading(true);
@@ -38,15 +39,15 @@ function Register() {
                     body: JSON.stringify({ username, nickname, password }),
                 });
 
-                if (response.ok) return router.push("/");
-                else setFormError(await response.text());
+                if (response.ok) return await router.push("/");
+                return setFormError(await response.text());
             } catch {
-                setFormError("an unknown error occured");
+                return setFormError("an unknown error occured");
             } finally {
                 setIsLoading(false);
             }
         },
-        [usernameInput, nicknameInput, passwordInput, retypePasswordInput, router]
+        [usernameInput, nicknameInput, passwordInput, retypePasswordInput, router],
     );
 
     return (
@@ -62,7 +63,12 @@ function Register() {
                 <TextField label="Username" inputRef={usernameInput} required />
                 <TextField label="Nickname" inputRef={nicknameInput} required />
                 <SensitiveTextField label="Password" inputRef={passwordInput} required />
-                <SensitiveTextField label="Re-type Password" inputRef={retypePasswordInput} required errorMessage={passwordError} />
+                <SensitiveTextField
+                    label="Re-type Password"
+                    inputRef={retypePasswordInput}
+                    required
+                    errorMessage={passwordError}
+                />
             </Form>
         </ExteriorPageLayout>
     );

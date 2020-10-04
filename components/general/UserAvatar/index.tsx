@@ -1,41 +1,48 @@
 import React from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
-import Card from "@material-ui/core/Card";
 import clsx from "clsx";
+import { withStyles, createStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
 
-const styles = (theme: Theme) =>
-    createStyles({
-        root: {
-            color: "white",
-            borderRadius: 3,
-            height: 38,
-            width: 38,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            fontFamily: "monospace",
-            fontSize: 16,
-            textTransform: "uppercase",
-        },
-        circledAvatar: {
-            borderRadius: "50%",
-        },
-        border: { border: "2px solid white" },
-    });
+import { MuiStyles } from "interfaces";
 
-type UserAvatarProps = MuiStyles & { nickname: string; color: string; variant?: "circle" | "box"; size?: number; withBorder?: boolean };
+const styles = () => createStyles({
+    root: {
+        color: "white",
+        borderRadius: 3,
+        height: 38,
+        width: 38,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: "bold",
+        fontFamily: "monospace",
+        fontSize: 16,
+        textTransform: "uppercase",
+    },
+    circledAvatar: {
+        borderRadius: "50%",
+    },
+    border: { border: "2px solid white" },
+});
 
-function UserAvatar(props: UserAvatarProps) {
-    const { classes, size } = props;
+type UserAvatarProps = MuiStyles & {
+    nickname: string;
+    color: string;
+    variant?: "circle" | "box";
+    size?: number;
+    withBorder?: boolean;
+};
 
+function UserAvatar({
+    classes, size, variant, withBorder, color, nickname,
+}: UserAvatarProps) {
     return (
         <Card
-            className={clsx(classes.root, props.variant === "circle" && classes.circledAvatar, props.withBorder && classes.border)}
-            style={{ backgroundColor: props.color, width: size, height: size }}
-            children={props.nickname[0]}
-        />
+            className={clsx(classes.root, variant === "circle" && classes.circledAvatar, withBorder && classes.border)}
+            style={{ backgroundColor: color, width: size, height: size }}
+        >
+            {nickname[0]}
+        </Card>
     );
 }
 

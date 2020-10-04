@@ -1,26 +1,25 @@
 import React, { useCallback } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { usePopoverState } from "utils/hooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import Menu from "components/general/Menu";
 import { useRouter } from "next/router";
+
+import { usePopoverState } from "utils/hooks";
+import Menu from "components/general/Menu";
 import UserAvatar from "components/general/UserAvatar";
 import { UserSessionObject } from "interfaces";
 
 type AccountButtonProps = { user?: UserSessionObject };
 
-function AccountButton(props: AccountButtonProps) {
+function AccountButton({ user }: AccountButtonProps): React.ReactElement {
     const [anchorEl, setAnchorEl, clearAnchorEl] = usePopoverState();
 
     const router = useRouter();
 
-    const _signOut = useCallback(async () => {
+    const signOut = useCallback(async () => {
         await fetch("/api/user/logout");
         router.push("/login");
     }, [router]);
-
-    const { user } = props;
 
     return (
         <>
@@ -41,7 +40,7 @@ function AccountButton(props: AccountButtonProps) {
                 }}
                 items={[
                     { title: "My Profile", icon: AccountCircleIcon },
-                    { title: "Sign Out", icon: LogoutIcon, onClick: _signOut },
+                    { title: "Sign Out", icon: LogoutIcon, onClick: signOut },
                 ]}
             />
         </>

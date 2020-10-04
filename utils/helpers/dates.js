@@ -19,7 +19,7 @@ export function formatDate(date, withTime = false) {
     const parsedDate = moment(date).calendar();
 
     if (withTime) return `${parsedDate} at ${formatTime(date)}`;
-    else return parsedDate;
+    return parsedDate;
 }
 
 export function formatTime(date) {

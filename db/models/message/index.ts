@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import Models from "../index";
 
 export type ChatMessageModel = {
@@ -22,4 +23,5 @@ const messagesSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.models[Models.CHAT_MESSAGE] || mongoose.model<ChatMessageModel & mongoose.Document>(Models.CHAT_MESSAGE, messagesSchema);
+export default mongoose.models[Models.CHAT_MESSAGE]
+    || mongoose.model<ChatMessageModel & mongoose.Document>(Models.CHAT_MESSAGE, messagesSchema);

@@ -1,4 +1,5 @@
 import { WithStyles } from "@material-ui/core/styles";
+
 import { ChatMessageModel } from "db/models/message";
 
 export type MuiStyles = WithStyles<string>;

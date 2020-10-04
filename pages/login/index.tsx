@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
+
 import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/ExteriorLayout";
 import TextField from "components/general/TextField";
 import SensitiveTextField from "components/general/SensitiveTextField";
@@ -28,15 +29,15 @@ function Login() {
                     body: JSON.stringify({ username, password }),
                 });
 
-                if (response.ok) return router.push("/");
-                else setFormError(await response.text());
+                if (response.ok) return await router.push("/");
+                return setFormError(await response.text());
             } catch {
-                setFormError("an unknown error occured");
+                return setFormError("an unknown error occured");
             } finally {
                 setIsLoading(false);
             }
         },
-        [usernameInput, passwordInput]
+        [router, usernameInput, passwordInput],
     );
 
     return (
