@@ -1,4 +1,5 @@
 import * as muiColors from "@material-ui/core/colors";
+import { OperationPostTypes } from "db/models/post";
 
 import { OperationPostTypes } from "interfaces";
 

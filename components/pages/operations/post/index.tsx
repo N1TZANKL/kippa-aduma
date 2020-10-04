@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, OperationPost, OperationPostTypes } from "interfaces";
+import { MuiStyles, OperationPost } from "interfaces";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import { Typography } from "@material-ui/core";
@@ -9,6 +9,7 @@ import clsx from "clsx";
 import PostAttachments from "./post-attachments";
 import PostTypeIndicator, { POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
 import PostMetadata from "./post-metadata";
+import { OperationPostTypes } from "db/models/post";
 
 type ObjectWithStringValues = { [key: string]: string };
 export const PostTypeToColor: ObjectWithStringValues = {
