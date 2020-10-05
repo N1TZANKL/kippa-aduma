@@ -6,6 +6,8 @@ import clsx from "clsx";
 import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "../post-type-indicator";
 import { isElementOverflowing } from "utils/helpers/css";
 import * as muiColors from "@material-ui/core/colors";
+import Collapse from "@material-ui/core/Collapse";
+import Fade from "@material-ui/core/Fade";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -75,18 +77,22 @@ function PostContent(props: PostContentProps) {
                 className={clsx(classes.multilineText, !expanded && classes.truncatedDescription, !title && PostTypeIndicatorStyle(type))}
                 children={`${!title ? POST_TYPE_INDICATOR_PLACEHOLDER : ""}${post.description}`}
             />
-            {shouldExpand && <div className={classes.toggleExpandText} children="Show More" />}
-            {expanded && (
-                <>
+            <Fade in={shouldExpand} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>
+                <div className={classes.toggleExpandText}>Show More</div>
+            </Fade>
+            <Collapse in={expanded} mountOnEnter unmountOnExit>
+                <div>
                     {additionalInformation && (
                         <>
                             <Typography variant="caption" children="Additional Information" className={classes.additionalInfoTitle} />
                             <div className={clsx(classes.multilineText, classes.additionalInfo)} children={additionalInformation} />
                         </>
                     )}
-                    <div className={classes.toggleExpandText} children="Show Less" />
-                </>
-            )}
+                    <Fade in={true} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>
+                        <div className={classes.toggleExpandText}>Show Less</div>
+                    </Fade>
+                </div>
+            </Collapse>
         </Typography>
     );
 }
