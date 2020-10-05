@@ -45,3 +45,8 @@ export function hexToRGB(hex: string, alpha: number): string {
     if (alpha) return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     else return `rgba(${r}, ${g}, ${b})`;
 }
+
+export function isElementOverflowing(el: HTMLElement): boolean {
+    if (!el) return false;
+    return el.offsetHeight < el.scrollHeight;
+}

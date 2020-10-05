@@ -36,16 +36,18 @@ const useStyles = makeStyles({
 
 export const POST_TYPE_INDICATOR_PLACEHOLDER = "                 ";
 
-type PostTypeIndicatorProps = { type: OperationPostTypes; variant: "title" | "description" };
+type PostTypeIndicatorProps = { type: OperationPostTypes };
 
 function PostTypeIndicator(props: PostTypeIndicatorProps) {
-    const { type, variant } = props;
-
+    const { type } = props;
     const classes = useStyles({ postType: type });
-
-    if (variant === "description") return classes.descriptionIndicatorChip;
 
     return <div className={classes.indicatorChip} children={type} />;
 }
 
 export default PostTypeIndicator;
+
+export const PostTypeIndicatorStyle = (postType: OperationPostTypes) => {
+    const classes = useStyles({ postType });
+    return classes.descriptionIndicatorChip;
+};

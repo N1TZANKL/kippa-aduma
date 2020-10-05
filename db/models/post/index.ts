@@ -5,7 +5,7 @@ export enum OperationPostTypes {
     UPDATE = "update", // default
     RECON = "recon",
     ACTION = "action",
-    ACHIEVEMENT = "achievement",
+    SUCCESS = "success",
     BURN = "burn",
 }
 
