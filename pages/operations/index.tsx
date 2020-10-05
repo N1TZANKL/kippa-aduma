@@ -21,8 +21,8 @@ const styles = (theme: Theme) =>
             flexBasis: "60%",
             maxWidth: "60%",
             backgroundColor: lighten(theme.constants.appBackground, 0.05),
-            padding: "15px 25px",
-
+            padding: 15,
+            position: "relative",
             //padding: "0 35px",
         },
         optionsRoot: {
@@ -36,10 +36,14 @@ const styles = (theme: Theme) =>
         },
         panelTitle: {
             fontWeight: "bold",
+            fontFamily: "monospace",
             textAlign: "center",
         },
         timelineContent: {
             overflowY: "auto",
+            height: "calc(100% - 45px)",
+            padding: "0 15px",
+            marginTop: 5,
             overflowX: "hidden",
             "& > *": {
                 marginTop: 15,
@@ -56,11 +60,19 @@ function Operations(props: OperationsProps) {
         <PageLayout user={user}>
             <div className={classes.root}>
                 <Paper className={classes.optionsRoot}>
-                    <Typography variant="h6" children="Filter & Sort" className={classes.panelTitle} />
-                    by date written/happened <br /> by post type <br /> by post author <br />
+                    <Typography variant="h5" children="Sort" className={classes.panelTitle} />
+                    {"date written: newest first"} <br />
+                    {"date written: oldest first"} <br />
+                    {"date happened: newest first"} <br />
+                    {"date happened: oldest first"} <br /> <br />
+                    <Typography variant="h5" children="Filter" className={classes.panelTitle} />
+                    {"post type => all/custom"} <br />
+                    {"post author => all/custom"} <br />
+                    {"date range => all/custom"} <br />
+                    {"search text"}
                 </Paper>
                 <Paper className={classes.timelineRoot}>
-                    <Typography variant="h6" children="Operation Timeline" className={classes.panelTitle} />
+                    <Typography variant="h5" children="Operation Timeline" className={classes.panelTitle} />
                     <div className={classes.timelineContent}>
                         {posts.map((post) => (
                             <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />
@@ -68,8 +80,14 @@ function Operations(props: OperationsProps) {
                     </div>
                 </Paper>
                 <Paper className={classes.optionsRoot}>
-                    <Typography variant="h6" children="Advanced Options" className={classes.panelTitle} />
-                    export <br /> calendar view
+                    <Typography variant="h5" children="Advanced Options" className={classes.panelTitle} />
+                    {"export to PDF"} <br />
+                    {"calendar view"} <br /> <br />
+                    <Typography variant="h5" children="Overview" className={classes.panelTitle} />
+                    {"X posts written"} <br />
+                    {"about X posts a day"} <br />
+                    {"Y burn posts, "} <br />
+                    {"Z success posts..."}
                 </Paper>
             </div>
         </PageLayout>
