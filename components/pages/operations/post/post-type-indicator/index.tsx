@@ -38,14 +38,12 @@ export const POST_TYPE_INDICATOR_PLACEHOLDER = "                 ";
 
 type PostTypeIndicatorProps = { type: OperationPostTypes };
 
-function PostTypeIndicator(props: PostTypeIndicatorProps) {
+export default function PostTypeIndicator(props: PostTypeIndicatorProps) {
     const { type } = props;
     const classes = useStyles({ postType: type });
 
     return <div className={classes.indicatorChip} children={type} />;
 }
-
-export default PostTypeIndicator;
 
 export const PostTypeIndicatorStyle = (postType: OperationPostTypes) => {
     const classes = useStyles({ postType });

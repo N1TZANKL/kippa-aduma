@@ -25,12 +25,12 @@ const styles = (theme: Theme) =>
         },
     });
 
-type PostAttachmentsProps = MuiStyles & { attachments?: Array<OperationPostAttachment> };
+type PostAttachmentsProps = MuiStyles & { attachments: Array<OperationPostAttachment> };
 
 function PostAttachments(props: PostAttachmentsProps) {
     const { classes, attachments } = props;
 
-    if (!Array.isArray(attachments) || attachments.length === 0) return null;
+    if (attachments.length === 0) return;
 
     return (
         <div className={classes.attachments}>

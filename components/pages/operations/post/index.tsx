@@ -40,15 +40,15 @@ type PostProps = MuiStyles & { post: OperationPost };
 
 function Post(props: PostProps) {
     const { classes, post } = props;
-    const { title, type } = post;
+    const { title, type, attachments } = post;
 
     return (
         <Paper className={classes.root} style={{ border: `1px solid ${PostTypeToColor[type]}` }}>
-            <PostTitle title={title} type={type} />
+            {title && <PostTitle title={title} type={type} />}
             <PostContent post={post} />
             <div className={classes.postBottomBar}>
                 <PostMetadata author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />
-                <PostAttachments attachments={post.attachments} />
+                {attachments && <PostAttachments attachments={attachments} />}
             </div>
         </Paper>
     );

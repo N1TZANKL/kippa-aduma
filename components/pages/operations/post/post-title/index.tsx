@@ -22,12 +22,10 @@ const styles = (theme: Theme) =>
         },
     });
 
-type PostTitleProps = MuiStyles & { title?: string; type: OperationPostTypes };
+type PostTitleProps = MuiStyles & { title: string; type: OperationPostTypes };
 
 function PostTitle(props: PostTitleProps) {
     const { classes, title, type } = props;
-
-    if (!title) return null;
 
     return (
         <>
