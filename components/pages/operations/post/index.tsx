@@ -3,7 +3,6 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, OperationPost } from "interfaces";
 import Paper from "@material-ui/core/Paper";
 import * as muiColors from "@material-ui/core/colors";
-import PostAttachments from "./post-attachments";
 import PostMetadata from "./post-metadata";
 import { OperationPostTypes } from "db/models/post";
 import PostTitle from "./post-title";
@@ -40,7 +39,7 @@ type PostProps = MuiStyles & { post: OperationPost };
 
 function Post(props: PostProps) {
     const { classes, post } = props;
-    const { title, type, attachments } = post;
+    const { title, type } = post;
 
     return (
         <Paper className={classes.root} style={{ border: `1px solid ${PostTypeToColor[type]}` }}>
@@ -48,7 +47,6 @@ function Post(props: PostProps) {
             <PostContent post={post} />
             <div className={classes.postBottomBar}>
                 <PostMetadata author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />
-                {attachments && <PostAttachments attachments={attachments} />}
             </div>
         </Paper>
     );
