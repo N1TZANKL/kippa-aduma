@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { withIronSession } from "utils/session";
+import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import messageModel, { ChatMessageModel } from "db/models/message";
@@ -32,13 +32,13 @@ async function createMessage(userId: string, message: string | FileMessage) {
     return newMessage.save();
 }
 
-export default withIronSession(async (req, res) => {
+export default withAuthenticatedUser(async (req, res, user) => {
     if (req.method !== "POST") return res.status(404).send("Invalid api call");
 
     if (!req.body) return res.status(400).send("No message sent");
 
     try {
-        await createMessage(req.session.get("user").id, req.body); // sanitize message?
+        await createMessage(user.id, req.body); // sanitize message?
         return res.status(200).send("Message added successfully");
     } catch (error) {
         log("Caught error while attempting to create chat message:", LogTypes.ERROR, error);

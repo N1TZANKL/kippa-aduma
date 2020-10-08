@@ -1,4 +1,4 @@
-import { withIronSession } from "utils/session";
+import { withAuthenticatedUser } from "utils/session";
 import userModel from "db/models/user";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
@@ -8,7 +8,7 @@ export async function getAllUsers(): Promise<UserSessionObject[]> {
     return userModel.find({}, "username nickname color -_id").lean();
 }
 
-export default withIronSession(async (req, res) => {
+export default withAuthenticatedUser(async (req, res) => {
     if (req.method !== "GET") return res.status(404).send("Invalid api call");
 
     try {

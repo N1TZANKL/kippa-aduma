@@ -26,9 +26,7 @@ export default withIronSession(async (req, res) => {
 
         log(`User '${username} (${nickname})' added successfully!`, LogTypes.SUCCESS);
 
-        req.session.set("user", {
-            id: result._id.toString(), username, nickname, color,
-        });
+        req.session.set("user_id", result._id.toString());
         // TODO - FUTURE: Implement a "private club" approach and approve a user only when an admin has accepted their request
         await req.session.save();
 

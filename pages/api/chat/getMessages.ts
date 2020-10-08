@@ -1,4 +1,4 @@
-import { withIronSession } from "utils/session";
+import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import messageModel from "db/models/message";
@@ -8,7 +8,7 @@ export async function getAllMessages(): Promise<ChatMessage[]> {
     return messageModel.find({}, "-_id").populate("user", "-_id -passwordHash").lean();
 }
 
-export default withIronSession(async (req, res) => {
+export default withAuthenticatedUser(async (req, res) => {
     if (req.method !== "GET") return res.status(404).send("Invalid api call");
 
     try {

@@ -23,9 +23,7 @@ export default withIronSession(async (req, res) => {
         const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
         if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-        req.session.set("user", {
-            id: dbUser._id.toString(), username, nickname: dbUser.nickname, color: dbUser.color,
-        });
+        req.session.set("user_id", dbUser._id.toString());
         await req.session.save();
 
         log(`'${username}' logged into the system`, LogTypes.SUCCESS);

@@ -8,10 +8,10 @@ export type Children = React.ReactNode;
 export type PageLayoutProps = MuiStyles & { children: Children };
 
 export type UserSessionObject = {
+    id: string;
     username: string;
     nickname: string;
     color: string;
-    id?: string;
 };
 
 export type SessionObject = { user: UserSessionObject };
