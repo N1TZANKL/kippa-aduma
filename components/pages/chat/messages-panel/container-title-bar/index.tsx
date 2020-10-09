@@ -1,27 +1,32 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 import { MuiStyles } from "interfaces";
 
 import { CustomButton } from "../new-message-line";
-import PanelTitle from "components/general/PanelTitle";
+import { PanelTitle } from "components/general/Panel";
 
 const styles = () =>
     createStyles({
-        title: {
+        root: {
             pointerEvents: "none",
             userSelect: "none",
+            height: 50,
+            display: "flex",
+            alignItems: "center",
+            padding: "0 10px 0 20px",
+            justifyContent: "space-between",
+            overflow: "hidden",
         },
     });
 
-function ContainerTitleBar({ classes, className }: MuiStyles & { className: string }) {
+function ContainerTitleBar({ classes }: MuiStyles) {
     return (
-        <Paper className={className}>
-            <PanelTitle className={classes.title}>Group Chat</PanelTitle>
+        <PanelTitle className={classes.root} withBackground>
+            Group Chat
             <CustomButton icon={AttachFileIcon} title="Send File" />
-        </Paper>
+        </PanelTitle>
     );
 }
 
