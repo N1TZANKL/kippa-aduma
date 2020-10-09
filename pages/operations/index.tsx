@@ -18,15 +18,15 @@ const styles = (theme: Theme) =>
             //minWidth: 1250,
         },
         timelineRoot: {
-            flexBasis: "60%",
-            maxWidth: "60%",
+            flexBasis: "58%",
+            maxWidth: "58%",
             backgroundColor: lighten(theme.constants.appBackground, 0.05),
             padding: 15,
             position: "relative",
             //padding: "0 35px",
         },
         optionsRoot: {
-            flexBasis: "18%",
+            flexBasis: "20%",
             maxWidth: 350,
             padding: 15,
             display: "flex",
