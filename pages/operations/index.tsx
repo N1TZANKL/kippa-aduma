@@ -1,12 +1,11 @@
 import React from "react";
-import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, UserSessionObject, OperationPost } from "interfaces";
 import PageLayout from "components/layouts/MainLayout";
 import { withUserSession } from "utils/session";
 import Post from "components/pages/operations/post";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import { DUMMY_OPERATION_POSTS } from "utils/constants/mocks";
+import Panel, { PanelTitle } from "components/general/Panel";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -20,9 +19,7 @@ const styles = (theme: Theme) =>
         timelineRoot: {
             flexBasis: "58%",
             maxWidth: "58%",
-            backgroundColor: lighten(theme.constants.appBackground, 0.05),
             padding: 15,
-            position: "relative",
             //padding: "0 35px",
         },
         optionsRoot: {
@@ -32,12 +29,6 @@ const styles = (theme: Theme) =>
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: lighten(theme.constants.appBackground, 0.03),
-        },
-        panelTitle: {
-            fontWeight: "bold",
-            fontFamily: "monospace",
-            textAlign: "center",
         },
         timelineContent: {
             overflowY: "auto",
@@ -59,36 +50,36 @@ function Operations(props: OperationsProps) {
     return (
         <PageLayout user={user}>
             <div className={classes.root}>
-                <Paper className={classes.optionsRoot}>
-                    <Typography variant="h5" children="Sort" className={classes.panelTitle} />
+                <Panel className={classes.optionsRoot}>
+                    <PanelTitle>Sort</PanelTitle>
                     {"date written: newest first"} <br />
                     {"date written: oldest first"} <br />
                     {"date happened: newest first"} <br />
                     {"date happened: oldest first"} <br /> <br />
-                    <Typography variant="h5" children="Filter" className={classes.panelTitle} />
+                    <PanelTitle>Filter</PanelTitle>
                     {"post type => all/custom"} <br />
                     {"post author => all/custom"} <br />
                     {"date range => all/custom"} <br />
                     {"search text"}
-                </Paper>
-                <Paper className={classes.timelineRoot}>
-                    <Typography variant="h5" children="Operation Timeline" className={classes.panelTitle} />
+                </Panel>
+                <Panel className={classes.timelineRoot}>
+                    <PanelTitle>Operation Timeline</PanelTitle>
                     <div className={classes.timelineContent}>
                         {posts.map((post) => (
                             <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />
                         ))}
                     </div>
-                </Paper>
-                <Paper className={classes.optionsRoot}>
-                    <Typography variant="h5" children="Advanced Options" className={classes.panelTitle} />
+                </Panel>
+                <Panel className={classes.optionsRoot}>
+                    <PanelTitle>Advanced Options</PanelTitle>
                     {"export to PDF"} <br />
                     {"calendar view"} <br /> <br />
-                    <Typography variant="h5" children="Overview" className={classes.panelTitle} />
+                    <PanelTitle>Overview</PanelTitle>
                     {"X posts written"} <br />
                     {"about X posts a day"} <br />
                     {"Y burn posts, "} <br />
                     {"Z success posts..."}
-                </Paper>
+                </Panel>
             </div>
         </PageLayout>
     );

@@ -14,6 +14,7 @@ const styles = (theme: Theme) =>
         panel: {
             borderRadius: 2,
             background: lighten(theme.constants.appBackground, 0.05),
+            position: "relative",
         },
         highlightBackground: {
             backgroundColor: theme.constants.appBackgroundHighlight,
