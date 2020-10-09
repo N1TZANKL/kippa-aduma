@@ -3,9 +3,9 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, UserSessionObject, OperationPost } from "interfaces";
 import PageLayout from "components/layouts/MainLayout";
 import { withUserSession } from "utils/session";
-import Post from "components/pages/operations/post";
 import { DUMMY_OPERATION_POSTS } from "utils/constants/mocks";
 import Panel, { PanelTitle } from "components/general/Panel";
+import Timeline from "components/pages/operations/timeline";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -19,7 +19,6 @@ const styles = (theme: Theme) =>
         timelineRoot: {
             flexBasis: "58%",
             maxWidth: "58%",
-            padding: 15,
             //padding: "0 35px",
         },
         optionsRoot: {
@@ -29,16 +28,6 @@ const styles = (theme: Theme) =>
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-        },
-        timelineContent: {
-            overflowY: "auto",
-            height: "calc(100% - 45px)",
-            padding: "0 15px",
-            marginTop: 5,
-            overflowX: "hidden",
-            "& > *": {
-                marginTop: 15,
-            },
         },
     });
 
@@ -60,16 +49,8 @@ function Operations(props: OperationsProps) {
                     {"post type => all/custom"} <br />
                     {"post author => all/custom"} <br />
                     {"date range => all/custom"} <br />
-                    {"search text"}
                 </Panel>
-                <Panel className={classes.timelineRoot}>
-                    <PanelTitle>Operation Timeline</PanelTitle>
-                    <div className={classes.timelineContent}>
-                        {posts.map((post) => (
-                            <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />
-                        ))}
-                    </div>
-                </Panel>
+                <Timeline posts={posts} className={classes.timelineRoot} />
                 <Panel className={classes.optionsRoot}>
                     <PanelTitle>Advanced Options</PanelTitle>
                     {"export to PDF"} <br />

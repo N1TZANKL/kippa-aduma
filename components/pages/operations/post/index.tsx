@@ -20,7 +20,7 @@ export const PostTypeToColor: ObjectWithStringValues = {
 const styles = (theme: Theme) =>
     createStyles({
         root: {
-            backgroundColor: theme.constants.appBackgroundHighlight,
+            backgroundColor: "rgba(255,255,255,0.08)",
             borderRadius: 2,
             padding: "10px 15px 15px",
             position: "relative",

@@ -4,6 +4,7 @@ import { Children, MuiStyles } from "interfaces";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import clsx from "clsx";
 import Paper, { PaperProps } from "@material-ui/core/Paper";
+import Button, { ButtonProps } from "@material-ui/core/Button";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -25,6 +26,20 @@ const styles = (theme: Theme) =>
             display: "flex",
             alignItems: "center",
             position: "relative",
+        },
+        button: {
+            fontSize: 16,
+            fontFamily: "monospace",
+            padding: "1px 12px",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            height: 30,
+            // in case there's also an icon:
+            "& > * > svg": {
+                marginRight: 5,
+                fontSize: 20,
+            },
         },
     });
 
@@ -55,4 +70,9 @@ export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
 type PanelBottomBarProps = MuiStyles & { children: Children; className?: string };
 export const PanelBottomBar = withStyles(styles)(({ classes, className, children }: PanelBottomBarProps) => (
     <div className={clsx(classes.bottomBar, classes.highlightBackground, className)}>{children}</div>
+));
+
+type PanelButtonProps = MuiStyles & ButtonProps;
+export const PanelButton = withStyles(styles)(({ classes, className, ...otherProps }: PanelButtonProps) => (
+    <Button className={clsx(classes.button, className)} variant="contained" {...otherProps} />
 ));
