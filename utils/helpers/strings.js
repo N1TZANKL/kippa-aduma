@@ -1,9 +1,13 @@
 export function firstLetterUppercase(string) {
-    return string.charAt(0).toUpperVase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export function capitalizeFirstLetters(string) {
-    return string.toLowerCase().split(" ").map(s => firstLetterUppercase(s)).join(" ");
+    return string
+        .toLowerCase()
+        .split(" ")
+        .map((s) => firstLetterUppercase(s))
+        .join(" ");
 }
 
 export function addSpaceBeforeUppercaseLetter(string) {
