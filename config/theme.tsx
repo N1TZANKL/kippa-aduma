@@ -78,5 +78,9 @@ export default createMuiTheme({
                 padding: 6,
             },
         },
+        MuiFilledInput: {
+            root: { borderRadius: "0 !important " },
+            input: { padding: "10px 12px" },
+        },
     },
 });

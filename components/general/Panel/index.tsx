@@ -12,6 +12,11 @@ const styles = (theme: Theme) =>
             fontWeight: "bold",
             fontFamily: "monospace",
         },
+        subtitle: {
+            width: "fit-content",
+            borderBottom: "2px solid rgba(255,255,255,0.6)",
+            margin: "5px 0",
+        },
         panel: {
             borderRadius: 2,
             background: lighten(theme.constants.appBackground, 0.05),
@@ -31,7 +36,6 @@ const styles = (theme: Theme) =>
             fontSize: 16,
             fontFamily: "monospace",
             padding: "1px 12px",
-            color: "white",
             display: "flex",
             alignItems: "center",
             height: 30,
@@ -66,6 +70,11 @@ export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
         />
     );
 });
+
+type PanelSubtitleProps = MuiStyles & TypographyProps;
+export const PanelSubtitle = withStyles(styles)(({ classes, ...otherProps }: PanelSubtitleProps) => (
+    <Typography className={clsx(classes.title, classes.subtitle)} variant="h6" {...otherProps} />
+));
 
 type PanelBottomBarProps = MuiStyles & { children: Children; className?: string };
 export const PanelBottomBar = withStyles(styles)(({ classes, className, children }: PanelBottomBarProps) => (
