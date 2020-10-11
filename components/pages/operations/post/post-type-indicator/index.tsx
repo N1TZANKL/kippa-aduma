@@ -18,6 +18,7 @@ const POST_TYPE_INDICATOR_CHIP_STYLE: CSSProperties = {
     justifyContent: "center",
     width: 62,
     maxWidth: 62,
+    fontSize: 11,
 };
 
 const useStyles = makeStyles({
@@ -42,7 +43,7 @@ export default function PostTypeIndicator(props: PostTypeIndicatorProps) {
     const { type } = props;
     const classes = useStyles({ postType: type });
 
-    return <div className={classes.indicatorChip} children={type} />;
+    return <div className={classes.indicatorChip}>{type}</div>;
 }
 
 export const PostTypeIndicatorStyle = (postType: OperationPostTypes) => {

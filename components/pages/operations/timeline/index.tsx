@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
 import NotFoundAnimation from "components/animations/not-found";
+import { SortOptions, SortOptionsToFunction } from "../sort-filter-panel";
+import { OperationPostTypes } from "db/models/post";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -47,25 +49,41 @@ const styles = (theme: Theme) =>
         },
     });
 
-type PostTimelineProps = MuiStyles & { posts: Array<OperationPost>; className: string };
+type PostTimelineProps = MuiStyles & {
+    posts: Array<OperationPost>;
+    className: string;
+    currentSort: SortOptions;
+    postTypeFilters: Array<OperationPostTypes> | null;
+};
 function PostsTimeline(props: PostTimelineProps) {
     const [shownPosts, setShownPosts] = useState<number>(5);
     const [searchString, setSearchString] = useState<string>("");
 
-    const { classes, className, posts } = props;
+    const { classes, className, posts, currentSort, postTypeFilters } = props;
 
     function _showMorePosts() {
         setShownPosts((prevState) => prevState + 5);
     }
 
-    function _filterPostsBySearchString() {
-        if (!searchString) return posts.slice(0, shownPosts);
+    function _filterPostsBySearchString(postsToFilter: Array<OperationPost>) {
+        if (!searchString) return postsToFilter;
 
         // filter all the string values of post object and check whether at least one matches the search string
-        return posts.slice(0, shownPosts).filter((post) => Object.values(post).some((p: any) => p && typeof p === "string" && p.match(searchString)));
+        return postsToFilter.filter((post) => Object.values(post).some((p: any) => p && typeof p === "string" && p.match(searchString)));
     }
 
-    const filteredPosts = useMemo(() => _filterPostsBySearchString(), [posts, shownPosts, searchString]);
+    function _filterPosts() {
+        // shown + match search string + match post type filter
+        return _filterPostsBySearchString(
+            posts.slice(0, shownPosts).filter((post: OperationPost) => !postTypeFilters || postTypeFilters.includes(post.type))
+        );
+    }
+
+    function _sortPosts(postsToSort: Array<OperationPost>): Array<OperationPost> {
+        return SortOptionsToFunction[currentSort](postsToSort);
+    }
+
+    const filteredPosts = useMemo(() => _filterPosts(), [posts, shownPosts, searchString, currentSort, postTypeFilters]);
 
     return (
         <Panel className={className}>
@@ -73,7 +91,7 @@ function PostsTimeline(props: PostTimelineProps) {
             <div className={classes.timelineContent}>
                 <div className={classes.postsWrapper}>
                     {filteredPosts.length > 0 ? (
-                        filteredPosts.map((post) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
+                        _sortPosts(filteredPosts).map((post: OperationPost) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
                     ) : (
                         <div className={classes.noPostsFoundWrapper}>
                             <NotFoundAnimation text={`No${posts.length > 0 ? " matching " : " "}posts found`} />
@@ -82,7 +100,7 @@ function PostsTimeline(props: PostTimelineProps) {
                 </div>
                 {filteredPosts.length > 0 && (
                     <>
-                        {shownPosts < posts.length ? (
+                        {shownPosts < filteredPosts.length ? (
                             <Typography
                                 variant="subtitle1"
                                 className={clsx(classes.timelineBottomIndicator, classes.clickable)}

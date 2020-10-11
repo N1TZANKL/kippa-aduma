@@ -45,6 +45,23 @@ const styles = (theme: Theme) =>
                 fontSize: 20,
             },
         },
+        stat: {
+            padding: 10,
+            backgroundColor: "rgba(255,255,255,0.1)",
+            background: "repeating-linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 10px, transparent 10px, transparent 20px)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        statTitle: {
+            fontFamily: "monospace",
+            fontWeight: "bold",
+        },
+        statContent: {
+            fontFamily: "monospace",
+            color: "rgba(255,255,255,0.5)",
+        },
     });
 
 type PanelProps = MuiStyles & PaperProps & { fullHeight?: boolean; className?: string };
@@ -84,4 +101,16 @@ export const PanelBottomBar = withStyles(styles)(({ classes, className, children
 type PanelButtonProps = MuiStyles & ButtonProps;
 export const PanelButton = withStyles(styles)(({ classes, className, ...otherProps }: PanelButtonProps) => (
     <Button className={clsx(classes.button, className)} variant="contained" {...otherProps} />
+));
+
+type PanelStatProps = MuiStyles & { title: string; children: Children };
+export const PanelStat = withStyles(styles)(({ classes, title, children }: PanelStatProps) => (
+    <Paper className={classes.stat} variant="outlined">
+        <Typography variant="h5" className={classes.statTitle}>
+            {title}
+        </Typography>
+        <Typography variant="h6" component="div" className={classes.statContent}>
+            {children}
+        </Typography>
+    </Paper>
 ));

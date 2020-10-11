@@ -11,7 +11,7 @@ import PostContent from "./post-content";
 type ObjectWithStringValues = { [key: string]: string };
 export const PostTypeToColor: ObjectWithStringValues = {
     [OperationPostTypes.SUCCESS]: muiColors.green["A400"],
-    [OperationPostTypes.RECON]: muiColors.indigo["A200"],
+    [OperationPostTypes.RECON]: muiColors.cyan["A400"],
     [OperationPostTypes.BURN]: muiColors.red["A400"],
     [OperationPostTypes.ACTION]: muiColors.amber["A400"],
     [OperationPostTypes.UPDATE]: muiColors.grey[400],
