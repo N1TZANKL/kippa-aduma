@@ -79,6 +79,11 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
         return !prevMessage || !areSameDates(prevMessage.timestamp, message.timestamp);
     }
 
+    // TODO: Actually handle emoji rendering
+    function renderEmoji(messageText: string) {
+        return messageText;
+    }
+
     return (
         <Panel className={className} fullHeight>
             <ContainerTitleBar />
@@ -94,12 +99,13 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
                                 isCurrentUser={user.username === message.user.username}
                                 withArrow={shouldAddArrowToMessage(message, prevMessage)}
                                 withMargin={shouldAddArrowToMessage(message, prevMessage)}
+                                renderEmoji={renderEmoji}
                             />
                         </React.Fragment>
                     );
                 })}
             </div>
-            <NewMessageLine sendMessage={sendMessage} />
+            <NewMessageLine sendMessage={sendMessage} renderEmoji={renderEmoji} />
         </Panel>
     );
 }

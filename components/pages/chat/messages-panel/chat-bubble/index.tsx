@@ -105,10 +105,10 @@ const styles = () => createStyles({
     marginTop: { marginTop: 20 },
 });
 
-type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean };
+type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean, renderEmoji: Function };
 
 function ChatBubble({
-    classes, message, isCurrentUser, withArrow, withMargin,
+    classes, message, isCurrentUser, withArrow, withMargin, renderEmoji
 }: ChatBubbleProps) {
     return (
         <Card
@@ -135,8 +135,8 @@ function ChatBubble({
                         </SvgIcon>
                     </div>
                 ) : (
-                    <div className={classes.content}>{message.message}</div>
-                )}
+                        <div className={classes.content}>{renderEmoji(message.message)}</div>
+                    )}
                 <div className={classes.metadata}>
                     <div>{formatTime(message.timestamp)}</div>
                     {message.type === "file" && (
