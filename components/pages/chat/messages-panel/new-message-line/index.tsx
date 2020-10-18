@@ -38,9 +38,9 @@ export const CustomButton = withStyles(styles)(({ classes, icon: Icon, ...props 
     </IconButton>
 ));
 
-type MessageLineProps = MuiStyles & { sendMessage: (value: string) => void; renderEmoji: Function };
+type MessageLineProps = MuiStyles & { sendMessage: (value: string) => void; };
 
-function NewMessageLine({ classes, sendMessage, renderEmoji }: MessageLineProps) {
+function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
     const [messageText, setMessageText] = useState<string>("");
     const [showEmojiPicker, setEmojiPickerOpen] = useState<boolean>(false);
 

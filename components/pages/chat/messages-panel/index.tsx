@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import socketIOClient from "socket.io-client";
 import React, { useState, useEffect } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
@@ -79,11 +78,6 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
         return !prevMessage || !areSameDates(prevMessage.timestamp, message.timestamp);
     }
 
-    // TODO: Actually handle emoji rendering
-    function renderEmoji(messageText: string) {
-        return messageText;
-    }
-
     return (
         <Panel className={className} fullHeight>
             <ContainerTitleBar />
@@ -99,13 +93,12 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
                                 isCurrentUser={user.username === message.user.username}
                                 withArrow={shouldAddArrowToMessage(message, prevMessage)}
                                 withMargin={shouldAddArrowToMessage(message, prevMessage)}
-                                renderEmoji={renderEmoji}
                             />
                         </React.Fragment>
                     );
                 })}
             </div>
-            <NewMessageLine sendMessage={sendMessage} renderEmoji={renderEmoji} />
+            <NewMessageLine sendMessage={sendMessage} />
         </Panel>
     );
 }
