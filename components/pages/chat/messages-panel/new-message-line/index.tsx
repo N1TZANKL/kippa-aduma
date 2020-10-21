@@ -1,13 +1,13 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
 import { SvgIconComponent } from "@material-ui/icons";
 import SendIcon from "@material-ui/icons/Send";
 import EmojiIcon from "@material-ui/icons/InsertEmoticon";
-
 import { MuiStyles } from "interfaces";
 import TextField from "components/general/TextField";
 import { PanelBottomBar } from "components/general/Panel";
+import EmojiPicker from "./emoji-picker";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -38,27 +38,34 @@ export const CustomButton = withStyles(styles)(({ classes, icon: Icon, ...props 
     </IconButton>
 ));
 
-type MessageLineProps = MuiStyles & { sendMessage: (value: string) => void };
+type MessageLineProps = MuiStyles & { sendMessage: (value: string) => void; };
 
 function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const [messageText, setMessageText] = useState<string>("");
+    const [showEmojiPicker, setEmojiPickerOpen] = useState<boolean>(false);
+
+    const toggleEmojiPicker = () => setEmojiPickerOpen((prevState) => !prevState);
 
     const onClickSend = useCallback(
         (e: React.FormEvent) => {
             e.preventDefault();
-            sendMessage(inputRef.current!.value);
-            inputRef.current!.value = "";
+            sendMessage(messageText);
+            setMessageText("");
         },
-        [sendMessage]
+        [sendMessage, messageText]
     );
 
     return (
         <form onSubmit={onClickSend}>
             <PanelBottomBar className={classes.root}>
-                <CustomButton icon={EmojiIcon} title="Add Emoji" />
+                <CustomButton icon={EmojiIcon} title="Add Emoji" onClick={toggleEmojiPicker} />
+                {showEmojiPicker && (
+                    <EmojiPicker editMessage={setMessageText} closePicker={toggleEmojiPicker} />
+                )}
                 <div className={classes.messageBox}>
                     <TextField
-                        inputRef={inputRef}
+                        value={messageText}
+                        onChange={e => setMessageText(e.target.value)}
                         className={classes.input}
                         focused
                         multiline

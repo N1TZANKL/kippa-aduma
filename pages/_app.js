@@ -6,6 +6,9 @@ import { hexToRGB } from "utils/helpers/css.ts";
 
 import theme from "config/theme";
 
+import 'emoji-mart/css/emoji-mart.css';
+
+
 const styles = () =>
     createStyles({
         "@global": {

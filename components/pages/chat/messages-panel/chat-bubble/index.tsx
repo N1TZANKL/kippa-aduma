@@ -9,6 +9,7 @@ import { withStyles, createStyles, darken } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Typography from "@material-ui/core/Typography";
+import { Emoji } from "emoji-mart";
 
 import { MuiStyles, ChatMessage } from "interfaces";
 import { formatTime } from "utils/helpers/dates";
@@ -105,10 +106,29 @@ const styles = () => createStyles({
     marginTop: { marginTop: 20 },
 });
 
-type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean };
+type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean, renderEmoji: Function };
+
+function renderTextWithEmojis(messageText: string) {
+
+    const handleEmojis = (messageLine: string) => {
+        const emojiRegex = /(?:\:[^\:]+\:(?:\:skin-tone-(?:\d)\:)?)/gi;
+        const matches = messageLine.match(emojiRegex) || [];
+        const emojiArray = matches.map((match, index) => <Emoji key={index} emoji={match} size={22} />);
+        return messageLine.split(emojiRegex).reduce((prev, curr, index) => ([...prev, curr, emojiArray[index]]), [])
+    };
+
+
+    return messageText.split(/\n/gi).map((messageLine, index) => 
+        <div style={{
+            display: "flex",
+            alignItems: "self-end",
+            whiteSpace: "pre-wrap"
+        }} key={index}> {handleEmojis(messageLine)} </div>
+    );
+}
 
 function ChatBubble({
-    classes, message, isCurrentUser, withArrow, withMargin,
+    classes, message, isCurrentUser, withArrow, withMargin, renderEmoji
 }: ChatBubbleProps) {
     return (
         <Card
@@ -135,8 +155,8 @@ function ChatBubble({
                         </SvgIcon>
                     </div>
                 ) : (
-                    <div className={classes.content}>{message.message}</div>
-                )}
+                        <div className={classes.content}>{renderTextWithEmojis(message.message)}</div>
+                    )}
                 <div className={classes.metadata}>
                     <div>{formatTime(message.timestamp)}</div>
                     {message.type === "file" && (

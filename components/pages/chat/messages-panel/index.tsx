@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import socketIOClient from "socket.io-client";
 import React, { useState, useEffect } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
