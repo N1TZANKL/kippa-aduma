@@ -1,6 +1,6 @@
 import socketIOClient from "socket.io-client";
-import React, { useState, useEffect } from "react";
-import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
+import React, { useState, useEffect, useRef } from "react";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
 import { getDatesDifference, areSameDates } from "utils/helpers/dates";
@@ -10,34 +10,38 @@ import NewMessageLine from "./new-message-line";
 import ContainerTitleBar from "./container-title-bar";
 import ChatDivider from "./chat-divider";
 import Panel from "components/general/Panel";
+import ScrollDownButton from "./scroll-down-button";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         messagesContainer: {
             display: "flex",
             flexDirection: "column",
             padding: 25,
             boxSizing: "border-box",
-            height: "calc(100% - 115px)",
-            maxHeight: "calc(100% - 115px)",
             "& > *:not(:last-child)": {
                 marginBottom: 8,
             },
             overflow: "auto",
-            backgroundImage: 'url("/favicon-blend.png")',
+            background: 'url("/favicon-blend.png") center no-repeat',
             backgroundSize: 600,
             backgroundBlendMode: "soft-light",
-            backgroundRepeat: "no-repeat",
-            backgroundPositionX: "center",
-            backgroundPositionY: "center",
         },
+        panelContent: {
+            display: "flex",
+            flexDirection: "column",
+            height: "100%"
+        }
     });
 
 type MessagesPanelProps = MuiStyles & { user: UserSessionObject; className: string; messages: Array<ChatMessage> };
 
 function MessagesPanel({ classes, messages, user, className }: MessagesPanelProps) {
     const [allMessages, setMessages] = useState(messages);
+    const [showScrollButton, setShowScrollButton] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
+    // Socket connection initialization
     useEffect(() => {
         const socket = socketIOClient(`http://localhost:${"1337" /* process.env.CHAT_PORT */}`); // TODO: fix
         socket.on("new message", onReceiveNewMessage);
@@ -45,6 +49,28 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
             socket.disconnect();
         };
     }, []);
+
+    function scrollToBottom() {
+        if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+
+    function toggleScrollButtonAccordingToScrollPosition() {
+        if (!containerRef.current) return;
+
+        if (containerRef.current.scrollTop !== (containerRef.current.scrollHeight - containerRef.current.offsetHeight)) setShowScrollButton(true);
+        else setShowScrollButton(false);
+    }
+
+    // Scroll to bottom when new messages are received
+    useEffect(scrollToBottom, [allMessages])
+
+    // If scroll position is not bottom - toggle button
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.addEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
+            return () => containerRef.current?.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
+        }
+    }, [containerRef.current])
 
     function onReceiveNewMessage(newMessage: ChatMessage) {
         setMessages((prevMessages) => [...prevMessages, newMessage]); // TODO: read about Mutable
@@ -80,25 +106,28 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
 
     return (
         <Panel className={className} fullHeight>
-            <ContainerTitleBar />
-            <div className={classes.messagesContainer}>
-                {allMessages.map((message, index) => {
-                    const prevMessage = index === 0 ? null : allMessages[index - 1];
+            <div className={classes.panelContent}>
+                <ContainerTitleBar />
+                <div className={classes.messagesContainer} ref={containerRef}>
+                    {allMessages.map((message, index) => {
+                        const prevMessage = index === 0 ? null : allMessages[index - 1];
 
-                    return (
-                        <React.Fragment key={`${message.user.username}_${message.timestamp}_${index}`}>
-                            {shouldShowDivider(message, prevMessage) && <ChatDivider timestamp={message.timestamp} />}
-                            <ChatBubble
-                                message={message}
-                                isCurrentUser={user.username === message.user.username}
-                                withArrow={shouldAddArrowToMessage(message, prevMessage)}
-                                withMargin={shouldAddArrowToMessage(message, prevMessage)}
-                            />
-                        </React.Fragment>
-                    );
-                })}
+                        return (
+                            <React.Fragment key={`${message.user.username}_${message.timestamp}_${index}`}>
+                                {shouldShowDivider(message, prevMessage) && <ChatDivider timestamp={message.timestamp} />}
+                                <ChatBubble
+                                    message={message}
+                                    isCurrentUser={user.username === message.user.username}
+                                    withArrow={shouldAddArrowToMessage(message, prevMessage)}
+                                    withMargin={shouldAddArrowToMessage(message, prevMessage)}
+                                />
+                            </React.Fragment>
+                        );
+                    })}
+                </div>
+                <ScrollDownButton show={showScrollButton} onClick={scrollToBottom} />
+                <NewMessageLine sendMessage={sendMessage} />
             </div>
-            <NewMessageLine sendMessage={sendMessage} />
         </Panel>
     );
 }

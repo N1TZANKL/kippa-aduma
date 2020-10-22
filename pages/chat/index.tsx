@@ -29,7 +29,8 @@ const styles = (theme: Theme) =>
         rightPanel: {
             flexBasis: "80%",
             minWidth: 900,
-            overflow: "auto",
+            position: "relative",
+            overflow: "hidden",
         },
     });
 
