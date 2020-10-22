@@ -30,7 +30,7 @@ const styles = () =>
         panelContent: {
             display: "flex",
             flexDirection: "column",
-            height: "100%"
+            height: "calc(100% - 50px)"
         }
     });
 
@@ -54,19 +54,23 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
         if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
 
+    function isContainerScrolledToBottom(): boolean {
+        if (!containerRef.current) return false;
+
+        return (containerRef.current.scrollTop === (containerRef.current.scrollHeight - containerRef.current.offsetHeight))
+    }
+
     function toggleScrollButtonAccordingToScrollPosition() {
         if (!containerRef.current) return;
 
-        if (containerRef.current.scrollTop !== (containerRef.current.scrollHeight - containerRef.current.offsetHeight)) setShowScrollButton(true);
-        else setShowScrollButton(false);
+        if (isContainerScrolledToBottom()) setShowScrollButton(false);
+        else setShowScrollButton(true);
     }
 
-    // Scroll to bottom when new messages are received
-    useEffect(scrollToBottom, [allMessages])
-
-    // If scroll position is not bottom - toggle button
+    // messages container init - auto scroll bottom + scroll event listener
     useEffect(() => {
         if (containerRef.current) {
+            scrollToBottom();
             containerRef.current.addEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
             return () => containerRef.current?.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
         }
@@ -82,6 +86,8 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(message),
         });
+
+        scrollToBottom();
     }
 
     function shouldAddMarginToMessage(message: ChatMessage, prevMessage: ChatMessage | null) {
@@ -106,8 +112,8 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
 
     return (
         <Panel className={className} fullHeight>
+            <ContainerTitleBar />
             <div className={classes.panelContent}>
-                <ContainerTitleBar />
                 <div className={classes.messagesContainer} ref={containerRef}>
                     {allMessages.map((message, index) => {
                         const prevMessage = index === 0 ? null : allMessages[index - 1];

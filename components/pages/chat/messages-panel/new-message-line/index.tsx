@@ -1,4 +1,4 @@
-import React, { MutableRefObject, RefObject, useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
 import { SvgIconComponent } from "@material-ui/icons";
@@ -14,7 +14,6 @@ const styles = (theme: Theme) =>
     createStyles({
         panel: {
             padding: "0 15px",
-            minHeight: 65,
         },
         messageBox: {
             backgroundColor: lighten(theme.constants.appBackgroundHighlight, 0.13),
@@ -22,10 +21,10 @@ const styles = (theme: Theme) =>
             borderRadius: 4,
             width: "100%",
             padding: "3px 10px",
-            margin: "0 15px",
+            margin: "10px 15px",
             overflow: "auto",
-            height: "65%",
-            maxHeight: 200,
+            minHeight: 35,
+            maxHeight: 175
         },
         iconButton: {
             padding: 6,
