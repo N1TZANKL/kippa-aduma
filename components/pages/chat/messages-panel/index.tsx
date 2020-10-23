@@ -43,7 +43,8 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
 
     // Socket connection initialization
     useEffect(() => {
-        const socket = socketIOClient(`http://localhost:${"1337" /* process.env.CHAT_PORT */}`); // TODO: fix
+
+        const socket = socketIOClient(`http://localhost:${process.env.CHAT_PORT}`);
         socket.on("new message", onReceiveNewMessage);
         return () => {
             socket.disconnect();
