@@ -106,7 +106,7 @@ const styles = () => createStyles({
     marginTop: { marginTop: 20 },
 });
 
-type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean, renderEmoji: Function };
+type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean };
 
 function renderTextWithEmojis(messageText: string) {
 
@@ -118,7 +118,7 @@ function renderTextWithEmojis(messageText: string) {
     };
 
 
-    return messageText.split(/\n/gi).map((messageLine, index) => 
+    return messageText.split(/\n/gi).map((messageLine, index) =>
         <div style={{
             display: "flex",
             alignItems: "self-end",
@@ -128,7 +128,7 @@ function renderTextWithEmojis(messageText: string) {
 }
 
 function ChatBubble({
-    classes, message, isCurrentUser, withArrow, withMargin, renderEmoji
+    classes, message, isCurrentUser, withArrow, withMargin,
 }: ChatBubbleProps) {
     return (
         <Card
