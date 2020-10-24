@@ -68,8 +68,6 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
         if (!value) delete postTypesToAmount[key];
     }
 
-    console.log("POST TYPES", postTypesToAmount);
-
     return (
         <Panel className={className}>
             <PanelTitle>Advanced Options</PanelTitle>
