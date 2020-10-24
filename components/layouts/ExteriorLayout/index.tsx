@@ -3,11 +3,10 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
 import { lightBlue, red } from "@material-ui/core/colors";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { Children, PageLayoutProps, MuiStyles } from "interfaces";
+import SubmitButton from "components/forms/SubmitButton";
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -81,13 +80,11 @@ const styles = (theme: Theme) => createStyles({
         },
     },
     submitButton: {
-        fontFamily: "monospace",
         margin: "25px 0",
         width: "fit-content",
         minWidth: 250,
         fontWeight: 800,
         fontSize: 18,
-        color: "white",
         letterSpacing: 1,
         padding: "5px 35px",
     },
@@ -107,10 +104,6 @@ const styles = (theme: Theme) => createStyles({
         fontWeight: 500,
         fontFamily: "monospace",
     },
-    progress: {
-        marginRight: 20,
-        color: "white",
-    },
 });
 
 type SubtitleProps = MuiStyles & { actionName: string; prompt: string; href: string };
@@ -118,21 +111,21 @@ type SubtitleProps = MuiStyles & { actionName: string; prompt: string; href: str
 export const FormSubtitle = withStyles(styles)(({
     classes, prompt, actionName, href,
 }: SubtitleProps) => (
-    <Typography variant="subtitle1" className={classes.subtitle}>
-        {prompt}
-        {" "}
+        <Typography variant="subtitle1" className={classes.subtitle}>
+            {prompt}
+            {" "}
         Click
-        {" "}
-        <a className={classes.subtitleLink} href={href}>
-            here
+            {" "}
+            <a className={classes.subtitleLink} href={href}>
+                here
         </a>
-        {" "}
+            {" "}
         to
-        {" "}
-        {actionName}
+            {" "}
+            {actionName}
         !
-    </Typography>
-));
+        </Typography>
+    ));
 
 type FormProps = MuiStyles & React.FormHTMLAttributes<Element> & {
     title: string;
@@ -146,21 +139,19 @@ type FormProps = MuiStyles & React.FormHTMLAttributes<Element> & {
 export const Form = withStyles(styles)(({
     classes, title, children, subtitle, submitMessage, error, loading, ...formElementProps
 }: FormProps) => (
-    <>
-        <Typography variant="h3" className={classes.formTitle}>{title}</Typography>
-        {subtitle}
-        <Divider className={classes.formTitleDivider} />
-        <form {...formElementProps} className={classes.form}>
-            <div className={classes.formChildren}>{children}</div>
-            <Button type="submit" color="secondary" className={classes.submitButton} variant="contained" disabled={loading}>
-                {loading && <CircularProgress color="inherit" size={18} className={classes.progress} />}
-                {" "}
-                {submitMessage || "submit!"}
-            </Button>
-        </form>
-        {error && <Typography variant="h6" className={classes.formError}>{error}</Typography>}
-    </>
-));
+        <>
+            <Typography variant="h3" className={classes.formTitle}>{title}</Typography>
+            {subtitle}
+            <Divider className={classes.formTitleDivider} />
+            <form {...formElementProps} className={classes.form}>
+                <div className={classes.formChildren}>{children}</div>
+                <SubmitButton className={classes.submitButton} isSubmitting={loading}>
+                    {submitMessage}
+                </SubmitButton>
+            </form>
+            {error && <Typography variant="h6" className={classes.formError}>{error}</Typography>}
+        </>
+    ));
 
 function ExteriorPageLayout({ classes, children }: PageLayoutProps) {
     return (

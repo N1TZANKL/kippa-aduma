@@ -85,11 +85,15 @@ export default createMuiTheme({
         },
         MuiButton: {
             contained: {
+                fontFamily: "monospace",
+                fontSize: 16,
                 backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.5),
                 "&:hover": {
                     backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.3),
                 },
             },
+            containedPrimary: { color: "white" },
+            containedSecondary: { color: "white" },
         },
     },
 });
