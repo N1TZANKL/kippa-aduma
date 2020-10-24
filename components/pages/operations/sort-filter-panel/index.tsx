@@ -7,8 +7,8 @@ import Checkbox from "components/general/Checkbox";
 import { OperationPostTypes } from "db/models/post";
 import { firstLetterUppercase } from "utils/helpers/strings";
 import Radio from "components/general/Radio";
-import PostTypeIndicator from "../post/post-type-indicator";
 import { sortObjectArrayByDate } from "utils/helpers/dates";
+import { PostTypeToColor } from "../post";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -20,10 +20,14 @@ const styles = (theme: Theme) =>
             display: "flex",
             flexDirection: "column",
         },
-        checkboxLabel: {
-            width: 100,
-            maxWidth: 100,
-        },
+        postTypeCheckboxColor: {
+            width: 12,
+            height: 12,
+            borderRadius: "50%",
+            backgroundColor: "transparent",
+            marginRight: 5,
+            display: "inline-block"
+        }
     });
 
 export enum SortOptions {
@@ -100,11 +104,11 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                         checked={!postTypeFilters || postTypeFilters.includes(postType)}
                         disabled={!postTypeFilters}
                         key={postType}
-                        label={<PostTypeIndicator type={postType} />}
+                        label={<span>
+                            <div className={classes.postTypeCheckboxColor} style={{ backgroundColor: PostTypeToColor[postType] }} />
+                            <i>{firstLetterUppercase(postType)}</i>
+                        </span>}
                         onChange={_togglePostTypeFilter}
-                        /* formControlLabelProps={{
-                            style: 
-                        }} */
                     />
                 ))}
             </div>

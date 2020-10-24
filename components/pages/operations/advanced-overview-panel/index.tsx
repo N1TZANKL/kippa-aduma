@@ -8,6 +8,7 @@ import { areSameDates } from "utils/helpers/dates";
 import { filterDuplicatesFromArray } from "utils/helpers/objects";
 import { OperationPostTypes } from "db/models/post";
 import { PostTypeToColor } from "../post";
+import { firstLetterUppercase } from "utils/helpers/strings";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -86,15 +87,15 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
                     {postsFromToday.length !== 1 ? (
                         `by ${todaysPostAuthors.length} different people`
                     ) : (
-                        <>
-                            By User <span className={classes.userText}>{todaysPostAuthors[0].nickname}</span>
-                        </>
-                    )}
+                            <>
+                                By User <span className={classes.userText}>{todaysPostAuthors[0].nickname}</span>
+                            </>
+                        )}
                 </PanelStat>
                 <PanelStat title={`${Object.keys(postTypesToAmount).length} Different post types:`}>
                     {Object.entries(postTypesToAmount).map(([key, value]) => (
                         <div key={key} className={classes.postTypeLine}>
-                            <span>{value}</span> <span style={{ color: PostTypeToColor[key] }}>{key}</span> <span>post{value !== 1 ? "s" : ""}</span>
+                            <span>{value}</span> <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i> <span>post{value !== 1 ? "s" : ""}</span>
                         </div>
                     ))}
                 </PanelStat>
