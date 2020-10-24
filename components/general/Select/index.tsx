@@ -1,9 +1,10 @@
 import React from "react";
-import MuiSelect, { SelectProps } from "@material-ui/core/Select";
+import MuiSelect, { SelectProps as MuiSelectProps } from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { firstLetterUppercase } from "utils/helpers/strings";
 
 type SelectionListItem = {
     label: string;
@@ -11,18 +12,20 @@ type SelectionListItem = {
     disabled?: boolean;
 };
 
-type CustomSelectProps = SelectProps & {
+export type SelectProps = MuiSelectProps & {
     selectionList: Array<SelectionListItem>;
     label?: string;
     helperText?: string;
     errorMessage?: string;
 };
 
-export default function Select(props: CustomSelectProps) {
-    const { selectionList, label, helperText, errorMessage, value, ...otherProps } = props;
+export const ArrayToSelectionList = (array: string[]) => array.map(s => ({ label: firstLetterUppercase(s), value: s }))
+
+export default function Select(props: SelectProps) {
+    const { selectionList, label, helperText, errorMessage, value, className, ...otherProps } = props;
 
     return (
-        <FormControl fullWidth>
+        <FormControl fullWidth className={className}>
             <InputLabel shrink={!!label} children={label} />
             <MuiSelect
                 {...otherProps}
