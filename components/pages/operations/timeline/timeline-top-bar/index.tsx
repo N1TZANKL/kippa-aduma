@@ -1,5 +1,5 @@
-import React from "react";
-import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles } from "interfaces";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
@@ -7,6 +7,8 @@ import clsx from "clsx";
 import { PanelButton, PanelTitle } from "components/general/Panel";
 import { spaceChildren } from "utils/helpers/css";
 import Input from "@material-ui/core/Input";
+import FormDialog from "components/dialogs/FormDialog";
+import CreatePostForm from "../../create-post-form";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -49,6 +51,11 @@ const styles = (theme: Theme) =>
 
 type TimelineTopBarProps = MuiStyles & { onSearch: Function; searchString?: string };
 function TimelineTopBar({ classes, onSearch, searchString }: TimelineTopBarProps) {
+
+    const [formOpen, setFormOpen] = useState(false);
+
+    const toggleFormOpen = () => setFormOpen(prev => !prev);
+
     return (
         <PanelTitle className={clsx(classes.titleRoot, classes.flexCenter)} withBackground>
             <span>Operation Timeline</span>
@@ -62,10 +69,13 @@ function TimelineTopBar({ classes, onSearch, searchString }: TimelineTopBarProps
                     className={classes.searchTextField}
                     startAdornment={<SearchIcon className={classes.searchIcon} />}
                 />
-                <PanelButton color="primary">
+                <PanelButton color="primary" onClick={toggleFormOpen}>
                     <EditIcon />
                     Create
                 </PanelButton>
+                <FormDialog title="Create Post" open={formOpen} onClose={toggleFormOpen}>
+                    <CreatePostForm />
+                </FormDialog>
             </div>
         </PanelTitle>
     );
