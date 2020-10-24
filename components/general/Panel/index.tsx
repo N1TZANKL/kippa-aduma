@@ -33,8 +33,6 @@ const styles = (theme: Theme) =>
             position: "relative",
         },
         button: {
-            fontSize: 16,
-            fontFamily: "monospace",
             padding: "1px 12px",
             display: "flex",
             alignItems: "center",
