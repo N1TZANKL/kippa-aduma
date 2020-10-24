@@ -1,5 +1,6 @@
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import * as muiColors from "@material-ui/core/colors";
+import { lighten } from "@material-ui/core";
 
 declare module "@material-ui/core/styles/createPalette" {
     interface Palette {
@@ -77,6 +78,22 @@ export default createMuiTheme({
             root: {
                 padding: 6,
             },
+        },
+        MuiFilledInput: {
+            root: { borderRadius: "0 !important " },
+            input: { padding: "10px 12px" },
+        },
+        MuiButton: {
+            contained: {
+                fontFamily: "monospace",
+                fontSize: 16,
+                backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.5),
+                "&:hover": {
+                    backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.3),
+                },
+            },
+            containedPrimary: { color: "white" },
+            containedSecondary: { color: "white" },
         },
     },
 });

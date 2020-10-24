@@ -37,6 +37,11 @@ export function spaceChildren(direction: "vertically" | "horizontally", spaceMar
     return notFirstChild({ [marginAttribute]: spaceMargin });
 }
 
+export function isElementOverflowing(el: HTMLElement): boolean {
+    if (!el) return false;
+    return el.offsetHeight < el.scrollHeight;
+}
+
 export function hexToRGB(hex: string, alpha: number): string {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);

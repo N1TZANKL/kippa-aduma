@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 import { UserSessionObject } from "interfaces";
 
-type StyleProps = { color: string | undefined; };
+type StyleProps = { color: string | undefined };
 
 const useStyles = makeStyles({
     root: {
@@ -18,12 +18,10 @@ const useStyles = makeStyles({
 type UserNicknameTextProps = Omit<TypographyProps, "children"> & {
     user: UserSessionObject;
     noUserColor?: boolean;
-    className?: string
+    className?: string;
 };
 
-export default function UserNicknameText({
-    user, noUserColor, className, ...typographyProps
-}: UserNicknameTextProps): React.ReactElement {
+export default function UserNicknameText({ user, noUserColor, className, ...typographyProps }: UserNicknameTextProps): React.ReactElement {
     const classes = useStyles({ color: noUserColor ? undefined : darken(user.color, 0.1) });
 
     return (
@@ -32,6 +30,7 @@ export default function UserNicknameText({
             title={`${user.nickname} (${user.username})`}
             {...typographyProps}
             className={clsx(classes.root, className)}
+            component="span"
         >
             {user.nickname}
         </Typography>
