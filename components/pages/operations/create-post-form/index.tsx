@@ -12,10 +12,25 @@ const validationSchema = Yup.object({
     happenedAt: Yup.date().required("Required")
 })
 
-export default function CreatePostForm() {
+type CreatePostFormProps = { addPost: Function; onClose?: Function };
+export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps) {
+
+    function onSubmit(formData: Object, setFormError: Function) {
+        return fetch("/api/post/postPost", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        }).then(async res => {
+            if (res.ok) {
+                res.json().then(newPost => addPost(newPost));
+                if (onClose) onClose();
+            }
+            else setFormError(await res.text());
+        }).catch(e => setFormError(e.message));
+    }
 
     return <FormBase validationSchema={validationSchema}
-        onSubmit={() => undefined}
+        onSubmit={onSubmit}
         initialValues={{ type: OperationPostTypes.UPDATE, happenedAt: new Date().toISOString(), description: "" }}>
         <TextField fieldKey="title" label="Title (Optional)" />
         <TextField fieldKey="description" type="multiline" />

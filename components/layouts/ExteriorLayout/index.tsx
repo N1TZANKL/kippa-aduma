@@ -3,10 +3,11 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import { lightBlue, red } from "@material-ui/core/colors";
+import { lightBlue } from "@material-ui/core/colors";
 
 import { Children, PageLayoutProps, MuiStyles } from "interfaces";
-import SubmitButton from "components/forms/SubmitButton";
+import { SubmitButton, FormError } from "components/forms";
+
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -47,14 +48,6 @@ const styles = (theme: Theme) => createStyles({
         flexDirection: "column",
         alignItems: "center",
     },
-    /* logo: {
-            marginRight: 45,
-            width: 72,
-            height: 72,
-            borderRadius: "50%",
-            backgroundColor: "white",
-            boxShadow: "0 2px 2px black",
-        }, */
     formTitle: {
         fontFamily: "monospace",
         textTransform: "uppercase",
@@ -99,11 +92,6 @@ const styles = (theme: Theme) => createStyles({
         cursor: "pointer",
         textDecoration: "underline",
     },
-    formError: {
-        color: red["400"],
-        fontWeight: 500,
-        fontFamily: "monospace",
-    },
 });
 
 type SubtitleProps = MuiStyles & { actionName: string; prompt: string; href: string };
@@ -112,18 +100,9 @@ export const FormSubtitle = withStyles(styles)(({
     classes, prompt, actionName, href,
 }: SubtitleProps) => (
         <Typography variant="subtitle1" className={classes.subtitle}>
-            {prompt}
-            {" "}
-        Click
-            {" "}
-            <a className={classes.subtitleLink} href={href}>
-                here
-        </a>
-            {" "}
-        to
-            {" "}
-            {actionName}
-        !
+            {prompt} Click
+            <a className={classes.subtitleLink} href={href}> here </a>
+            to {actionName}!
         </Typography>
     ));
 
@@ -149,7 +128,7 @@ export const Form = withStyles(styles)(({
                     {submitMessage}
                 </SubmitButton>
             </form>
-            {error && <Typography variant="h6" className={classes.formError}>{error}</Typography>}
+            {error && <FormError>{error}</FormError>}
         </>
     ));
 
@@ -157,7 +136,6 @@ function ExteriorPageLayout({ classes, children }: PageLayoutProps) {
     return (
         <div className={classes.root}>
             <Paper className={classes.banner}>
-                {/* <img className={classes.logo} src="/favicon.ico" alt="App-Logo" /> */}
                 <span>Kippa Aduma</span>
             </Paper>
             <div className={classes.formWrapper}>

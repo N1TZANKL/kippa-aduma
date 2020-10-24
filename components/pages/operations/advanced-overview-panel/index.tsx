@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, OperationPost } from "interfaces";
 import Panel, { PanelButton, PanelStat, PanelTitle } from "components/general/Panel";
@@ -49,24 +49,30 @@ type AdvancedOverviewPanelProps = MuiStyles & { className: string; posts: Array<
 function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
     const { classes, className, posts } = props;
 
-    const postsFromToday = posts.filter((post: OperationPost) => areSameDates(new Date().toISOString(), post.writtenAt));
-    const todaysPostAuthors = filterDuplicatesFromArray(postsFromToday.map((post: OperationPost) => post.author));
+    const postsFromToday = useMemo(() => posts.filter((post: OperationPost) => areSameDates(new Date().toISOString(), post.writtenAt)), [posts]);
+    const todaysPostAuthors = filterDuplicatesFromArray(postsFromToday.map((post: OperationPost) => post.author.nickname));
 
-    // initialize object
-    const postTypesToAmount = {} as { [key: string]: number };
-    for (const postType of Object.values(OperationPostTypes)) {
-        postTypesToAmount[postType] = 0;
-    }
+    const postTypesToAmount = useMemo(() => {
+        // initialize object
+        const typeToAmount = {} as { [key: string]: number };
+        for (const postType of Object.values(OperationPostTypes)) {
+            typeToAmount[postType] = 0;
+        }
 
-    // fill object with values
-    for (const post of posts) {
-        postTypesToAmount[post.type] = postTypesToAmount[post.type] + 1;
-    }
+        // fill object with values
+        for (const post of posts) {
+            typeToAmount[post.type] = typeToAmount[post.type] + 1;
+        }
 
-    // remove types that were not used
-    for (const [key, value] of Object.entries(postTypesToAmount)) {
-        if (!value) delete postTypesToAmount[key];
-    }
+        // remove types that were not used
+        for (const [key, value] of Object.entries(typeToAmount)) {
+            if (!value) delete typeToAmount[key];
+        }
+
+        return typeToAmount;
+    }, [posts]);
+
+    const differentPostTypesAmount = Object.keys(postTypesToAmount).length;
 
     return (
         <Panel className={className}>
@@ -82,18 +88,18 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
             <div className={classes.stats}>
                 <PanelStat title={`${posts.length} Posts written overall`}>since operation started</PanelStat>
                 <PanelStat title={`${postsFromToday.length} Post${postsFromToday.length !== 1 ? "s" : ""} written today`}>
-                    {postsFromToday.length !== 1 ? (
+                    {todaysPostAuthors.length !== 1 ? (
                         `by ${todaysPostAuthors.length} different people`
                     ) : (
                             <>
-                                By User <span className={classes.userText}>{todaysPostAuthors[0].nickname}</span>
+                                By User <span className={classes.userText}>{todaysPostAuthors[0]}</span>
                             </>
                         )}
                 </PanelStat>
-                <PanelStat title={`${Object.keys(postTypesToAmount).length} Different post types:`}>
-                    {Object.entries(postTypesToAmount).map(([key, value]) => (
+                <PanelStat title={differentPostTypesAmount === 1 ? "One post type used:" : `${differentPostTypesAmount} post types used:`}>
+                    {differentPostTypesAmount === 0 ? "(none used)" : Object.entries(postTypesToAmount).map(([key, value]) => (
                         <div key={key} className={classes.postTypeLine}>
-                            <span>{value}</span> <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i> <span>post{value !== 1 ? "s" : ""}</span>
+                            <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i> <span>({value} post{value !== 1 ? "s" : ""})</span>
                         </div>
                     ))}
                 </PanelStat>

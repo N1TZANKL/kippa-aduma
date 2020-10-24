@@ -18,7 +18,7 @@ export type OperationPostModel = {
     type: OperationPostTypes;
     writtenAt: string;
     happenedAt: string;
-    author: mongoose.Schema.Types.ObjectId;
+    author: mongoose.Types.ObjectId;
     attachments?: Array<OperationPostAttachment>;
 };
 

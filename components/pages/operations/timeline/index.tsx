@@ -54,12 +54,13 @@ type PostTimelineProps = MuiStyles & {
     className: string;
     currentSort: SortOptions;
     postTypeFilters: Array<OperationPostTypes> | null;
+    addPost: Function
 };
 function PostsTimeline(props: PostTimelineProps) {
+    const { classes, className, posts, addPost, currentSort, postTypeFilters } = props;
+
     const [shownPosts, setShownPosts] = useState<number>(5);
     const [searchString, setSearchString] = useState<string>("");
-
-    const { classes, className, posts, currentSort, postTypeFilters } = props;
 
     function _showMorePosts() {
         setShownPosts((prevState) => prevState + 5);
@@ -75,7 +76,7 @@ function PostsTimeline(props: PostTimelineProps) {
     function _filterPosts() {
         // shown + match search string + match post type filter
         return _filterPostsBySearchString(
-            posts.slice(0, shownPosts).filter((post: OperationPost) => !postTypeFilters || postTypeFilters.includes(post.type))
+            posts.filter((post: OperationPost) => !postTypeFilters || postTypeFilters.includes(post.type))
         );
     }
 
@@ -87,16 +88,16 @@ function PostsTimeline(props: PostTimelineProps) {
 
     return (
         <Panel className={className}>
-            <TimelineTopBar onSearch={setSearchString} />
+            <TimelineTopBar onSearch={setSearchString} addPost={addPost} />
             <div className={classes.timelineContent}>
                 <div className={classes.postsWrapper}>
                     {filteredPosts.length > 0 ? (
-                        _sortPosts(filteredPosts).map((post: OperationPost) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
+                        _sortPosts(filteredPosts).slice(0, shownPosts).map((post: OperationPost) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
                     ) : (
-                        <div className={classes.noPostsFoundWrapper}>
-                            <NotFoundAnimation text={`No${posts.length > 0 ? " matching " : " "}posts found`} />
-                        </div>
-                    )}
+                            <div className={classes.noPostsFoundWrapper}>
+                                <NotFoundAnimation text={`No${posts.length > 0 ? " matching" : ""} posts found`} />
+                            </div>
+                        )}
                 </div>
                 {filteredPosts.length > 0 && (
                     <>
@@ -109,10 +110,10 @@ function PostsTimeline(props: PostTimelineProps) {
                                 <ExpandMoreIcon /> <span>Show More Posts</span>
                             </Typography>
                         ) : (
-                            <Typography variant="subtitle1" className={clsx(classes.timelineBottomIndicator, classes.noMorePosts)}>
-                                No More Posts to Show
-                            </Typography>
-                        )}
+                                <Typography variant="subtitle1" className={clsx(classes.timelineBottomIndicator, classes.noMorePosts)}>
+                                    No More Posts to Show
+                                </Typography>
+                            )}
                     </>
                 )}
             </div>

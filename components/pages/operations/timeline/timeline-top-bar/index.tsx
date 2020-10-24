@@ -49,8 +49,8 @@ const styles = (theme: Theme) =>
         },
     });
 
-type TimelineTopBarProps = MuiStyles & { onSearch: Function; searchString?: string };
-function TimelineTopBar({ classes, onSearch, searchString }: TimelineTopBarProps) {
+type TimelineTopBarProps = MuiStyles & { onSearch: Function; searchString?: string; addPost: Function };
+function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTopBarProps) {
 
     const [formOpen, setFormOpen] = useState(false);
 
@@ -74,7 +74,7 @@ function TimelineTopBar({ classes, onSearch, searchString }: TimelineTopBarProps
                     Create
                 </PanelButton>
                 <FormDialog title="Create Post" open={formOpen} onClose={toggleFormOpen}>
-                    <CreatePostForm />
+                    <CreatePostForm addPost={addPost} onClose={toggleFormOpen} />
                 </FormDialog>
             </div>
         </PanelTitle>
