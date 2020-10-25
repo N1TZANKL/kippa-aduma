@@ -5,6 +5,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import NextPageIcon from '@material-ui/icons/ChevronRight';
 import PreviousPageIcon from '@material-ui/icons/ChevronLeft';
 import SortArrowIcon from '@material-ui/icons/ArrowDownward';
+import { Icons } from 'material-table';
 
 export default {
     SortArrow: SortArrowIcon,
@@ -14,4 +15,4 @@ export default {
     LastPage: LastPageIcon,
     NextPage: NextPageIcon,
     PreviousPage: PreviousPageIcon
-}
+} as Icons;

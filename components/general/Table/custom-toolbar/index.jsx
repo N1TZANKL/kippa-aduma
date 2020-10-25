@@ -1,10 +1,10 @@
 import React from 'react';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles, lighten } from '@material-ui/core/styles';
 import {MTableToolbar} from "material-table";
 
 const styles = (theme) => createStyles({
     root: {
-        boxShadow: "inset 1px 1px 25px rgba(255,255,255,0.15)",
+        backgroundColor: lighten(theme.constants.appBackground, 0.05),
         borderBottom: `2px solid ${theme.constants.appBackground}`,
         paddingRight: 15
     }

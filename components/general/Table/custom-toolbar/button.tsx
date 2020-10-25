@@ -1,12 +1,12 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Button, {ButtonProps} from '@material-ui/core/Button';
 import * as muiColors from '@material-ui/core/colors';
 import customTheme from "../custom-theme";
 import { Color } from '@material-ui/core';
+import { PanelButton, PanelButtonProps } from 'components/general/Panel';
 
-type ToolbarButtonProps = Omit<ButtonProps, "color"> & {color: keyof typeof muiColors, disabledText?: string}
-export default function ToolbarButton({color, disabledText, ...otherProps}: ToolbarButtonProps) {
+export type ButtonProps = Omit<PanelButtonProps, "color" | "classes"> & { color?: keyof typeof muiColors, disabledText?: string }
+export default function ToolbarButton({ color = "grey", disabledText, ...otherProps }: ButtonProps) {
 
     const chosenMuiColor: Color = muiColors[color];
 
@@ -22,7 +22,11 @@ export default function ToolbarButton({color, disabledText, ...otherProps}: Tool
             MuiButton: {
                 ...customTheme.overrides?.MuiButton,
                 containedPrimary: {
-                    textShadow: `0 2px 2px ${chosenMuiColor[700]}, 0 2px 2px rgba(0,0,0,0.5)`
+                    color: color === "grey" ? "black" : "white",
+                    textShadow: `0 2px 2px ${chosenMuiColor[700]}, 0 2px 2px rgba(0,0,0,0.3)`,
+                    "&:disabled": {
+                        textShadow: "none"
+                    }
                 }
             }
         }
@@ -30,7 +34,7 @@ export default function ToolbarButton({color, disabledText, ...otherProps}: Tool
 
     return <MuiThemeProvider theme={buttonTheme}>
         <div title={(otherProps.disabled && disabledText) || ""}>
-            <Button color="primary" variant="contained" {...otherProps} />
+            <PanelButton color="primary" {...otherProps} />
         </div>
     </MuiThemeProvider>;
 }
