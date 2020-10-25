@@ -1,4 +1,5 @@
 import { WithStyles } from "@material-ui/core/styles";
+import { CredModel } from "db/models/cred";
 
 import { ChatMessageModel } from "db/models/message";
 import { OperationPostModel } from "db/models/post";
@@ -19,3 +20,4 @@ export type SessionObject = { user: UserSessionObject };
 
 export type ChatMessage = ChatMessageModel & SessionObject;
 export type OperationPost = OperationPostModel & { author: UserSessionObject };
+export type Credential = CredModel;
