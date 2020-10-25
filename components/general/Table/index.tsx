@@ -31,16 +31,7 @@ function Table({ classes, actions, options = {}, ...props }: TableProps) {
             components={{ Toolbar: CustomToolbar }}
             icons={customIcons}
             {...props}
-            options={{
-                ...options, emptyRowsWhenPaging: false, searchFieldStyle: {
-                    border: `1px solid rgba(255,255,255,0.2)`,
-                    height: 35,
-                    padding: "2px 10px",
-                    fontSize: 14,
-                    borderRadius: 2,
-                    width: 275,
-                }
-            }}
+            options={{ ...options, emptyRowsWhenPaging: false, }}
             title={<div className={classes.titleDiv}>
                 <PanelTitle className={classes.titleText}>Actions:</PanelTitle>
                 {actions.map(({ name, children, icon, ...action }: TableAction, index) =>

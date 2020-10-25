@@ -61,6 +61,7 @@ function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTo
             <span>Operation Timeline</span>
             <div className={clsx(classes.flexCenter, classes.actionsRoot)}>
                 <Input
+                    disableUnderline
                     autoFocus
                     placeholder="Search for text, author, post type..."
                     value={searchString}
@@ -68,7 +69,7 @@ function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTo
                     className={classes.searchTextField}
                     startAdornment={<SearchIcon className={classes.searchIcon} />}
                 />
-                <PanelButton color="primary" onClick={toggleFormOpen}>
+                <PanelButton color="secondary" onClick={toggleFormOpen}>
                     <EditIcon />
                     Create
                 </PanelButton>
