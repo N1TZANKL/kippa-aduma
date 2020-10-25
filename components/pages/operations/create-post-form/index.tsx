@@ -32,10 +32,12 @@ export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps
     return <FormBase validationSchema={validationSchema}
         onSubmit={onSubmit}
         initialValues={{ type: OperationPostTypes.UPDATE, happenedAt: new Date().toISOString(), description: "" }}>
-        <TextField fieldKey="title" label="Title (Optional)" />
-        <TextField fieldKey="description" type="multiline" />
-        <TextField fieldKey="additionalInformation" label="Additional Info (Optional)" type="multiline" />
-        <Select fieldKey="type" selectionList={ArrayToSelectionList(Object.values(OperationPostTypes))} />
-        <DateTimeField fieldKey="happenedAt" />
+        {() => <>
+            <TextField fieldKey="title" label="Title (Optional)" />
+            <TextField fieldKey="description" type="multiline" />
+            <TextField fieldKey="additionalInformation" label="Additional Info (Optional)" type="multiline" />
+            <Select fieldKey="type" selectionList={ArrayToSelectionList(Object.values(OperationPostTypes))} />
+            <DateTimeField fieldKey="happenedAt" />
+        </>}
     </FormBase>;
 }

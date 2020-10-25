@@ -37,15 +37,15 @@ const styles = (theme: Theme) =>
         searchTextField: {
             backgroundColor: theme.constants.appBackgroundHighlight,
             border: `1px solid rgba(255,255,255,0.2)`,
-            height: 30,
+            height: 32,
             padding: "2px 10px",
             fontSize: 14,
             borderRadius: 2,
             width: 275,
         },
         searchIcon: {
-            color: "rgba(255,255,255,0.4)",
             marginRight: 5,
+            fontSize: 20
         },
     });
 
@@ -62,7 +62,6 @@ function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTo
             <div className={clsx(classes.flexCenter, classes.actionsRoot)}>
                 <Input
                     autoFocus
-                    disableUnderline
                     placeholder="Search for text, author, post type..."
                     value={searchString}
                     onChange={(e) => onSearch(e.target.value)}

@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
+import { Children, MuiStyles } from "interfaces";
 import Lottie from "react-lottie";
 import animationData from "./animation.json";
 import Fade from "@material-ui/core/Fade";
@@ -20,8 +20,8 @@ const styles = (theme: Theme) =>
         },
     });
 
-type NotFoundAnimationProps = MuiStyles & { text?: string };
-function NotFoundAnimation({ classes, text }: NotFoundAnimationProps) {
+type NotFoundAnimationProps = MuiStyles & { message?: Children };
+function NotFoundAnimation({ classes, message }: NotFoundAnimationProps) {
     const options = {
         loop: true,
         animationData,
@@ -36,8 +36,8 @@ function NotFoundAnimation({ classes, text }: NotFoundAnimationProps) {
                 <div className={classes.root}>
                     <Lottie options={options} height={300} width={300} />
                 </div>
-                <Typography variant="h6" className={classes.text} align="center">
-                    {text || "No result found to match your request"}
+                <Typography variant="h6" className={classes.text} align="center" component="div">
+                    {message || "No result found to match your request"}
                 </Typography>
             </div>
         </Fade>

@@ -17,7 +17,7 @@ const styles = () => ({
 type CustomCheckboxProps = MuiStyles &
     CheckboxProps & {
         label: Children;
-        formControlLabelProps?: Omit<FormControlLabelProps, "control|label">;
+        formControlLabelProps?: Omit<FormControlLabelProps, "control" | "label">;
         big?: boolean;
     };
 

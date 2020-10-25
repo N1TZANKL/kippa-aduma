@@ -95,7 +95,7 @@ function PostsTimeline(props: PostTimelineProps) {
                         _sortPosts(filteredPosts).slice(0, shownPosts).map((post: OperationPost) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
                     ) : (
                             <div className={classes.noPostsFoundWrapper}>
-                                <NotFoundAnimation text={`No${posts.length > 0 ? " matching" : ""} posts found`} />
+                                <NotFoundAnimation message={`No${posts.length > 0 ? " matching" : ""} posts found`} />
                             </div>
                         )}
                 </div>

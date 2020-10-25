@@ -15,7 +15,7 @@ const styles = () => createStyles({
     }
 });
 
-type FormBaseProps = MuiStyles & { initialValues: Object, validationSchema: ObjectSchema, onSubmit: Function; children: Children; };
+type FormBaseProps = MuiStyles & { initialValues: Object, validationSchema: ObjectSchema, onSubmit: Function; children: Function; };
 function FormBase({ classes, initialValues, validationSchema, onSubmit, children }: FormBaseProps) {
 
     const [formError, setFormError] = useState<string>("");
@@ -27,7 +27,7 @@ function FormBase({ classes, initialValues, validationSchema, onSubmit, children
         resetForm();
     }}>
         {(formikProps) => <Form className={classes.formRoot}>
-            {children}
+            {children(formikProps)}
             <SubmitButton isSubmitting={formikProps.isSubmitting} />
             {formError && <FormError>{formError}</FormError>}
         </Form>}
