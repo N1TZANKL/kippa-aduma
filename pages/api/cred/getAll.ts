@@ -4,7 +4,7 @@ import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 
 export async function getAllCreds(): Promise<CredModel[]> {
-    return credModel.find({}, "-_id").lean();
+    return credModel.find({}, "-_id -__v").lean();
 }
 
 export default withAuthenticatedUser(async (req, res) => {

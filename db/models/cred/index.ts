@@ -12,8 +12,8 @@ export type CredModel = {
     username: string;
     password: string;
     type: CredentialTypes;
-    worksOn: string; // if local - the host, if domain - the domain name, if applicative - the application
-    additionalInformation: string;
+    worksOn: string;
+    additionalInformation?: string;
 };
 
 const credSchema = new mongoose.Schema({

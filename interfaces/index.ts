@@ -7,6 +7,8 @@ import { OperationPostModel } from "db/models/post";
 export type MuiStyles = WithStyles<string>;
 export type Children = React.ReactNode;
 
+export type StringObject = { [key: string]: string };
+
 export type PageLayoutProps = MuiStyles & { children: Children };
 
 export type UserSessionObject = {

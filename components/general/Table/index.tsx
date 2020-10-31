@@ -5,10 +5,10 @@ import customIcons from "./custom-icons";
 import MaterialTable, { MaterialTableProps } from "material-table";
 import CustomToolbar from "./custom-toolbar";
 import TableButton, { ButtonProps } from "./custom-toolbar/button";
-import { MuiStyles } from 'interfaces';
+import { Children, MuiStyles } from 'interfaces';
 import { spaceChildren } from 'utils/helpers/css';
 import { PanelTitle } from '../Panel';
-import { SvgIconComponent } from '@material-ui/icons';
+//import { SvgIconComponent } from '@material-ui/icons';
 
 const styles = () => createStyles({
     titleDiv: {
@@ -21,7 +21,7 @@ const styles = () => createStyles({
     }
 });
 
-export type TableAction = ButtonProps & { name?: string; icon?: SvgIconComponent }
+export type TableAction = ButtonProps & { name?: string; icon?: Children }
 
 type TableProps = MuiStyles & Omit<MaterialTableProps<any>, "title" | "actions"> & { actions: TableAction[]; emptyValueText?: string }
 function Table({ classes, actions, options = {}, ...props }: TableProps) {
