@@ -8,7 +8,7 @@ import { PanelButton, PanelTitle } from "components/general/Panel";
 import { spaceChildren } from "utils/helpers/css";
 import Input from "@material-ui/core/Input";
 import FormDialog from "components/dialogs/FormDialog";
-import CreatePostForm from "../../create-post-form";
+import CreatePostForm from "../create-post-form";
 
 const styles = (theme: Theme) =>
     createStyles({

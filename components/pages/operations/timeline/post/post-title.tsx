@@ -4,7 +4,7 @@ import { MuiStyles } from "interfaces";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { OperationPostTypes } from "db/models/post";
-import PostTypeIndicator from "../post-type-indicator";
+import PostTypeIndicator from "./post-type-indicator";
 
 const styles = (theme: Theme) =>
     createStyles({

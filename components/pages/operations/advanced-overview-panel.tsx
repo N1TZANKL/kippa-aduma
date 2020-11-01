@@ -7,7 +7,7 @@ import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import { areSameDates } from "utils/helpers/dates";
 import { filterDuplicatesFromArray } from "utils/helpers/objects";
 import { OperationPostTypes } from "db/models/post";
-import { PostTypeToColor } from "../post";
+import { PostTypeToColor } from "./timeline/post";
 import { firstLetterUppercase } from "utils/helpers/strings";
 
 const styles = (theme: Theme) =>

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, OperationPost } from "interfaces";
 import Panel from "components/general/Panel";
-import Post from "components/pages/operations/post";
+import Post from "./post";
 import { notLastChild, spaceChildren } from "utils/helpers/css";
 import TimelineTopBar from "./timeline-top-bar";
 import Typography from "@material-ui/core/Typography";

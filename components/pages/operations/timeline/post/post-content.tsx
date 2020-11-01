@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiStyles, OperationPost } from "interfaces";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
-import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "../post-type-indicator";
+import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
 import { isElementOverflowing } from "utils/helpers/css";
 import * as muiColors from "@material-ui/core/colors";
 import Collapse from "@material-ui/core/Collapse";

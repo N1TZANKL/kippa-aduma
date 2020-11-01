@@ -8,7 +8,7 @@ import { OperationPostTypes } from "db/models/post";
 import { firstLetterUppercase } from "utils/helpers/strings";
 import Radio from "components/general/Radio";
 import { sortObjectArrayByDate } from "utils/helpers/dates";
-import { PostTypeToColor } from "../post";
+import { PostTypeToColor } from "./timeline/post";
 
 const styles = (theme: Theme) =>
     createStyles({

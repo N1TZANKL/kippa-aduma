@@ -4,7 +4,7 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 import { MuiStyles } from "interfaces";
 
-import { CustomButton } from "../new-message-line";
+import { CustomButton } from "./new-message-line";
 import { PanelTitle } from "components/general/Panel";
 
 const styles = () =>
