@@ -26,12 +26,13 @@ export default function Select(props: SelectProps) {
 
     return (
         <FormControl fullWidth className={className}>
-            <InputLabel shrink={!!label} children={label} />
+            <InputLabel shrink={!!label} children={label} error={!!errorMessage} />
             <MuiSelect
                 {...otherProps}
                 color="secondary"
                 value={value || ""}
                 displayEmpty
+                error={!!errorMessage}
                 renderValue={(val) => (val ? selectionList.find((item: SelectionListItem) => item.value === val)?.label : "(Select)")}
             >
                 {selectionList.map((item: SelectionListItem) => (
@@ -40,10 +41,11 @@ export default function Select(props: SelectProps) {
             </MuiSelect>
             {helperText ||
                 (errorMessage && (
-                    <FormHelperText error={!!errorMessage} component="legend" style={{ marginTop: -5, marginBottom: 3 }}>
+                    <FormHelperText error={!!errorMessage} component="legend" style={{ marginBottom: 3 }}>
                         {errorMessage || helperText}
                     </FormHelperText>
-                ))}
-        </FormControl>
+                ))
+            }
+        </FormControl >
     );
 }

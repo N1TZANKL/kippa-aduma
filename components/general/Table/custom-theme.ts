@@ -1,5 +1,6 @@
 import theme from "config/theme";
 import { createMuiTheme, lighten } from "@material-ui/core/styles";
+import {after, before} from "utils/helpers/css";
 
 const { overrides, ...baseTheme } = theme;
 
@@ -7,6 +8,7 @@ export default createMuiTheme({
     ...baseTheme,
     overrides: {
         ...overrides,
+        // general table overrides
         MuiTableRow: {
             root: {
                 cursor: "pointer",
@@ -36,6 +38,7 @@ export default createMuiTheme({
                 justifyContent: "center"
             }
         },
+        // selection checkbox overrides
         MuiCheckbox: {
             ...overrides?.MuiCheckbox,
             root: {
@@ -43,12 +46,37 @@ export default createMuiTheme({
                 marginRight: "15px !important",
             }
         },
+        // action button overrides
         MuiButton: {
             ...overrides?.MuiButton,
             root: {
                 margin: "0 5px",
                 padding: "4px 12px",
                 fontSize: "85%"
+            }
+        },
+        // search field overrides
+        MuiInput: {
+            root: {
+                border: `1px solid rgba(255,255,255,0.2)`,
+                height: 35,
+                padding: "2px 10px",
+                fontSize: 14,
+                borderRadius: 2,
+                width: 275,
+            },
+            underline: {
+                ...before("", {
+                    borderBottomWidth: "0px !important",
+                }),
+                ...after("", {
+                    borderBottomWidth: "0px !important",
+                }),
+            },
+        },
+        MuiSvgIcon: {
+            fontSizeSmall: {
+                pointerEvents: "none"
             }
         }
     }

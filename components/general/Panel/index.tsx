@@ -96,7 +96,7 @@ export const PanelBottomBar = withStyles(styles)(({ classes, className, children
     <div className={clsx(classes.bottomBar, classes.highlightBackground, className)}>{children}</div>
 ));
 
-type PanelButtonProps = MuiStyles & ButtonProps;
+export type PanelButtonProps = MuiStyles & ButtonProps;
 export const PanelButton = withStyles(styles)(({ classes, className, ...otherProps }: PanelButtonProps) => (
     <Button className={clsx(classes.button, className)} variant="contained" {...otherProps} />
 ));
