@@ -2,37 +2,6 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import * as muiColors from "@material-ui/core/colors";
 import { lighten } from "@material-ui/core";
 
-declare module "@material-ui/core/styles/createPalette" {
-    interface Palette {
-        primary: PaletteColor;
-        secondary: PaletteColor;
-    }
-    interface SimplePaletteColorOptions {
-        main: string;
-        dark?: string;
-        light?: string;
-        veryLight?: string;
-        superLight?: string;
-    }
-}
-
-declare module "@material-ui/core/styles/createMuiTheme" {
-    interface Theme {
-        constants: {
-            appBackground: string;
-            appBackgroundDark: string;
-            appBackgroundHighlight: string;
-        };
-    }
-    interface ThemeOptions {
-        constants: {
-            appBackground: string;
-            appBackgroundDark: string;
-            appBackgroundHighlight: string;
-        };
-    }
-}
-
 const primaryColor = muiColors.red;
 const secondaryColor = muiColors.lightBlue;
 
