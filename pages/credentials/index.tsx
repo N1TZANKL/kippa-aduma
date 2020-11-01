@@ -5,6 +5,7 @@ import { getAllCreds } from 'pages/api/cred/getAll';
 import PageLayout from "components/layouts/MainLayout";
 import { CreateCredForm, CredsTable } from "components/pages/creds";
 import FormDialog from "components/dialogs/FormDialog";
+import { resetServerContext } from "react-beautiful-dnd";
 
 type CredentialsPageProps = { user: UserSessionObject; creds: Array<Credential> }
 export default function CredentialsPage({ user, creds }: CredentialsPageProps) {
@@ -15,8 +16,12 @@ export default function CredentialsPage({ user, creds }: CredentialsPageProps) {
     const addCredential = (newCred: Credential) => setCreds(prevState => [...prevState, newCred]);
     const toggleFormOpen = () => setFormOpen(prevState => !prevState);
 
+    function removeDeletedCredsFromLocalState(ids: string[]) {
+        setCreds(prevState => prevState.filter(cred => !ids.includes(cred.id)));
+    }
+
     return <PageLayout user={user}>
-        <CredsTable creds={allCreds} toggleFormOpen={toggleFormOpen} />
+        <CredsTable creds={allCreds} toggleFormOpen={toggleFormOpen} removeDeletedCredsFromLocalState={removeDeletedCredsFromLocalState} />
         <FormDialog title="Add Cred" open={isFormOpen} onClose={toggleFormOpen}>
             <CreateCredForm addCred={addCredential} onClose={toggleFormOpen} />
         </FormDialog>
@@ -37,6 +42,10 @@ export const getServerSideProps = withUserSession(async () => {
         });
 
     await getCreds;
+
+    // this shit is called to prevent errors from react-beautiful-dnd library,
+    // which is used by material-table (the creds table's base library)
+    resetServerContext();
 
     return { props };
 });

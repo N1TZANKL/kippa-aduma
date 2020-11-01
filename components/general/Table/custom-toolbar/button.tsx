@@ -24,7 +24,7 @@ export default function ToolbarButton({ color = "grey", disabledText, ...otherPr
                 containedPrimary: {
                     color: color === "grey" ? "black" : "white",
                     textShadow: `0 2px 2px ${chosenMuiColor[700]}, 0 2px 2px rgba(0,0,0,0.3)`,
-                    "&:disabled": {
+                    "&$disabled": {
                         textShadow: "none"
                     }
                 }

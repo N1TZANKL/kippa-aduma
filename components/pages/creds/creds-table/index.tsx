@@ -11,6 +11,7 @@ import CredTypeCell from "./cred-type-cell";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { saveAs } from 'file-saver';
 import { unparse } from "papaparse";
+import ConfirmationDialog from 'components/dialogs/ConfirmationDialog';
 
 const styles = () => createStyles({
     buttonIcon: {
@@ -39,14 +40,20 @@ const fieldNameToTitle: StringObject = {
 type TableData = Credential & { tableData?: { id: number; checked: boolean } };
 type ExportedCred = Credential & { additionalInformation: string }; // exported cred has default additionalInformation value
 
-type CredsTableProps = MuiStyles & { creds: Credential[]; toggleFormOpen: () => void }
-function CredsTable({ classes, creds, toggleFormOpen }: CredsTableProps) {
+type CredsTableProps = MuiStyles & { creds: Credential[]; toggleFormOpen: () => void; removeDeletedCredsFromLocalState: (ids: string[]) => void };
+function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLocalState }: CredsTableProps) {
 
     const [selectedCreds, setSelectedCreds] = useState<Credential[]>([]);
+    const [isDeleting, setDeleting] = useState<boolean>(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+
+    function toggleDeleteDialogOpen() {
+        setDeleteDialogOpen(prevState => !prevState)
+    }
 
     function exportToCsv(creds: TableData[]) {
         // step 1: map the data, adding a default value to additionalInformation field (since it's optional)
-        const baseData = creds.map(({ additionalInformation = "-", tableData, ...cred }) => ({ ...cred, additionalInformation }));
+        const baseData = creds.map(({ additionalInformation = "-", ...cred }) => ({ ...cred, additionalInformation }));
 
         // step 2: replace each cred object's keys with their matching title from fieldNameToTitle
         const dataWithCorrectTitles = baseData.map((cred: ExportedCred) => {
@@ -57,22 +64,37 @@ function CredsTable({ classes, creds, toggleFormOpen }: CredsTableProps) {
         });
 
         // step 3: convert to CSV + download
-        const csvData = unparse(dataWithCorrectTitles);
+        const csvData = unparse(dataWithCorrectTitles, {
+            // specify exported columns to prevent unwanted fields from being exported
+            columns: Object.values(fieldNameToTitle)
+        });
         const file = new File([csvData], "creds.csv", { type: "text/csv;charset=utf-8" });
         saveAs(file);
     }
+
+    const batchDeleteCreds = useCallback(() => {
+        const ids = selectedCreds.map(c => c.id);
+
+        setDeleting(true);
+        fetch("/api/cred/deleteCreds", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ids })
+        }).then(() => {
+            removeDeletedCredsFromLocalState(ids);
+            setSelectedCreds(prevState => prevState.filter(c => !ids.includes(c.id)));
+        }).finally(() => setDeleting(false));
+    }, [selectedCreds]);
 
     function onSelectionChange(newSelectedCreds: TableData[]) {
         setSelectedCreds(newSelectedCreds);
     }
 
-    const exportCredentials = useCallback(() => exportToCsv(selectedCreds.length === 0 ? creds : selectedCreds), [creds, selectedCreds])
-
     const tableActions: TableAction[] = useMemo(() => ([
         { name: "Create", icon: <EditIcon className={classes.buttonIcon} />, onClick: toggleFormOpen, color: "lightBlue" },
-        { name: "Delete", icon: <DeleteIcon className={classes.buttonIcon} />, onClick: () => { }, color: "deepOrange" },
-        { name: `Export ${selectedCreds.length === 0 ? "All" : "Selected"} Creds`, icon: <SaveIcon className={classes.buttonIcon} />, onClick: exportCredentials, color: "green" },
-    ]), [creds, selectedCreds, exportCredentials]);
+        { name: `Export ${selectedCreds.length === 0 ? "All" : "Selected"} Creds`, icon: <SaveIcon className={classes.buttonIcon} />, onClick: () => exportToCsv(selectedCreds.length === 0 ? creds : selectedCreds), color: "green" },
+        { name: `${selectedCreds.length > 0 ? "Delete Selected Creds" : "Batch Delete"}`, disabled: isDeleting || selectedCreds.length === 0, disabledText: isDeleting ? "Deleting..." : "Select the cred/s you want to delete first!", icon: <DeleteIcon className={classes.buttonIcon} />, onClick: toggleDeleteDialogOpen, color: "deepOrange" },
+    ]), [creds, selectedCreds]);
 
     if (!creds || creds.length === 0)
         return <NotFoundAnimation
@@ -83,13 +105,20 @@ function CredsTable({ classes, creds, toggleFormOpen }: CredsTableProps) {
                 </PanelButton>
             </div>} />;
 
-    return <Table columns={[
-        { field: "username", title: fieldNameToTitle["username"], width: "15%" },
-        { field: "password", title: fieldNameToTitle["password"], render: (rowData: Credential) => <PasswordCell password={rowData.password} />, width: "15%" },
-        { field: "type", title: fieldNameToTitle["type"], render: (rowData: Credential) => <CredTypeCell type={rowData.type} />, width: "10%" },
-        { field: "worksOn", title: fieldNameToTitle["worksOn"], width: "20%" },
-        { field: "additionalInformation", title: fieldNameToTitle["additionalInformation"], render: (rowData: Credential) => rowData.additionalInformation || "-", width: "20%" },
-    ]} data={creds} actions={tableActions} options={{ selection: true }} onSelectionChange={onSelectionChange} />
+    return <>
+        <Table columns={[
+            { field: "username", title: fieldNameToTitle["username"], width: "15%" },
+            { field: "password", title: fieldNameToTitle["password"], render: (rowData: Credential) => <PasswordCell password={rowData.password} />, width: "15%" },
+            { field: "type", title: fieldNameToTitle["type"], render: (rowData: Credential) => <CredTypeCell type={rowData.type} />, width: "10%" },
+            { field: "worksOn", title: fieldNameToTitle["worksOn"], width: "20%" },
+            { field: "additionalInformation", title: fieldNameToTitle["additionalInformation"], render: (rowData: Credential) => rowData.additionalInformation || "-", width: "20%" },
+        ]} data={creds} actions={tableActions} options={{ selection: true }} onSelectionChange={onSelectionChange} />
+        <ConfirmationDialog confirmText="Yes, Delete creds" denyText="Return" open={deleteDialogOpen} onClose={toggleDeleteDialogOpen} onConfirm={batchDeleteCreds}>
+            <div>Are you sure you want to delete these credentials?</div>
+            <i>This action is irreversible!</i>
+        </ConfirmationDialog>
+    </>;
+
 }
 
 export default withStyles(styles)(CredsTable);
