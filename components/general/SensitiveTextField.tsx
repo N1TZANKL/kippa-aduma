@@ -4,7 +4,7 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-import TextField, { TextFieldProps } from "../TextField";
+import TextField, { TextFieldProps } from "./TextField";
 
 type Props = Omit<TextFieldProps, "type">;
 
