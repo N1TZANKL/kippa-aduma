@@ -1,7 +1,7 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import * as muiColors from '@material-ui/core/colors';
-import customTheme from "../custom-theme";
+import customTheme from "../utils/theme";
 import { Color } from '@material-ui/core';
 import { PanelButton, PanelButtonProps } from 'components/general/Panel';
 

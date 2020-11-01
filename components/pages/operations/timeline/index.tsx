@@ -8,7 +8,7 @@ import TimelineTopBar from "./timeline-top-bar";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
-import NotFoundAnimation from "components/animations/not-found";
+import { NotFoundAnimation } from "components/animations";
 import { SortOptions, SortOptionsToFunction } from "../sort-filter-panel";
 import { OperationPostTypes } from "db/models/post";
 

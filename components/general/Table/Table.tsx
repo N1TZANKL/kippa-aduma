@@ -1,10 +1,10 @@
 import React from 'react';
 import { withStyles, createStyles, MuiThemeProvider } from '@material-ui/core/styles';
-import customTheme from "./custom-theme";
-import customIcons from "./custom-icons";
+import customTheme from "./utils/theme";
+import customIcons from "./utils/icons";
 import MaterialTable, { MaterialTableProps } from "material-table";
-import CustomToolbar from "./custom-toolbar";
-import TableButton, { ButtonProps } from "./custom-toolbar/button";
+import CustomToolbar from "./components/toolbar";
+import TableButton, { ButtonProps } from "./components/action-button";
 import { Children, MuiStyles } from 'interfaces';
 import { spaceChildren } from 'utils/helpers/css';
 import { PanelTitle } from '../Panel';

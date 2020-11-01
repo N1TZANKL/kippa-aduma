@@ -5,8 +5,8 @@ import clsx from "clsx";
 
 import { PageLayoutProps, UserSessionObject } from "interfaces";
 
-import AppBar from "./app-bar";
-import Sidebar from "./side-bar";
+import AppBar from "./components/app-bar";
+import Sidebar from "./components/side-bar";
 
 const styles = (theme: Theme) => createStyles({
     pageRoot: {
@@ -32,7 +32,7 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-function PageLayout({
+function MainLayout({
     classes, children, noPadding, user,
 }: PageLayoutProps & { noPadding?: boolean; user?: UserSessionObject }) {
     return (
@@ -48,4 +48,4 @@ function PageLayout({
     );
 }
 
-export default withStyles(styles)(PageLayout);
+export default withStyles(styles)(MainLayout);

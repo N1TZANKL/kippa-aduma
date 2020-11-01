@@ -1,9 +1,9 @@
 import React, { useMemo, useCallback, useState } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { MuiStyles, Credential, StringObject } from 'interfaces';
-import Table, { TableAction } from "components/general/Table";
+import Table, { TableAction } from "components/general/Table/Table";
 import SaveIcon from '@material-ui/icons/Save';
-import NotFoundAnimation from "components/animations/not-found";
+import { NotFoundAnimation } from "components/animations";
 import EditIcon from '@material-ui/icons/Edit';
 import { PanelButton } from "components/general/Panel";
 import PasswordCell from "./password-cell";
