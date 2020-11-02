@@ -10,7 +10,8 @@
         "airbnb/hooks",
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -21,10 +22,7 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
+    "plugins": ["react", "@typescript-eslint", "prettier"],
     "settings": {
         "import/resolver": {
             "typescript": {
@@ -36,57 +34,26 @@
         "import/order": [
             "error",
             {
-                "groups": [
-                    "builtin",
-                    "external",
-                    "internal",
-                    [
-                        "sibling",
-                        "parent"
-                    ]
-                ],
+                "groups": ["builtin", "external", "internal", ["sibling", "parent"]],
                 "newlines-between": "always"
             }
         ],
         "import/prefer-default-export": "off",
-        "max-len": [
-            "error",
-            130
-        ],
-        "@typescript-eslint/indent": [
-            "error",
-            4
-        ],
-        "react/jsx-indent": [
-            "error",
-            4
-        ],
-        "react/jsx-indent-props": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "@typescript-eslint/quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "arrow-parens": [
-            "error",
-            "as-needed"
-        ],
+        "max-len": ["error", 130],
+        "@typescript-eslint/indent": ["error", 4],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "@typescript-eslint/quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "arrow-parens": ["error", "as-needed"],
         "new-cap": "off",
         "no-underscore-dangle": "warn",
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
         "react/require-default-props": "off",
-        "@typescript-eslint/no-use-before-define": "off"
+        "@typescript-eslint/no-use-before-define": "off",
+        "prettier/prettier": ["error"]
     },
     "globals": {
         "React": "readonly"
