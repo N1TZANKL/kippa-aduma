@@ -26,6 +26,7 @@ const styles = () =>
             background: 'url("/favicon-blend.png") center no-repeat',
             backgroundSize: 600,
             backgroundBlendMode: "soft-light",
+            flexGrow: 1,
         },
         panelContent: {
             display: "flex",
