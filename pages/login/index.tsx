@@ -37,7 +37,7 @@ function Login() {
                 setIsLoading(false);
             }
         },
-        [router, usernameInput, passwordInput],
+        [router, usernameInput, passwordInput]
     );
 
     return (

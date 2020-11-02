@@ -44,10 +44,9 @@ app.prepare().then(() => {
 function distributeNewChatMessages(io: socketIO.Server) {
     const changeStream = messageModel.watch([{ $match: { operationType: "insert" } }], { fullDocument: "updateLookup" });
 
-    changeStream.on("change", async change => {
+    changeStream.on("change", async (change) => {
         if (change.operationType === "insert") {
-            const populatedDocument = await new messageModel(change.fullDocument)
-                .populate("user", "-_id -passwordHash").execPopulate();
+            const populatedDocument = await new messageModel(change.fullDocument).populate("user", "-_id -passwordHash").execPopulate();
             io.sockets.emit("new message", populatedDocument);
         }
     });

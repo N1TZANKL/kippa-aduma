@@ -43,14 +43,20 @@ function Operations(props: OperationsProps) {
     const postTypeFiltersState = useState<Array<OperationPostTypes> | null>(null);
 
     function addPost(newPost: OperationPost) {
-        setPosts(prevState => [...prevState, newPost]);
+        setPosts((prevState) => [...prevState, newPost]);
     }
 
     return (
         <PageLayout user={user}>
             <div className={classes.root}>
                 <SortFilterPanel className={classes.optionsRoot} sortState={sortState} postTypeFiltersState={postTypeFiltersState} />
-                <Timeline posts={allPosts} addPost={addPost} className={classes.timelineRoot} currentSort={sortState[0]} postTypeFilters={postTypeFiltersState[0]} />
+                <Timeline
+                    posts={allPosts}
+                    addPost={addPost}
+                    className={classes.timelineRoot}
+                    currentSort={sortState[0]}
+                    postTypeFilters={postTypeFiltersState[0]}
+                />
                 <AdvancedOverviewPanel className={classes.optionsRoot} posts={allPosts} />
             </div>
         </PageLayout>

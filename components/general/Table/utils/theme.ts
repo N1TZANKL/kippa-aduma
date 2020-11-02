@@ -1,6 +1,6 @@
 import theme from "config/theme";
 import { createMuiTheme, lighten } from "@material-ui/core/styles";
-import {after, before} from "utils/helpers/css";
+import { after, before } from "utils/helpers/css";
 
 const { overrides, ...baseTheme } = theme;
 
@@ -20,23 +20,22 @@ export default createMuiTheme({
                 backgroundColor: theme.constants.appBackgroundHighlight,
                 padding: "0 20px",
             },
-
         },
         MuiTableCell: {
             head: {
                 backgroundColor: `${lighten(theme.constants.appBackgroundHighlight, 0.03)} !important`,
                 font: "bold 18px monospace !important",
-                boxShadow: "rgba(0,0,0,0.2) 0 4px 1px -2px !important"
+                boxShadow: "rgba(0,0,0,0.2) 0 4px 1px -2px !important",
             },
         },
         MuiTablePagination: {
             input: {
-                marginRight: "15px !important"
+                marginRight: "15px !important",
             },
             select: {
                 display: "flex",
-                justifyContent: "center"
-            }
+                justifyContent: "center",
+            },
         },
         // selection checkbox overrides
         MuiCheckbox: {
@@ -44,7 +43,7 @@ export default createMuiTheme({
             root: {
                 marginLeft: "15px !important",
                 marginRight: "15px !important",
-            }
+            },
         },
         // action button overrides
         MuiButton: {
@@ -52,8 +51,8 @@ export default createMuiTheme({
             root: {
                 margin: "0 5px",
                 padding: "4px 12px",
-                fontSize: "85%"
-            }
+                fontSize: "85%",
+            },
         },
         // search field overrides
         MuiInput: {
@@ -76,8 +75,8 @@ export default createMuiTheme({
         },
         MuiSvgIcon: {
             fontSizeSmall: {
-                pointerEvents: "none"
-            }
-        }
-    }
-})
+                pointerEvents: "none",
+            },
+        },
+    },
+});

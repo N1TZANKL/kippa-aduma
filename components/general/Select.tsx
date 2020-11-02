@@ -19,7 +19,7 @@ export type SelectProps = MuiSelectProps & {
     errorMessage?: string;
 };
 
-export const ArrayToSelectionList = (array: string[]) => array.map(s => ({ label: firstLetterUppercase(s), value: s }))
+export const ArrayToSelectionList = (array: string[]) => array.map((s) => ({ label: firstLetterUppercase(s), value: s }));
 
 export default function Select(props: SelectProps) {
     const { selectionList, label, helperText, errorMessage, value, className, ...otherProps } = props;
@@ -44,8 +44,7 @@ export default function Select(props: SelectProps) {
                     <FormHelperText error={!!errorMessage} component="legend" style={{ marginBottom: 3 }}>
                         {errorMessage || helperText}
                     </FormHelperText>
-                ))
-            }
-        </FormControl >
+                ))}
+        </FormControl>
     );
 }

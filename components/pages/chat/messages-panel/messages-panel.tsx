@@ -31,8 +31,8 @@ const styles = () =>
         panelContent: {
             display: "flex",
             flexDirection: "column",
-            height: "calc(100% - 50px)"
-        }
+            height: "calc(100% - 50px)",
+        },
     });
 
 type MessagesPanelProps = MuiStyles & { user: UserSessionObject; className: string; messages: Array<ChatMessage> };
@@ -44,7 +44,6 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
 
     // Socket connection initialization
     useEffect(() => {
-
         const socket = socketIOClient(`http://localhost:${process.env.CHAT_PORT}`);
         socket.on("new message", onReceiveNewMessage);
         return () => {
@@ -59,7 +58,7 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
     function isContainerScrolledToBottom(): boolean {
         if (!containerRef.current) return false;
 
-        return (containerRef.current.scrollTop === (containerRef.current.scrollHeight - containerRef.current.offsetHeight))
+        return containerRef.current.scrollTop === containerRef.current.scrollHeight - containerRef.current.offsetHeight;
     }
 
     function toggleScrollButtonAccordingToScrollPosition() {
@@ -76,7 +75,7 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
             containerRef.current.addEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
             return () => containerRef.current?.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
         }
-    }, [containerRef.current])
+    }, [containerRef.current]);
 
     function onReceiveNewMessage(newMessage: ChatMessage) {
         setMessages((prevMessages) => [...prevMessages, newMessage]); // TODO: read about Mutable

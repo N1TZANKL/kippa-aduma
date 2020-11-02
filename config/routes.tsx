@@ -1,7 +1,5 @@
 import React from "react";
-import {
-    mdiHome, mdiAccountKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiClipboardList,
-} from "@mdi/js";
+import { mdiHome, mdiAccountKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiClipboardList } from "@mdi/js";
 import { CSSProperties } from "@material-ui/styles";
 
 export type Route = {

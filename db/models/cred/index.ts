@@ -21,7 +21,7 @@ const credSchema = new mongoose.Schema({
     password: String,
     type: String,
     worksOn: String,
-    additionalInformation: String
+    additionalInformation: String,
 });
 
 export default mongoose.models?.[Models.CREDENTIAL] || mongoose.model<CredModel & mongoose.Document>(Models.CREDENTIAL, credSchema);

@@ -91,17 +91,22 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
                     {todaysPostAuthors.length !== 1 ? (
                         `by ${todaysPostAuthors.length} different people`
                     ) : (
-                            <>
-                                By User <span className={classes.userText}>{todaysPostAuthors[0]}</span>
-                            </>
-                        )}
+                        <>
+                            By User <span className={classes.userText}>{todaysPostAuthors[0]}</span>
+                        </>
+                    )}
                 </PanelStat>
                 <PanelStat title={differentPostTypesAmount === 1 ? "One post type used:" : `${differentPostTypesAmount} post types used:`}>
-                    {differentPostTypesAmount === 0 ? "(none used)" : Object.entries(postTypesToAmount).map(([key, value]) => (
-                        <div key={key} className={classes.postTypeLine}>
-                            <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i> <span>({value} post{value !== 1 ? "s" : ""})</span>
-                        </div>
-                    ))}
+                    {differentPostTypesAmount === 0
+                        ? "(none used)"
+                        : Object.entries(postTypesToAmount).map(([key, value]) => (
+                              <div key={key} className={classes.postTypeLine}>
+                                  <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i>{" "}
+                                  <span>
+                                      ({value} post{value !== 1 ? "s" : ""})
+                                  </span>
+                              </div>
+                          ))}
                 </PanelStat>
             </div>
         </Panel>

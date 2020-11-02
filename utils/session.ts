@@ -1,9 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 
 import { withIronSession as wis, SessionOptions } from "next-iron-session";
-import {
-    NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse, GetServerSidePropsContext,
-} from "next";
+import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse, GetServerSidePropsContext } from "next";
 
 import userModel from "db/models/user";
 import { UserSessionObject } from "interfaces";
@@ -33,12 +31,11 @@ export function withAuthenticatedUser(handler: NextHandlerWithUser): (...args: a
 
 export type WithUser<T> = T & { user: UserSessionObject };
 
-type ServerSidePropsWithUser<T> =
-    (context: GetServerSidePropsContext, user: UserSessionObject) => Promise<GetServerSidePropsResult<T>>;
+type ServerSidePropsWithUser<T> = (context: GetServerSidePropsContext, user: UserSessionObject) => Promise<GetServerSidePropsResult<T>>;
 
 export function withUserSession<T = any>(handler?: ServerSidePropsWithUser<T>): GetServerSideProps<WithUser<T>> {
     return wis(
-        (async ctx => {
+        (async (ctx) => {
             const user = await assertUser(ctx.req, ctx.res);
             if (!user) {
                 ctx.res.writeHead(302, { Location: "/login" }).end();
@@ -47,11 +44,11 @@ export function withUserSession<T = any>(handler?: ServerSidePropsWithUser<T>): 
 
             if (!handler) return { props: { user } };
 
-            const result: GetServerSidePropsResult<WithUser<T>> = await handler(ctx, user) as any;
+            const result: GetServerSidePropsResult<WithUser<T>> = (await handler(ctx, user)) as any;
             result.props.user = user;
             return result;
         }) as GetServerSideProps,
-        SESSION_OPTIONS,
+        SESSION_OPTIONS
     );
 }
 

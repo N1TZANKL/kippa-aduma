@@ -45,16 +45,15 @@ const styles = (theme: Theme) =>
         },
         searchIcon: {
             marginRight: 5,
-            fontSize: 20
+            fontSize: 20,
         },
     });
 
 type TimelineTopBarProps = MuiStyles & { onSearch: Function; searchString?: string; addPost: Function };
 function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTopBarProps) {
-
     const [formOpen, setFormOpen] = useState(false);
 
-    const toggleFormOpen = () => setFormOpen(prev => !prev);
+    const toggleFormOpen = () => setFormOpen((prev) => !prev);
 
     return (
         <PanelTitle className={clsx(classes.titleRoot, classes.flexCenter)} withBackground>

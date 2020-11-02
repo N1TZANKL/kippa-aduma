@@ -21,7 +21,10 @@ export default withIronSession(async (req, res) => {
         const color = generateRandomColor(); // TODO: generate better colors?
 
         const result = await addUser({
-            username, nickname, passwordHash, color,
+            username,
+            nickname,
+            passwordHash,
+            color,
         });
 
         log(`User '${username} (${nickname})' added successfully!`, LogTypes.SUCCESS);

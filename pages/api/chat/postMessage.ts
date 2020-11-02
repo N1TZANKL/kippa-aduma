@@ -17,15 +17,15 @@ async function createMessage(userId: string, message: string | FileMessage) {
         user: mongoose.Types.ObjectId(userId),
         ...(typeof message === "string"
             ? {
-                type: "text",
-                message,
-            }
+                  type: "text",
+                  message,
+              }
             : {
-                type: "file",
-                message: message.name,
-                fileType: message.type,
-                fileSize: message.size,
-            }),
+                  type: "file",
+                  message: message.name,
+                  fileType: message.type,
+                  fileSize: message.size,
+              }),
     };
 
     const newMessage = new messageModel(dbMessage);

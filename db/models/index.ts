@@ -5,7 +5,7 @@ enum Models {
     SYSTEM_USER = "user",
     CHAT_MESSAGE = "message",
     OPERATION_POST = "post",
-    CREDENTIAL = "cred"
+    CREDENTIAL = "cred",
 }
 
 export default Models;

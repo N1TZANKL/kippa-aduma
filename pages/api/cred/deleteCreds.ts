@@ -5,9 +5,11 @@ import credModel from "db/models/cred";
 import mongoose from "mongoose";
 
 async function deleteCreds(credIds: string[]) {
-    return credModel.remove({_id: {
-        $in: credIds.map(id => mongoose.Types.ObjectId(id))
-    }});
+    return credModel.remove({
+        _id: {
+            $in: credIds.map((id) => mongoose.Types.ObjectId(id)),
+        },
+    });
 }
 
 export default withAuthenticatedUser(async (req, res) => {

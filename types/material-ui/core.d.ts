@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {createMuiTheme, createPalette} from "@material-ui/core/styles";
+import { createMuiTheme, createPalette } from "@material-ui/core/styles";
 
 declare module "@material-ui/core/styles/createPalette" {
     interface Palette {

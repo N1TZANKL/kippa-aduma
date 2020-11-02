@@ -26,8 +26,8 @@ const styles = (theme: Theme) =>
             borderRadius: "50%",
             backgroundColor: "transparent",
             marginRight: 5,
-            display: "inline-block"
-        }
+            display: "inline-block",
+        },
     });
 
 export enum SortOptions {
@@ -104,10 +104,12 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                         checked={!postTypeFilters || postTypeFilters.includes(postType)}
                         disabled={!postTypeFilters}
                         key={postType}
-                        label={<span>
-                            <div className={classes.postTypeCheckboxColor} style={{ backgroundColor: PostTypeToColor[postType] }} />
-                            <i>{firstLetterUppercase(postType)}</i>
-                        </span>}
+                        label={
+                            <span>
+                                <div className={classes.postTypeCheckboxColor} style={{ backgroundColor: PostTypeToColor[postType] }} />
+                                <i>{firstLetterUppercase(postType)}</i>
+                            </span>
+                        }
                         onChange={_togglePostTypeFilter}
                     />
                 ))}

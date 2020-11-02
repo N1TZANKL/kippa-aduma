@@ -5,25 +5,26 @@ import Card from "@material-ui/core/Card";
 
 import { MuiStyles } from "interfaces";
 
-const styles = () => createStyles({
-    root: {
-        color: "white",
-        borderRadius: 3,
-        height: 38,
-        width: 38,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: "bold",
-        fontFamily: "monospace",
-        fontSize: 16,
-        textTransform: "uppercase",
-    },
-    circledAvatar: {
-        borderRadius: "50%",
-    },
-    border: { border: "2px solid white" },
-});
+const styles = () =>
+    createStyles({
+        root: {
+            color: "white",
+            borderRadius: 3,
+            height: 38,
+            width: 38,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontWeight: "bold",
+            fontFamily: "monospace",
+            fontSize: 16,
+            textTransform: "uppercase",
+        },
+        circledAvatar: {
+            borderRadius: "50%",
+        },
+        border: { border: "2px solid white" },
+    });
 
 type UserAvatarProps = MuiStyles & {
     nickname: string;
@@ -33,9 +34,7 @@ type UserAvatarProps = MuiStyles & {
     withBorder?: boolean;
 };
 
-function UserAvatar({
-    classes, size, variant, withBorder, color, nickname,
-}: UserAvatarProps) {
+function UserAvatar({ classes, size, variant, withBorder, color, nickname }: UserAvatarProps) {
     return (
         <Card
             className={clsx(classes.root, variant === "circle" && classes.circledAvatar, withBorder && classes.border)}

@@ -6,16 +6,17 @@ import { SvgIconComponent } from "@material-ui/icons";
 
 import { MuiStyles } from "interfaces";
 
-const styles = () => createStyles({
-    menuItemWrapper: {
-        display: "flex",
-        alignItems: "center",
-        padding: "5px 0",
-    },
-    menuItemIcon: {
-        marginRight: 12,
-    },
-});
+const styles = () =>
+    createStyles({
+        menuItemWrapper: {
+            display: "flex",
+            alignItems: "center",
+            padding: "5px 0",
+        },
+        menuItemIcon: {
+            marginRight: 12,
+        },
+    });
 
 type MenuItemProps = {
     title: string;
@@ -23,26 +24,23 @@ type MenuItemProps = {
     onClick?: React.MouseEventHandler;
 };
 
-type MenuProps = MuiStyles & PopoverProps & {
-    anchorEl: PopoverProps["anchorEl"];
-    onClose: PopoverProps["onClose"];
-    items: Array<MenuItemProps>;
-};
+type MenuProps = MuiStyles &
+    PopoverProps & {
+        anchorEl: PopoverProps["anchorEl"];
+        onClose: PopoverProps["onClose"];
+        items: Array<MenuItemProps>;
+    };
 
 function Menu(props: MenuProps) {
     const { classes, items, ...popoverProps } = props;
 
     return (
         <Popover {...popoverProps}>
-            {items.length > 0
-                && items.map((menuItem, index) => {
+            {items.length > 0 &&
+                items.map((menuItem, index) => {
                     const Icon = menuItem.icon;
                     return (
-                        <MenuItem
-                            key={menuItem.title}
-                            divider={index !== items.length - 1}
-                            onClick={menuItem.onClick}
-                        >
+                        <MenuItem key={menuItem.title} divider={index !== items.length - 1} onClick={menuItem.onClick}>
                             <div className={classes.menuItemWrapper}>
                                 {Icon && <Icon className={classes.menuItemIcon} />}
                                 {menuItem.title}

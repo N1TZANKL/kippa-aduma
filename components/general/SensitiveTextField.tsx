@@ -10,7 +10,7 @@ type Props = Omit<TextFieldProps, "type">;
 
 function SensitiveTextField(props: Props): React.ReactElement {
     const [showInput, setInputVisibility] = useState(false);
-    const onIconClick = useCallback(() => setInputVisibility(state => !state), []);
+    const onIconClick = useCallback(() => setInputVisibility((state) => !state), []);
 
     return (
         <TextField

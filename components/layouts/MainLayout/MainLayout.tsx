@@ -8,41 +8,38 @@ import { PageLayoutProps, UserSessionObject } from "interfaces";
 import AppBar from "./components/app-bar";
 import Sidebar from "./components/side-bar";
 
-const styles = (theme: Theme) => createStyles({
-    pageRoot: {
-        height: "100%",
-        backgroundColor: theme.constants.appBackground,
-    },
-    wrapper: {
-        position: "absolute",
-        marginTop: 65,
-        height: "calc(100% - 65px)",
-        display: "flex",
-        overflow: "hidden",
-        width: "100%",
-    },
-    childrenWrapper: {
-        borderRadius: 0,
-        padding: 20,
-        marginLeft: 70,
-        width: "100%",
-    },
-    noPadding: {
-        padding: 0,
-    },
-});
+const styles = (theme: Theme) =>
+    createStyles({
+        pageRoot: {
+            height: "100%",
+            backgroundColor: theme.constants.appBackground,
+        },
+        wrapper: {
+            position: "absolute",
+            marginTop: 65,
+            height: "calc(100% - 65px)",
+            display: "flex",
+            overflow: "hidden",
+            width: "100%",
+        },
+        childrenWrapper: {
+            borderRadius: 0,
+            padding: 20,
+            marginLeft: 70,
+            width: "100%",
+        },
+        noPadding: {
+            padding: 0,
+        },
+    });
 
-function MainLayout({
-    classes, children, noPadding, user,
-}: PageLayoutProps & { noPadding?: boolean; user?: UserSessionObject }) {
+function MainLayout({ classes, children, noPadding, user }: PageLayoutProps & { noPadding?: boolean; user?: UserSessionObject }) {
     return (
         <div className={classes.pageRoot}>
             <AppBar user={user} />
             <div className={classes.wrapper}>
                 <Sidebar />
-                <Paper className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)}>
-                    {children}
-                </Paper>
+                <Paper className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)}>{children}</Paper>
             </div>
         </div>
     );

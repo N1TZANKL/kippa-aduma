@@ -8,7 +8,7 @@ import { MuiStyles } from "interfaces";
 import TextField from "components/general/TextField";
 import { PanelBottomBar } from "components/general/Panel";
 import EmojiPicker from "./emoji-picker";
-import Card from '@material-ui/core/Card';
+import Card from "@material-ui/core/Card";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -24,7 +24,7 @@ const styles = (theme: Theme) =>
             margin: "10px 15px",
             overflow: "auto",
             minHeight: 35,
-            maxHeight: 175
+            maxHeight: 175,
         },
         iconButton: {
             padding: 6,
@@ -63,13 +63,13 @@ function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
             // [CTRL + Enter]: Send message
             if (e.key === "Enter" && e.ctrlKey && !e.shiftKey) {
                 onSubmit();
-                setMessageText("")
-            };
+                setMessageText("");
+            }
             // [CTRL + E]: Toggle emoji picker
             if (e.key === "e" && e.ctrlKey) {
                 e.preventDefault();
                 toggleEmojiPicker();
-            };
+            }
         },
         [onSubmit]
     );
@@ -78,19 +78,17 @@ function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
         window.addEventListener("keydown", handleKeyboardShortcuts);
         return () => {
             window.removeEventListener("keydown", handleKeyboardShortcuts);
-        }
-    }, [handleKeyboardShortcuts])
+        };
+    }, [handleKeyboardShortcuts]);
 
     return (
         <PanelBottomBar className={classes.panel}>
             <CustomButton icon={EmojiIcon} title="Add Emoji" onClick={toggleEmojiPicker} />
-            {showEmojiPicker && (
-                <EmojiPicker editMessage={setMessageText} closePicker={toggleEmojiPicker} />
-            )}
+            {showEmojiPicker && <EmojiPicker editMessage={setMessageText} closePicker={toggleEmojiPicker} />}
             <Card className={classes.messageBox}>
                 <TextField
                     value={messageText}
-                    onChange={e => setMessageText(e.target.value)}
+                    onChange={(e) => setMessageText(e.target.value)}
                     className={classes.input}
                     focused
                     multiline

@@ -22,4 +22,4 @@ export type SessionObject = { user: UserSessionObject };
 
 export type ChatMessage = ChatMessageModel & SessionObject;
 export type OperationPost = OperationPostModel & { author: UserSessionObject };
-export type Credential = CredModel & {id: string};
+export type Credential = CredModel & { id: string };

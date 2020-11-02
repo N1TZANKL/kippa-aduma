@@ -4,7 +4,7 @@ import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import postModel, { OperationPostModel } from "db/models/post";
 
-async function createPost(userId: string, postData: Omit<OperationPostModel, "writtenAt"|"author">) {
+async function createPost(userId: string, postData: Omit<OperationPostModel, "writtenAt" | "author">) {
     const operationPost: OperationPostModel = {
         ...postData,
         author: mongoose.Types.ObjectId(userId),

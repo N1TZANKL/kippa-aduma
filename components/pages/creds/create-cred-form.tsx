@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import * as Yup from "yup";
-import { ArrayToSelectionList } from 'components/general/Select';
-import { FormBase, TextField, Select } from 'components/forms';
-import { CredentialTypes } from 'db/models/cred';
+import { ArrayToSelectionList } from "components/general/Select";
+import { FormBase, TextField, Select } from "components/forms";
+import { CredentialTypes } from "db/models/cred";
 import { FormikProps } from "formik";
 
 const validationSchema = Yup.object({
@@ -23,19 +23,19 @@ interface FormValues {
 
 type CreateCredFormProps = { addCred: Function; onClose?: Function };
 export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps) {
-
     function onSubmit(formData: Object, setFormError: Function) {
         return fetch("/api/cred/postCred", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
-        }).then(async res => {
-            if (res.ok) {
-                res.json().then(newCred => addCred(newCred));
-                if (onClose) onClose();
-            }
-            else setFormError(await res.text());
-        }).catch(e => setFormError(e.message));
+        })
+            .then(async (res) => {
+                if (res.ok) {
+                    res.json().then((newCred) => addCred(newCred));
+                    if (onClose) onClose();
+                } else setFormError(await res.text());
+            })
+            .catch((e) => setFormError(e.message));
     }
 
     function getworksOnLabel(credType: CredentialTypes) {
@@ -51,16 +51,22 @@ export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps
         }
     }
 
-    return <FormBase validationSchema={validationSchema}
-        onSubmit={onSubmit}
-        initialValues={{ username: "", password: "", type: "", worksOn: "" }}>
-        {({ values }: FormikProps<FormValues>) => (
-            <>
-                <TextField fieldKey="username" />
-                <TextField fieldKey="password" type="sensitive" />
-                <Select fieldKey="type" selectionList={ArrayToSelectionList(Object.values(CredentialTypes))} />
-                {values.type && <TextField fieldKey="worksOn" label={getworksOnLabel(values.type)} />}
-                <TextField fieldKey="additionalInformation" label="Additional Info (Optional)" type="multiline" placeholder="Related AD groups, how the cred was acquired, who it belongs to..." />
-            </>)}
-    </FormBase>;
+    return (
+        <FormBase validationSchema={validationSchema} onSubmit={onSubmit} initialValues={{ username: "", password: "", type: "", worksOn: "" }}>
+            {({ values }: FormikProps<FormValues>) => (
+                <>
+                    <TextField fieldKey="username" />
+                    <TextField fieldKey="password" type="sensitive" />
+                    <Select fieldKey="type" selectionList={ArrayToSelectionList(Object.values(CredentialTypes))} />
+                    {values.type && <TextField fieldKey="worksOn" label={getworksOnLabel(values.type)} />}
+                    <TextField
+                        fieldKey="additionalInformation"
+                        label="Additional Info (Optional)"
+                        type="multiline"
+                        placeholder="Related AD groups, how the cred was acquired, who it belongs to..."
+                    />
+                </>
+            )}
+        </FormBase>
+    );
 }

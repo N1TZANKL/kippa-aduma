@@ -2,11 +2,11 @@ import { withAuthenticatedUser } from "utils/session";
 import credModel from "db/models/cred";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import {Credential} from "interfaces";
+import { Credential } from "interfaces";
 
 export async function getAllCreds(): Promise<Credential[]> {
     // return cred + _id as id + filter unecessary fields
-    return credModel.find({}).then(creds => creds.map(({id, _doc: {_id, __v, ...cred}}) => ({id, ...cred})));
+    return credModel.find({}).then((creds) => creds.map(({ id, _doc: { _id, __v, ...cred } }) => ({ id, ...cred })));
 }
 
 export default withAuthenticatedUser(async (req, res) => {

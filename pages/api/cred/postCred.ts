@@ -4,7 +4,6 @@ import { GeneralErrors } from "server/errors";
 import credModel, { CredModel } from "db/models/cred";
 
 async function createCred(credData: CredModel) {
-
     const credDoc = new credModel(credData);
     return credDoc.save();
 }

@@ -1,13 +1,12 @@
-import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import * as muiColors from '@material-ui/core/colors';
+import React from "react";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import * as muiColors from "@material-ui/core/colors";
 import customTheme from "../utils/theme";
-import { Color } from '@material-ui/core';
-import { PanelButton, PanelButtonProps } from 'components/general/Panel';
+import { Color } from "@material-ui/core";
+import { PanelButton, PanelButtonProps } from "components/general/Panel";
 
-export type ButtonProps = Omit<PanelButtonProps, "color" | "classes"> & { color?: keyof typeof muiColors, disabledText?: string }
+export type ButtonProps = Omit<PanelButtonProps, "color" | "classes"> & { color?: keyof typeof muiColors; disabledText?: string };
 export default function ToolbarButton({ color = "grey", disabledText, ...otherProps }: ButtonProps) {
-
     const chosenMuiColor: Color = muiColors[color];
 
     const buttonTheme = createMuiTheme({
@@ -25,16 +24,18 @@ export default function ToolbarButton({ color = "grey", disabledText, ...otherPr
                     color: color === "grey" ? "black" : "white",
                     textShadow: `0 2px 2px ${chosenMuiColor[700]}, 0 2px 2px rgba(0,0,0,0.3)`,
                     "&$disabled": {
-                        textShadow: "none"
-                    }
-                }
-            }
-        }
+                        textShadow: "none",
+                    },
+                },
+            },
+        },
     });
 
-    return <MuiThemeProvider theme={buttonTheme}>
-        <div title={(otherProps.disabled && disabledText) || ""}>
-            <PanelButton color="primary" {...otherProps} />
-        </div>
-    </MuiThemeProvider>;
+    return (
+        <MuiThemeProvider theme={buttonTheme}>
+            <div title={(otherProps.disabled && disabledText) || ""}>
+                <PanelButton color="primary" {...otherProps} />
+            </div>
+        </MuiThemeProvider>
+    );
 }
