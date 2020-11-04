@@ -1,6 +1,6 @@
 import { WithStyles } from "@material-ui/core/styles";
-import { CredModel } from "db/models/cred";
 
+import { CredModel } from "db/models/cred";
 import { ChatMessageModel } from "db/models/message";
 import { OperationPostModel } from "db/models/post";
 

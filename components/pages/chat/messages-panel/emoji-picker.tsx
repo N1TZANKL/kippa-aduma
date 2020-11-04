@@ -1,8 +1,9 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Picker } from "emoji-mart";
-import { MuiStyles } from "interfaces";
 import CloseIcon from "@material-ui/icons/Close";
+
+import { MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

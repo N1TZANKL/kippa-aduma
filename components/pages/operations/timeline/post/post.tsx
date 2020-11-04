@@ -1,19 +1,21 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, OperationPost } from "interfaces";
 import Paper from "@material-ui/core/Paper";
 import * as muiColors from "@material-ui/core/colors";
-import PostMetadata from "./post-metadata";
+
+import { MuiStyles, OperationPost } from "interfaces";
 import { OperationPostTypes } from "db/models/post";
+
+import PostMetadata from "./post-metadata";
 import PostTitle from "./post-title";
 import PostContent from "./post-content";
 
 type ObjectWithStringValues = { [key: string]: string };
 export const PostTypeToColor: ObjectWithStringValues = {
-    [OperationPostTypes.SUCCESS]: muiColors.green["A400"],
-    [OperationPostTypes.RECON]: muiColors.cyan["A400"],
-    [OperationPostTypes.BURN]: muiColors.red["A400"],
-    [OperationPostTypes.ACTION]: muiColors.amber["A400"],
+    [OperationPostTypes.SUCCESS]: muiColors.green.A400,
+    [OperationPostTypes.RECON]: muiColors.cyan.A400,
+    [OperationPostTypes.BURN]: muiColors.red.A400,
+    [OperationPostTypes.ACTION]: muiColors.amber.A400,
     [OperationPostTypes.UPDATE]: muiColors.grey[400],
 };
 

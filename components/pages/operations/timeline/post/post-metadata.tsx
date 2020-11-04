@@ -1,13 +1,14 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, UserSessionObject } from "interfaces";
 import Typography from "@material-ui/core/Typography";
-import { formatDate, formatTime } from "utils/helpers/dates";
-import UserNicknameText from "components/general/UserNicknameText";
 import CreateIcon from "@material-ui/icons/Create";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { grey } from "@material-ui/core/colors";
 import clsx from "clsx";
+
+import UserNicknameText from "components/general/UserNicknameText";
+import { formatDate, formatTime } from "utils/helpers/dates";
+import { MuiStyles, UserSessionObject } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
 
 const styles = (theme: Theme) =>

@@ -1,9 +1,10 @@
 import React from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import Grow from "@material-ui/core/Grow";
 import Fab from "@material-ui/core/Fab";
+
+import { MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

@@ -1,9 +1,10 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
+
+import { MuiStyles } from "interfaces";
 
 const styles = () =>
     createStyles({

@@ -1,10 +1,11 @@
 import React from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
-import { Children, MuiStyles } from "interfaces";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import clsx from "clsx";
 import Paper, { PaperProps } from "@material-ui/core/Paper";
 import Button, { ButtonProps } from "@material-ui/core/Button";
+
+import { Children, MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -46,7 +47,7 @@ const styles = (theme: Theme) =>
         stat: {
             padding: 10,
             backgroundColor: "rgba(255,255,255,0.07)",
-            //background: "repeating-linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 10px, transparent 10px, transparent 20px)",
+            // background: "repeating-linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 10px, transparent 10px, transparent 20px)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

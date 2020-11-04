@@ -1,5 +1,6 @@
-import theme from "config/theme";
 import { createMuiTheme, lighten } from "@material-ui/core/styles";
+
+import theme from "config/theme";
 import { after, before } from "utils/helpers/css";
 
 const { overrides, ...baseTheme } = theme;
@@ -57,7 +58,7 @@ export default createMuiTheme({
         // search field overrides
         MuiInput: {
             root: {
-                border: `1px solid rgba(255,255,255,0.2)`,
+                border: "1px solid rgba(255,255,255,0.2)",
                 height: 35,
                 padding: "2px 10px",
                 fontSize: 14,

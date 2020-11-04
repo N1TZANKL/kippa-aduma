@@ -48,5 +48,5 @@ export function hexToRGB(hex: string, alpha: number): string {
     const b = parseInt(hex.slice(5, 7), 16);
 
     if (alpha) return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    else return `rgba(${r}, ${g}, ${b})`;
+    return `rgba(${r}, ${g}, ${b})`;
 }

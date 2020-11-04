@@ -1,12 +1,13 @@
 import React from "react";
 import { withStyles, createStyles, Theme, lighten } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import Dialog, { DialogProps } from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
+
+import { MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

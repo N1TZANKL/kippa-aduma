@@ -1,7 +1,8 @@
 import React from "react";
+import { useField } from "formik";
+
 import TextField, { TextFieldProps } from "components/general/TextField";
 import SensitiveTextField from "components/general/SensitiveTextField";
-import { useField } from "formik";
 import { firstLetterUppercase } from "utils/helpers/strings";
 
 type FormikTextFieldProps = Omit<TextFieldProps, "type"> & { fieldKey: string; type?: "text" | "sensitive" | "multiline" };

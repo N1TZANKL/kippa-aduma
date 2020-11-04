@@ -1,16 +1,17 @@
 import React, { useState, useMemo } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import IconButton from "@material-ui/core/IconButton";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+
+import { MuiStyles } from "interfaces";
 
 const styles = () =>
     createStyles({
         root: {
             display: "flex",
             alignItems: "center",
-            //justifyContent: "center"
+            // justifyContent: "center"
         },
         toggleButton: {
             fontSize: 22,

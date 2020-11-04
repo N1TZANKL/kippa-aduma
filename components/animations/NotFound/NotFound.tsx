@@ -1,10 +1,12 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Children, MuiStyles } from "interfaces";
 import Lottie from "react-lottie";
-import animationData from "./animation.json";
 import Fade from "@material-ui/core/Fade";
 import Typography from "@material-ui/core/Typography";
+
+import { Children, MuiStyles } from "interfaces";
+
+import animationData from "./animation.json";
 
 const styles = (theme: Theme) =>
     createStyles({

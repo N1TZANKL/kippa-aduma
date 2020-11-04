@@ -1,16 +1,18 @@
 import React, { useMemo, useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, OperationPost } from "interfaces";
-import Panel from "components/general/Panel";
-import Post from "./post";
-import { notLastChild, spaceChildren } from "utils/helpers/css";
-import TimelineTopBar from "./timeline-top-bar";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
+
+import { MuiStyles, OperationPost } from "interfaces";
+import Panel from "components/general/Panel";
+import { notLastChild, spaceChildren } from "utils/helpers/css";
 import { NotFoundAnimation } from "components/animations";
-import { SortOptions, SortOptionsToFunction } from "../sort-filter-panel";
 import { OperationPostTypes } from "db/models/post";
+
+import Post from "./post";
+import TimelineTopBar from "./timeline-top-bar";
+import { SortOptions, SortOptionsToFunction } from "../sort-filter-panel";
 
 const styles = (theme: Theme) =>
     createStyles({

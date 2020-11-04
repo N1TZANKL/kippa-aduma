@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, OperationPost } from "interfaces";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
-import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
-import { isElementOverflowing } from "utils/helpers/css";
 import * as muiColors from "@material-ui/core/colors";
 import Collapse from "@material-ui/core/Collapse";
 import Fade from "@material-ui/core/Fade";
+
+import { isElementOverflowing } from "utils/helpers/css";
+import { MuiStyles, OperationPost } from "interfaces";
+
+import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -22,8 +24,8 @@ const styles = (theme: Theme) =>
         },
         toggleExpandText: {
             // extract this CSS to LinkText component
-            color: muiColors.lightBlue["A400"],
-            borderBottom: `1px solid ${muiColors.lightBlue["A400"]}`,
+            color: muiColors.lightBlue.A400,
+            borderBottom: `1px solid ${muiColors.lightBlue.A400}`,
             width: "fit-content",
             marginTop: 3,
         },

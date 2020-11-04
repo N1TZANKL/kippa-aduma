@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import Models from "db/models";
 
 export enum OperationPostTypes {
@@ -9,7 +10,7 @@ export enum OperationPostTypes {
     BURN = "burn",
 }
 
-export type OperationPostAttachment = string; //change
+export type OperationPostAttachment = string; // change
 
 export type OperationPostModel = {
     title?: string;
@@ -33,7 +34,7 @@ const postsSchema = new mongoose.Schema({
         ref: Models.SYSTEM_USER,
         type: mongoose.Schema.Types.ObjectId,
     },
-    //attachments
+    // attachments
 });
 
 export default mongoose.models?.[Models.OPERATION_POST] || mongoose.model<OperationPostModel & mongoose.Document>(Models.OPERATION_POST, postsSchema);

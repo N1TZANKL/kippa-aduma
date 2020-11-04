@@ -1,9 +1,10 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
-import { CredentialTypes } from "db/models/cred";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+
+import { MuiStyles } from "interfaces";
+import { CredentialTypes } from "db/models/cred";
 
 const styles = (theme: Theme) =>
     createStyles({

@@ -1,17 +1,19 @@
 import React, { useMemo, useCallback, useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { MuiStyles, Credential, StringObject } from "interfaces";
-import Table, { TableAction } from "components/general/Table/Table";
 import SaveIcon from "@material-ui/icons/Save";
-import { NotFoundAnimation } from "components/animations";
 import EditIcon from "@material-ui/icons/Edit";
-import { PanelButton } from "components/general/Panel";
-import PasswordCell from "./password-cell";
-import CredTypeCell from "./cred-type-cell";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { saveAs } from "file-saver";
 import { unparse } from "papaparse";
+
+import { MuiStyles, Credential, StringObject } from "interfaces";
+import Table, { TableAction } from "components/general/Table/Table";
+import { NotFoundAnimation } from "components/animations";
+import { PanelButton } from "components/general/Panel";
 import ConfirmationDialog from "components/dialogs/ConfirmationDialog";
+
+import PasswordCell from "./password-cell";
+import CredTypeCell from "./cred-type-cell";
 
 const styles = () =>
     createStyles({
@@ -131,23 +133,23 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
         <>
             <Table
                 columns={[
-                    { field: "username", title: fieldNameToTitle["username"], width: "15%" },
+                    { field: "username", title: fieldNameToTitle.username, width: "15%" },
                     {
                         field: "password",
-                        title: fieldNameToTitle["password"],
+                        title: fieldNameToTitle.password,
                         render: (rowData: Credential) => <PasswordCell password={rowData.password} />,
                         width: "15%",
                     },
                     {
                         field: "type",
-                        title: fieldNameToTitle["type"],
+                        title: fieldNameToTitle.type,
                         render: (rowData: Credential) => <CredTypeCell type={rowData.type} />,
                         width: "10%",
                     },
-                    { field: "worksOn", title: fieldNameToTitle["worksOn"], width: "20%" },
+                    { field: "worksOn", title: fieldNameToTitle.worksOn, width: "20%" },
                     {
                         field: "additionalInformation",
-                        title: fieldNameToTitle["additionalInformation"],
+                        title: fieldNameToTitle.additionalInformation,
                         render: (rowData: Credential) => rowData.additionalInformation || "-",
                         width: "20%",
                     },

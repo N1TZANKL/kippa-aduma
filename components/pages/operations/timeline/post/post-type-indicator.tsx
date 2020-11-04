@@ -1,9 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CSSProperties } from "@material-ui/styles";
+
 import { before, textEllipsis } from "utils/helpers/css";
-import { PostTypeToColor } from "./post";
 import { OperationPostTypes } from "db/models/post";
+
+import { PostTypeToColor } from "./post";
 
 const POST_TYPE_INDICATOR_CHIP_STYLE: CSSProperties = {
     borderRadius: 3,

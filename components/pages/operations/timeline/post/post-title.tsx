@@ -1,9 +1,11 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+
+import { MuiStyles } from "interfaces";
 import { OperationPostTypes } from "db/models/post";
+
 import PostTypeIndicator from "./post-type-indicator";
 
 const styles = (theme: Theme) =>

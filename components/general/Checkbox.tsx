@@ -5,6 +5,7 @@ import FormControlLabel, { FormControlLabelProps } from "@material-ui/core/FormC
 import SvgIcon from "@material-ui/core/SvgIcon";
 import DefaultIcon from "@material-ui/icons/CheckBoxOutlineBlankTwoTone";
 import CheckedIcon from "@material-ui/icons/CheckBoxTwoTone";
+
 import { Children, MuiStyles } from "interfaces";
 
 const styles = () => ({

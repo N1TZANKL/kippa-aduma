@@ -4,11 +4,13 @@ import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
 import { SvgIconComponent } from "@material-ui/icons";
 import SendIcon from "@material-ui/icons/Send";
 import EmojiIcon from "@material-ui/icons/InsertEmoticon";
+import Card from "@material-ui/core/Card";
+
 import { MuiStyles } from "interfaces";
 import TextField from "components/general/TextField";
 import { PanelBottomBar } from "components/general/Panel";
+
 import EmojiPicker from "./emoji-picker";
-import Card from "@material-ui/core/Card";
 
 const styles = (theme: Theme) =>
     createStyles({

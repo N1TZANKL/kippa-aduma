@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { resetServerContext } from "react-beautiful-dnd";
+
 import { Credential, UserSessionObject } from "interfaces";
 import { withUserSession } from "utils/session";
 import { getAllCreds } from "pages/api/cred/getAll";
 import PageLayout from "components/layouts/MainLayout";
 import { CreateCredForm, CredsTable } from "components/pages/creds";
 import FormDialog from "components/dialogs/FormDialog";
-import { resetServerContext } from "react-beautiful-dnd";
 
 type CredentialsPageProps = { user: UserSessionObject; creds: Array<Credential> };
 export default function CredentialsPage({ user, creds }: CredentialsPageProps) {
@@ -34,11 +35,11 @@ export const getServerSideProps = withUserSession(async () => {
 
     const getCreds = getAllCreds()
         .then((data) => {
-            props["creds"] = data;
+            props.creds = data;
             return data;
         })
         .catch((e) => {
-            props["creds"] = null;
+            props.creds = null;
             return;
         });
 

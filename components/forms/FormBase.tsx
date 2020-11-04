@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { Children, MuiStyles } from "interfaces";
 import { Form, Formik } from "formik";
 import { ObjectSchema } from "yup";
+
+import { MuiStyles } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
+
 import { FormError, SubmitButton } from ".";
 
 const styles = () =>

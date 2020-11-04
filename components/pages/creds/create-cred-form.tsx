@@ -1,9 +1,10 @@
 import React from "react";
 import * as Yup from "yup";
+import { FormikProps } from "formik";
+
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, Select } from "components/forms";
 import { CredentialTypes } from "db/models/cred";
-import { FormikProps } from "formik";
 
 const validationSchema = Yup.object({
     username: Yup.string().required("Required"),

@@ -1,9 +1,11 @@
 import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import * as muiColors from "@material-ui/core/colors";
-import customTheme from "../utils/theme";
 import { Color } from "@material-ui/core";
+
 import { PanelButton, PanelButtonProps } from "components/general/Panel";
+
+import customTheme from "../utils/theme";
 
 export type ButtonProps = Omit<PanelButtonProps, "color" | "classes"> & { color?: keyof typeof muiColors; disabledText?: string };
 export default function ToolbarButton({ color = "grey", disabledText, ...otherProps }: ButtonProps) {

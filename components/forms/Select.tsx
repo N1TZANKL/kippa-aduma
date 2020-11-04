@@ -1,8 +1,9 @@
 import React from "react";
-import Select, { SelectProps } from "components/general/Select";
 import { useField } from "formik";
-import { firstLetterUppercase } from "utils/helpers/strings";
 import { createStyles, withStyles } from "@material-ui/styles";
+
+import Select, { SelectProps } from "components/general/Select";
+import { firstLetterUppercase } from "utils/helpers/strings";
 import { MuiStyles } from "interfaces";
 
 const styles = () =>

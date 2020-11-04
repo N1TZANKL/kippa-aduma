@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import Button from "@material-ui/core/Button";
 import Dialog, { DialogProps } from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -10,6 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+
+import { MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

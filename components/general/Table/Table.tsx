@@ -1,14 +1,16 @@
 import React from "react";
 import { withStyles, createStyles, MuiThemeProvider } from "@material-ui/core/styles";
-import customTheme from "./utils/theme";
-import customIcons from "./utils/icons";
 import MaterialTable, { MaterialTableProps } from "material-table";
-import CustomToolbar from "./components/toolbar";
-import TableButton, { ButtonProps } from "./components/action-button";
+
 import { Children, MuiStyles } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
+
+import customTheme from "./utils/theme";
+import customIcons from "./utils/icons";
+import CustomToolbar from "./components/toolbar";
+import TableButton, { ButtonProps } from "./components/action-button";
 import { PanelTitle } from "../Panel";
-//import { SvgIconComponent } from '@material-ui/icons';
+// import { SvgIconComponent } from '@material-ui/icons';
 
 const styles = () =>
     createStyles({

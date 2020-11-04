@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+
 import { MuiStyles, OperationPost } from "interfaces";
 import Panel, { PanelSubtitle, PanelTitle } from "components/general/Panel";
 import Select from "components/general/Select";
@@ -8,6 +9,7 @@ import { OperationPostTypes } from "db/models/post";
 import { firstLetterUppercase } from "utils/helpers/strings";
 import Radio from "components/general/Radio";
 import { sortObjectArrayByDate } from "utils/helpers/dates";
+
 import { PostTypeToColor } from "./timeline/post";
 
 const styles = (theme: Theme) =>
@@ -64,7 +66,7 @@ function SortFilterPanel(props: SortFilterPanelProps) {
     }
 
     function _togglePostTypeFilter(e: React.ChangeEvent<HTMLInputElement>) {
-        const value = e.target.value;
+        const { value } = e.target;
 
         // should not happen, but just so TS will shut up
         if (!postTypeFilters) return;

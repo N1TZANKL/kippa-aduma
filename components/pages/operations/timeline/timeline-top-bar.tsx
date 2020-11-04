@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { MuiStyles } from "interfaces";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
 import clsx from "clsx";
+import Input from "@material-ui/core/Input";
+
 import { PanelButton, PanelTitle } from "components/general/Panel";
 import { spaceChildren } from "utils/helpers/css";
-import Input from "@material-ui/core/Input";
+import { MuiStyles } from "interfaces";
 import FormDialog from "components/dialogs/FormDialog";
+
 import CreatePostForm from "../create-post-form";
 
 const styles = (theme: Theme) =>
@@ -36,7 +38,7 @@ const styles = (theme: Theme) =>
         },
         searchTextField: {
             backgroundColor: theme.constants.appBackgroundHighlight,
-            border: `1px solid rgba(255,255,255,0.2)`,
+            border: "1px solid rgba(255,255,255,0.2)",
             height: 32,
             padding: "2px 10px",
             fontSize: 14,

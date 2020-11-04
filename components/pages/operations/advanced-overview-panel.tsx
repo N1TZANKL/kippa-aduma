@@ -1,14 +1,16 @@
 import React, { useMemo } from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import SaveAltIcon from "@material-ui/icons/SaveAlt";
+
 import { MuiStyles, OperationPost } from "interfaces";
 import Panel, { PanelButton, PanelStat, PanelTitle } from "components/general/Panel";
 import { notFirstChild, spaceChildren } from "utils/helpers/css";
-import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import { areSameDates } from "utils/helpers/dates";
 import { filterDuplicatesFromArray } from "utils/helpers/objects";
 import { OperationPostTypes } from "db/models/post";
-import { PostTypeToColor } from "./timeline/post";
 import { firstLetterUppercase } from "utils/helpers/strings";
+
+import { PostTypeToColor } from "./timeline/post";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -103,7 +105,7 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
                               <div key={key} className={classes.postTypeLine}>
                                   <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i>{" "}
                                   <span>
-                                      ({value} post{value !== 1 ? "s" : ""})
+                                    ({value} post{value !== 1 ? "s" : ""})
                                   </span>
                               </div>
                           ))}

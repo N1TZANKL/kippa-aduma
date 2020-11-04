@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
+
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import credModel from "db/models/cred";
-import mongoose from "mongoose";
 
 async function deleteCreds(credIds: string[]) {
     return credModel.remove({

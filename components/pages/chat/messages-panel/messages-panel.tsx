@@ -4,12 +4,12 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
 import { getDatesDifference, areSameDates } from "utils/helpers/dates";
+import Panel from "components/general/Panel";
 
 import ChatBubble from "./chat-bubble";
 import NewMessageLine from "./new-message-line";
 import ContainerTitleBar from "./container-title-bar";
 import ChatDivider from "./chat-divider";
-import Panel from "components/general/Panel";
 import ScrollDownButton from "./scroll-down-button";
 
 const styles = () =>
