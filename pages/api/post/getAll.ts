@@ -1,9 +1,10 @@
 import { withAuthenticatedUser } from "utils/session";
-import postModel, { OperationPostModel } from "db/models/post";
+import postModel from "db/models/post";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
+import { OperationPost } from "interfaces";
 
-export async function getAllPosts(): Promise<OperationPostModel[]> {
+export async function getAllPosts(): Promise<OperationPost[]> {
     return postModel.find({}, "-_id").populate("author", "-_id -passwordHash").lean();
 }
 

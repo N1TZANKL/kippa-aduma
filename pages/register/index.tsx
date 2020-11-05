@@ -5,7 +5,7 @@ import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/Exter
 import TextField from "components/general/TextField";
 import SensitiveTextField from "components/general/SensitiveTextField";
 
-function Register() {
+export default function Register(): JSX.Element {
     const router = useRouter();
 
     const [formError, setFormError] = useState<string | undefined>();
@@ -21,28 +21,33 @@ function Register() {
         async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
-            const username = usernameInput.current!.value;
-            const nickname = nicknameInput.current!.value;
-            const password = passwordInput.current!.value;
-            const retypePassword = retypePasswordInput.current!.value;
+            const username = usernameInput.current?.value;
+            const nickname = nicknameInput.current?.value;
+            const password = passwordInput.current?.value;
+            const retypePassword = retypePasswordInput.current?.value;
 
-            if (retypePassword !== password) return setPasswordError("passwords must match");
+            if (!(username || nickname || password || retypePassword)) return;
+
+            if (retypePassword !== password) {
+                setPasswordError("passwords must match");
+                return;
+            }
+
             setPasswordError(undefined);
+            setIsLoading(true);
+            setFormError(undefined);
 
             try {
-                setIsLoading(true);
-                setFormError(undefined);
-
                 const response = await fetch("/api/user/register", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, nickname, password }),
                 });
 
-                if (response.ok) return await router.push("/");
-                return setFormError(await response.text());
+                if (response.ok) await router.push("/");
+                else setFormError(await response.text());
             } catch {
-                return setFormError("an unknown error occured");
+                setFormError("an unknown error occured");
             } finally {
                 setIsLoading(false);
             }
@@ -68,5 +73,3 @@ function Register() {
         </ExteriorPageLayout>
     );
 }
-
-export default Register;

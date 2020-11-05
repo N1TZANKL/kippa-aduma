@@ -1,6 +1,6 @@
 import PageLayout from "components/layouts/MainLayout";
-import { SessionObject } from "interfaces";
+// import { SessionObject } from "interfaces";
 
-export default function Home(props: SessionObject) {
+export default function Home(/* props: SessionObject */): JSX.Element {
     return <PageLayout>Home</PageLayout>;
 }

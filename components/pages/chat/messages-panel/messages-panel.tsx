@@ -1,5 +1,5 @@
 import socketIOClient from "socket.io-client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
@@ -35,10 +35,10 @@ const styles = () =>
         },
     });
 
-type MessagesPanelProps = MuiStyles & { user: UserSessionObject; className: string; messages: Array<ChatMessage> };
+type MessagesPanelProps = MuiStyles & { user: UserSessionObject; className: string; messages?: ChatMessage[] };
 
 function MessagesPanel({ classes, messages, user, className }: MessagesPanelProps) {
-    const [allMessages, setMessages] = useState(messages);
+    const [allMessages, setMessages] = useState(messages || []);
     const [showScrollButton, setShowScrollButton] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -61,21 +61,23 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
         return containerRef.current.scrollTop === containerRef.current.scrollHeight - containerRef.current.offsetHeight;
     }
 
-    function toggleScrollButtonAccordingToScrollPosition() {
+    const toggleScrollButtonAccordingToScrollPosition = useCallback(() => {
         if (!containerRef.current) return;
 
         if (isContainerScrolledToBottom()) setShowScrollButton(false);
         else setShowScrollButton(true);
-    }
+    }, [containerRef]);
 
     // messages container init - auto scroll bottom + scroll event listener
     useEffect(() => {
-        if (containerRef.current) {
-            scrollToBottom();
-            containerRef.current.addEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
-            return () => containerRef.current?.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
-        }
-    }, [containerRef.current]);
+        if (!containerRef.current) return () => {}; // so ESLint shuts the fuck up
+        scrollToBottom();
+        const el = containerRef.current;
+        el.addEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
+        return () => {
+            el.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
+        };
+    }, [containerRef, toggleScrollButtonAccordingToScrollPosition]);
 
     function onReceiveNewMessage(newMessage: ChatMessage) {
         setMessages((prevMessages) => [...prevMessages, newMessage]); // TODO: read about Mutable

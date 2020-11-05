@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
 import { withUserSession } from "utils/session";
@@ -8,7 +8,7 @@ import { getAllUsers } from "pages/api/user/getAll";
 import PageLayout from "components/layouts/MainLayout";
 import { UsersPanel, MessagesPanel } from "components/pages/chat";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         root: {
             display: "flex",
@@ -34,7 +34,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-type ChatProps = MuiStyles & { users: Array<UserSessionObject>; user: UserSessionObject; messages: Array<ChatMessage> };
+type ChatProps = MuiStyles & { users?: UserSessionObject[]; user: UserSessionObject; messages?: ChatMessage[] };
 
 function Chat({ classes, users, user, messages }: ChatProps) {
     return (
@@ -50,22 +50,22 @@ function Chat({ classes, users, user, messages }: ChatProps) {
 export default withStyles(styles)(Chat);
 
 export const getServerSideProps = withUserSession(async () => {
-    const props: any = {};
+    const props: Omit<ChatProps, "user" | "classes"> = {};
 
     const allUsersPromise = getAllUsers()
         .then((data) => {
             props.users = data;
         })
-        .catch((e) => {
-            props.users = null;
+        .catch(() => {
+            props.users = undefined;
         });
 
     const allMessagesPromise = getAllMessages()
         .then((data) => {
             props.messages = data;
         })
-        .catch((e) => {
-            props.messages = null;
+        .catch(() => {
+            props.messages = undefined;
         });
 
     await Promise.all([allUsersPromise, allMessagesPromise]);

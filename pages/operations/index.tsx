@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { MuiStyles, UserSessionObject, OperationPost } from "interfaces";
 import PageLayout from "components/layouts/MainLayout";
@@ -10,7 +10,7 @@ import AdvancedOverviewPanel from "components/pages/operations/advanced-overview
 import { OperationPostTypes } from "db/models/post";
 import { getAllPosts } from "pages/api/post/getAll";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         root: {
             display: "flex",
@@ -33,15 +33,15 @@ const styles = (theme: Theme) =>
         },
     });
 
-type OperationsProps = MuiStyles & { user: UserSessionObject; posts: Array<OperationPost> };
+type OperationsProps = MuiStyles & { user: UserSessionObject; posts?: Array<OperationPost> };
 
 function Operations(props: OperationsProps) {
     const { classes, user, posts } = props;
 
-    const [allPosts, setPosts] = useState<Array<OperationPost>>(posts);
+    const [allPosts, setPosts] = useState<OperationPost[]>(posts || []);
 
     const sortState = useState<SortOptions>(SortOptions.WRITTEN_DESC);
-    const postTypeFiltersState = useState<Array<OperationPostTypes> | null>(null);
+    const postTypeFiltersState = useState<OperationPostTypes[] | null>(null);
 
     function addPost(newPost: OperationPost) {
         setPosts((prevState) => [...prevState, newPost]);
@@ -67,16 +67,15 @@ function Operations(props: OperationsProps) {
 export default withStyles(styles)(Operations);
 
 export const getServerSideProps = withUserSession(async () => {
-    const props: any = {};
+    const props: Omit<OperationsProps, "user" | "classes"> = {};
 
     const getPosts = getAllPosts()
         .then((data) => {
             props.posts = data;
             return data;
         })
-        .catch((e) => {
-            props.posts = null;
-            return;
+        .catch(() => {
+            props.posts = undefined;
         });
 
     await getPosts;

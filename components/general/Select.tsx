@@ -9,7 +9,7 @@ import { firstLetterUppercase } from "utils/helpers/strings";
 
 type SelectionListItem = {
     label: string;
-    value: any;
+    value: unknown;
     disabled?: boolean;
 };
 
@@ -20,14 +20,16 @@ export type SelectProps = MuiSelectProps & {
     errorMessage?: string;
 };
 
-export const ArrayToSelectionList = (array: string[]) => array.map((s) => ({ label: firstLetterUppercase(s), value: s }));
+export const ArrayToSelectionList = (array: string[]): SelectionListItem[] => array.map((s) => ({ label: firstLetterUppercase(s), value: s }));
 
-export default function Select(props: SelectProps) {
+export default function Select(props: SelectProps): JSX.Element {
     const { selectionList, label, helperText, errorMessage, value, className, ...otherProps } = props;
 
     return (
         <FormControl fullWidth className={className}>
-            <InputLabel shrink={!!label} children={label} error={!!errorMessage} />
+            <InputLabel shrink={!!label} error={!!errorMessage}>
+                {label}
+            </InputLabel>
             <MuiSelect
                 {...otherProps}
                 color="secondary"
@@ -37,7 +39,9 @@ export default function Select(props: SelectProps) {
                 renderValue={(val) => (val ? selectionList.find((item: SelectionListItem) => item.value === val)?.label : "(Select)")}
             >
                 {selectionList.map((item: SelectionListItem) => (
-                    <MenuItem key={JSON.stringify(item.value)} value={item.value} children={item.label} disabled={item.disabled} />
+                    <MenuItem key={JSON.stringify(item.value)} value={item.value} disabled={item.disabled}>
+                        {item.label}
+                    </MenuItem>
                 ))}
             </MuiSelect>
             {helperText ||

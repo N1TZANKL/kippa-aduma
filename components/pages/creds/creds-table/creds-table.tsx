@@ -53,14 +53,16 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
         setDeleteDialogOpen((prevState) => !prevState);
     }
 
-    function exportToCsv(creds: TableData[]) {
+    function exportToCsv(credsToExport: TableData[]) {
         // step 1: map the data, adding a default value to additionalInformation field (since it's optional)
-        const baseData = creds.map(({ additionalInformation = "-", ...cred }) => ({ ...cred, additionalInformation }));
+        const baseData = credsToExport.map(({ additionalInformation = "-", ...cred }) => ({ ...cred, additionalInformation }));
 
         // step 2: replace each cred object's keys with their matching title from fieldNameToTitle
         const dataWithCorrectTitles = baseData.map((cred: ExportedCred) => {
             const newCred: StringObject = {};
-            for (const [key, data] of Object.entries(cred)) newCred[fieldNameToTitle[key]] = data;
+            Object.entries(cred).forEach(([key, data]) => {
+                newCred[fieldNameToTitle[key]] = data;
+            });
 
             return newCred;
         });
@@ -88,7 +90,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
                 setSelectedCreds((prevState) => prevState.filter((c) => !ids.includes(c.id)));
             })
             .finally(() => setDeleting(false));
-    }, [selectedCreds]);
+    }, [selectedCreds, removeDeletedCredsFromLocalState]);
 
     function onSelectionChange(newSelectedCreds: TableData[]) {
         setSelectedCreds(newSelectedCreds);
@@ -112,7 +114,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
                 color: "deepOrange",
             },
         ],
-        [creds, selectedCreds]
+        [creds, selectedCreds, toggleFormOpen, isDeleting, classes.buttonIcon]
     );
 
     if (!creds || creds.length === 0)
@@ -129,6 +131,9 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
             />
         );
 
+    const renderPasswordCell = (rowData: Credential) => <PasswordCell password={rowData.password} />;
+    const renderCredTypeCell = (rowData: Credential) => <CredTypeCell type={rowData.type} />;
+
     return (
         <>
             <Table
@@ -137,13 +142,13 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
                     {
                         field: "password",
                         title: fieldNameToTitle.password,
-                        render: (rowData: Credential) => <PasswordCell password={rowData.password} />,
+                        render: renderPasswordCell,
                         width: "15%",
                     },
                     {
                         field: "type",
                         title: fieldNameToTitle.type,
-                        render: (rowData: Credential) => <CredTypeCell type={rowData.type} />,
+                        render: renderCredTypeCell,
                         width: "10%",
                     },
                     { field: "worksOn", title: fieldNameToTitle.worksOn, width: "20%" },

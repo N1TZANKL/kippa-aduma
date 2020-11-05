@@ -31,7 +31,7 @@ type PostAttachmentsProps = MuiStyles & { attachments: Array<OperationPostAttach
 function PostAttachments(props: PostAttachmentsProps) {
     const { classes, attachments } = props;
 
-    if (attachments.length === 0) return;
+    if (attachments.length === 0) return null;
 
     return (
         <div className={classes.attachments}>

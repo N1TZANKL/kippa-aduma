@@ -70,7 +70,7 @@ const styles = (theme: Theme) =>
 
 type FormikDateTimeProps = MuiStyles & { fieldKey: string };
 function FormikDateTime({ classes, fieldKey }: FormikDateTimeProps) {
-    const [field, meta, { setValue }] = useField(fieldKey);
+    const [field /* meta */, , { setValue }] = useField(fieldKey);
 
     return (
         <div className={classes.root}>

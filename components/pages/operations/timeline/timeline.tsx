@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import React, { useCallback, useMemo, useState } from "react";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
@@ -14,7 +14,7 @@ import Post from "./post";
 import TimelineTopBar from "./timeline-top-bar";
 import { SortOptions, SortOptionsToFunction } from "../sort-filter-panel";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         timelineContent: {
             overflowY: "auto",
@@ -56,7 +56,7 @@ type PostTimelineProps = MuiStyles & {
     className: string;
     currentSort: SortOptions;
     postTypeFilters: Array<OperationPostTypes> | null;
-    addPost: Function;
+    addPost: (newPost: OperationPost) => void;
 };
 function PostsTimeline(props: PostTimelineProps) {
     const { classes, className, posts, addPost, currentSort, postTypeFilters } = props;
@@ -64,27 +64,28 @@ function PostsTimeline(props: PostTimelineProps) {
     const [shownPosts, setShownPosts] = useState<number>(5);
     const [searchString, setSearchString] = useState<string>("");
 
-    function _showMorePosts() {
+    function showMorePosts() {
         setShownPosts((prevState) => prevState + 5);
     }
 
-    function _filterPostsBySearchString(postsToFilter: Array<OperationPost>) {
-        if (!searchString) return postsToFilter;
+    const filterPostsBySearchString = useCallback(
+        (postsToFilter: Array<OperationPost>) => {
+            if (!searchString) return postsToFilter;
 
-        // filter all the string values of post object and check whether at least one matches the search string
-        return postsToFilter.filter((post) => Object.values(post).some((p: any) => p && typeof p === "string" && p.match(searchString)));
-    }
+            // filter all the string values of post object and check whether at least one matches the search string
+            return postsToFilter.filter((post) => Object.values(post).some((p: unknown) => p && typeof p === "string" && p.match(searchString)));
+        },
+        [searchString]
+    );
 
-    function _filterPosts() {
-        // shown + match search string + match post type filter
-        return _filterPostsBySearchString(posts.filter((post: OperationPost) => !postTypeFilters || postTypeFilters.includes(post.type)));
-    }
-
-    function _sortPosts(postsToSort: Array<OperationPost>): Array<OperationPost> {
+    function sortPosts(postsToSort: Array<OperationPost>): Array<OperationPost> {
         return SortOptionsToFunction[currentSort](postsToSort);
     }
 
-    const filteredPosts = useMemo(() => _filterPosts(), [posts, shownPosts, searchString, currentSort, postTypeFilters]);
+    const filteredPosts = useMemo(() => {
+        // shown + match search string + match post type filter
+        return filterPostsBySearchString(posts.filter((post: OperationPost) => !postTypeFilters || postTypeFilters.includes(post.type)));
+    }, [posts, postTypeFilters, filterPostsBySearchString]);
 
     return (
         <Panel className={className}>
@@ -92,7 +93,7 @@ function PostsTimeline(props: PostTimelineProps) {
             <div className={classes.timelineContent}>
                 <div className={classes.postsWrapper}>
                     {filteredPosts.length > 0 ? (
-                        _sortPosts(filteredPosts)
+                        sortPosts(filteredPosts)
                             .slice(0, shownPosts)
                             .map((post: OperationPost) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
                     ) : (
@@ -107,7 +108,7 @@ function PostsTimeline(props: PostTimelineProps) {
                             <Typography
                                 variant="subtitle1"
                                 className={clsx(classes.timelineBottomIndicator, classes.clickable)}
-                                onClick={_showMorePosts}
+                                onClick={showMorePosts}
                             >
                                 <ExpandMoreIcon /> <span>Show More Posts</span>
                             </Typography>

@@ -64,7 +64,7 @@ const styles = (theme: Theme) =>
     });
 
 type PanelProps = MuiStyles & PaperProps & { fullHeight?: boolean; className?: string };
-export const Panel = withStyles(styles)((props: PanelProps) => {
+const Panel = withStyles(styles)((props: PanelProps) => {
     const { classes, fullHeight, className, ...otherProps } = props;
 
     return <Paper className={clsx(classes.panel, className, fullHeight && classes.fullHeight)} {...otherProps} />;

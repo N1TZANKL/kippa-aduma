@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage } from "http";
 
 import { withIronSession as wis, SessionOptions } from "next-iron-session";
 import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse, GetServerSidePropsContext } from "next";
@@ -36,7 +36,7 @@ type ServerSidePropsWithUser<T> = (context: GetServerSidePropsContext, user: Use
 export function withUserSession<T = any>(handler?: ServerSidePropsWithUser<T>): GetServerSideProps<WithUser<T>> {
     return wis(
         (async (ctx) => {
-            const user = await assertUser(ctx.req, ctx.res);
+            const user = await assertUser(ctx.req /* , ctx.res */);
             if (!user) {
                 ctx.res.writeHead(302, { Location: "/login" }).end();
                 return { props: {} };
@@ -52,12 +52,12 @@ export function withUserSession<T = any>(handler?: ServerSidePropsWithUser<T>): 
     );
 }
 
-async function assertUser(req: IncomingMessage, res: ServerResponse): Promise<UserSessionObject | null> {
+async function assertUser(req: IncomingMessage /* res: ServerResponse */): Promise<UserSessionObject | null> {
     try {
         const id = req.session.get("user_id");
 
         if (!id) throw new Error("User not logged in");
-        const dbUser = await userModel.findOne({ _id: id }).orFail(new Error("User does not exist"));
+        const dbUser = await userModel.findById(id).orFail(new Error("User does not exist"));
 
         return {
             id,

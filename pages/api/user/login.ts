@@ -6,7 +6,7 @@ import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
 
 async function getUser(username: string) {
-    return userModel.findOne({ username });
+    return userModel.findOne({ username }).then(({ id, _doc: { _id, __v, ...user } }) => ({ id, ...user }));
 }
 
 export default withIronSession(async (req, res) => {
@@ -23,7 +23,7 @@ export default withIronSession(async (req, res) => {
         const hashResult = await bcrypt.compare(password, dbUser.passwordHash);
         if (!hashResult) return res.status(400).send(LoginErrors.InvalidCredentials);
 
-        req.session.set("user_id", dbUser._id.toString());
+        req.session.set("user_id", dbUser.id);
         await req.session.save();
 
         log(`'${username}' logged into the system`, LogTypes.SUCCESS);

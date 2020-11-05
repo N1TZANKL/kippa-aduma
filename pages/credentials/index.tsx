@@ -8,9 +8,9 @@ import PageLayout from "components/layouts/MainLayout";
 import { CreateCredForm, CredsTable } from "components/pages/creds";
 import FormDialog from "components/dialogs/FormDialog";
 
-type CredentialsPageProps = { user: UserSessionObject; creds: Array<Credential> };
-export default function CredentialsPage({ user, creds }: CredentialsPageProps) {
-    const [allCreds, setCreds] = useState<Array<Credential>>(creds);
+type CredentialsPageProps = { user: UserSessionObject; creds?: Credential[] };
+export default function CredentialsPage({ user, creds }: CredentialsPageProps): JSX.Element {
+    const [allCreds, setCreds] = useState<Credential[]>(creds || []);
     const [isFormOpen, setFormOpen] = useState<boolean>(false);
 
     const addCredential = (newCred: Credential) => setCreds((prevState) => [...prevState, newCred]);
@@ -31,16 +31,15 @@ export default function CredentialsPage({ user, creds }: CredentialsPageProps) {
 }
 
 export const getServerSideProps = withUserSession(async () => {
-    const props: any = {};
+    const props: Omit<CredentialsPageProps, "user"> = {};
 
     const getCreds = getAllCreds()
         .then((data) => {
             props.creds = data;
             return data;
         })
-        .catch((e) => {
-            props.creds = null;
-            return;
+        .catch(() => {
+            props.creds = undefined;
         });
 
     await getCreds;

@@ -1,4 +1,4 @@
 import PageLayout from "components/layouts/MainLayout";
 
-const Assignments = () => <PageLayout>Assignments</PageLayout>;
+const Assignments = (): JSX.Element => <PageLayout>Assignments</PageLayout>;
 export default Assignments;

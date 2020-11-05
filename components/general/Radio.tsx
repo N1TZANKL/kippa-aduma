@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MuiRadio, { RadioProps } from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControlLabel, { FormControlLabelProps } from "@material-ui/core/FormControlLabel";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import DefaultIcon from "@material-ui/icons/RadioButtonUncheckedTwoTone";
 import CheckedIcon from "@material-ui/icons/RadioButtonCheckedTwoTone";
@@ -18,12 +18,12 @@ const styles = () => ({
 type CustomRadioProps = MuiStyles &
     RadioProps & {
         label: string;
-        formControlLabelProps?: object;
+        formControlLabelProps?: FormControlLabelProps;
         big?: boolean;
     };
 
 function Radio(props: CustomRadioProps) {
-    const { classes, label, formControlLabelProps = {}, big, ...otherProps } = props;
+    const { classes, label, formControlLabelProps = {} as FormControlLabelProps, big, ...otherProps } = props;
 
     return (
         <FormControlLabel
@@ -35,8 +35,16 @@ function Radio(props: CustomRadioProps) {
                 <MuiRadio
                     color="secondary"
                     {...otherProps}
-                    icon={<SvgIcon children={<DefaultIcon />} className={big ? classes.bigIcon : classes.icon} />}
-                    checkedIcon={<SvgIcon children={<CheckedIcon />} className={big ? classes.bigIcon : classes.icon} />}
+                    icon={
+                        <SvgIcon className={big ? classes.bigIcon : classes.icon}>
+                            <DefaultIcon />
+                        </SvgIcon>
+                    }
+                    checkedIcon={
+                        <SvgIcon className={big ? classes.bigIcon : classes.icon}>
+                            <CheckedIcon />
+                        </SvgIcon>
+                    }
                 />
             }
         />

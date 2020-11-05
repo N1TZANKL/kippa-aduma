@@ -5,7 +5,7 @@ import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/Exter
 import TextField from "components/general/TextField";
 import SensitiveTextField from "components/general/SensitiveTextField";
 
-function Login() {
+function Login(): JSX.Element {
     const router = useRouter();
     const usernameInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -16,8 +16,10 @@ function Login() {
         async (e: React.FormEvent) => {
             e.preventDefault();
 
-            const username = usernameInput.current!.value;
-            const password = passwordInput.current!.value;
+            const username = usernameInput.current?.value;
+            const password = passwordInput.current?.value;
+
+            if (!(username || password)) return;
 
             try {
                 setIsLoading(true);
@@ -29,10 +31,10 @@ function Login() {
                     body: JSON.stringify({ username, password }),
                 });
 
-                if (response.ok) return await router.push("/");
-                return setFormError(await response.text());
+                if (response.ok) await router.push("/");
+                else setFormError(await response.text());
             } catch {
-                return setFormError("an unknown error occured");
+                setFormError("an unknown error occured");
             } finally {
                 setIsLoading(false);
             }

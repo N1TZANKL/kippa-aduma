@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CreateIcon from "@material-ui/icons/Create";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
@@ -11,7 +11,7 @@ import { formatDate, formatTime } from "utils/helpers/dates";
 import { MuiStyles, UserSessionObject } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         postMetadata: {
             fontStyle: "italic",

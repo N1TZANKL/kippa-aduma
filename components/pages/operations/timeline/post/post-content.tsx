@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import * as muiColors from "@material-ui/core/colors";
@@ -11,7 +11,7 @@ import { MuiStyles, OperationPost } from "interfaces";
 
 import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         multilineText: {
             whiteSpace: "pre-wrap",
@@ -59,35 +59,36 @@ function PostContent(props: PostContentProps) {
 
     useEffect(() => {
         setCanExpand(!!additionalInformation || (expanded ? true : isElementOverflowing(descriptionRef.current)));
-    }, [expanded, descriptionRef.current]);
+    }, [expanded, descriptionRef, additionalInformation]);
 
-    function _toggleExpanded() {
+    function toggleExpanded() {
         setExpanded((prevState) => !prevState);
     }
-
-    const shouldExpand = !expanded && canExpand;
 
     return (
         <Typography
             component="div"
             variant="body2"
             className={clsx(classes.postContent, canExpand && classes.clickable)}
-            onClick={canExpand ? _toggleExpanded : undefined}
+            onClick={canExpand ? toggleExpanded : undefined}
         >
             <div
                 ref={descriptionRef}
                 className={clsx(classes.multilineText, !expanded && classes.truncatedDescription, !title && PostTypeIndicatorStyle(type))}
-                children={`${!title ? POST_TYPE_INDICATOR_PLACEHOLDER : ""}${post.description}`}
-            />
-            <Fade in={shouldExpand} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>
+            >
+                {`${!title ? POST_TYPE_INDICATOR_PLACEHOLDER : ""}${post.description}`}
+            </div>
+            <Fade in={!expanded && canExpand} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>
                 <div className={classes.toggleExpandText}>Show More</div>
             </Fade>
             <Collapse in={expanded} mountOnEnter unmountOnExit>
                 <div>
                     {additionalInformation && (
                         <>
-                            <Typography variant="caption" children="Additional Information" className={classes.additionalInfoTitle} />
-                            <div className={clsx(classes.multilineText, classes.additionalInfo)} children={additionalInformation} />
+                            <Typography variant="caption" className={classes.additionalInfoTitle}>
+                                Additional Information
+                            </Typography>
+                            <div className={clsx(classes.multilineText, classes.additionalInfo)}>{additionalInformation}</div>
                         </>
                     )}
                     <Fade in={true} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>

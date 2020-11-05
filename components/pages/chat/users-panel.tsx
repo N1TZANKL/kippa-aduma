@@ -29,13 +29,13 @@ const styles = (theme: Theme) =>
         },
     });
 
-type UsersPanelProps = MuiStyles & { user: UserSessionObject; className: string; users: Array<UserSessionObject> };
+type UsersPanelProps = MuiStyles & { user: UserSessionObject; className: string; users?: UserSessionObject[] };
 
-function UsersPanel({ classes, user, users, className }: UsersPanelProps & { users: Array<UserSessionObject> }) {
+function UsersPanel({ classes, user, users, className }: UsersPanelProps) {
     const onlineUsersAmount = 1; // TODO: Implement user online states
-    const allUsersAmount = users.length;
+    const allUsersAmount = users?.length || 0;
 
-    const usersListWithCurrentUserFirst = [user, ...users.filter((u) => u.nickname !== user.nickname)];
+    const usersListWithCurrentUserFirst = [user, ...(users?.filter((u) => u.nickname !== user.nickname) || [])];
 
     return (
         <Panel className={className} fullHeight>

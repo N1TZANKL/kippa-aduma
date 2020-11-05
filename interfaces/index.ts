@@ -1,3 +1,4 @@
+import React, { Dispatch, SetStateAction } from "react";
 import { WithStyles } from "@material-ui/core/styles";
 
 import { CredModel } from "db/models/cred";
@@ -6,8 +7,10 @@ import { OperationPostModel } from "db/models/post";
 
 export type MuiStyles = WithStyles<string>;
 export type Children = React.ReactNode;
+export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 export type StringObject = { [key: string]: string };
+export type GenericObject = Record<string, unknown>;
 
 export type PageLayoutProps = MuiStyles & { children: Children };
 

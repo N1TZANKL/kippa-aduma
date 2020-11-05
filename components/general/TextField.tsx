@@ -5,10 +5,6 @@ export type TextFieldProps = Omit<MuiTextFieldProps, "error"> & {
     errorMessage?: string;
 };
 
-function TextField(props: TextFieldProps): React.ReactElement {
-    const { errorMessage, helperText, ...otherProps } = props;
-
+export default function TextField({ errorMessage, helperText, ...otherProps }: TextFieldProps): JSX.Element {
     return <MuiTextField color="secondary" fullWidth helperText={errorMessage || helperText} {...otherProps} error={!!errorMessage} />;
 }
-
-export default TextField;

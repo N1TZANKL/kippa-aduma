@@ -35,8 +35,16 @@ function Checkbox(props: CustomCheckboxProps) {
                 <MuiCheckbox
                     color="secondary"
                     {...otherProps}
-                    icon={<SvgIcon children={<DefaultIcon />} className={big ? classes.bigIcon : classes.icon} />}
-                    checkedIcon={<SvgIcon children={<CheckedIcon />} className={big ? classes.bigIcon : classes.icon} />}
+                    icon={
+                        <SvgIcon className={big ? classes.bigIcon : classes.icon}>
+                            <DefaultIcon />
+                        </SvgIcon>
+                    }
+                    checkedIcon={
+                        <SvgIcon className={big ? classes.bigIcon : classes.icon}>
+                            <CheckedIcon />
+                        </SvgIcon>
+                    }
                 />
             }
         />

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikProps } from "formik";
 import { ObjectSchema } from "yup";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles, GenericObject, SetState, Children } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
 
-import { FormError, SubmitButton } from ".";
+import FormError from "./FormError";
+import SubmitButton from "./SubmitButton";
 
 const styles = () =>
     createStyles({
@@ -18,7 +19,12 @@ const styles = () =>
         },
     });
 
-type FormBaseProps = MuiStyles & { initialValues: Object; validationSchema: ObjectSchema; onSubmit: Function; children: Function };
+type FormBaseProps = MuiStyles & {
+    initialValues: GenericObject;
+    validationSchema: ObjectSchema;
+    onSubmit: (values: GenericObject, setFormError: SetState<string>) => Promise<void>;
+    children: (formikProps: FormikProps<GenericObject>) => Children;
+};
 function FormBase({ classes, initialValues, validationSchema, onSubmit, children }: FormBaseProps) {
     const [formError, setFormError] = useState<string>("");
 

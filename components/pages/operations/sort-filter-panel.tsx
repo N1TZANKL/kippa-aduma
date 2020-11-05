@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { MuiStyles, OperationPost } from "interfaces";
 import Panel, { PanelSubtitle, PanelTitle } from "components/general/Panel";
@@ -10,9 +10,9 @@ import { firstLetterUppercase } from "utils/helpers/strings";
 import Radio from "components/general/Radio";
 import { sortObjectArrayByDate } from "utils/helpers/dates";
 
-import { PostTypeToColor } from "./timeline/post";
+import { PostTypeToColor } from "./timeline/post/post-type-indicator";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         sortSelect: {
             margin: "10px 0 20px",
@@ -40,10 +40,10 @@ export enum SortOptions {
 }
 
 export const SortOptionsToFunction = {
-    [SortOptions.WRITTEN_ASC]: (posts: Array<OperationPost>) => sortObjectArrayByDate(posts, "writtenAt"),
-    [SortOptions.HAPPENED_ASC]: (posts: Array<OperationPost>) => sortObjectArrayByDate(posts, "happenedAt"),
-    [SortOptions.WRITTEN_DESC]: (posts: Array<OperationPost>) => sortObjectArrayByDate(posts, "writtenAt", "desc"),
-    [SortOptions.HAPPENED_DESC]: (posts: Array<OperationPost>) => sortObjectArrayByDate(posts, "happenedAt", "desc"),
+    [SortOptions.WRITTEN_ASC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "writtenAt"),
+    [SortOptions.HAPPENED_ASC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "happenedAt"),
+    [SortOptions.WRITTEN_DESC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "writtenAt", "desc"),
+    [SortOptions.HAPPENED_DESC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "happenedAt", "desc"),
 };
 
 export enum PostTypeFilterRadioOptions {
@@ -61,11 +61,11 @@ function SortFilterPanel(props: SortFilterPanelProps) {
     const [currentSort, setSort] = sortState;
     const [postTypeFilters, setPostTypeFilters] = postTypeFiltersState;
 
-    function _onChangePostTypeFilterRadio(e: React.ChangeEvent<HTMLInputElement>) {
+    function onChangePostTypeFilterRadio(e: React.ChangeEvent<HTMLInputElement>) {
         setPostTypeFilters(JSON.parse(e.target.value));
     }
 
-    function _togglePostTypeFilter(e: React.ChangeEvent<HTMLInputElement>) {
+    function togglePostTypeFilter(e: React.ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
 
         // should not happen, but just so TS will shut up
@@ -91,13 +91,13 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                 value={"null"}
                 checked={!postTypeFilters}
                 label={firstLetterUppercase(PostTypeFilterRadioOptions.ALL)}
-                onChange={_onChangePostTypeFilterRadio}
+                onChange={onChangePostTypeFilterRadio}
             />
             <Radio
                 value={JSON.stringify(Object.values(OperationPostTypes))}
                 checked={Array.isArray(postTypeFilters)}
                 label={firstLetterUppercase(PostTypeFilterRadioOptions.CUSTOM)}
-                onChange={_onChangePostTypeFilterRadio}
+                onChange={onChangePostTypeFilterRadio}
             />
             <div className={classes.checkboxSectionWrapper}>
                 {Object.values(OperationPostTypes).map((postType: OperationPostTypes) => (
@@ -112,7 +112,7 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                                 <i>{firstLetterUppercase(postType)}</i>
                             </span>
                         }
-                        onChange={_togglePostTypeFilter}
+                        onChange={togglePostTypeFilter}
                     />
                 ))}
             </div>

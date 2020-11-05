@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { OperationPostTypes } from "db/models/post";
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, DateTimeField, Select } from "components/forms";
+import { GenericObject, OperationPost, SetState } from "interfaces";
 
 const validationSchema = Yup.object({
     title: Yup.string(),
@@ -13,9 +14,9 @@ const validationSchema = Yup.object({
     happenedAt: Yup.date().required("Required"),
 });
 
-type CreatePostFormProps = { addPost: Function; onClose?: Function };
-export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps) {
-    function onSubmit(formData: Object, setFormError: Function) {
+type CreatePostFormProps = { addPost: (newPost: OperationPost) => void; onClose?: () => void };
+export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps): JSX.Element {
+    function onSubmit(formData: GenericObject, setFormError: SetState<string>) {
         return fetch("/api/post/postPost", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

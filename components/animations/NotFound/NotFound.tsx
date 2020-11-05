@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import Lottie from "react-lottie";
 import Fade from "@material-ui/core/Fade";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +8,7 @@ import { Children, MuiStyles } from "interfaces";
 
 import animationData from "./animation.json";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         root: {
             pointerEvents: "none",

@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Picker } from "emoji-mart";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles, SetState } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -63,7 +63,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-type EmojiPickerProps = MuiStyles & { editMessage: Function; closePicker: () => void };
+type EmojiPickerProps = MuiStyles & { editMessage: SetState<string>; closePicker: () => void };
 function EmojiPicker({ classes, editMessage, closePicker }: EmojiPickerProps) {
     return (
         <div className={classes.root}>

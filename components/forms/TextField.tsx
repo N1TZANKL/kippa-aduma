@@ -6,7 +6,7 @@ import SensitiveTextField from "components/general/SensitiveTextField";
 import { firstLetterUppercase } from "utils/helpers/strings";
 
 type FormikTextFieldProps = Omit<TextFieldProps, "type"> & { fieldKey: string; type?: "text" | "sensitive" | "multiline" };
-export default function FormikTextField({ fieldKey, type = "text", label, ...props }: FormikTextFieldProps) {
+export default function FormikTextField({ fieldKey, type = "text", label, ...props }: FormikTextFieldProps): JSX.Element {
     const [field, meta] = useField(fieldKey);
 
     const FieldComponent = type === "sensitive" ? SensitiveTextField : TextField;

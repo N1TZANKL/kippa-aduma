@@ -7,7 +7,7 @@ import Input from "@material-ui/core/Input";
 
 import { PanelButton, PanelTitle } from "components/general/Panel";
 import { spaceChildren } from "utils/helpers/css";
-import { MuiStyles } from "interfaces";
+import { MuiStyles, OperationPost, SetState } from "interfaces";
 import FormDialog from "components/dialogs/FormDialog";
 
 import CreatePostForm from "../create-post-form";
@@ -51,7 +51,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-type TimelineTopBarProps = MuiStyles & { onSearch: Function; searchString?: string; addPost: Function };
+type TimelineTopBarProps = MuiStyles & { onSearch: SetState<string>; searchString?: string; addPost: (newPost: OperationPost) => void };
 function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTopBarProps) {
     const [formOpen, setFormOpen] = useState(false);
 

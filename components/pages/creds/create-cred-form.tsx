@@ -5,6 +5,7 @@ import { FormikProps } from "formik";
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, Select } from "components/forms";
 import { CredentialTypes } from "db/models/cred";
+import { GenericObject, SetState } from "interfaces";
 
 const validationSchema = Yup.object({
     username: Yup.string().required("Required"),
@@ -22,9 +23,9 @@ interface FormValues {
     additionalInformation: string;
 }
 
-type CreateCredFormProps = { addCred: Function; onClose?: Function };
-export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps) {
-    function onSubmit(formData: Object, setFormError: Function) {
+type CreateCredFormProps = { addCred: (newCred: Credential) => void; onClose?: () => void };
+export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps): JSX.Element {
+    function onSubmit(formData: GenericObject, setFormError: SetState<string>) {
         return fetch("/api/cred/postCred", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

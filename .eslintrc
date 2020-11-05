@@ -29,6 +29,9 @@
             "typescript": {
                 "project": "."
             }
+        },
+        "react": {
+            "version": "latest"
         }
     },
     "rules": {
@@ -40,20 +43,18 @@
             }
         ],
         "import/prefer-default-export": "off",
-        "max-len": ["error", 130],
-        "@typescript-eslint/indent": ["error", 4],
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4],
-        "linebreak-style": ["error", "unix"],
-        "@typescript-eslint/quotes": ["error", "double"],
-        "semi": ["error", "always"],
-        "arrow-parens": ["error", "as-needed"],
+        "@typescript-eslint/indent": "off",
         "new-cap": "off",
-        "no-underscore-dangle": "warn",
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
         "react/require-default-props": "off",
         "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/quotes": "off",
+        "react/jsx-indent": "off",
+        "no-underscore-dangle": "warn",
+        "react/jsx-indent-props": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "semi": ["error", "always"],
         "prettier/prettier": ["error"]
     },
     "globals": {

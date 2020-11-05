@@ -109,7 +109,7 @@ type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolea
 
 function renderTextWithEmojis(messageText: string) {
     const handleEmojis = (messageLine: string) => {
-        const emojiRegex = /(?:\:[^\:]+\:(?:\:skin-tone-(?:\d)\:)?)/gi;
+        const emojiRegex = /(?::[^:]+:(?::skin-tone-(?:\d):)?)/gi;
         const matches = messageLine.match(emojiRegex) || [];
         const emojiArray = matches.map((match, index) => <Emoji key={index} emoji={match} size={22} />);
         return messageLine.split(emojiRegex).reduce((prev, curr, index) => [...prev, curr, emojiArray[index]], []);

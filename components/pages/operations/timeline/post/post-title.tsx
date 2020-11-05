@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
@@ -8,7 +8,7 @@ import { OperationPostTypes } from "db/models/post";
 
 import PostTypeIndicator from "./post-type-indicator";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         title: {
             display: "flex",
@@ -33,7 +33,7 @@ function PostTitle(props: PostTitleProps) {
         <>
             <Typography variant="subtitle2" component="div" className={classes.title}>
                 <PostTypeIndicator type={type} />
-                <div className={classes.titleText} children={title} />
+                <div className={classes.titleText}>{title}</div>
             </Typography>
             <Divider className={classes.titleDivider} />
         </>

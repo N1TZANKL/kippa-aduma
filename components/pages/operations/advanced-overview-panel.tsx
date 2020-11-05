@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 
 import { MuiStyles, OperationPost } from "interfaces";
@@ -10,9 +10,9 @@ import { filterDuplicatesFromArray } from "utils/helpers/objects";
 import { OperationPostTypes } from "db/models/post";
 import { firstLetterUppercase } from "utils/helpers/strings";
 
-import { PostTypeToColor } from "./timeline/post";
+import { PostTypeToColor } from "./timeline/post/post-type-indicator";
 
-const styles = (theme: Theme) =>
+const styles = () =>
     createStyles({
         buttons: {
             margin: "10px 0",
@@ -57,19 +57,19 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
     const postTypesToAmount = useMemo(() => {
         // initialize object
         const typeToAmount = {} as { [key: string]: number };
-        for (const postType of Object.values(OperationPostTypes)) {
+        Object.values(OperationPostTypes).forEach((postType) => {
             typeToAmount[postType] = 0;
-        }
+        });
 
         // fill object with values
-        for (const post of posts) {
-            typeToAmount[post.type] = typeToAmount[post.type] + 1;
-        }
+        posts.forEach((post) => {
+            typeToAmount[post.type] += 1;
+        });
 
         // remove types that were not used
-        for (const [key, value] of Object.entries(typeToAmount)) {
+        Object.entries(typeToAmount).forEach(([key, value]) => {
             if (!value) delete typeToAmount[key];
-        }
+        });
 
         return typeToAmount;
     }, [posts]);
@@ -105,7 +105,7 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
                               <div key={key} className={classes.postTypeLine}>
                                   <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i>{" "}
                                   <span>
-                                    ({value} post{value !== 1 ? "s" : ""})
+                                      ({value} post{value !== 1 ? "s" : ""})
                                   </span>
                               </div>
                           ))}

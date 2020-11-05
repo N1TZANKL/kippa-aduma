@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
 import { SvgIconComponent } from "@material-ui/icons";

@@ -8,7 +8,7 @@ import { PanelButton, PanelButtonProps } from "components/general/Panel";
 import customTheme from "../utils/theme";
 
 export type ButtonProps = Omit<PanelButtonProps, "color" | "classes"> & { color?: keyof typeof muiColors; disabledText?: string };
-export default function ToolbarButton({ color = "grey", disabledText, ...otherProps }: ButtonProps) {
+export default function ToolbarButton({ color = "grey", disabledText, ...otherProps }: ButtonProps): JSX.Element {
     const chosenMuiColor: Color = muiColors[color];
 
     const buttonTheme = createMuiTheme({
