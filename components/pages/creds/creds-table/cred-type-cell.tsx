@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
 import { MuiStyles } from "interfaces";
-import { CredentialTypes } from "db/models/cred";
+import { CredentialTypes } from "db/cred/model";
 
 const styles = () =>
     createStyles({

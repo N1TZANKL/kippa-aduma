@@ -7,7 +7,7 @@ import Panel, { PanelButton, PanelStat, PanelTitle } from "components/general/Pa
 import { notFirstChild, spaceChildren } from "utils/helpers/css";
 import { areSameDates } from "utils/helpers/dates";
 import { filterDuplicatesFromArray } from "utils/helpers/objects";
-import { OperationPostTypes } from "db/models/post";
+import { OperationPostTypes } from "db/post/model";
 import { firstLetterUppercase } from "utils/helpers/strings";
 
 import { PostTypeToColor } from "./timeline/post/post-type-indicator";

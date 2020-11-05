@@ -1,8 +1,8 @@
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
+import { getAllCreds, createCred, deleteCreds } from "db/cred/controller";
 import { APIFunctionObject } from "interfaces";
-import { getChatMessages, createMessage } from "db/message/controller";
 
 // this NextJS config is to prevent the message "API resolved without sending a response"
 export const config = {
@@ -14,20 +14,30 @@ export const config = {
 const methodToFunction: APIFunctionObject = {
     GET: async (res) => {
         try {
-            return res.status(200).json(await getChatMessages()); // TODO: paging?
+            return res.status(200).json(await getAllCreds());
         } catch (error) {
-            log("Caught error while attempting to fetch chat messages:", LogTypes.ERROR, error);
+            log("Caught error while attempting to fetch creds:", LogTypes.ERROR, error);
             return res.status(500).send(GeneralErrors.UnknownError);
         }
     },
-    POST: async (res, req, user) => {
-        if (!req.body) return res.status(400).send("No message sent");
+    POST: async (res, req) => {
+        if (!req.body) return res.status(400).send("No cred sent");
 
         try {
-            await createMessage(user.id, req.body); // sanitize message?
-            return res.status(200).send("Message added successfully");
+            return res.status(200).json(await createCred(req.body));
         } catch (error) {
-            log("Caught error while attempting to create chat message:", LogTypes.ERROR, error);
+            log("Caught error while attempting to create credential:", LogTypes.ERROR, error);
+            return res.status(500).send(GeneralErrors.UnknownError);
+        }
+    },
+    DELETE: async (res, req) => {
+        if (!req.body.ids) return res.status(400).send("No cred ids sent");
+
+        try {
+            await deleteCreds(req.body.ids);
+            return res.status(200).send("Creds deleted successfully");
+        } catch (error) {
+            log("Caught error while attempting to batch delete credentials:", LogTypes.ERROR, error);
             return res.status(500).send(GeneralErrors.UnknownError);
         }
     },

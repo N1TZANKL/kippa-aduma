@@ -7,8 +7,8 @@ import { withUserSession } from "utils/session";
 import Timeline from "components/pages/operations/timeline";
 import SortFilterPanel, { SortOptions } from "components/pages/operations/sort-filter-panel";
 import AdvancedOverviewPanel from "components/pages/operations/advanced-overview-panel";
-import { OperationPostTypes } from "db/models/post";
-import { getAllPosts } from "pages/api/post/getAll";
+import { OperationPostTypes } from "db/post/model";
+import { getAllPosts } from "db/post/controller";
 
 const styles = () =>
     createStyles({

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import Models from "../index";
+import Models from "../models";
 
 export type ChatMessageModel = {
     type: "text" | "file";

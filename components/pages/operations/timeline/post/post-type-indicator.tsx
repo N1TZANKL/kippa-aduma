@@ -4,7 +4,7 @@ import { CSSProperties } from "@material-ui/styles";
 import * as muiColors from "@material-ui/core/colors";
 
 import { textEllipsis } from "utils/helpers/css";
-import { OperationPostTypes } from "db/models/post";
+import { OperationPostTypes } from "db/post/model";
 import { StringObject } from "interfaces";
 
 export const PostTypeToColor: StringObject = {

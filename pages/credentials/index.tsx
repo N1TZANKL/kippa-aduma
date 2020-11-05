@@ -3,7 +3,7 @@ import { resetServerContext } from "react-beautiful-dnd";
 
 import { Credential, UserSessionObject } from "interfaces";
 import { withUserSession } from "utils/session";
-import { getAllCreds } from "pages/api/cred/getAll";
+import { getAllCreds } from "db/cred/controller";
 import PageLayout from "components/layouts/MainLayout";
 import { CreateCredForm, CredsTable } from "components/pages/creds";
 import FormDialog from "components/dialogs/FormDialog";

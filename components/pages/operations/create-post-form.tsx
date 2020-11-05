@@ -1,10 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
 
-import { OperationPostTypes } from "db/models/post";
+import { OperationPostTypes } from "db/post/model";
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, DateTimeField, Select } from "components/forms";
 import { GenericObject, OperationPost, SetState } from "interfaces";
+import { Post } from "utils/helpers/api";
 
 const validationSchema = Yup.object({
     title: Yup.string(),
@@ -17,11 +18,7 @@ const validationSchema = Yup.object({
 type CreatePostFormProps = { addPost: (newPost: OperationPost) => void; onClose?: () => void };
 export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps): JSX.Element {
     function onSubmit(formData: GenericObject, setFormError: SetState<string>) {
-        return fetch("/api/post/postPost", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        })
+        return Post("post", formData)
             .then(async (res) => {
                 if (res.ok) {
                     res.json().then((newPost) => addPost(newPost));

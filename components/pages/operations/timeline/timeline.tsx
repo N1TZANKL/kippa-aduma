@@ -8,7 +8,7 @@ import { MuiStyles, OperationPost } from "interfaces";
 import Panel from "components/general/Panel";
 import { notLastChild, spaceChildren } from "utils/helpers/css";
 import { NotFoundAnimation } from "components/animations";
-import { OperationPostTypes } from "db/models/post";
+import { OperationPostTypes } from "db/post/model";
 
 import Post from "./post";
 import TimelineTopBar from "./timeline-top-bar";

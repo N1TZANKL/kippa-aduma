@@ -5,7 +5,7 @@ import { MuiStyles, OperationPost } from "interfaces";
 import Panel, { PanelSubtitle, PanelTitle } from "components/general/Panel";
 import Select from "components/general/Select";
 import Checkbox from "components/general/Checkbox";
-import { OperationPostTypes } from "db/models/post";
+import { OperationPostTypes } from "db/post/model";
 import { firstLetterUppercase } from "utils/helpers/strings";
 import Radio from "components/general/Radio";
 import { sortObjectArrayByDate } from "utils/helpers/dates";

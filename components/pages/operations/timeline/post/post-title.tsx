@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
 import { MuiStyles } from "interfaces";
-import { OperationPostTypes } from "db/models/post";
+import { OperationPostTypes } from "db/post/model";
 
 import PostTypeIndicator from "./post-type-indicator";
 

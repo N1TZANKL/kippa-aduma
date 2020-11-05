@@ -1,13 +1,9 @@
 import * as bcrypt from "bcryptjs";
 
 import { withIronSession } from "utils/session";
-import userModel from "db/models/user";
 import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
-
-async function getUser(username: string) {
-    return userModel.findOne({ username }).then(({ id, _doc: { _id, __v, ...user } }) => ({ id, ...user }));
-}
+import { getUser } from "db/user/controller";
 
 export default withIronSession(async (req, res) => {
     if (req.method !== "POST") return res.status(404).send("Invalid api call");

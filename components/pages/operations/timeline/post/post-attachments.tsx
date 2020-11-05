@@ -5,7 +5,7 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
 import { MuiStyles } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
-import { OperationPostAttachment } from "db/models/post";
+import { OperationPostAttachment } from "db/post/model";
 
 const styles = (theme: Theme) =>
     createStyles({

@@ -3,8 +3,8 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
 import { withUserSession } from "utils/session";
-import { getAllMessages } from "pages/api/chat";
-import { getAllUsers } from "pages/api/user/getAll";
+import { getChatMessages } from "db/message/controller";
+import { getAllUsers } from "db/user/controller";
 import PageLayout from "components/layouts/MainLayout";
 import { UsersPanel, MessagesPanel } from "components/pages/chat";
 
@@ -60,7 +60,7 @@ export const getServerSideProps = withUserSession(async () => {
             props.users = undefined;
         });
 
-    const allMessagesPromise = getAllMessages()
+    const allMessagesPromise = getChatMessages()
         .then((data) => {
             props.messages = data;
         })

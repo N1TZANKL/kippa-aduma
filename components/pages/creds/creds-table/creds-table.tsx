@@ -11,6 +11,7 @@ import Table, { TableAction } from "components/general/Table/Table";
 import { NotFoundAnimation } from "components/animations";
 import { PanelButton } from "components/general/Panel";
 import ConfirmationDialog from "components/dialogs/ConfirmationDialog";
+import { Delete } from "utils/helpers/api";
 
 import PasswordCell from "./password-cell";
 import CredTypeCell from "./cred-type-cell";
@@ -80,11 +81,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
         const ids = selectedCreds.map((c) => c.id);
 
         setDeleting(true);
-        fetch("/api/cred/deleteCreds", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ids }),
-        })
+        Delete("cred", ids)
             .then(() => {
                 removeDeletedCredsFromLocalState(ids);
                 setSelectedCreds((prevState) => prevState.filter((c) => !ids.includes(c.id)));

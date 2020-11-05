@@ -1,20 +1,16 @@
 import { withAuthenticatedUser } from "utils/session";
-import postModel from "db/models/post";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { OperationPost } from "interfaces";
+import { getAllUsers } from "db/user/controller";
 
-export async function getAllPosts(): Promise<OperationPost[]> {
-    return postModel.find({}, "-_id").populate("author", "-_id -passwordHash").lean();
-}
-
+// GET /api/user
 export default withAuthenticatedUser(async (req, res) => {
     if (req.method !== "GET") return res.status(404).send("Invalid api call");
 
     try {
-        return res.status(200).json(await getAllPosts());
+        return res.status(200).json(await getAllUsers());
     } catch (error) {
-        log("Caught error while attempting to fetch operation posts:", LogTypes.ERROR, error);
+        log("Caught error while attempting to fetch users:", LogTypes.ERROR, error);
         return res.status(500).send(GeneralErrors.UnknownError);
     }
 });

@@ -11,8 +11,8 @@ import next from "next";
 import socketIO from "socket.io";
 
 import log, { LogTypes } from "../utils/logger";
-import { connectToDb } from "../db";
-import messageModel from "../db/models/message";
+import connectToDb from "../db";
+import messageModel from "../db/message/model";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";

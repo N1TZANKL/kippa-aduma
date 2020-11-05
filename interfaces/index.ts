@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { NextApiRequest, NextApiResponse } from "next";
 import { WithStyles } from "@material-ui/core/styles";
 
-import { CredModel } from "db/models/cred";
-import { ChatMessageModel } from "db/models/message";
-import { OperationPostModel } from "db/models/post";
+import { CredModel } from "db/cred/model";
+import { ChatMessageModel } from "db/message/model";
+import { OperationPostModel } from "db/post/model";
 
 export type MuiStyles = WithStyles<string>;
 export type Children = React.ReactNode;
@@ -11,6 +12,7 @@ export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 export type StringObject = { [key: string]: string };
 export type GenericObject = Record<string, unknown>;
+export type APIFunctionObject = { [key: string]: (res: NextApiResponse<unknown>, req: NextApiRequest, user: UserSessionObject) => void };
 
 export type PageLayoutProps = MuiStyles & { children: Children };
 
