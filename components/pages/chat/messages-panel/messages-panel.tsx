@@ -5,6 +5,7 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
 import { getDatesDifference, areSameDates } from "utils/helpers/dates";
 import Panel from "components/general/Panel";
+import { Post } from "utils/helpers/api";
 
 import ChatBubble from "./chat-bubble";
 import NewMessageLine from "./new-message-line";
@@ -84,12 +85,7 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
     }
 
     function sendMessage(message: string) {
-        fetch("/api/chat/postMessage", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(message),
-        });
-
+        Post("chat", message);
         scrollToBottom();
     }
 

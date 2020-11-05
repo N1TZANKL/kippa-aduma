@@ -3,7 +3,7 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
 import { withUserSession } from "utils/session";
-import { getAllMessages } from "pages/api/chat/getMessages";
+import { getAllMessages } from "pages/api/chat";
 import { getAllUsers } from "pages/api/user/getAll";
 import PageLayout from "components/layouts/MainLayout";
 import { UsersPanel, MessagesPanel } from "components/pages/chat";
