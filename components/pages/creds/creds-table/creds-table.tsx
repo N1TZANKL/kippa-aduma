@@ -81,10 +81,12 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
         const ids = selectedCreds.map((c) => c.id);
 
         setDeleting(true);
-        Delete("cred", ids)
-            .then(() => {
-                removeDeletedCredsFromLocalState(ids);
-                setSelectedCreds((prevState) => prevState.filter((c) => !ids.includes(c.id)));
+        Delete("cred", { ids })
+            .then((res) => {
+                if (res.ok) {
+                    removeDeletedCredsFromLocalState(ids);
+                    setSelectedCreds((prevState) => prevState.filter((c) => !ids.includes(c.id)));
+                }
             })
             .finally(() => setDeleting(false));
     }, [selectedCreds, removeDeletedCredsFromLocalState]);

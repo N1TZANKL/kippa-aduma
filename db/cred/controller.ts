@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { Credential } from "interfaces";
 
 import credModel, { CredModel } from "./model";
 
@@ -7,15 +7,18 @@ export async function getAllCreds(): Promise<Credential[]> {
     return credModel.find({}).then((creds) => creds.map(({ id, _doc: { _id, __v, ...cred } }) => ({ id, ...cred })));
 }
 
-export async function createCred(credData: CredModel): Promise<Document> {
+export async function createCred(credData: CredModel): Promise<Credential> {
     const credDoc = new credModel(credData);
-    return credDoc.save();
+    const {
+        id,
+        _doc: { _id, __v, ...cred },
+    } = await credDoc.save();
+    return { id, ...cred };
 }
 
 export async function deleteCreds(credIds: string[]): Promise<void> {
-    credModel.remove({
-        _id: {
-            $in: credIds.map((id) => mongoose.Types.ObjectId(id)),
-        },
-    });
+    const res = await credModel.deleteMany({ _id: { $in: credIds } });
+
+    if (!res.ok || res.deletedCount !== credIds.length)
+        throw new Error(`deleteMany failed. ${res.deletedCount} creds out of ${credIds.length} were deleted.`);
 }
