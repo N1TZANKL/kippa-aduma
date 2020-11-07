@@ -1,5 +1,3 @@
-import Models from "db/models";
-
 function fetchJSON(relativePath: string, data: unknown, method: string) {
     return fetch(`/api/${relativePath}`, {
         method,
@@ -8,10 +6,10 @@ function fetchJSON(relativePath: string, data: unknown, method: string) {
     });
 }
 
-export function Post(model: Models[keyof Models], data: unknown): Promise<Response> {
-    return fetchJSON(model as string, data, "POST");
+export function Post(relativePath: string, data: unknown): Promise<Response> {
+    return fetchJSON(relativePath, data, "POST");
 }
 
-export function Delete(model: Models[keyof Models], data: unknown): Promise<Response> {
-    return fetchJSON(model as string, data, "DELETE");
+export function Delete(relativePath: string, data: unknown): Promise<Response> {
+    return fetchJSON(relativePath, data, "DELETE");
 }

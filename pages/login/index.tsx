@@ -1,46 +1,37 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import ExteriorPageLayout, { Form, FormSubtitle } from "components/layouts/ExteriorLayout";
 import TextField from "components/general/TextField";
 import SensitiveTextField from "components/general/SensitiveTextField";
+import { Post } from "utils/helpers/api";
 
 function Login(): JSX.Element {
     const router = useRouter();
     const usernameInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
-    const [formError, setFormError] = useState<string | undefined>();
+    const [formError, setFormError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const onSubmit = useCallback(
-        async (e: React.FormEvent) => {
-            e.preventDefault();
+    function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
 
-            const username = usernameInput.current?.value;
-            const password = passwordInput.current?.value;
+        const username = usernameInput.current?.value;
+        const password = passwordInput.current?.value;
 
-            if (!(username || password)) return;
+        if (!(username || password)) return;
 
-            try {
-                setIsLoading(true);
-                setFormError(undefined);
+        setIsLoading(true);
+        setFormError("");
 
-                const response = await fetch("/api/user/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, password }),
-                });
-
-                if (response.ok) await router.push("/");
-                else setFormError(await response.text());
-            } catch {
-                setFormError("an unknown error occured");
-            } finally {
-                setIsLoading(false);
-            }
-        },
-        [router, usernameInput, passwordInput]
-    );
+        Post("user/login", { username, password })
+            .then(async (res) => {
+                if (res.ok) await router.push("/");
+                else setFormError(await res.text());
+            })
+            .catch(() => setFormError("an unknown error occured"))
+            .finally(() => setIsLoading(false));
+    }
 
     return (
         <ExteriorPageLayout>

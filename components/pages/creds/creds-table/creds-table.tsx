@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState } from "react";
+import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import EditIcon from "@material-ui/icons/Edit";
@@ -77,7 +77,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
         saveAs(file);
     }
 
-    const batchDeleteCreds = useCallback(() => {
+    function batchDeleteCreds() {
         const ids = selectedCreds.map((c) => c.id);
 
         setDeleting(true);
@@ -89,32 +89,29 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
                 }
             })
             .finally(() => setDeleting(false));
-    }, [selectedCreds, removeDeletedCredsFromLocalState]);
+    }
 
     function onSelectionChange(newSelectedCreds: TableData[]) {
         setSelectedCreds(newSelectedCreds);
     }
 
-    const tableActions: TableAction[] = useMemo(
-        () => [
-            { name: "Create", icon: <EditIcon className={classes.buttonIcon} />, onClick: toggleFormOpen, color: "lightBlue" },
-            {
-                name: `Export ${selectedCreds.length === 0 ? "All" : "Selected"} Creds`,
-                icon: <SaveIcon className={classes.buttonIcon} />,
-                onClick: () => exportToCsv(selectedCreds.length === 0 ? creds : selectedCreds),
-                color: "green",
-            },
-            {
-                name: `${selectedCreds.length > 0 ? "Delete Selected Creds" : "Batch Delete"}`,
-                disabled: isDeleting || selectedCreds.length === 0,
-                disabledText: isDeleting ? "Deleting..." : "Select the cred/s you want to delete first!",
-                icon: <DeleteIcon className={classes.buttonIcon} />,
-                onClick: toggleDeleteDialogOpen,
-                color: "deepOrange",
-            },
-        ],
-        [creds, selectedCreds, toggleFormOpen, isDeleting, classes.buttonIcon]
-    );
+    const tableActions: TableAction[] = [
+        { name: "Create", icon: <EditIcon className={classes.buttonIcon} />, onClick: toggleFormOpen, color: "lightBlue" },
+        {
+            name: `Export ${selectedCreds.length === 0 ? "All" : "Selected"} Creds`,
+            icon: <SaveIcon className={classes.buttonIcon} />,
+            onClick: () => exportToCsv(selectedCreds.length === 0 ? creds : selectedCreds),
+            color: "green",
+        },
+        {
+            name: `${selectedCreds.length > 0 ? "Delete Selected Creds" : "Batch Delete"}`,
+            disabled: isDeleting || selectedCreds.length === 0,
+            disabledText: isDeleting ? "Deleting..." : "Select the cred/s you want to delete first!",
+            icon: <DeleteIcon className={classes.buttonIcon} />,
+            onClick: toggleDeleteDialogOpen,
+            color: "deepOrange",
+        },
+    ];
 
     if (!creds || creds.length === 0)
         return (

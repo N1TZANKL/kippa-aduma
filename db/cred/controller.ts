@@ -11,7 +11,7 @@ export async function createCred(credData: CredModel): Promise<Credential> {
     const credDoc = new credModel(credData);
     const {
         id,
-        _doc: { _id, __v, ...cred },
+        _doc: { _id: docObjId, __v: docVerKey, ...cred },
     } = await credDoc.save();
     return { id, ...cred };
 }

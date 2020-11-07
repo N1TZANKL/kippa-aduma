@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 
-import { MuiStyles, OperationPost } from "interfaces";
+import { MuiStyles, NumberObject, OperationPost } from "interfaces";
 import Panel, { PanelButton, PanelStat, PanelTitle } from "components/general/Panel";
 import { notFirstChild, spaceChildren } from "utils/helpers/css";
 import { areSameDates } from "utils/helpers/dates";
@@ -51,28 +51,23 @@ type AdvancedOverviewPanelProps = MuiStyles & { className: string; posts: Array<
 function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
     const { classes, className, posts } = props;
 
-    const postsFromToday = useMemo(() => posts.filter((post: OperationPost) => areSameDates(new Date().toISOString(), post.writtenAt)), [posts]);
+    const postsFromToday = posts.filter((post: OperationPost) => areSameDates(new Date().toISOString(), post.writtenAt));
     const todaysPostAuthors = filterDuplicatesFromArray(postsFromToday.map((post: OperationPost) => post.author.nickname));
 
-    const postTypesToAmount = useMemo(() => {
-        // initialize object
-        const typeToAmount = {} as { [key: string]: number };
-        Object.values(OperationPostTypes).forEach((postType) => {
-            typeToAmount[postType] = 0;
-        });
+    const postTypesToAmount: NumberObject = {};
+    Object.values(OperationPostTypes).forEach((postType) => {
+        postTypesToAmount[postType] = 0;
+    });
 
-        // fill object with values
-        posts.forEach((post) => {
-            typeToAmount[post.type] += 1;
-        });
+    // fill object with values
+    posts.forEach((post) => {
+        postTypesToAmount[post.type] += 1;
+    });
 
-        // remove types that were not used
-        Object.entries(typeToAmount).forEach(([key, value]) => {
-            if (!value) delete typeToAmount[key];
-        });
-
-        return typeToAmount;
-    }, [posts]);
+    // remove types that were not used
+    Object.entries(postTypesToAmount).forEach(([key, value]) => {
+        if (!value) delete postTypesToAmount[key];
+    });
 
     const differentPostTypesAmount = Object.keys(postTypesToAmount).length;
 

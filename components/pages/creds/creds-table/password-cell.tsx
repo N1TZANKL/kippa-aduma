@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -11,7 +11,6 @@ const styles = () =>
         root: {
             display: "flex",
             alignItems: "center",
-            // justifyContent: "center"
         },
         toggleButton: {
             fontSize: 22,
@@ -26,8 +25,8 @@ function PasswordCell({ classes, password }: PasswordCellProps) {
 
     const togglePasswordShown = () => setPasswordShown((prevState) => !prevState);
 
-    const IconComponent = useMemo(() => (isPasswordShown ? VisibilityOffIcon : VisibilityIcon), [isPasswordShown]);
-    const title = useMemo(() => (isPasswordShown ? "Hide Password" : "Show Password"), [isPasswordShown]);
+    const IconComponent = isPasswordShown ? VisibilityOffIcon : VisibilityIcon;
+    const title = isPasswordShown ? "Hide Password" : "Show Password";
 
     return (
         <div className={classes.root}>

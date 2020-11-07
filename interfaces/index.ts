@@ -11,6 +11,7 @@ export type Children = React.ReactNode;
 export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 export type StringObject = { [key: string]: string };
+export type NumberObject = { [key: string]: number };
 export type GenericObject = Record<string, unknown>;
 export type APIFunctionObject = { [key: string]: (res: NextApiResponse<unknown>, req: NextApiRequest, user: UserSessionObject) => void };
 

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
@@ -16,10 +16,11 @@ function AccountButton({ user }: AccountButtonProps): React.ReactElement {
 
     const router = useRouter();
 
-    const signOut = useCallback(async () => {
-        await fetch("/api/user/logout");
-        router.push("/login");
-    }, [router]);
+    function signOut() {
+        fetch("/api/user/logout").then((res) => {
+            if (res.ok) router.push("/login");
+        });
+    }
 
     return (
         <>

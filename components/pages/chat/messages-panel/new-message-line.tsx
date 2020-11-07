@@ -50,12 +50,13 @@ function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
     const [showEmojiPicker, setEmojiPickerOpen] = useState<boolean>(false);
 
     const toggleEmojiPicker = () => setEmojiPickerOpen((prevState) => !prevState);
+    const clearInput = () => setMessageText("");
 
     const onSubmit = useCallback(
         (e?: React.FormEvent) => {
             if (e) e.preventDefault();
             sendMessage(messageText);
-            setMessageText("");
+            clearInput();
         },
         [sendMessage, messageText]
     );
@@ -65,10 +66,10 @@ function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
             // [CTRL + Enter]: Send message
             if (e.key === "Enter" && e.ctrlKey && !e.shiftKey) {
                 onSubmit();
-                setMessageText("");
+                clearInput();
             }
             // [CTRL + E]: Toggle emoji picker
-            if (e.key === "e" && e.ctrlKey) {
+            else if (e.key === "e" && e.ctrlKey) {
                 e.preventDefault();
                 toggleEmojiPicker();
             }

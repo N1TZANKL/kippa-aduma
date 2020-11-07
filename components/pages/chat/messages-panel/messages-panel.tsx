@@ -1,5 +1,5 @@
 import socketIOClient from "socket.io-client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { ChatMessage, MuiStyles, UserSessionObject } from "interfaces";
@@ -62,23 +62,18 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
         return containerRef.current.scrollTop === containerRef.current.scrollHeight - containerRef.current.offsetHeight;
     }
 
-    const toggleScrollButtonAccordingToScrollPosition = useCallback(() => {
-        if (!containerRef.current) return;
-
-        if (isContainerScrolledToBottom()) setShowScrollButton(false);
-        else setShowScrollButton(true);
-    }, [containerRef]);
-
     // messages container init - auto scroll bottom + scroll event listener
     useEffect(() => {
-        if (!containerRef.current) return () => {}; // so ESLint shuts the fuck up
-        scrollToBottom();
         const el = containerRef.current;
+        if (!el) return () => {}; // so ESLint shuts the fuck up
+
+        scrollToBottom();
+
+        const toggleScrollButtonAccordingToScrollPosition = () => setShowScrollButton(!isContainerScrolledToBottom());
         el.addEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
-        return () => {
-            el.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
-        };
-    }, [containerRef, toggleScrollButtonAccordingToScrollPosition]);
+
+        return () => el.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
+    }, [containerRef]);
 
     function onReceiveNewMessage(newMessage: ChatMessage) {
         setMessages((prevMessages) => [...prevMessages, newMessage]); // TODO: read about Mutable

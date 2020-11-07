@@ -10,7 +10,7 @@ export function formatDate(date, withTime = false) {
             lastDay: "[Yesterday]",
             sameDay: "[Today]",
             nextDay: "[Tomorrow]",
-            lastWeek: "dddd (MMM DD)",
+            lastWeek: "dddd (MMM. D)",
             nextWeek: "[Next] dddd",
             sameElse: "MMM DD",
         },
