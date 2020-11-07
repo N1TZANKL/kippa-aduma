@@ -1,15 +1,16 @@
 import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import * as muiColors from "@material-ui/core/colors";
-import { Color } from "@material-ui/core";
 
 import { PanelButton, PanelButtonProps } from "components/general/Panel";
 
 import customTheme from "../utils/theme";
 
+type ColorObject = Record<string | number, string>;
+
 export type ButtonProps = Omit<PanelButtonProps, "color" | "classes"> & { color?: keyof typeof muiColors; disabledText?: string };
 export default function ToolbarButton({ color = "grey", disabledText, ...otherProps }: ButtonProps): JSX.Element {
-    const chosenMuiColor: Color = muiColors[color];
+    const chosenMuiColor: ColorObject = muiColors[color];
 
     const buttonTheme = createMuiTheme({
         ...customTheme,
@@ -24,10 +25,6 @@ export default function ToolbarButton({ color = "grey", disabledText, ...otherPr
                 ...customTheme.overrides?.MuiButton,
                 containedPrimary: {
                     color: color === "grey" ? "black" : "white",
-                    textShadow: `0 2px 2px ${chosenMuiColor[700]}, 0 2px 2px rgba(0,0,0,0.3)`,
-                    "&$disabled": {
-                        textShadow: "none",
-                    },
                 },
             },
         },
