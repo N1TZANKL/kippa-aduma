@@ -44,12 +44,11 @@ export default function Select(props: SelectProps): JSX.Element {
                     </MenuItem>
                 ))}
             </MuiSelect>
-            {helperText ||
-                (errorMessage && (
-                    <FormHelperText error={!!errorMessage} component="legend" style={{ marginBottom: 3 }}>
-                        {errorMessage || helperText}
-                    </FormHelperText>
-                ))}
+            {errorMessage || helperText ? (
+                <FormHelperText error={!!errorMessage} component="legend" style={{ marginBottom: 3 }}>
+                    {errorMessage || helperText}
+                </FormHelperText>
+            ) : null}
         </FormControl>
     );
 }

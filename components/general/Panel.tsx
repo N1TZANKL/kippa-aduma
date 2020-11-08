@@ -72,9 +72,9 @@ const Panel = withStyles(styles)((props: PanelProps) => {
 
 export default Panel;
 
-type PanelTitleProps = MuiStyles & TypographyProps & { withBackground?: boolean };
+type PanelTitleProps = MuiStyles & { withBackground?: boolean; className?: string };
 export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
-    const { classes, withBackground, className, ...otherProps } = props;
+    const { classes, withBackground, className } = props;
 
     return (
         <Typography
@@ -82,7 +82,6 @@ export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
             variant="h5"
             align="center"
             className={clsx(classes.title, className, withBackground && classes.highlightBackground)}
-            {...otherProps}
         />
     );
 });

@@ -42,7 +42,7 @@ function Menu(props: MenuProps) {
                     return (
                         <MenuItem key={menuItem.title} divider={index !== items.length - 1} onClick={menuItem.onClick}>
                             <div className={classes.menuItemWrapper}>
-                                {Icon && <Icon className={classes.menuItemIcon} />}
+                                {Icon ? <Icon className={classes.menuItemIcon} /> : null}
                                 {menuItem.title}
                             </div>
                         </MenuItem>

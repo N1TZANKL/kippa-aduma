@@ -10,7 +10,7 @@ export default withIronSession(async (req, res) => {
 
     const { username, password } = req.body;
 
-    if (!username || !password) res.status(400).send(LoginErrors.MissingFields);
+    if (!(username || password)) res.status(400).send(LoginErrors.MissingFields);
 
     try {
         const dbUser = await getUser(username);

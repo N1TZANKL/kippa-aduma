@@ -19,7 +19,7 @@ function Login(): JSX.Element {
         const username = usernameInput.current?.value;
         const password = passwordInput.current?.value;
 
-        if (!(username || password)) return;
+        if (!username || !password) return;
 
         setIsLoading(true);
         setFormError("");

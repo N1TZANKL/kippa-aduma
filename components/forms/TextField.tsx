@@ -20,7 +20,7 @@ export default function FormikTextField({ fieldKey, type = "text", label, ...pro
             value={field.value}
             label={label || firstLetterUppercase(field.name)}
             onChange={field.onChange}
-            errorMessage={(meta.touched && meta.error) || ""}
+            errorMessage={meta.touched ? meta.error : ""}
             {...additionalProps}
             {...props}
         />

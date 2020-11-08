@@ -1,12 +1,12 @@
 import React from "react";
 import * as Yup from "yup";
-import { FormikProps } from "formik";
 
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, Select } from "components/forms";
 import { CredentialTypes } from "db/cred/model";
 import { GenericObject, SetState } from "interfaces";
 import { Post } from "utils/helpers/api";
+import { FormProps } from "components/forms/FormBase";
 
 const validationSchema = Yup.object({
     username: Yup.string().required("Required"),
@@ -16,7 +16,7 @@ const validationSchema = Yup.object({
     additionalInformation: Yup.string(),
 });
 
-interface FormValues {
+interface FormValues extends GenericObject {
     username: string;
     password: string;
     type: CredentialTypes;
@@ -52,12 +52,12 @@ export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps
 
     return (
         <FormBase validationSchema={validationSchema} onSubmit={onSubmit} initialValues={{ username: "", password: "", type: "", worksOn: "" }}>
-            {({ values }: FormikProps<FormValues>) => (
+            {({ values }: FormProps<FormValues>) => (
                 <>
                     <TextField fieldKey="username" />
                     <TextField fieldKey="password" type="sensitive" />
                     <Select fieldKey="type" selectionList={ArrayToSelectionList(Object.values(CredentialTypes))} />
-                    {values.type && <TextField fieldKey="worksOn" label={getworksOnLabel(values.type)} />}
+                    {values.type ? <TextField fieldKey="worksOn" label={getworksOnLabel(values.type)} /> : null}
                     <TextField
                         fieldKey="additionalInformation"
                         label="Additional Info (Optional)"

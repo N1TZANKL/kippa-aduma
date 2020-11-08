@@ -74,14 +74,14 @@ function UserListItem({ classes, online, color, nickname, onClick, isCurrentUser
                     <Typography variant="body1" className={classes.nicknameText}>
                         {nickname}
                     </Typography>
-                    {isCurrentUser && (
+                    {isCurrentUser ? (
                         <Typography variant="caption" className={classes.userIndicator}>
                             {"\n(You)"}
                         </Typography>
-                    )}
+                    ) : null}
                 </div>
             </div>
-            {online || (isCurrentUser && <div className={classes.onlineIndicator} />)}
+            {online || isCurrentUser ? <div className={classes.onlineIndicator} /> : null}
         </div>
     );
 }

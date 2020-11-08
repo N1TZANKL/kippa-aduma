@@ -58,7 +58,7 @@ function PostContent(props: PostContentProps) {
     const { title, additionalInformation, type } = post;
 
     useEffect(() => {
-        setCanExpand(!!additionalInformation || (expanded ? true : isElementOverflowing(descriptionRef.current)));
+        setCanExpand(!!additionalInformation || expanded || isElementOverflowing(descriptionRef.current));
     }, [expanded, descriptionRef, additionalInformation]);
 
     function toggleExpanded() {
@@ -83,14 +83,14 @@ function PostContent(props: PostContentProps) {
             </Fade>
             <Collapse in={expanded} mountOnEnter unmountOnExit>
                 <div>
-                    {additionalInformation && (
+                    {additionalInformation ? (
                         <>
                             <Typography variant="caption" className={classes.additionalInfoTitle}>
                                 Additional Information
                             </Typography>
                             <div className={clsx(classes.multilineText, classes.additionalInfo)}>{additionalInformation}</div>
                         </>
-                    )}
+                    ) : null}
                     <Fade in={true} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>
                         <div className={classes.toggleExpandText}>Show Less</div>
                     </Fade>

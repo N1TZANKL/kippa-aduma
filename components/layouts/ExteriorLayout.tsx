@@ -130,7 +130,7 @@ export const Form = withStyles(styles)(({ classes, title, children, subtitle, su
                 {submitMessage}
             </SubmitButton>
         </form>
-        {error && <FormError>{error}</FormError>}
+        {error ? <FormError>{error}</FormError> : null}
     </>
 ));
 

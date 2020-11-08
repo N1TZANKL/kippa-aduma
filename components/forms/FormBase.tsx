@@ -19,11 +19,13 @@ const styles = () =>
         },
     });
 
+export type FormProps<T> = FormikProps<T | any>;
+
 type FormBaseProps = MuiStyles & {
     initialValues: GenericObject;
     validationSchema: ObjectSchema;
     onSubmit: (values: GenericObject, setFormError: SetState<string>) => Promise<void>;
-    children: (formikProps: FormikProps<GenericObject>) => Children;
+    children: (formikProps: FormProps<any>) => Children;
 };
 function FormBase({ classes, initialValues, validationSchema, onSubmit, children }: FormBaseProps) {
     const [formError, setFormError] = useState<string>("");
@@ -43,7 +45,7 @@ function FormBase({ classes, initialValues, validationSchema, onSubmit, children
                 <Form className={classes.formRoot}>
                     {children(formikProps)}
                     <SubmitButton isSubmitting={formikProps.isSubmitting} />
-                    {formError && <FormError>{formError}</FormError>}
+                    {formError ? <FormError>{formError}</FormError> : null}
                 </Form>
             )}
         </Formik>

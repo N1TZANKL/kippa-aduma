@@ -35,7 +35,7 @@ function Post(props: PostProps) {
 
     return (
         <Paper className={classes.root} style={{ border: `1px solid ${PostTypeToColor[type]}` }}>
-            {title && <PostTitle title={title} type={type} />}
+            {title ? <PostTitle title={title} type={type} /> : null}
             <PostContent post={post} />
             <div className={classes.postBottomBar}>
                 <PostMetadata author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />

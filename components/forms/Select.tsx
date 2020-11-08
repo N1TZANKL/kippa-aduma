@@ -24,7 +24,7 @@ function FormikSelect({ classes, fieldKey, label, ...props }: FormikSelectProps)
             value={field.value}
             label={label || firstLetterUppercase(field.name)}
             onChange={field.onChange}
-            errorMessage={(meta.touched && meta.error) || ""}
+            errorMessage={meta.touched ? meta.error : ""}
             className={classes.select}
             {...props}
         />
