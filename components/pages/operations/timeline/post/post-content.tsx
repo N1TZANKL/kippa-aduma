@@ -32,7 +32,6 @@ const styles = () =>
         additionalInfoTitle: {
             marginTop: 15,
             fontWeight: "bold",
-            color: muiColors.grey[400],
         },
         additionalInfo: {
             margin: "3px 0",
@@ -85,7 +84,7 @@ function PostContent(props: PostContentProps) {
                 <div>
                     {additionalInformation ? (
                         <>
-                            <Typography variant="caption" className={classes.additionalInfoTitle}>
+                            <Typography variant="caption" color="textSecondary" className={classes.additionalInfoTitle}>
                                 Additional Information
                             </Typography>
                             <div className={clsx(classes.multilineText, classes.additionalInfo)}>{additionalInformation}</div>

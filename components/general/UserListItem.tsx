@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { MouseEventHandler } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { grey, green } from "@material-ui/core/colors";
+import { green } from "@material-ui/core/colors";
 
 import { MuiStyles, UserSessionObject } from "interfaces";
 import UserAvatar from "components/general/UserAvatar";
@@ -51,7 +51,6 @@ const styles = () =>
             lineHeight: 1.1,
         },
         userIndicator: {
-            color: grey[500],
             fontSize: 11,
             pointerEvents: "none",
             userSelect: "none",
@@ -75,7 +74,7 @@ function UserListItem({ classes, online, color, nickname, onClick, isCurrentUser
                         {nickname}
                     </Typography>
                     {isCurrentUser ? (
-                        <Typography variant="caption" className={classes.userIndicator}>
+                        <Typography color="textSecondary" variant="caption" className={classes.userIndicator}>
                             {"\n(You)"}
                         </Typography>
                     ) : null}

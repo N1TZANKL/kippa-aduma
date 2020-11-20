@@ -59,7 +59,6 @@ const styles = (theme: Theme) =>
         },
         statContent: {
             fontFamily: "monospace",
-            color: "rgba(255,255,255,0.5)",
         },
     });
 
@@ -107,7 +106,7 @@ export const PanelStat = withStyles(styles)(({ classes, title, children }: Panel
         <Typography variant="h5" className={classes.statTitle}>
             {title}
         </Typography>
-        <Typography variant="h6" component="div" className={classes.statContent}>
+        <Typography variant="h6" component="div" color="textSecondary" className={classes.statContent}>
             {children}
         </Typography>
     </Paper>

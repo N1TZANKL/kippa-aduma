@@ -3,7 +3,6 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CreateIcon from "@material-ui/icons/Create";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import { grey } from "@material-ui/core/colors";
 import clsx from "clsx";
 
 import UserNicknameText from "components/general/UserNicknameText";
@@ -15,7 +14,6 @@ const styles = () =>
     createStyles({
         postMetadata: {
             fontStyle: "italic",
-            color: grey[400],
             display: "flex",
             alignItems: "center",
             marginRight: 5,
@@ -45,7 +43,7 @@ function PostMetadata(props: PostMetadataProps) {
     const { classes } = props;
 
     return (
-        <Typography variant="caption" className={classes.postMetadata}>
+        <Typography variant="caption" color="textSecondary" className={classes.postMetadata}>
             <div className={clsx(classes.data, classes.flexCenter)}>
                 <span className={classes.flexCenter}>
                     <CreateIcon className={classes.metadataIcon} />
