@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import Card from "@material-ui/core/Card";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import SettingsIcon from "@material-ui/icons/Settings";
-import IconButton from "@material-ui/core/IconButton";
 
 import routes, { Route } from "config/routes";
+import IconButton from "components/general/IconButton";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -43,9 +43,6 @@ const styles = (theme: Theme) =>
         iconButton: {
             marginBottom: 15,
         },
-        icon: {
-            fontSize: 28,
-        },
     });
 
 function Sidebar({ classes }: WithStyles<typeof styles>) {
@@ -56,9 +53,7 @@ function Sidebar({ classes }: WithStyles<typeof styles>) {
                     <SidebarBox key={route.path} route={route} />
                 ))}
             </div>
-            <IconButton title="Settings" className={classes.iconButton}>
-                <SettingsIcon className={classes.icon} />
-            </IconButton>
+            <IconButton title="Settings" className={classes.iconButton} fontSize={28} icon={SettingsIcon} />
         </Card>
     );
 }

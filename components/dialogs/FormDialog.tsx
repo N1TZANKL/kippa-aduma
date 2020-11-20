@@ -3,11 +3,11 @@ import { withStyles, createStyles, Theme, lighten } from "@material-ui/core/styl
 import Dialog, { DialogProps } from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 
 import { MuiStyles } from "interfaces";
+import IconButton from "components/general/IconButton";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -34,10 +34,6 @@ const styles = (theme: Theme) =>
             backgroundColor: theme.constants.appBackgroundHighlight,
             borderTop: `1px solid ${lighten(theme.constants.appBackgroundHighlight, 0.15)}`,
         },
-        closeButton: {
-            padding: 4,
-            fontSize: 24,
-        },
     });
 
 type FormDialogProps = MuiStyles & DialogProps & { title: string; onClose: () => void };
@@ -48,9 +44,7 @@ function FormDialog({ classes, title, children, open, onClose }: FormDialogProps
                 <Typography variant="h5" className={classes.titleText}>
                     {title}
                 </Typography>
-                <IconButton className={classes.closeButton} onClick={onClose}>
-                    <CloseIcon fontSize="inherit" />
-                </IconButton>
+                <IconButton onClick={onClose} fontSize={24} icon={CloseIcon} />
             </DialogTitle>
             <DialogContent className={classes.content}>{children}</DialogContent>
         </Dialog>

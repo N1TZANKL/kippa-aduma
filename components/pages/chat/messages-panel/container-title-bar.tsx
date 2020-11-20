@@ -4,8 +4,7 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 import { MuiStyles } from "interfaces";
 import { PanelTitle } from "components/general/Panel";
-
-import { CustomButton } from "./new-message-line";
+import IconButton from "components/general/IconButton";
 
 const styles = () =>
     createStyles({
@@ -25,7 +24,7 @@ function ContainerTitleBar({ classes }: MuiStyles) {
     return (
         <PanelTitle className={classes.root} withBackground>
             Group Chat
-            <CustomButton icon={AttachFileIcon} title="Send File" />
+            <IconButton icon={AttachFileIcon} title="Send File" p={6} />
         </PanelTitle>
     );
 }

@@ -7,10 +7,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { MuiStyles } from "interfaces";
+import IconButton from "components/general/IconButton";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -66,9 +66,7 @@ function ConfirmationDialog({
                     <Typography variant="h5" className={classes.titleText}>
                         Confirm Action
                     </Typography>
-                    <IconButton className={classes.closeButton} onClick={onClose}>
-                        <CloseIcon fontSize="inherit" />
-                    </IconButton>
+                    <IconButton onClick={onClose} icon={CloseIcon} />
                 </DialogTitle>
             )}
             <DialogContent className={classes.content}>

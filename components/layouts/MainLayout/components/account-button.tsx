@@ -28,7 +28,7 @@ function AccountButton({ user }: AccountButtonProps): React.ReactElement {
                 {user ? (
                     <UserAvatar variant="circle" withBorder color={user.color} nickname={user.nickname} size={36} />
                 ) : (
-                    <AccountCircleIcon style={{ fontSize: 36 }} />
+                    <AccountCircleIcon fontSize="large" />
                 )}
             </IconButton>
             <Menu

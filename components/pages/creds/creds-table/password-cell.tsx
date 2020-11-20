@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import { MuiStyles } from "interfaces";
+import IconButton from "components/general/IconButton";
 
 const styles = () =>
     createStyles({
         root: {
             display: "flex",
             alignItems: "center",
-        },
-        toggleButton: {
-            fontSize: 22,
-            padding: 3,
-            marginRight: 6,
+            " & > button": {
+                marginRight: 8,
+            },
         },
     });
 
@@ -30,9 +28,7 @@ function PasswordCell({ classes, password }: PasswordCellProps) {
 
     return (
         <div className={classes.root}>
-            <IconButton color="secondary" onClick={togglePasswordShown} className={classes.toggleButton} title={title}>
-                <IconComponent fontSize="inherit" />
-            </IconButton>
+            <IconButton color="secondary" onClick={togglePasswordShown} title={title} icon={IconComponent} fontSize={22} p={3} />
             {isPasswordShown ? password : "•".repeat(password.length)}
         </div>
     );

@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
-import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
-import { SvgIconComponent } from "@material-ui/icons";
 import SendIcon from "@material-ui/icons/Send";
 import EmojiIcon from "@material-ui/icons/InsertEmoticon";
 import Card from "@material-ui/core/Card";
@@ -9,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import { MuiStyles } from "interfaces";
 import TextField from "components/general/TextField";
 import { PanelBottomBar } from "components/general/Panel";
+import IconButton from "components/general/IconButton";
 
 import EmojiPicker from "./emoji-picker";
 
@@ -28,20 +27,7 @@ const styles = (theme: Theme) =>
             minHeight: 35,
             maxHeight: 175,
         },
-        iconButton: {
-            padding: 6,
-        },
-        icon: {
-            color: "white",
-        },
     });
-
-type CustomButtonProps = MuiStyles & Omit<IconButtonProps, "children"> & { icon: SvgIconComponent };
-export const CustomButton = withStyles(styles)(({ classes, icon: Icon, ...props }: CustomButtonProps) => (
-    <IconButton className={classes.iconButton} {...props}>
-        <Icon className={classes.icon} />
-    </IconButton>
-));
 
 type MessageLineProps = MuiStyles & { sendMessage: (value: string) => void };
 
@@ -86,7 +72,7 @@ function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
 
     return (
         <PanelBottomBar className={classes.panel}>
-            <CustomButton icon={EmojiIcon} title="Add Emoji" onClick={toggleEmojiPicker} />
+            <IconButton icon={EmojiIcon} title="Add Emoji" onClick={toggleEmojiPicker} p={6} />
             {showEmojiPicker && <EmojiPicker editMessage={setMessageText} closePicker={toggleEmojiPicker} />}
             <Card className={classes.messageBox}>
                 <TextField
@@ -99,7 +85,7 @@ function NewMessageLine({ classes, sendMessage }: MessageLineProps) {
                     placeholder="Write a message here..."
                 />
             </Card>
-            <CustomButton onClick={onSubmit} icon={SendIcon} title="Send Message" />
+            <IconButton onClick={onSubmit} icon={SendIcon} title="Send Message" p={6} />
         </PanelBottomBar>
     );
 }
