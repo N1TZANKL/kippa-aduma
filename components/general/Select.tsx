@@ -4,6 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Box from "@material-ui/core/Box";
 
 import { firstLetterUppercase } from "utils/helpers/strings";
 
@@ -45,9 +46,11 @@ export default function Select(props: SelectProps): JSX.Element {
                 ))}
             </MuiSelect>
             {errorMessage || helperText ? (
-                <FormHelperText error={!!errorMessage} component="legend" style={{ marginBottom: 3 }}>
-                    {errorMessage || helperText}
-                </FormHelperText>
+                <Box marginBottom="3px" clone>
+                    <FormHelperText error={!!errorMessage} component="legend">
+                        {errorMessage || helperText}
+                    </FormHelperText>
+                </Box>
             ) : null}
         </FormControl>
     );

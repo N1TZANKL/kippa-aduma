@@ -28,7 +28,7 @@ type MenuProps = MuiStyles &
     PopoverProps & {
         anchorEl: PopoverProps["anchorEl"];
         onClose: PopoverProps["onClose"];
-        items: Array<MenuItemProps>;
+        items: MenuItemProps[];
     };
 
 function Menu(props: MenuProps) {
@@ -37,17 +37,14 @@ function Menu(props: MenuProps) {
     return (
         <Popover {...popoverProps}>
             {items.length > 0 &&
-                items.map((menuItem, index) => {
-                    const Icon = menuItem.icon;
-                    return (
-                        <MenuItem key={menuItem.title} divider={index !== items.length - 1} onClick={menuItem.onClick}>
-                            <div className={classes.menuItemWrapper}>
-                                {Icon ? <Icon className={classes.menuItemIcon} /> : null}
-                                {menuItem.title}
-                            </div>
-                        </MenuItem>
-                    );
-                })}
+                items.map(({ title, icon: Icon, onClick }, index) => (
+                    <MenuItem key={title} divider={index !== items.length - 1} onClick={onClick}>
+                        <div className={classes.menuItemWrapper}>
+                            {Icon ? <Icon className={classes.menuItemIcon} /> : null}
+                            {title}
+                        </div>
+                    </MenuItem>
+                ))}
         </Popover>
     );
 }

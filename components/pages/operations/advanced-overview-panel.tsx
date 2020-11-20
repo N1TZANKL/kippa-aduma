@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 
-import { MuiStyles, NumberObject, OperationPost } from "interfaces";
+import { MuiStyles, OperationPost } from "interfaces";
 import Panel, { PanelButton, PanelStat, PanelTitle } from "components/general/Panel";
 import { notFirstChild, spaceChildren } from "utils/helpers/css";
 import { areSameDates } from "utils/helpers/dates";
@@ -48,28 +48,19 @@ const styles = () =>
     });
 
 type AdvancedOverviewPanelProps = MuiStyles & { className: string; posts: Array<OperationPost> };
-function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
-    const { classes, className, posts } = props;
+function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPanelProps) {
+    const postsFromToday = posts.filter((post) => areSameDates(new Date(), post.writtenAt));
+    const todaysPostAuthors = filterDuplicatesFromArray(postsFromToday.map((post) => post.author.nickname));
 
-    const postsFromToday = posts.filter((post: OperationPost) => areSameDates(new Date().toISOString(), post.writtenAt));
-    const todaysPostAuthors = filterDuplicatesFromArray(postsFromToday.map((post: OperationPost) => post.author.nickname));
+    const postsCountByType = posts.reduce<Record<OperationPostTypes, number>>((agg, { type }) => {
+        /* eslint-disable no-param-reassign */
+        if (agg[type]) agg[type] += 1;
+        else agg[type] = 1;
+        /* eslint-enable no-param-reassign */
+        return agg;
+    }, {} as any);
 
-    const postTypesToAmount: NumberObject = {};
-    Object.values(OperationPostTypes).forEach((postType) => {
-        postTypesToAmount[postType] = 0;
-    });
-
-    // fill object with values
-    posts.forEach((post) => {
-        postTypesToAmount[post.type] += 1;
-    });
-
-    // remove types that were not used
-    Object.entries(postTypesToAmount).forEach(([key, value]) => {
-        if (!value) delete postTypesToAmount[key];
-    });
-
-    const differentPostTypesAmount = Object.keys(postTypesToAmount).length;
+    const postTypesUsedCount = Object.keys(postsCountByType).length;
 
     return (
         <Panel className={className}>
@@ -93,10 +84,10 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
                         </>
                     )}
                 </PanelStat>
-                <PanelStat title={differentPostTypesAmount === 1 ? "One post type used:" : `${differentPostTypesAmount} post types used:`}>
-                    {differentPostTypesAmount === 0
+                <PanelStat title={postTypesUsedCount === 1 ? "One post type used:" : `${postTypesUsedCount} post types used:`}>
+                    {postTypesUsedCount === 0
                         ? "(none used)"
-                        : Object.entries(postTypesToAmount).map(([key, value]) => (
+                        : Object.entries(postsCountByType).map(([key, value]) => (
                               <div key={key} className={classes.postTypeLine}>
                                   <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i>{" "}
                                   <span>
@@ -110,4 +101,4 @@ function AdvancedOverviewPanel(props: AdvancedOverviewPanelProps) {
     );
 }
 
-export default withStyles(styles)(AdvancedOverviewPanel);
+export default withStyles(styles)(React.memo(AdvancedOverviewPanel));

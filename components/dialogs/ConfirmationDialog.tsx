@@ -43,24 +43,17 @@ const styles = (theme: Theme) =>
 
 type ConfirmationDialogProps = MuiStyles &
     DialogProps & { onClose: () => void; onConfirm: () => void; withTitle?: boolean; confirmText?: string; denyText?: string };
-function ConfirmationDialog({
-    classes,
-    open,
-    onClose,
-    onConfirm,
-    children,
-    confirmText = "Confirm",
-    denyText = "Close",
-    withTitle = true,
-    ...props
-}: ConfirmationDialogProps) {
+
+function ConfirmationDialog(props: ConfirmationDialogProps) {
+    const { classes, open, onClose, onConfirm, children, confirmText = "Confirm", denyText = "Close", withTitle = true, ...otherProps } = props;
+
     function confirmAndClose() {
         onConfirm();
         onClose();
     }
 
     return (
-        <Dialog open={open} onClose={onClose} {...props}>
+        <Dialog open={open} onClose={onClose} {...otherProps}>
             {withTitle && (
                 <DialogTitle disableTypography className={classes.title}>
                     <Typography variant="h5" className={classes.titleText}>

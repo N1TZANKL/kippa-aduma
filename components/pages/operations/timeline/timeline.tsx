@@ -51,6 +51,8 @@ const styles = () =>
         },
     });
 
+const POSTS_PER_PAGE = 5;
+
 type PostTimelineProps = MuiStyles & {
     posts: Array<OperationPost>;
     className: string;
@@ -61,11 +63,11 @@ type PostTimelineProps = MuiStyles & {
 function PostsTimeline(props: PostTimelineProps) {
     const { classes, className, posts, addPost, currentSort, postTypeFilters } = props;
 
-    const [shownPosts, setShownPosts] = useState<number>(5);
+    const [shownPosts, setShownPosts] = useState<number>(POSTS_PER_PAGE);
     const [searchString, setSearchString] = useState<string>("");
 
     function showMorePosts() {
-        setShownPosts((prevState) => prevState + 5);
+        setShownPosts((prevState) => prevState + POSTS_PER_PAGE);
     }
 
     const filterPostsBySearchString = useCallback(

@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import clsx from "clsx";
+import Box from "@material-ui/core/Box";
 
 import { PageLayoutProps, UserSessionObject } from "interfaces";
 
@@ -23,12 +23,8 @@ const styles = (theme: Theme) =>
             width: "100%",
         },
         childrenWrapper: {
-            padding: 20,
             marginLeft: 70,
             width: "100%",
-        },
-        noPadding: {
-            padding: 0,
         },
     });
 
@@ -38,9 +34,11 @@ function MainLayout({ classes, children, noPadding, user }: PageLayoutProps & { 
             <AppBar user={user} />
             <div className={classes.wrapper}>
                 <Sidebar />
-                <Paper square className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)}>
-                    {children}
-                </Paper>
+                <Box padding={noPadding ? 0 : "20px"} clone>
+                    <Paper square className={classes.childrenWrapper}>
+                        {children}
+                    </Paper>
+                </Box>
             </div>
         </div>
     );

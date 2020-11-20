@@ -39,11 +39,11 @@ export enum SortOptions {
     HAPPENED_ASC = "Date Happened: Oldest First",
 }
 
-export const SortOptionsToFunction = {
-    [SortOptions.WRITTEN_ASC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "writtenAt"),
-    [SortOptions.HAPPENED_ASC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "happenedAt"),
-    [SortOptions.WRITTEN_DESC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "writtenAt", "desc"),
-    [SortOptions.HAPPENED_DESC]: (posts: OperationPost[]): OperationPost[] => sortObjectArrayByDate(posts, "happenedAt", "desc"),
+export const SortOptionsToFunction: Record<SortOptions, (posts: OperationPost[]) => OperationPost[]> = {
+    [SortOptions.WRITTEN_ASC]: (posts) => sortObjectArrayByDate(posts, "writtenAt"),
+    [SortOptions.HAPPENED_ASC]: (posts) => sortObjectArrayByDate(posts, "happenedAt"),
+    [SortOptions.WRITTEN_DESC]: (posts) => sortObjectArrayByDate(posts, "writtenAt", "desc"),
+    [SortOptions.HAPPENED_DESC]: (posts) => sortObjectArrayByDate(posts, "happenedAt", "desc"),
 };
 
 export enum PostTypeFilterRadioOptions {
@@ -54,7 +54,7 @@ export enum PostTypeFilterRadioOptions {
 type SortFilterPanelProps = MuiStyles & {
     className: string;
     sortState: [SortOptions, Dispatch<SetStateAction<SortOptions>>];
-    postTypeFiltersState: [Array<OperationPostTypes> | null, Dispatch<SetStateAction<Array<OperationPostTypes> | null>>];
+    postTypeFiltersState: [OperationPostTypes[] | null, Dispatch<SetStateAction<OperationPostTypes[] | null>>];
 };
 function SortFilterPanel(props: SortFilterPanelProps) {
     const { classes, className, sortState, postTypeFiltersState } = props;
