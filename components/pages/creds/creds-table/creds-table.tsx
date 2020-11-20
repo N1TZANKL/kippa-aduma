@@ -96,14 +96,16 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
     }
 
     const tableActions: TableAction[] = [
-        { name: "Create", icon: <EditIcon className={classes.buttonIcon} />, onClick: toggleFormOpen, color: "lightBlue" },
+        { id: "create", name: "Create", icon: <EditIcon className={classes.buttonIcon} />, onClick: toggleFormOpen, color: "lightBlue" },
         {
+            id: "export",
             name: `Export ${selectedCreds.length === 0 ? "All" : "Selected"} Creds`,
             icon: <SaveIcon className={classes.buttonIcon} />,
             onClick: () => exportToCsv(selectedCreds.length === 0 ? creds : selectedCreds),
             color: "green",
         },
         {
+            id: "delete",
             name: `${selectedCreds.length > 0 ? "Delete Selected Creds" : "Batch Delete"}`,
             disabled: isDeleting || selectedCreds.length === 0,
             disabledText: isDeleting ? "Deleting..." : "Select the cred/s you want to delete first!",

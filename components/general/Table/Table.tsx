@@ -24,7 +24,7 @@ const styles = () =>
         },
     });
 
-export type TableAction = ButtonProps & { name?: string; icon?: Children };
+export type TableAction = ButtonProps & { id: string; name?: string; icon?: Children };
 
 type TableProps = MuiStyles & Omit<MaterialTableProps<any>, "title" | "actions"> & { actions: TableAction[]; emptyValueText?: string };
 function Table({ classes, actions, options = {}, ...props }: TableProps) {
@@ -38,8 +38,8 @@ function Table({ classes, actions, options = {}, ...props }: TableProps) {
                 title={
                     <div className={classes.titleDiv}>
                         <PanelTitle className={classes.titleText}>Actions:</PanelTitle>
-                        {actions.map(({ name, children, icon, ...action }: TableAction, index) => (
-                            <TableButton {...action} key={index}>
+                        {actions.map(({ name, children, icon, id, ...action }: TableAction) => (
+                            <TableButton {...action} key={id}>
                                 {children || (
                                     <>
                                         {icon} {name}
