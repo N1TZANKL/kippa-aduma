@@ -12,7 +12,6 @@ import routes, { Route } from "config/routes";
 const styles = (theme: Theme) =>
     createStyles({
         sidebar: {
-            borderRadius: 0,
             height: "calc(100% - 65px)",
             width: 70,
             backgroundColor: theme.constants.appBackgroundDark,
@@ -51,7 +50,7 @@ const styles = (theme: Theme) =>
 
 function Sidebar({ classes }: WithStyles<typeof styles>) {
     return (
-        <Card className={classes.sidebar}>
+        <Card className={classes.sidebar} square>
             <div>
                 {routes.map((route) => (
                     <SidebarBox key={route.path} route={route} />

@@ -27,7 +27,6 @@ const styles = (theme: Theme) =>
             paddingTop: "10vh",
             justifyContent: "center",
             textShadow: "0 2px 2px black",
-            borderRadius: 0,
             padding: 30,
             minHeight: 260,
         },
@@ -137,7 +136,7 @@ export const Form = withStyles(styles)(({ classes, title, children, subtitle, su
 function ExteriorPageLayout({ classes, children }: PageLayoutProps) {
     return (
         <div className={classes.root}>
-            <Paper className={classes.banner}>
+            <Paper className={classes.banner} square>
                 <span>Kippa Aduma</span>
             </Paper>
             <div className={classes.formWrapper}>

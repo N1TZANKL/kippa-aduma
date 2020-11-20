@@ -23,7 +23,6 @@ const styles = (theme: Theme) =>
             width: "100%",
         },
         childrenWrapper: {
-            borderRadius: 0,
             padding: 20,
             marginLeft: 70,
             width: "100%",
@@ -39,7 +38,9 @@ function MainLayout({ classes, children, noPadding, user }: PageLayoutProps & { 
             <AppBar user={user} />
             <div className={classes.wrapper}>
                 <Sidebar />
-                <Paper className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)}>{children}</Paper>
+                <Paper square className={clsx(classes.childrenWrapper, noPadding && classes.noPadding)}>
+                    {children}
+                </Paper>
             </div>
         </div>
     );
