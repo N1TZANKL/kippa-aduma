@@ -40,7 +40,7 @@ function Operations(props: OperationsProps) {
 
     const [allPosts, setPosts] = useState<OperationPost[]>(posts || []);
 
-    const sortState = useState<SortOptions>(SortOptions.WRITTEN_DESC);
+    const sortState = useState<SortOptions>(SortOptions.WrittenDesc);
     const postTypeFiltersState = useState<OperationPostTypes[] | null>(null);
 
     function addPost(newPost: OperationPost) {

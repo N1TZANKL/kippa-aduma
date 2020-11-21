@@ -33,17 +33,17 @@ const styles = () =>
     });
 
 export enum SortOptions {
-    WRITTEN_DESC = "Date Written: Newest First",
-    WRITTEN_ASC = "Date Written: Oldest First",
-    HAPPENED_DESC = "Date Happened: Newest First",
-    HAPPENED_ASC = "Date Happened: Oldest First",
+    WrittenDesc = "Date Written: Newest First",
+    WrittenAsc = "Date Written: Oldest First",
+    HappenedDesc = "Date Happened: Newest First",
+    HappenedAsc = "Date Happened: Oldest First",
 }
 
 export const SortOptionsToFunction: Record<SortOptions, (posts: OperationPost[]) => OperationPost[]> = {
-    [SortOptions.WRITTEN_ASC]: (posts) => sortObjectArrayByDate(posts, "writtenAt"),
-    [SortOptions.HAPPENED_ASC]: (posts) => sortObjectArrayByDate(posts, "happenedAt"),
-    [SortOptions.WRITTEN_DESC]: (posts) => sortObjectArrayByDate(posts, "writtenAt", "desc"),
-    [SortOptions.HAPPENED_DESC]: (posts) => sortObjectArrayByDate(posts, "happenedAt", "desc"),
+    [SortOptions.WrittenAsc]: (posts) => sortObjectArrayByDate(posts, "writtenAt"),
+    [SortOptions.HappenedAsc]: (posts) => sortObjectArrayByDate(posts, "happenedAt"),
+    [SortOptions.WrittenDesc]: (posts) => sortObjectArrayByDate(posts, "writtenAt", "desc"),
+    [SortOptions.HappenedDesc]: (posts) => sortObjectArrayByDate(posts, "happenedAt", "desc"),
 };
 
 export enum PostTypeFilterRadioOptions {
