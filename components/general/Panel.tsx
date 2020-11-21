@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Paper, { PaperProps } from "@material-ui/core/Paper";
 import Button, { ButtonProps } from "@material-ui/core/Button";
 
-import { Children, MuiStyles } from "interfaces";
+import { MuiStyles } from "interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -71,7 +71,7 @@ const Panel = withStyles(styles)((props: PanelProps) => {
 
 export default Panel;
 
-type PanelTitleProps = MuiStyles & { withBackground?: boolean; className?: string; children: Children };
+type PanelTitleProps = MuiStyles & { withBackground?: boolean; className?: string; children: React.ReactChild };
 export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
     const { classes, withBackground, className, children } = props;
 
@@ -92,7 +92,7 @@ export const PanelSubtitle = withStyles(styles)(({ classes, ...otherProps }: Pan
     <Typography className={clsx(classes.title, classes.subtitle)} variant="h6" {...otherProps} />
 ));
 
-type PanelBottomBarProps = MuiStyles & { children: Children; className?: string };
+type PanelBottomBarProps = MuiStyles & { children: React.ReactChild; className?: string };
 export const PanelBottomBar = withStyles(styles)(({ classes, className, children }: PanelBottomBarProps) => (
     <div className={clsx(classes.bottomBar, classes.highlightBackground, className)}>{children}</div>
 ));
@@ -102,7 +102,7 @@ export const PanelButton = withStyles(styles)(({ classes, className, ...otherPro
     <Button className={clsx(classes.button, className)} variant="contained" {...otherProps} />
 ));
 
-type PanelStatProps = MuiStyles & { title: string; children: Children };
+type PanelStatProps = MuiStyles & { title: string; children: React.ReactChild };
 export const PanelStat = withStyles(styles)(({ classes, title, children }: PanelStatProps) => (
     <Paper className={classes.stat} variant="outlined">
         <Typography variant="h5" className={classes.statTitle}>

@@ -15,7 +15,7 @@ type SelectionListItem = {
 };
 
 export type SelectProps = MuiSelectProps & {
-    selectionList: Array<SelectionListItem>;
+    selectionList: SelectionListItem[];
     label?: string;
     helperText?: string;
     errorMessage?: string;

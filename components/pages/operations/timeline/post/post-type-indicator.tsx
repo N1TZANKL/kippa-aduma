@@ -5,9 +5,8 @@ import * as muiColors from "@material-ui/core/colors";
 
 import { textEllipsis } from "utils/helpers/css";
 import { OperationPostTypes } from "db/post/model";
-import { StringObject } from "interfaces";
 
-export const PostTypeToColor: StringObject = {
+export const PostTypeToColor: Record<OperationPostTypes, string> = {
     [OperationPostTypes.SUCCESS]: muiColors.green.A400,
     [OperationPostTypes.RECON]: muiColors.cyan.A400,
     [OperationPostTypes.BURN]: muiColors.red.A400,

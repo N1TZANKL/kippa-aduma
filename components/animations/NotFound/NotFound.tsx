@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 import Fade from "@material-ui/core/Fade";
 import Typography from "@material-ui/core/Typography";
 
-import { Children, MuiStyles } from "interfaces";
+import { MuiStyles } from "interfaces";
 
 import animationData from "./animation.json";
 
@@ -22,7 +22,7 @@ const styles = () =>
         },
     });
 
-type NotFoundAnimationProps = MuiStyles & { message?: Children };
+type NotFoundAnimationProps = MuiStyles & { message?: React.ReactChild };
 function NotFoundAnimation({ classes, message }: NotFoundAnimationProps) {
     const options = {
         loop: true,

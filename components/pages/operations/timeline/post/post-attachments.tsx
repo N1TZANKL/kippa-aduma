@@ -26,7 +26,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-type PostAttachmentsProps = MuiStyles & { attachments: Array<OperationPostAttachment> };
+type PostAttachmentsProps = MuiStyles & { attachments: OperationPostAttachment[] };
 
 function PostAttachments(props: PostAttachmentsProps) {
     const { classes, attachments } = props;

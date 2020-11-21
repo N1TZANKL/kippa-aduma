@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { Form, Formik, FormikProps } from "formik";
+import { Form, Formik, FormikHelpers, FormikProps, FormikValues } from "formik";
 import { ObjectSchema } from "yup";
 
-import { MuiStyles, GenericObject, SetState, Children } from "interfaces";
+import { MuiStyles } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
 
 import FormError from "./FormError";
@@ -19,28 +19,35 @@ const styles = () =>
         },
     });
 
-export type FormProps<T> = FormikProps<T | any>;
+export type FormBaseOnSubmit = (values: FormikValues) => Promise<void>;
 
 type FormBaseProps = MuiStyles & {
-    initialValues: GenericObject;
+    initialValues: FormikValues;
     validationSchema: ObjectSchema;
-    onSubmit: (values: GenericObject, setFormError: SetState<string>) => Promise<void>;
-    children: (formikProps: FormProps<any>) => Children;
+    onSubmit: FormBaseOnSubmit;
+    children: (formikProps: FormikProps<FormikValues>) => React.ReactChild;
+    onClose?: () => void;
 };
-function FormBase({ classes, initialValues, validationSchema, onSubmit, children }: FormBaseProps) {
+
+function FormBase({ classes, initialValues, validationSchema, onSubmit, children, onClose }: FormBaseProps) {
     const [formError, setFormError] = useState<string>("");
 
+    async function onSubmitForm(values: FormikValues, { setSubmitting, resetForm }: FormikHelpers<FormikValues>) {
+        setFormError("");
+
+        try {
+            await onSubmit(values);
+            if (onClose) onClose();
+            else resetForm();
+        } catch (e) {
+            setFormError(e.message);
+        } finally {
+            setSubmitting(false);
+        }
+    }
+
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={async (values, { setSubmitting, resetForm }) => {
-                setFormError("");
-                await onSubmit(values, setFormError);
-                setSubmitting(false);
-                resetForm();
-            }}
-        >
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmitForm}>
             {(formikProps) => (
                 <Form className={classes.formRoot}>
                     {children(formikProps)}

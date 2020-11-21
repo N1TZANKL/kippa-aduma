@@ -6,7 +6,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { saveAs } from "file-saver";
 import { unparse } from "papaparse";
 
-import { MuiStyles, Credential, StringObject } from "interfaces";
+import { MuiStyles, Credential } from "interfaces";
 import Table, { TableAction } from "components/general/Table/Table";
 import { NotFoundAnimation } from "components/animations";
 import { PanelButton } from "components/general/Panel";
@@ -33,7 +33,7 @@ const styles = () =>
         },
     });
 
-const fieldNameToTitle: StringObject = {
+const fieldNameToTitle: Record<string, string> = {
     username: "Username",
     password: "Password",
     type: "Cred Type",
@@ -60,7 +60,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
 
         // step 2: replace each cred object's keys with their matching title from fieldNameToTitle
         const dataWithCorrectTitles = baseData.map((cred: ExportedCred) => {
-            const newCred: StringObject = {};
+            const newCred: Record<string, string> = {};
             Object.entries(cred).forEach(([key, data]) => {
                 newCred[fieldNameToTitle[key]] = data;
             });

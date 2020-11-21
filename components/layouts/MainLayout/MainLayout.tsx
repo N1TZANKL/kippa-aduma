@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 
-import { PageLayoutProps, UserSessionObject } from "interfaces";
+import { MuiStyles, UserSessionObject } from "interfaces";
 
 import AppBar from "./components/app-bar";
 import Sidebar from "./components/side-bar";
@@ -28,7 +28,9 @@ const styles = (theme: Theme) =>
         },
     });
 
-function MainLayout({ classes, children, noPadding, user }: PageLayoutProps & { noPadding?: boolean; user?: UserSessionObject }) {
+type MainLayoutProps = MuiStyles & { children: React.ReactChild; noPadding?: boolean; user?: UserSessionObject };
+
+function MainLayout({ classes, children, noPadding, user }: MainLayoutProps) {
     return (
         <div className={classes.pageRoot}>
             <AppBar user={user} />

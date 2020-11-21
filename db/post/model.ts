@@ -20,7 +20,7 @@ export type OperationPostModel = {
     writtenAt: string;
     happenedAt: string;
     author: mongoose.Types.ObjectId;
-    attachments?: Array<OperationPostAttachment>;
+    attachments?: OperationPostAttachment[];
 };
 
 const postsSchema = new mongoose.Schema({

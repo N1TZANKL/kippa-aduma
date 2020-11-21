@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles, createStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import MaterialTable, { MaterialTableProps } from "material-table";
 
-import { Children, MuiStyles } from "interfaces";
+import { MuiStyles } from "interfaces";
 import { spaceChildren } from "utils/helpers/css";
 
 import customTheme from "./utils/theme";
@@ -24,7 +24,7 @@ const styles = () =>
         },
     });
 
-export type TableAction = ButtonProps & { id: string; name?: string; icon?: Children };
+export type TableAction = ButtonProps & { id: string; name?: string; icon?: React.ReactChild };
 
 type TableProps = MuiStyles & Omit<MaterialTableProps<any>, "title" | "actions"> & { actions: TableAction[]; emptyValueText?: string };
 function Table({ classes, actions, options = {}, ...props }: TableProps) {

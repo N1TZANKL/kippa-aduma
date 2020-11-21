@@ -47,7 +47,7 @@ const styles = () =>
         },
     });
 
-type AdvancedOverviewPanelProps = MuiStyles & { className: string; posts: Array<OperationPost> };
+type AdvancedOverviewPanelProps = MuiStyles & { className: string; posts: OperationPost[] };
 function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPanelProps) {
     const postsFromToday = posts.filter((post) => areSameDates(new Date(), post.writtenAt));
     const todaysPostAuthors = filterDuplicatesFromArray(postsFromToday.map((post) => post.author.nickname));

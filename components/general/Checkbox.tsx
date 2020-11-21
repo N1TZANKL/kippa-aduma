@@ -6,7 +6,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import DefaultIcon from "@material-ui/icons/CheckBoxOutlineBlankTwoTone";
 import CheckedIcon from "@material-ui/icons/CheckBoxTwoTone";
 
-import { Children, MuiStyles } from "interfaces";
+import { MuiStyles } from "interfaces";
 
 const styles = () => ({
     formControl: { width: "fit-content" },
@@ -17,7 +17,7 @@ const styles = () => ({
 
 type CustomCheckboxProps = MuiStyles &
     CheckboxProps & {
-        label: Children;
+        label: React.ReactChild;
         formControlLabelProps?: Omit<FormControlLabelProps, "control" | "label">;
         big?: boolean;
     };

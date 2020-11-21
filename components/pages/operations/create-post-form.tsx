@@ -4,8 +4,9 @@ import * as Yup from "yup";
 import { OperationPostTypes } from "db/post/model";
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, DateTimeField, Select } from "components/forms";
-import { GenericObject, OperationPost, SetState } from "interfaces";
+import { OperationPost } from "interfaces";
 import { Post } from "utils/helpers/api";
+import { FormBaseOnSubmit } from "components/forms/FormBase";
 
 const validationSchema = Yup.object({
     title: Yup.string(),
@@ -16,24 +17,21 @@ const validationSchema = Yup.object({
 });
 
 type CreatePostFormProps = { addPost: (newPost: OperationPost) => void; onClose?: () => void };
+
 export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps): JSX.Element {
-    function onSubmit(formData: GenericObject, setFormError: SetState<string>) {
-        return Post("post", formData)
-            .then(async (res) => {
-                if (res.ok) {
-                    res.json().then((newPost) => addPost(newPost));
-                    if (onClose) onClose();
-                } else setFormError(await res.text());
-            })
-            .catch((e) => setFormError(e.message));
-    }
+    const initialValues = { type: OperationPostTypes.UPDATE, happenedAt: new Date().toISOString(), description: "" };
+
+    const onSubmit: FormBaseOnSubmit = (formData) =>
+        Post("post", formData).then(async (res) => {
+            if (res.ok) res.json().then((newPost) => addPost(newPost));
+            else {
+                const errorMessage = await res.text();
+                throw new Error(errorMessage);
+            }
+        });
 
     return (
-        <FormBase
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-            initialValues={{ type: OperationPostTypes.UPDATE, happenedAt: new Date().toISOString(), description: "" }}
-        >
+        <FormBase validationSchema={validationSchema} onSubmit={onSubmit} initialValues={initialValues} onClose={onClose}>
             {() => (
                 <>
                     <TextField fieldKey="title" label="Title (Optional)" />

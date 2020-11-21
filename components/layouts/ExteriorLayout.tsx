@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { lightBlue } from "@material-ui/core/colors";
 
-import { Children, PageLayoutProps, MuiStyles } from "interfaces";
+import { MuiStyles } from "interfaces";
 import { SubmitButton, FormError } from "components/forms";
 
 const styles = (theme: Theme) =>
@@ -99,8 +99,7 @@ export const FormSubtitle = withStyles(styles)(({ classes, prompt, actionName, h
     <Typography variant="subtitle1" className={classes.subtitle}>
         {prompt} Click
         <a className={classes.subtitleLink} href={href}>
-            {" "}
-            here{" "}
+            {" here "}
         </a>
         to {actionName}!
     </Typography>
@@ -109,11 +108,11 @@ export const FormSubtitle = withStyles(styles)(({ classes, prompt, actionName, h
 type FormProps = MuiStyles &
     React.FormHTMLAttributes<Element> & {
         title: string;
-        subtitle?: Children;
+        subtitle?: React.ReactChild;
         submitMessage?: string;
         error?: string;
         loading: boolean;
-        children: Children[];
+        children: React.ReactChild[];
     };
 
 export const Form = withStyles(styles)(({ classes, title, children, subtitle, submitMessage, error, loading, ...formElementProps }: FormProps) => (
@@ -133,7 +132,9 @@ export const Form = withStyles(styles)(({ classes, title, children, subtitle, su
     </>
 ));
 
-function ExteriorPageLayout({ classes, children }: PageLayoutProps) {
+type ExteriorPageLayoutProps = MuiStyles & { children: React.ReactChild };
+
+function ExteriorPageLayout({ classes, children }: ExteriorPageLayoutProps) {
     return (
         <div className={classes.root}>
             <Paper className={classes.banner} square>

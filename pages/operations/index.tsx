@@ -33,7 +33,7 @@ const styles = () =>
         },
     });
 
-type OperationsProps = MuiStyles & { user: UserSessionObject; posts?: Array<OperationPost> };
+type OperationsProps = MuiStyles & { user: UserSessionObject; posts?: OperationPost[] };
 
 function Operations(props: OperationsProps) {
     const { classes, user, posts } = props;

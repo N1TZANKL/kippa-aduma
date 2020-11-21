@@ -54,10 +54,10 @@ const styles = () =>
 const POSTS_PER_PAGE = 5;
 
 type PostTimelineProps = MuiStyles & {
-    posts: Array<OperationPost>;
+    posts: OperationPost[];
     className: string;
     currentSort: SortOptions;
-    postTypeFilters: Array<OperationPostTypes> | null;
+    postTypeFilters: OperationPostTypes[] | null;
     addPost: (newPost: OperationPost) => void;
 };
 function PostsTimeline(props: PostTimelineProps) {
@@ -71,7 +71,7 @@ function PostsTimeline(props: PostTimelineProps) {
     }
 
     const filterPostsBySearchString = useCallback(
-        (postsToFilter: Array<OperationPost>) => {
+        (postsToFilter: OperationPost[]) => {
             if (!searchString) return postsToFilter;
 
             // filter all the string values of post object and check whether at least one matches the search string
@@ -80,7 +80,7 @@ function PostsTimeline(props: PostTimelineProps) {
         [searchString]
     );
 
-    function sortPosts(postsToSort: Array<OperationPost>): Array<OperationPost> {
+    function sortPosts(postsToSort: OperationPost[]): OperationPost[] {
         return SortOptionsToFunction[currentSort](postsToSort);
     }
 

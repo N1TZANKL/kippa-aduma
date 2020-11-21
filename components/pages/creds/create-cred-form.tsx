@@ -1,12 +1,12 @@
 import React from "react";
 import * as Yup from "yup";
+import { FormikProps } from "formik";
 
 import { ArrayToSelectionList } from "components/general/Select";
 import { FormBase, TextField, Select } from "components/forms";
 import { CredentialTypes } from "db/cred/model";
-import { GenericObject, SetState } from "interfaces";
 import { Post } from "utils/helpers/api";
-import { FormProps } from "components/forms/FormBase";
+import { FormBaseOnSubmit } from "components/forms/FormBase";
 
 const validationSchema = Yup.object({
     username: Yup.string().required("Required"),
@@ -16,26 +16,18 @@ const validationSchema = Yup.object({
     additionalInformation: Yup.string(),
 });
 
-interface FormValues extends GenericObject {
+interface CredFormValues {
     username: string;
     password: string;
     type: CredentialTypes;
     worksOn: string;
-    additionalInformation: string;
+    additionalInformation?: string;
 }
 
 type CreateCredFormProps = { addCred: (newCred: Credential) => void; onClose?: () => void };
+
 export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps): JSX.Element {
-    function onSubmit(formData: GenericObject, setFormError: SetState<string>) {
-        return Post("cred", formData)
-            .then(async (res) => {
-                if (res.ok) {
-                    res.json().then((newCred) => addCred(newCred));
-                    if (onClose) onClose();
-                } else setFormError(await res.text());
-            })
-            .catch((e) => setFormError(e.message));
-    }
+    const initialValues: CredFormValues = { username: "", password: "", type: CredentialTypes.DOMAIN, worksOn: "" };
 
     function getworksOnLabel(credType: CredentialTypes) {
         switch (credType) {
@@ -50,9 +42,18 @@ export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps
         }
     }
 
+    const onSubmit: FormBaseOnSubmit = (formData) =>
+        Post("cred", formData).then(async (res) => {
+            if (res.ok) res.json().then((newCred) => addCred(newCred));
+            else {
+                const errorMessage = await res.text();
+                throw new Error(errorMessage);
+            }
+        });
+
     return (
-        <FormBase validationSchema={validationSchema} onSubmit={onSubmit} initialValues={{ username: "", password: "", type: "", worksOn: "" }}>
-            {({ values }: FormProps<FormValues>) => (
+        <FormBase initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} onClose={onClose}>
+            {({ values }: FormikProps<Partial<CredFormValues>>) => (
                 <>
                     <TextField fieldKey="username" />
                     <TextField fieldKey="password" type="sensitive" />

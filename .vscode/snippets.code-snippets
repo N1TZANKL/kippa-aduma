@@ -52,11 +52,11 @@
         "body": [
             "import React, { Component } from 'react';",
             "import { withStyles, Theme, createStyles } from '@material-ui/core/styles';",
-            "import { MuiStyles, Children } from 'interfaces';",
+            "import { MuiStyles } from 'interfaces';",
             "",
             "const styles = (theme: Theme) => createStyles({});",
             "",
-            "class ${NAME} extends Component<MuiStyles & Children> {",
+            "class ${NAME} extends Component<MuiStyles & { children: React.ReactChild }> {",
             "",
             "\tstate = { error: false };",
             "",
