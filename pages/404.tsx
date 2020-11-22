@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Link from "next/link";
 
 const styles = () =>
     createStyles({
@@ -18,6 +20,9 @@ const styles = () =>
             fontFamily: "monospace",
             marginTop: 25,
         },
+        backButton: {
+            marginTop: 25,
+        },
     });
 
 function Custom404({ classes }: WithStyles<typeof styles>) {
@@ -27,9 +32,13 @@ function Custom404({ classes }: WithStyles<typeof styles>) {
                 Oops! Page Not Found :(
             </Typography>
             <Typography variant="h5" className={classes.subtitle} align="center">
-                The page you asked for does not exist. <br />
-                Check out the other pages instead!
+                The page you asked for does not exist.
             </Typography>
+            <Link href="/">
+                <Button variant="outlined" className={classes.backButton}>
+                    Go Back Home
+                </Button>
+            </Link>
         </div>
     );
 }
