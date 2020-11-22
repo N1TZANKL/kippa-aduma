@@ -5,7 +5,8 @@ import { ServerStyleSheets } from "@material-ui/core/styles";
 import theme from "config/theme";
 
 export default class MyDocument extends Document {
-    render() {
+    // eslint-disable-next-line class-methods-use-this
+    render(): JSX.Element {
         return (
             <Html lang="en">
                 <Head>

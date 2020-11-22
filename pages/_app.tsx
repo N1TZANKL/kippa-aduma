@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { ThemeProvider, withStyles, createStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Head from "next/head";
-import { hexToRGB } from "utils/helpers/css.ts";
 
+import { hexToRGB } from "utils/helpers/css";
 import theme from "config/theme";
 
 import "emoji-mart/css/emoji-mart.css";
@@ -29,13 +29,13 @@ const styles = () =>
         },
     });
 
-function MyApp({ Component, pageProps }) {
+type AppProps = { Component: React.ElementType; pageProps: Record<string, unknown> };
+
+function MyApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector("#jss-server-side");
-        if (jssStyles) {
-            jssStyles.parentElement.removeChild(jssStyles);
-        }
+        if (jssStyles?.parentElement) jssStyles.parentElement.removeChild(jssStyles);
     }, []);
 
     return (
