@@ -3,9 +3,10 @@ import { green } from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 
-import { MuiStyles, UserSessionObject } from "interfaces";
+import { MuiStyles } from "interfaces";
 import UserListItem from "src/components/general/UserListItem";
 import Panel from "src/components/general/Panel";
+import { UserSessionObject } from "utils/session";
 
 const styles = (theme: Theme) =>
     createStyles({

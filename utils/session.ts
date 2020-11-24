@@ -4,7 +4,13 @@ import { withIronSession as wis, SessionOptions } from "next-iron-session";
 import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse, GetServerSidePropsContext } from "next";
 
 import userModel from "db/user/model";
-import { UserSessionObject } from "interfaces";
+
+export type UserSessionObject = {
+    id: string;
+    username: string;
+    nickname: string;
+    color: string;
+};
 
 export const SESSION_OPTIONS: SessionOptions = {
     cookieName: process.env.SITE_COOKIE,

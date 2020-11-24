@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-import { UserSessionObject } from "interfaces";
+import { UserSessionObject } from "utils/session";
 
 import userModel, { UserModel } from "./model";
 

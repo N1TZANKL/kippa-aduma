@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
-import { MuiStyles, UserSessionObject, ChatMessage } from "interfaces";
-import { withUserSession } from "utils/session";
+import { MuiStyles, ChatMessage } from "interfaces";
+import { withUserSession, UserSessionObject } from "utils/session";
 import { getChatMessages } from "db/message/controller";
 import { getAllUsers } from "db/user/controller";
 import PageLayout from "src/components/layouts/MainLayout";

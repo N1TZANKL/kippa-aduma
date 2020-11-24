@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { usePopoverState } from "utils/hooks";
 import Menu from "src/components/general/Menu";
 import UserAvatar from "src/components/general/UserAvatar";
-import { UserSessionObject } from "interfaces";
+import { UserSessionObject } from "utils/session";
 
 type AccountButtonProps = { user?: UserSessionObject };
 

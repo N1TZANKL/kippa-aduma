@@ -4,8 +4,9 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { green } from "@material-ui/core/colors";
 
-import { MuiStyles, UserSessionObject } from "interfaces";
+import { MuiStyles } from "interfaces";
 import UserAvatar from "src/components/general/UserAvatar";
+import { UserSessionObject } from "utils/session";
 
 const styles = () =>
     createStyles({

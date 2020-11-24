@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
-import { MuiStyles, UserSessionObject, OperationPost } from "interfaces";
+import { MuiStyles, OperationPost } from "interfaces";
 import PageLayout from "src/components/layouts/MainLayout";
-import { withUserSession } from "utils/session";
+import { withUserSession, UserSessionObject } from "utils/session";
 import Timeline from "src/pages/operations/timeline";
 import SortFilterPanel, { SortOptions } from "src/pages/operations/sort-filter-panel";
 import AdvancedOverviewPanel from "src/pages/operations/advanced-overview-panel";

@@ -3,7 +3,7 @@ import { darken, makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import clsx from "clsx";
 
-import { UserSessionObject } from "interfaces";
+import { UserSessionObject } from "utils/session";
 
 type StyleProps = { color: string | undefined };
 
