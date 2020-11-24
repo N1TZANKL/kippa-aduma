@@ -2,10 +2,10 @@ import socketIOClient from "socket.io-client";
 import React, { useState, useEffect, useRef } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
-import { ChatMessage, MuiStyles } from "interfaces";
-import { getDatesDifference, areSameDates } from "utils/helpers/dates";
+import { ChatMessage, MuiStyles } from "src/utils/interfaces";
+import { getDatesDifference, areSameDates } from "src/utils/helpers/dates";
 import Panel from "src/components/general/Panel";
-import { Post } from "utils/helpers/api";
+import { Post } from "src/utils/helpers/api";
 import { UserSessionObject } from "utils/session";
 
 import ChatBubble from "./chat-bubble";

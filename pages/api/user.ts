@@ -1,7 +1,7 @@
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { getAllUsers } from "db/user/controller";
+import { getAllUsers } from "server/db/user/controller";
 
 // GET /api/user
 export default withAuthenticatedUser(async (req, res) => {

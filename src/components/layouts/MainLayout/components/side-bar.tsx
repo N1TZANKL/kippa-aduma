@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import SettingsIcon from "@material-ui/icons/Settings";
 
-import routes, { Route } from "config/routes";
+import routes, { Route } from "../routes";
 import IconButton from "src/components/general/IconButton";
 
 const styles = (theme: Theme) =>

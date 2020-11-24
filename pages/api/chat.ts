@@ -1,8 +1,8 @@
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { APIFunctionObject } from "interfaces";
-import { getChatMessages, createMessage } from "db/message/controller";
+import { APIFunctionObject } from "src/utils/interfaces";
+import { getChatMessages, createMessage } from "server/db/message/controller";
 
 // this NextJS config is to prevent the message "API resolved without sending a response"
 export const config = {

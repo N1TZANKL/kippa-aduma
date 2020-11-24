@@ -2,13 +2,13 @@ import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 
-import { MuiStyles, OperationPost } from "interfaces";
+import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import Panel, { PanelButton, PanelStat, PanelTitle } from "src/components/general/Panel";
-import { notFirstChild, spaceChildren } from "utils/helpers/css";
-import { areSameDates } from "utils/helpers/dates";
-import { filterDuplicatesFromArray } from "utils/helpers/objects";
-import { OperationPostTypes } from "db/post/model";
-import { firstLetterUppercase } from "utils/helpers/strings";
+import { notFirstChild, spaceChildren } from "src/utils/helpers/css";
+import { areSameDates } from "src/utils/helpers/dates";
+import { filterDuplicatesFromArray } from "src/utils/helpers/objects";
+import { OperationPostTypes } from "server/db/post/model";
+import { firstLetterUppercase } from "src/utils/helpers/strings";
 
 import { PostTypeToColor } from "./timeline/post/post-type-indicator";
 

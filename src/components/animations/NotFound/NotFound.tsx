@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 import Fade from "@material-ui/core/Fade";
 import Typography from "@material-ui/core/Typography";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 import animationData from "./animation.json";
 

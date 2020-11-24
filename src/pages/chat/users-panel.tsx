@@ -3,7 +3,7 @@ import { green } from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import UserListItem from "src/components/general/UserListItem";
 import Panel from "src/components/general/Panel";
 import { UserSessionObject } from "utils/session";

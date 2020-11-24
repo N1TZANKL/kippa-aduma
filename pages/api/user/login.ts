@@ -3,7 +3,7 @@ import * as bcrypt from "bcryptjs";
 import { withIronSession } from "utils/session";
 import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
-import { getUser } from "db/user/controller";
+import { getUser } from "server/db/user/controller";
 
 export default withIronSession(async (req, res) => {
     if (req.method !== "POST") return res.status(404).send("Invalid api call");

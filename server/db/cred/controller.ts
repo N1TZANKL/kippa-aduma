@@ -1,4 +1,4 @@
-import { Credential } from "interfaces";
+import { Credential } from "src/utils/interfaces";
 
 import credModel, { CredModel } from "./model";
 

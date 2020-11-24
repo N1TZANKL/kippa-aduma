@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-import { getCurrentTimestamp } from "./helpers/dates";
+import { getCurrentTimestamp } from "../src/utils/helpers/dates";
 
 // TODO: Switch to external library?
 

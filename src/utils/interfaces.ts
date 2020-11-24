@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction } from "react";
 import { NextApiRequest, NextApiResponse } from "next";
 import { WithStyles } from "@material-ui/core/styles";
 
-import { CredModel } from "db/cred/model";
-import { ChatMessageModel } from "db/message/model";
-import { OperationPostModel } from "db/post/model";
+import { CredModel } from "server/db/cred/model";
+import { ChatMessageModel } from "server/db/message/model";
+import { OperationPostModel } from "server/db/post/model";
 import { UserSessionObject } from "utils/session";
 
 export type MuiStyles = WithStyles<string>;

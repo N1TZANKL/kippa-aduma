@@ -4,8 +4,8 @@ import { FormikProps } from "formik";
 
 import { ArrayToSelectionList } from "src/components/general/Select";
 import { FormBase, TextField, Select } from "src/components/forms";
-import { CredentialTypes } from "db/cred/model";
-import { Post } from "utils/helpers/api";
+import { CredentialTypes } from "server/db/cred/model";
+import { Post } from "src/utils/helpers/api";
 import { FormBaseOnSubmit } from "src/components/forms/FormBase";
 
 const validationSchema = Yup.object({

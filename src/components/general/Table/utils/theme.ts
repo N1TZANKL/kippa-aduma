@@ -1,7 +1,7 @@
 import { createMuiTheme, lighten } from "@material-ui/core/styles";
 
-import theme from "config/theme";
-import { after, before } from "utils/helpers/css";
+import theme from "src/utils/theme";
+import { after, before } from "src/utils/helpers/css";
 
 const { overrides, ...baseTheme } = theme;
 

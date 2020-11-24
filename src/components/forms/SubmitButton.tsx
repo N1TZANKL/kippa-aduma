@@ -4,7 +4,7 @@ import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = () =>
     createStyles({

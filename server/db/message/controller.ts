@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-import { ChatMessage } from "interfaces";
+import { ChatMessage } from "src/utils/interfaces";
 
 import messageModel, { ChatMessageModel } from "./model";
 

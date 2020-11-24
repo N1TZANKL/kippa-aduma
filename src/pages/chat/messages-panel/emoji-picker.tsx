@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Picker } from "emoji-mart";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { MuiStyles, SetState } from "interfaces";
+import { MuiStyles, SetState } from "src/utils/interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

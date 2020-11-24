@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { lightBlue } from "@material-ui/core/colors";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import { SubmitButton, FormError } from "src/components/forms";
 
 const styles = (theme: Theme) =>

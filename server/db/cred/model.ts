@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import Models from "db/models";
+import Models from "server/db/models";
 
 export enum CredentialTypes {
     LOCAL = "local",

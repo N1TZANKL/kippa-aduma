@@ -3,8 +3,8 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
-import { MuiStyles } from "interfaces";
-import { CredentialTypes } from "db/cred/model";
+import { MuiStyles } from "src/utils/interfaces";
+import { CredentialTypes } from "server/db/cred/model";
 
 const styles = () =>
     createStyles({

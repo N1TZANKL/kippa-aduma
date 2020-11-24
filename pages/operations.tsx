@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
-import { MuiStyles, OperationPost } from "interfaces";
+import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import PageLayout from "src/components/layouts/MainLayout";
 import { withUserSession, UserSessionObject } from "utils/session";
 import Timeline from "src/pages/operations/timeline";
 import SortFilterPanel, { SortOptions } from "src/pages/operations/sort-filter-panel";
 import AdvancedOverviewPanel from "src/pages/operations/advanced-overview-panel";
-import { OperationPostTypes } from "db/post/model";
-import { getAllPosts } from "db/post/controller";
+import { OperationPostTypes } from "server/db/post/model";
+import { getAllPosts } from "server/db/post/controller";
 
 const styles = () =>
     createStyles({

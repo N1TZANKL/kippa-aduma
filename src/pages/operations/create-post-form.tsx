@@ -1,11 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
 
-import { OperationPostTypes } from "db/post/model";
+import { OperationPostTypes } from "server/db/post/model";
 import { ArrayToSelectionList } from "src/components/general/Select";
 import { FormBase, TextField, DateTimeField, Select } from "src/components/forms";
-import { OperationPost } from "interfaces";
-import { Post } from "utils/helpers/api";
+import { OperationPost } from "src/utils/interfaces";
+import { Post } from "src/utils/helpers/api";
 import { FormBaseOnSubmit } from "src/components/forms/FormBase";
 
 const validationSchema = Yup.object({

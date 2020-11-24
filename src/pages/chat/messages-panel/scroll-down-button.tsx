@@ -4,7 +4,7 @@ import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import Grow from "@material-ui/core/Grow";
 import Fab from "@material-ui/core/Fab";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

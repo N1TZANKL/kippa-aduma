@@ -4,11 +4,11 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
 
-import { MuiStyles, OperationPost } from "interfaces";
+import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import Panel from "src/components/general/Panel";
-import { notLastChild, spaceChildren } from "utils/helpers/css";
+import { notLastChild, spaceChildren } from "src/utils/helpers/css";
 import { NotFoundAnimation } from "src/components/animations";
-import { OperationPostTypes } from "db/post/model";
+import { OperationPostTypes } from "server/db/post/model";
 
 import Post from "./post";
 import TimelineTopBar from "./timeline-top-bar";

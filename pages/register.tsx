@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import ExteriorPageLayout, { Form, FormSubtitle } from "src/components/layouts/ExteriorLayout";
 import TextField from "src/components/general/TextField";
 import SensitiveTextField from "src/components/general/SensitiveTextField";
-import { Post } from "utils/helpers/api";
+import { Post } from "src/utils/helpers/api";
 
 export default function Register(): JSX.Element {
     const router = useRouter();

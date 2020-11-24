@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { resetServerContext } from "react-beautiful-dnd";
 
-import { Credential } from "interfaces";
+import { Credential } from "src/utils/interfaces";
 import { withUserSession, UserSessionObject } from "utils/session";
-import { getAllCreds } from "db/cred/controller";
+import { getAllCreds } from "server/db/cred/controller";
 import PageLayout from "src/components/layouts/MainLayout";
 import { CreateCredForm, CredsTable } from "src/pages/creds";
 import FormDialog from "src/components/dialogs/FormDialog";

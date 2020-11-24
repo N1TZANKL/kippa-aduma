@@ -3,7 +3,7 @@ import { IncomingMessage } from "http";
 import { withIronSession as wis, SessionOptions } from "next-iron-session";
 import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse, GetServerSidePropsContext } from "next";
 
-import userModel from "db/user/model";
+import userModel from "server/db/user/model";
 
 export type UserSessionObject = {
     id: string;

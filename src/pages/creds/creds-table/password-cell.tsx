@@ -3,7 +3,7 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import IconButton from "src/components/general/IconButton";
 
 const styles = () =>

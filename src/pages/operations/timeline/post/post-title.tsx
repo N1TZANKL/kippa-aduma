@@ -3,8 +3,8 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
-import { MuiStyles } from "interfaces";
-import { OperationPostTypes } from "db/post/model";
+import { MuiStyles } from "src/utils/interfaces";
+import { OperationPostTypes } from "server/db/post/model";
 
 import PostTypeIndicator from "./post-type-indicator";
 

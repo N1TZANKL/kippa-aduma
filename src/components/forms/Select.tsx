@@ -3,8 +3,8 @@ import { useField } from "formik";
 import { createStyles, withStyles } from "@material-ui/styles";
 
 import Select, { SelectProps } from "src/components/general/Select";
-import { firstLetterUppercase } from "utils/helpers/strings";
-import { MuiStyles } from "interfaces";
+import { firstLetterUppercase } from "src/utils/helpers/strings";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = () =>
     createStyles({

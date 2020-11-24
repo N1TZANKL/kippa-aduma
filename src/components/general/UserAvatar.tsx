@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = () =>
     createStyles({

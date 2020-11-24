@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Paper, { PaperProps } from "@material-ui/core/Paper";
 import Button, { ButtonProps } from "@material-ui/core/Button";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({

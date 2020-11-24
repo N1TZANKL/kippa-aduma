@@ -3,8 +3,8 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import { Form, Formik, FormikHelpers, FormikProps, FormikValues } from "formik";
 import { ObjectSchema } from "yup";
 
-import { MuiStyles } from "interfaces";
-import { spaceChildren } from "utils/helpers/css";
+import { MuiStyles } from "src/utils/interfaces";
+import { spaceChildren } from "src/utils/helpers/css";
 
 import FormError from "./FormError";
 import SubmitButton from "./SubmitButton";

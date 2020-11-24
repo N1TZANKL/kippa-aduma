@@ -6,7 +6,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import DefaultIcon from "@material-ui/icons/CheckBoxOutlineBlankTwoTone";
 import CheckedIcon from "@material-ui/icons/CheckBoxTwoTone";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = () => ({
     formControl: { width: "fit-content" },

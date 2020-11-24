@@ -6,8 +6,8 @@ import * as muiColors from "@material-ui/core/colors";
 import Collapse from "@material-ui/core/Collapse";
 import Fade from "@material-ui/core/Fade";
 
-import { isElementOverflowing } from "utils/helpers/css";
-import { MuiStyles, OperationPost } from "interfaces";
+import { isElementOverflowing } from "src/utils/helpers/css";
+import { MuiStyles, OperationPost } from "src/utils/interfaces";
 
 import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
 

@@ -2,8 +2,8 @@ import React from "react";
 import { withStyles, createStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import MaterialTable, { MaterialTableProps } from "material-table";
 
-import { MuiStyles } from "interfaces";
-import { spaceChildren } from "utils/helpers/css";
+import { MuiStyles } from "src/utils/interfaces";
+import { spaceChildren } from "src/utils/helpers/css";
 
 import customTheme from "./utils/theme";
 import customIcons from "./utils/icons";

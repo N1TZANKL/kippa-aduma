@@ -6,8 +6,8 @@ import clsx from "clsx";
 import Input from "@material-ui/core/Input";
 
 import { PanelButton, PanelTitle } from "src/components/general/Panel";
-import { spaceChildren } from "utils/helpers/css";
-import { MuiStyles, OperationPost, SetState } from "interfaces";
+import { spaceChildren } from "src/utils/helpers/css";
+import { MuiStyles, OperationPost, SetState } from "src/utils/interfaces";
 import FormDialog from "src/components/dialogs/FormDialog";
 
 import CreatePostForm from "../create-post-form";

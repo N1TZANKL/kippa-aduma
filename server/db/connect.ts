@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import log, { LogTypes } from "../utils/logger";
+import log, { LogTypes } from "../../utils/logger";
 
 const DEFAULT_DB_NAME = "kippa_aduma";
 

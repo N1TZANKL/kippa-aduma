@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import { PanelTitle } from "src/components/general/Panel";
 import IconButton from "src/components/general/IconButton";
 

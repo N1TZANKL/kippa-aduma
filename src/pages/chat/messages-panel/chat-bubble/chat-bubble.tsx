@@ -9,9 +9,9 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import Typography from "@material-ui/core/Typography";
 import { Emoji } from "emoji-mart";
 
-import { MuiStyles, ChatMessage } from "interfaces";
-import { formatTime } from "utils/helpers/dates";
-import { before, textEllipsis } from "utils/helpers/css";
+import { MuiStyles, ChatMessage } from "src/utils/interfaces";
+import { formatTime } from "src/utils/helpers/dates";
+import { before, textEllipsis } from "src/utils/helpers/css";
 import UserNicknameText from "src/components/general/UserNicknameText";
 
 import cssStyles from "./ChatBubble.module.css";

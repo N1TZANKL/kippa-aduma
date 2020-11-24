@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import { UserSessionObject } from "utils/session";
 
 import AppBar from "./components/app-bar";

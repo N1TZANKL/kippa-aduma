@@ -1,8 +1,8 @@
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { getAllPosts, createPost } from "db/post/controller";
-import { APIFunctionObject } from "interfaces";
+import { getAllPosts, createPost } from "server/db/post/controller";
+import { APIFunctionObject } from "src/utils/interfaces";
 
 // this NextJS config is to prevent the message "API resolved without sending a response"
 export const config = {

@@ -3,7 +3,7 @@ import { useField } from "formik";
 
 import TextField, { TextFieldProps } from "src/components/general/TextField";
 import SensitiveTextField from "src/components/general/SensitiveTextField";
-import { firstLetterUppercase } from "utils/helpers/strings";
+import { firstLetterUppercase } from "src/utils/helpers/strings";
 
 type FormikTextFieldProps = Omit<TextFieldProps, "type"> & { fieldKey: string; type?: "text" | "sensitive" | "multiline" };
 export default function FormikTextField({ fieldKey, type = "text", label, ...props }: FormikTextFieldProps): JSX.Element {

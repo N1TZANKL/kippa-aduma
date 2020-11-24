@@ -4,7 +4,7 @@ import SendIcon from "@material-ui/icons/Send";
 import EmojiIcon from "@material-ui/icons/InsertEmoticon";
 import Card from "@material-ui/core/Card";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import TextField from "src/components/general/TextField";
 import { PanelBottomBar } from "src/components/general/Panel";
 import IconButton from "src/components/general/IconButton";

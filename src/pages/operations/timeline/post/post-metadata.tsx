@@ -6,9 +6,9 @@ import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import clsx from "clsx";
 
 import UserNicknameText from "src/components/general/UserNicknameText";
-import { formatDate, formatTime } from "utils/helpers/dates";
-import { MuiStyles } from "interfaces";
-import { spaceChildren } from "utils/helpers/css";
+import { formatDate, formatTime } from "src/utils/helpers/dates";
+import { MuiStyles } from "src/utils/interfaces";
+import { spaceChildren } from "src/utils/helpers/css";
 import { UserSessionObject } from "utils/session";
 
 const styles = () =>

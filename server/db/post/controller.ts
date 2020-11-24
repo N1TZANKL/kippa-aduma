@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { OperationPost } from "interfaces";
+import { OperationPost } from "src/utils/interfaces";
 
 import postModel, { OperationPostModel } from "./model";
 

@@ -2,8 +2,8 @@ import React from "react";
 import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { MuiStyles } from "interfaces";
-import { formatDate } from "utils/helpers/dates";
+import { MuiStyles } from "src/utils/interfaces";
+import { formatDate } from "src/utils/helpers/dates";
 
 const styles = (theme: Theme) =>
     createStyles({

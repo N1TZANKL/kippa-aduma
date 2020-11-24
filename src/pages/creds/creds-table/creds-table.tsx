@@ -6,12 +6,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { saveAs } from "file-saver";
 import { unparse } from "papaparse";
 
-import { MuiStyles, Credential } from "interfaces";
+import { MuiStyles, Credential } from "src/utils/interfaces";
 import Table, { TableAction } from "src/components/general/Table/Table";
 import { NotFoundAnimation } from "src/components/animations";
 import { PanelButton } from "src/components/general/Panel";
 import ConfirmationDialog from "src/components/dialogs/ConfirmationDialog";
-import { Delete } from "utils/helpers/api";
+import { Delete } from "src/utils/helpers/api";
 
 import PasswordCell from "./password-cell";
 import CredTypeCell from "./cred-type-cell";

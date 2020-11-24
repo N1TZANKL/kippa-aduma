@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
-import { MuiStyles, OperationPost } from "interfaces";
+import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import Panel, { PanelSubtitle, PanelTitle } from "src/components/general/Panel";
 import Select from "src/components/general/Select";
 import Checkbox from "src/components/general/Checkbox";
-import { OperationPostTypes } from "db/post/model";
-import { firstLetterUppercase } from "utils/helpers/strings";
+import { OperationPostTypes } from "server/db/post/model";
+import { firstLetterUppercase } from "src/utils/helpers/strings";
 import Radio from "src/components/general/Radio";
-import { sortObjectArrayByDate } from "utils/helpers/dates";
+import { sortObjectArrayByDate } from "src/utils/helpers/dates";
 
 import { PostTypeToColor } from "./timeline/post/post-type-indicator";
 

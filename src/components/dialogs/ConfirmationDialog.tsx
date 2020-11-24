@@ -9,7 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 import IconButton from "src/components/general/IconButton";
 
 const styles = (theme: Theme) =>

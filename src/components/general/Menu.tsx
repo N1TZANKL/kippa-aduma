@@ -4,7 +4,7 @@ import Popover, { PopoverProps } from "@material-ui/core/Popover";
 import MenuItem from "@material-ui/core/MenuItem";
 import { SvgIconComponent } from "@material-ui/icons";
 
-import { MuiStyles } from "interfaces";
+import { MuiStyles } from "src/utils/interfaces";
 
 const styles = () =>
     createStyles({

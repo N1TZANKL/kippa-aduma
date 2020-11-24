@@ -3,8 +3,8 @@ import { ThemeProvider, withStyles, createStyles } from "@material-ui/core/style
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Head from "next/head";
 
-import { hexToRGB } from "utils/helpers/css";
-import theme from "config/theme";
+import { hexToRGB } from "src/utils/helpers/css";
+import theme from "src/utils/theme";
 
 import "emoji-mart/css/emoji-mart.css";
 

@@ -4,7 +4,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import { useRouter } from "next/router";
 
-import { usePopoverState } from "utils/hooks";
+import { usePopoverState } from "src/utils/hooks";
 import Menu from "src/components/general/Menu";
 import UserAvatar from "src/components/general/UserAvatar";
 import { UserSessionObject } from "utils/session";

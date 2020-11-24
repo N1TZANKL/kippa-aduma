@@ -3,9 +3,9 @@ import { withStyles, Theme, createStyles, lighten } from "@material-ui/core/styl
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
-import { MuiStyles } from "interfaces";
-import { spaceChildren } from "utils/helpers/css";
-import { OperationPostAttachment } from "db/post/model";
+import { MuiStyles } from "src/utils/interfaces";
+import { spaceChildren } from "src/utils/helpers/css";
+import { OperationPostAttachment } from "server/db/post/model";
 
 const styles = (theme: Theme) =>
     createStyles({

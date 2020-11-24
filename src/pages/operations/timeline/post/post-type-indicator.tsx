@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CSSProperties } from "@material-ui/styles";
 import * as muiColors from "@material-ui/core/colors";
 
-import { textEllipsis } from "utils/helpers/css";
-import { OperationPostTypes } from "db/post/model";
+import { textEllipsis } from "src/utils/helpers/css";
+import { OperationPostTypes } from "server/db/post/model";
 
 export const PostTypeToColor: Record<OperationPostTypes, string> = {
     [OperationPostTypes.SUCCESS]: muiColors.green.A400,

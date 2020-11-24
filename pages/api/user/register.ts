@@ -4,7 +4,7 @@ import generateRandomColor from "randomcolor";
 import { withIronSession } from "utils/session";
 import { RegisterErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
-import { addUser } from "db/user/controller";
+import { addUser } from "server/db/user/controller";
 
 export default withIronSession(async (req, res) => {
     const { username, nickname, password } = req.body;

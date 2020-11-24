@@ -6,7 +6,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Box from "@material-ui/core/Box";
 
-import { firstLetterUppercase } from "utils/helpers/strings";
+import { firstLetterUppercase } from "src/utils/helpers/strings";
 
 type SelectionListItem = {
     label: string;
