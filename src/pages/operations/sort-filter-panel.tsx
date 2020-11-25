@@ -39,10 +39,10 @@ export enum SortOptions {
 }
 
 export const SortOptionsToFunction: Record<SortOptions, (posts: OperationPost[]) => OperationPost[]> = {
-    [SortOptions.WrittenAsc]: (posts) => sortObjectArrayByDate(posts, "writtenAt"),
-    [SortOptions.HappenedAsc]: (posts) => sortObjectArrayByDate(posts, "happenedAt"),
-    [SortOptions.WrittenDesc]: (posts) => sortObjectArrayByDate(posts, "writtenAt", "desc"),
-    [SortOptions.HappenedDesc]: (posts) => sortObjectArrayByDate(posts, "happenedAt", "desc"),
+    [SortOptions.WrittenAsc]: (posts) => sortObjectArrayByDate<OperationPost>(posts, "writtenAt"),
+    [SortOptions.HappenedAsc]: (posts) => sortObjectArrayByDate<OperationPost>(posts, "happenedAt"),
+    [SortOptions.WrittenDesc]: (posts) => sortObjectArrayByDate<OperationPost>(posts, "writtenAt", "desc"),
+    [SortOptions.HappenedDesc]: (posts) => sortObjectArrayByDate<OperationPost>(posts, "happenedAt", "desc"),
 };
 
 export enum PostTypeFilterRadioOptions {
