@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
+import Box from "@material-ui/core/Box";
 
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import Panel, { PanelButton, PanelStat, PanelTitle } from "src/components/general/Panel";
@@ -85,16 +86,21 @@ function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPa
                     )}
                 </PanelStat>
                 <PanelStat title={postTypesUsedCount === 1 ? "One post type used:" : `${postTypesUsedCount} post types used:`}>
-                    {postTypesUsedCount === 0
-                        ? "(none used)"
-                        : Object.entries(postsCountByType).map(([key, value]) => (
-                              <div key={key} className={classes.postTypeLine}>
-                                  <i style={{ color: PostTypeToColor[key] }}>{firstLetterUppercase(key)}</i>{" "}
-                                  <span>
-                                      ({value} post{value !== 1 ? "s" : ""})
-                                  </span>
-                              </div>
-                          ))}
+                    {postTypesUsedCount === 0 ? (
+                        "(none used)"
+                    ) : (
+                        <div>
+                            {Object.entries(postsCountByType).map(([key, value]) => (
+                                <div key={key} className={classes.postTypeLine}>
+                                    <span>{value}</span>
+                                    <Box color={PostTypeToColor[key as OperationPostTypes]} clone>
+                                        <i>{firstLetterUppercase(key)}</i>
+                                    </Box>
+                                    <span>{`post${value !== 1 ? "s" : ""}`}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </PanelStat>
             </div>
         </Panel>

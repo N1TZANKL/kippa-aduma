@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import Panel, { PanelSubtitle, PanelTitle } from "src/components/general/Panel";
@@ -26,9 +27,7 @@ const styles = () =>
             width: 12,
             height: 12,
             borderRadius: "50%",
-            backgroundColor: "transparent",
-            marginRight: 5,
-            display: "inline-block",
+            marginRight: 8,
         },
     });
 
@@ -108,7 +107,7 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                         key={postType}
                         label={
                             <span>
-                                <div className={classes.postTypeCheckboxColor} style={{ backgroundColor: PostTypeToColor[postType] }} />
+                                <Box className={classes.postTypeCheckboxColor} bgcolor={PostTypeToColor[postType]} display="inline-block" />
                                 <i>{firstLetterUppercase(postType)}</i>
                             </span>
                         }

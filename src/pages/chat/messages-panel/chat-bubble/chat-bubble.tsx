@@ -8,6 +8,7 @@ import Card from "@material-ui/core/Card";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Typography from "@material-ui/core/Typography";
 import { Emoji } from "emoji-mart";
+import Box from "@material-ui/core/Box";
 
 import { MuiStyles, ChatMessage } from "src/utils/interfaces";
 import { formatTime } from "src/utils/helpers/dates";
@@ -26,19 +27,8 @@ const styles = () =>
             margin: 3,
             marginRight: "13vw",
             minHeight: "fit-content",
-            // arrow related CSS
             position: "relative",
             overflow: "visible",
-            /* "&:after": {
-                content: " ",
-                position: "absolute",
-                width: 0,
-                height: 0,
-                top: 0,
-                right: -12,
-                border: "7px solid",
-                borderColor: `${blueGrey[200]} transparent transparent ${blueGrey[200]}`,
-            }, */
         },
         nickname: {
             fontSize: 14,
@@ -116,16 +106,9 @@ function renderTextWithEmojis(messageText: string) {
     };
 
     return messageText.split(/\n/gi).map((messageLine, index) => (
-        <div
-            style={{
-                display: "flex",
-                alignItems: "self-end",
-                whiteSpace: "pre-wrap",
-            }}
-            key={index}
-        >
+        <Box display="flex" alignItems="self-end" whiteSpace="pre-wrap" key={index}>
             {handleEmojis(messageLine)}
-        </div>
+        </Box>
     ));
 }
 

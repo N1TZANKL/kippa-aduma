@@ -1,13 +1,16 @@
 import React from "react";
-import { lighten, withStyles, WithStyles, Theme, createStyles, WithTheme } from "@material-ui/core/styles";
+import { lighten, withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Card from "@material-ui/core/Card";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import SettingsIcon from "@material-ui/icons/Settings";
+import clsx from "clsx";
+
+import IconButton from "src/components/general/IconButton";
+import { MuiStyles } from "src/utils/interfaces";
 
 import routes, { Route } from "../routes";
-import IconButton from "src/components/general/IconButton";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -43,9 +46,12 @@ const styles = (theme: Theme) =>
         iconButton: {
             marginBottom: 15,
         },
+        currentPathBox: {
+            backgroundColor: lighten(theme.constants.appBackgroundDark, 0.1),
+        },
     });
 
-function Sidebar({ classes }: WithStyles<typeof styles>) {
+function Sidebar({ classes }: MuiStyles) {
     return (
         <Card className={classes.sidebar} square>
             <div>
@@ -60,29 +66,19 @@ function Sidebar({ classes }: WithStyles<typeof styles>) {
 
 export default withStyles(styles)(Sidebar);
 
-type SidebarBoxProps = WithStyles<typeof styles> & WithTheme & { route: Route };
+type SidebarBoxProps = MuiStyles & { route: Route };
 
-function SidebarBoxComponent(props: SidebarBoxProps) {
-    const { classes, theme, route } = props;
-
+const SidebarBox = withStyles(styles)(({ classes, route }: SidebarBoxProps) => {
     const router = useRouter();
-
     const currentPath = router.pathname;
-    const currentPathHighlightColor = lighten(theme.constants.appBackgroundDark, 0.1);
 
     return (
         <Link href={route.path}>
-            <div
-                className={classes.sidebarBox}
-                title={route.title}
-                style={{ backgroundColor: route.path === currentPath ? currentPathHighlightColor : undefined }}
-            >
+            <div className={clsx(classes.sidebarBox, route.path === currentPath && classes.currentPathBox)} title={route.title}>
                 <SvgIcon className={classes.sidebarIcon} style={route.iconStyle}>
                     <path d={route.icon} />
                 </SvgIcon>
             </div>
         </Link>
     );
-}
-
-const SidebarBox = withStyles(styles, { withTheme: true })(SidebarBoxComponent);
+});
