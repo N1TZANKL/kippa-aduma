@@ -7,4 +7,4 @@ Kippa Aduma is a web application, suited mainly for Red Teams, to keep track of 
 
 ## Technologies
 
-This project was written using Next.js framework (React + Node.js), Typescript, with a Mongo database. 
+This project was written in Typescript using Next.js framework (React + Node.js). The application's data is stored in a Mongo database. 
