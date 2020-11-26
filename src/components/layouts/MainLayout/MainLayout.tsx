@@ -26,6 +26,7 @@ const styles = (theme: Theme) =>
         childrenWrapper: {
             marginLeft: 70,
             width: "100%",
+            overflow: "auto",
         },
     });
 

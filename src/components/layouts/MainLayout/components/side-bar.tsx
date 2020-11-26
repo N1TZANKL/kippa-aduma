@@ -4,10 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Card from "@material-ui/core/Card";
 import SvgIcon from "@material-ui/core/SvgIcon";
-import SettingsIcon from "@material-ui/icons/Settings";
 import clsx from "clsx";
 
-import IconButton from "src/components/general/IconButton";
 import { MuiStyles } from "src/utils/interfaces";
 
 import routes, { Route } from "../routes";
@@ -24,7 +22,6 @@ const styles = (theme: Theme) =>
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "space-between",
             position: "fixed",
         },
         sidebarBox: {
@@ -43,9 +40,6 @@ const styles = (theme: Theme) =>
         sidebarIcon: {
             fontSize: 28,
         },
-        iconButton: {
-            marginBottom: 15,
-        },
         currentPathBox: {
             backgroundColor: lighten(theme.constants.appBackgroundDark, 0.1),
         },
@@ -54,12 +48,9 @@ const styles = (theme: Theme) =>
 function Sidebar({ classes }: MuiStyles) {
     return (
         <Card className={classes.sidebar} square>
-            <div>
-                {routes.map((route) => (
-                    <SidebarBox key={route.path} route={route} />
-                ))}
-            </div>
-            <IconButton title="Settings" className={classes.iconButton} fontSize={28} icon={SettingsIcon} />
+            {routes.map((route) => (
+                <SidebarBox key={route.path} route={route} />
+            ))}
         </Card>
     );
 }

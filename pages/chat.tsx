@@ -1,5 +1,7 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden";
+import withWidth, { WithWidth } from "@material-ui/core/withWidth";
 
 import { MuiStyles, ChatMessage } from "src/utils/interfaces";
 import { withUserSession, UserSessionObject } from "utils/session";
@@ -12,7 +14,8 @@ const styles = () =>
     createStyles({
         root: {
             display: "flex",
-            minWidth: 1250,
+            minWidth: 800,
+            minHeight: 400,
             height: "100%",
             width: "100%",
             padding: 20,
@@ -27,27 +30,28 @@ const styles = () =>
             overflow: "auto",
         },
         rightPanel: {
-            flexBasis: "80%",
-            minWidth: 900,
+            flexBasis: "100%",
             position: "relative",
             overflow: "hidden",
         },
     });
 
-type ChatProps = MuiStyles & { users?: UserSessionObject[]; user: UserSessionObject; messages?: ChatMessage[] };
+type ChatProps = WithWidth & MuiStyles & { users?: UserSessionObject[]; user: UserSessionObject; messages?: ChatMessage[] };
 
 function Chat({ classes, users, user, messages }: ChatProps) {
     return (
         <PageLayout noPadding user={user}>
             <div className={classes.root}>
-                <UsersPanel className={classes.leftPanel} user={user} users={users} />
+                <Hidden mdDown implementation="css">
+                    <UsersPanel className={classes.leftPanel} user={user} users={users} />
+                </Hidden>
                 <MessagesPanel className={classes.rightPanel} user={user} messages={messages} />
             </div>
         </PageLayout>
     );
 }
 
-export default withStyles(styles)(Chat);
+export default withStyles(styles)(withWidth()(Chat));
 
 export const getServerSideProps = withUserSession(async () => {
     const props: Omit<ChatProps, "user" | "classes"> = {};

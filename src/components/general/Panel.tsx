@@ -56,6 +56,7 @@ const styles = (theme: Theme) =>
         statTitle: {
             fontFamily: "monospace",
             fontWeight: "bold",
+            textAlign: "center",
         },
         statContent: {
             fontFamily: "monospace",

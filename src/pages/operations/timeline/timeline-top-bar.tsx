@@ -43,7 +43,7 @@ const styles = (theme: Theme) =>
             padding: "2px 10px",
             fontSize: 14,
             borderRadius: 2,
-            width: 275,
+            width: 230,
         },
         searchIcon: {
             marginRight: 5,
@@ -64,7 +64,7 @@ function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTo
                 <Input
                     disableUnderline
                     autoFocus
-                    placeholder="Search for text, author, post type..."
+                    placeholder="Search posts by text, type..."
                     value={searchString}
                     onChange={(e) => onSearch(e.target.value)}
                     className={classes.searchTextField}

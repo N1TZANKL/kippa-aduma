@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { resetServerContext } from "react-beautiful-dnd";
+import Box from "@material-ui/core/Box";
 
 import { Credential } from "src/utils/interfaces";
 import { withUserSession, UserSessionObject } from "utils/session";
@@ -21,8 +22,10 @@ export default function CredentialsPage({ user, creds }: CredentialsPageProps): 
     }
 
     return (
-        <PageLayout user={user}>
-            <CredsTable creds={allCreds} toggleFormOpen={toggleFormOpen} removeDeletedCredsFromLocalState={removeDeletedCredsFromLocalState} />
+        <PageLayout noPadding user={user}>
+            <Box minWidth={1115} padding="15px">
+                <CredsTable creds={allCreds} toggleFormOpen={toggleFormOpen} removeDeletedCredsFromLocalState={removeDeletedCredsFromLocalState} />
+            </Box>
             <FormDialog title="Add Cred" open={isFormOpen} onClose={toggleFormOpen}>
                 <CreateCredForm addCred={addCredential} onClose={toggleFormOpen} />
             </FormDialog>

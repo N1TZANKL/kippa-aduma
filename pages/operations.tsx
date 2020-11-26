@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden";
+import withWidth, { WithWidth } from "@material-ui/core/withWidth";
+import clsx from "clsx";
 
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
 import PageLayout from "src/components/layouts/MainLayout";
@@ -17,23 +20,32 @@ const styles = () =>
             height: "100%",
             width: "100%",
             justifyContent: "space-between",
-            // minWidth: 1250,
+            minHeight: 610,
+            minWidth: 700,
+            padding: 15,
         },
         timelineRoot: {
-            flexBasis: "58%",
-            maxWidth: "58%",
-            // padding: "0 35px",
+            maxWidth: "100%",
+            minWidth: "40%",
+            flexGrow: 1,
         },
         optionsRoot: {
-            flexBasis: "20%",
-            maxWidth: 350,
-            padding: "15px 25px",
+            flexBasis: "15%",
+            height: "100%",
+            maxWidth: 275,
+            padding: 15,
             display: "flex",
             flexDirection: "column",
         },
+        sortPanel: {
+            marginRight: 15,
+        },
+        overviewPanel: {
+            marginLeft: 15,
+        },
     });
 
-type OperationsProps = MuiStyles & { user: UserSessionObject; posts?: OperationPost[] };
+type OperationsProps = MuiStyles & WithWidth & { user: UserSessionObject; posts?: OperationPost[] };
 
 function Operations(props: OperationsProps) {
     const { classes, user, posts } = props;
@@ -48,9 +60,15 @@ function Operations(props: OperationsProps) {
     }
 
     return (
-        <PageLayout user={user}>
+        <PageLayout noPadding user={user}>
             <div className={classes.root}>
-                <SortFilterPanel className={classes.optionsRoot} sortState={sortState} postTypeFiltersState={postTypeFiltersState} />
+                <Hidden smDown implementation="css">
+                    <SortFilterPanel
+                        className={clsx(classes.optionsRoot, classes.sortPanel)}
+                        sortState={sortState}
+                        postTypeFiltersState={postTypeFiltersState}
+                    />
+                </Hidden>
                 <Timeline
                     posts={allPosts}
                     addPost={addPost}
@@ -58,13 +76,15 @@ function Operations(props: OperationsProps) {
                     currentSort={sortState[0]}
                     postTypeFilters={postTypeFiltersState[0]}
                 />
-                <AdvancedOverviewPanel className={classes.optionsRoot} posts={allPosts} />
+                <Hidden mdDown implementation="css">
+                    <AdvancedOverviewPanel className={clsx(classes.optionsRoot, classes.overviewPanel)} posts={allPosts} />
+                </Hidden>
             </div>
         </PageLayout>
     );
 }
 
-export default withStyles(styles)(Operations);
+export default withStyles(styles)(withWidth()(Operations));
 
 export const getServerSideProps = withUserSession(async () => {
     const props: Omit<OperationsProps, "user" | "classes"> = {};
