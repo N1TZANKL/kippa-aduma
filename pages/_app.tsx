@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { ThemeProvider, withStyles, createStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Head from "next/head";
+import "typeface-roboto";
 
 import { hexToRGB } from "src/utils/helpers/css";
 import theme from "src/utils/theme";
@@ -52,6 +53,22 @@ function MyApp({ Component, pageProps }: AppProps) {
                         div#__next,
                         div#__next > div {
                             height: 100%;
+                        }
+
+                        @font-face {
+                            font-family: "Inconsolata";
+                            src: url("/fonts/Inconsolata/Inconsolata-Regular.ttf");
+                            font-style: normal;
+                            font-weight: 400;
+                            font-display: swap;
+                        }
+
+                        @font-face {
+                            font-family: "Inconsolata";
+                            src: url("/fonts/Inconsolata/Inconsolata-Bold.ttf");
+                            font-style: medium;
+                            font-weight: 600;
+                            font-display: swap;
                         }
                     `}
                 </style>

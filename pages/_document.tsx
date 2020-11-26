@@ -12,6 +12,8 @@ export default class MyDocument extends Document {
                 <Head>
                     {/* PWA primary color */}
                     <meta name="theme-color" content={theme.palette.primary.main} />
+                    <link rel="preload" href="/fonts/Inconsolata/Inconsolata-Regular.ttf" as="font" crossOrigin="" />
+                    <link rel="preload" href="/fonts/Inconsolata/Inconsolata-Bold.ttf" as="font" crossOrigin="" />
                 </Head>
                 <body>
                     <Main />

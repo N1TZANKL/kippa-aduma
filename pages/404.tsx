@@ -13,11 +13,13 @@ const styles = () =>
             justifyContent: "center",
         },
         title: {
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
             marginTop: 75,
         },
         subtitle: {
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
             marginTop: 25,
         },
         backButton: {

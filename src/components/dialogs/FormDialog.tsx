@@ -22,7 +22,8 @@ const styles = (theme: Theme) =>
             justifyContent: "space-between",
         },
         titleText: {
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
             fontWeight: "bold",
             marginLeft: 5,
         },

@@ -15,8 +15,8 @@ const styles = () =>
             width: "fit-content",
         },
         text: {
-            letterSpacing: 1,
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 2,
             textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
         },
     });

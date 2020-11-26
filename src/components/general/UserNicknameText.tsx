@@ -10,7 +10,8 @@ type StyleProps = { color: string | undefined };
 const useStyles = makeStyles({
     root: {
         fontWeight: "bold",
-        fontFamily: "monospace",
+        fontFamily: "Inconsolata",
+        letterSpacing: 1.15,
         color: (props: StyleProps) => props.color,
     },
 });

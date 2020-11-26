@@ -17,8 +17,8 @@ const styles = () =>
             marginTop: -50,
             color: "rgba(255,255,255,0.35)",
             fontStyle: "italic",
-            letterSpacing: 1,
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
         },
     });
 

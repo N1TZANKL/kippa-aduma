@@ -54,7 +54,8 @@ export default createMuiTheme({
         },
         MuiButton: {
             contained: {
-                fontFamily: "monospace",
+                fontFamily: "Inconsolata",
+                letterSpacing: 1.15,
                 fontSize: 16,
                 backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.5),
                 "&:hover": {

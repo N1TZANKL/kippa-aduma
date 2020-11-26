@@ -10,7 +10,8 @@ const styles = () =>
         root: {
             color: red["400"],
             fontWeight: 500,
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
         },
     });
 

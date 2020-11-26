@@ -11,12 +11,14 @@ const styles = (theme: Theme) =>
     createStyles({
         title: {
             fontWeight: "bold",
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
         },
         subtitle: {
             width: "fit-content",
             borderBottom: "2px solid rgba(255,255,255,0.6)",
             margin: "5px 0",
+            fontSize: 16,
         },
         panel: {
             borderRadius: 2,
@@ -54,12 +56,14 @@ const styles = (theme: Theme) =>
             justifyContent: "center",
         },
         statTitle: {
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
             fontWeight: "bold",
             textAlign: "center",
         },
         statContent: {
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
         },
     });
 
@@ -90,7 +94,7 @@ export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
 
 type PanelSubtitleProps = MuiStyles & TypographyProps;
 export const PanelSubtitle = withStyles(styles)(({ classes, ...otherProps }: PanelSubtitleProps) => (
-    <Typography className={clsx(classes.title, classes.subtitle)} variant="h6" {...otherProps} />
+    <Typography className={clsx(classes.title, classes.subtitle)} variant="h5" {...otherProps} />
 ));
 
 type PanelBottomBarProps = MuiStyles & { children: React.ReactChild; className?: string };
@@ -106,10 +110,10 @@ export const PanelButton = withStyles(styles)(({ classes, className, ...otherPro
 type PanelStatProps = MuiStyles & { title: string; children: React.ReactChild };
 export const PanelStat = withStyles(styles)(({ classes, title, children }: PanelStatProps) => (
     <Paper className={classes.stat} variant="outlined">
-        <Typography variant="h5" className={classes.statTitle}>
+        <Typography variant="h6" className={classes.statTitle}>
             {title}
         </Typography>
-        <Typography variant="h6" component="div" color="textSecondary" className={classes.statContent}>
+        <Typography variant="body1" component="div" color="textSecondary" className={classes.statContent}>
             {children}
         </Typography>
     </Paper>

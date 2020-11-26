@@ -20,7 +20,8 @@ const POST_TYPE_INDICATOR_CHIP_STYLE: CSSProperties = {
     color: "white",
     textTransform: "uppercase",
     marginRight: 8,
-    fontFamily: "monospace",
+    fontFamily: "Inconsolata",
+    letterSpacing: 1.15,
     textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
     marginBottom: 3,
     display: "flex",
@@ -28,6 +29,7 @@ const POST_TYPE_INDICATOR_CHIP_STYLE: CSSProperties = {
     width: 62,
     maxWidth: 62,
     fontSize: 11,
+    fontWeight: 600,
 };
 
 type UseStylesProps = { postType: OperationPostTypes };

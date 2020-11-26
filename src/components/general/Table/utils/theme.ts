@@ -25,8 +25,9 @@ export default createMuiTheme({
         MuiTableCell: {
             head: {
                 backgroundColor: `${lighten(theme.constants.appBackgroundHighlight, 0.03)} !important`,
-                font: "bold 18px monospace !important",
+                font: "bold 18px Inconsolata !important",
                 boxShadow: "rgba(0,0,0,0.2) 0 4px 1px -2px !important",
+                letterSpacing: 1.15,
             },
         },
         MuiTablePagination: {

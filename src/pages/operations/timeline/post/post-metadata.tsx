@@ -27,6 +27,7 @@ const styles = () =>
             marginLeft: 5,
         },
         authorNameText: {
+            fontSize: 15,
             margin: "0 5px 2px",
             textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
         },
@@ -50,8 +51,8 @@ function PostMetadata(props: PostMetadataProps) {
                     <CreateIcon className={classes.metadataIcon} />
                     Written {formatDate(props.writtenTimestamp)}
                 </span>
-                <span>at {formatTime(props.writtenTimestamp)}</span>
-                <span>
+                <span className={classes.flexCenter}>at {formatTime(props.writtenTimestamp)}</span>
+                <span className={classes.flexCenter}>
                     by
                     <UserNicknameText className={classes.authorNameText} user={props.author} />
                 </span>

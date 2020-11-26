@@ -24,9 +24,9 @@ const styles = (theme: Theme) =>
             backgroundColor: theme.constants.appBackgroundHighlight,
             "& > *": {
                 fontWeight: "bold",
-                fontFamily: "monospace",
+                fontFamily: "Inconsolata",
+                letterSpacing: 1.15,
                 fontSize: 15,
-                letterSpacing: 1,
             },
         },
         title: {
@@ -35,7 +35,8 @@ const styles = (theme: Theme) =>
             justifyContent: "space-between",
         },
         titleText: {
-            fontFamily: "monospace",
+            fontFamily: "Inconsolata",
+            letterSpacing: 1.15,
             fontWeight: "bold",
             marginLeft: 5,
         },
