@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
-import SearchIcon from "@material-ui/icons/Search";
 import clsx from "clsx";
-import Input from "@material-ui/core/Input";
 
 import { PanelButton, PanelTitle } from "src/components/general/Panel";
 import { spaceChildren } from "src/utils/helpers/css";
@@ -11,45 +9,32 @@ import { MuiStyles, OperationPost, SetState } from "src/utils/interfaces";
 import FormDialog from "src/components/dialogs/FormDialog";
 
 import CreatePostForm from "../create-post-form";
+import SearchBox from "src/components/general/SearchBox";
 
-const styles = (theme: Theme) =>
-    createStyles({
-        flexCenter: {
-            display: "flex",
-            alignItems: "center",
-        },
-        titleRoot: {
-            justifyContent: "space-between",
-            padding: "0 15px",
-            height: 50,
-        },
-        actionsRoot: {
-            ...spaceChildren("horizontally", 10),
-        },
-        searchOpenRight: {
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-        },
-        searchOpenLeft: {
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-            padding: "2px 5px 2px 10px",
-            minWidth: "fit-content",
-        },
-        searchTextField: {
-            backgroundColor: theme.constants.appBackgroundHighlight,
-            border: "1px solid rgba(255,255,255,0.2)",
-            height: 32,
-            padding: "2px 10px",
-            fontSize: 14,
-            borderRadius: 2,
-            width: 230,
-        },
-        searchIcon: {
-            marginRight: 5,
-            fontSize: 20,
-        },
-    });
+const styles = createStyles({
+    flexCenter: {
+        display: "flex",
+        alignItems: "center",
+    },
+    titleRoot: {
+        justifyContent: "space-between",
+        padding: "0 15px",
+        height: 50,
+    },
+    actionsRoot: {
+        ...spaceChildren("horizontally", 10),
+    },
+    searchOpenRight: {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+    },
+    searchOpenLeft: {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        padding: "2px 5px 2px 10px",
+        minWidth: "fit-content",
+    },
+});
 
 type TimelineTopBarProps = MuiStyles & { onSearch: SetState<string>; searchString?: string; addPost: (newPost: OperationPost) => void };
 function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTopBarProps) {
@@ -61,14 +46,12 @@ function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTo
         <PanelTitle className={clsx(classes.titleRoot, classes.flexCenter)} withBackground>
             <span>Operation Timeline</span>
             <div className={clsx(classes.flexCenter, classes.actionsRoot)}>
-                <Input
-                    disableUnderline
-                    autoFocus
+                <SearchBox
                     placeholder="Search posts by text, type..."
                     value={searchString}
                     onChange={(e) => onSearch(e.target.value)}
-                    className={classes.searchTextField}
-                    startAdornment={<SearchIcon className={classes.searchIcon} />}
+                    padding="2px 10px"
+                    width={250}
                 />
                 <PanelButton color="secondary" onClick={toggleFormOpen}>
                     <EditIcon />

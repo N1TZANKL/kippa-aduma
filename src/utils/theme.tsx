@@ -53,10 +53,12 @@ export default createMuiTheme({
             input: { padding: "10px 12px" },
         },
         MuiButton: {
-            contained: {
+            root: {
                 fontFamily: "Inconsolata",
                 letterSpacing: 1.15,
                 fontSize: 16,
+            },
+            contained: {
                 backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.5),
                 "&:hover": {
                     backgroundColor: lighten(customTheme.constants.appBackgroundHighlight, 0.3),

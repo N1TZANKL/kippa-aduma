@@ -4,6 +4,7 @@ import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import clsx from "clsx";
 import Paper, { PaperProps } from "@material-ui/core/Paper";
 import Button, { ButtonProps } from "@material-ui/core/Button";
+import Box, { BoxProps } from "@material-ui/core/Box";
 
 import { MuiStyles } from "src/utils/interfaces";
 
@@ -76,19 +77,21 @@ const Panel = withStyles(styles)((props: PanelProps) => {
 
 export default Panel;
 
-type PanelTitleProps = MuiStyles & { withBackground?: boolean; className?: string; children: React.ReactChild };
+type PanelTitleProps = MuiStyles & BoxProps & { withBackground?: boolean; className?: string; children: React.ReactChild };
 export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
-    const { classes, withBackground, className, children } = props;
+    const { classes, withBackground, className, children, ...boxProps } = props;
 
     return (
-        <Typography
-            component="div"
-            variant="h5"
-            align="center"
-            className={clsx(classes.title, className, withBackground && classes.highlightBackground)}
-        >
-            {children}
-        </Typography>
+        <Box {...boxProps} clone>
+            <Typography
+                component="div"
+                variant="h5"
+                align="center"
+                className={clsx(classes.title, className, withBackground && classes.highlightBackground)}
+            >
+                {children}
+            </Typography>
+        </Box>
     );
 });
 
