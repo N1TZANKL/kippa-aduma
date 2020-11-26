@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
-import withWidth, { WithWidth } from "@material-ui/core/withWidth";
 import clsx from "clsx";
 
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
@@ -45,7 +44,7 @@ const styles = () =>
         },
     });
 
-type OperationsProps = MuiStyles & WithWidth & { user: UserSessionObject; posts?: OperationPost[] };
+type OperationsProps = MuiStyles & { user: UserSessionObject; posts?: OperationPost[] };
 
 function Operations(props: OperationsProps) {
     const { classes, user, posts } = props;
@@ -84,7 +83,7 @@ function Operations(props: OperationsProps) {
     );
 }
 
-export default withStyles(styles)(withWidth()(Operations));
+export default withStyles(styles)(Operations);
 
 export const getServerSideProps = withUserSession(async () => {
     const props: Omit<OperationsProps, "user" | "classes"> = {};

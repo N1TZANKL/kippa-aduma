@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
-import withWidth, { WithWidth } from "@material-ui/core/withWidth";
 
 import { MuiStyles, ChatMessage } from "src/utils/interfaces";
 import { withUserSession, UserSessionObject } from "utils/session";
@@ -36,7 +35,7 @@ const styles = () =>
         },
     });
 
-type ChatProps = WithWidth & MuiStyles & { users?: UserSessionObject[]; user: UserSessionObject; messages?: ChatMessage[] };
+type ChatProps = MuiStyles & { users?: UserSessionObject[]; user: UserSessionObject; messages?: ChatMessage[] };
 
 function Chat({ classes, users, user, messages }: ChatProps) {
     return (
@@ -51,7 +50,7 @@ function Chat({ classes, users, user, messages }: ChatProps) {
     );
 }
 
-export default withStyles(styles)(withWidth()(Chat));
+export default withStyles(styles)(Chat);
 
 export const getServerSideProps = withUserSession(async () => {
     const props: Omit<ChatProps, "user" | "classes"> = {};
