@@ -5,7 +5,7 @@ import { UserSessionObject } from "utils/session";
 import userModel, { UserModel } from "./model";
 
 export async function getAllUsers(): Promise<UserSessionObject[]> {
-    return userModel.find({}, "username nickname color -_id").lean();
+    return userModel.find({}, "-passwordHash").then((users) => users.map(({ id, _doc: { _id, __v, ...user } }) => ({ id, ...user })));
 }
 
 export async function addUser(userData: UserModel): Promise<Document> {
