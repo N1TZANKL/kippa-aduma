@@ -51,9 +51,9 @@ export default createMuiTheme({
         MuiButton: {
             ...overrides?.MuiButton,
             root: {
+                ...overrides?.MuiButton?.root,
                 margin: "0 5px",
                 padding: "4px 12px",
-                fontSize: "85%",
             },
         },
         // search field overrides
