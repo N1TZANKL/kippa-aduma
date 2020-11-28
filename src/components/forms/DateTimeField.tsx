@@ -5,6 +5,7 @@ import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker, TimePicker } from "@material-ui/pickers";
 import InputLabel from "@material-ui/core/InputLabel";
 import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 
 import { MuiStyles } from "src/utils/interfaces";
 import { notFirstChild, spaceChildren } from "src/utils/helpers/css";
@@ -16,14 +17,27 @@ const styles = (theme: Theme) =>
         root: {
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             marginTop: "20px !important",
+        },
+        fieldHidden: {
+            display: "block",
         },
         label: {
             fontSize: 13,
             lineHeight: 1.25,
             width: "min-content",
             minWidth: 90,
+        },
+        fields: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+        },
+        spaceFields: {
+            "& > *": {
+                marginLeft: 10,
+            },
         },
         "@global": {
             // both pickers overrides
@@ -68,33 +82,41 @@ const styles = (theme: Theme) =>
         },
     });
 
-type FormikDateTimeProps = MuiStyles & { fieldKey: string };
-function FormikDateTime({ classes, fieldKey }: FormikDateTimeProps) {
+type FormikDateTimeProps = MuiStyles & { fieldKey: string; label: string; hide?: "date" | "time" };
+function FormikDateTime({ classes, fieldKey, label, hide }: FormikDateTimeProps) {
     const [field /* meta */, , { setValue }] = useField(fieldKey);
 
     return (
-        <div className={classes.root}>
-            <InputLabel className={classes.label}>Date & Time Happened</InputLabel>
+        <div className={clsx(classes.root, hide && classes.fieldHidden)}>
+            <InputLabel className={classes.label}>{label}</InputLabel>
             <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
-                <DatePicker
-                    color="secondary"
-                    name={`${field.name}_date`}
-                    id={`${field.name}_date`}
-                    variant="inline"
-                    disableToolbar
-                    disableFuture
-                    value={field.value}
-                    onChange={(newDate) => setValue(newDate?.toISOString())}
-                />
+                <div className={clsx(classes.fields, !hide && classes.spaceFields)}>
+                    {hide !== "date" && (
+                        <DatePicker
+                            color="secondary"
+                            name={`${field.name}_date`}
+                            id={`${field.name}_date`}
+                            variant="inline"
+                            disableToolbar
+                            disableFuture
+                            value={field.value}
+                            onChange={(newDate) => setValue(newDate?.toISOString())}
+                            fullWidth
+                        />
+                    )}
 
-                <TimePicker
-                    color="secondary"
-                    name={`${field.name}_time`}
-                    id={`${field.name}_time`}
-                    value={field.value}
-                    onChange={(newDate) => setValue(newDate)}
-                    variant="inline"
-                />
+                    {hide !== "time" && (
+                        <TimePicker
+                            color="secondary"
+                            name={`${field.name}_time`}
+                            id={`${field.name}_time`}
+                            value={field.value}
+                            onChange={(newDate) => setValue(newDate)}
+                            variant="inline"
+                            fullWidth
+                        />
+                    )}
+                </div>
             </MuiPickersUtilsProvider>
         </div>
     );
