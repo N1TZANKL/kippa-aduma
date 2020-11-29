@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { MutableRefObject, useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import { Form, Formik, FormikHelpers, FormikProps, FormikValues } from "formik";
 import { ObjectSchema } from "yup";
@@ -29,7 +29,9 @@ type FormBaseProps = MuiStyles & {
     onClose?: () => void;
 };
 
-function FormBase({ classes, initialValues, validationSchema, onSubmit, children, onClose }: FormBaseProps) {
+type FormRef = MutableRefObject<FormikProps<any> | null>;
+
+function FormBase({ classes, initialValues, validationSchema, onSubmit, children, onClose }: FormBaseProps, ref: FormRef) {
     const [formError, setFormError] = useState<string>("");
 
     async function onSubmitForm(values: FormikValues, { setSubmitting, resetForm }: FormikHelpers<FormikValues>) {
@@ -47,7 +49,7 @@ function FormBase({ classes, initialValues, validationSchema, onSubmit, children
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmitForm}>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmitForm} innerRef={ref}>
             {(formikProps) => (
                 <Form className={classes.formRoot}>
                     {children(formikProps)}
@@ -59,4 +61,4 @@ function FormBase({ classes, initialValues, validationSchema, onSubmit, children
     );
 }
 
-export default withStyles(styles)(FormBase);
+export default withStyles(styles)(React.forwardRef(FormBase));
