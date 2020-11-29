@@ -3,6 +3,7 @@ import { useField } from "formik";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker, TimePicker } from "@material-ui/pickers";
+import { WithPureInputProps } from "@material-ui/pickers/Picker/makePickerWithState";
 import InputLabel from "@material-ui/core/InputLabel";
 import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -82,9 +83,14 @@ const styles = (theme: Theme) =>
         },
     });
 
-type FormikDateTimeProps = MuiStyles & { fieldKey: string; label: string; hide?: "date" | "time" };
-function FormikDateTime({ classes, fieldKey, label, hide }: FormikDateTimeProps) {
+type FormikDateTimeProps = MuiStyles & { fieldKey: string; label: string; hide?: "date" | "time"; disabled?: boolean };
+function FormikDateTime({ classes, fieldKey, label, hide, disabled }: FormikDateTimeProps) {
     const [field /* meta */, , { setValue }] = useField(fieldKey);
+
+    const fieldProps: Partial<WithPureInputProps> = { disabled, color: "secondary", variant: "inline", fullWidth: true };
+
+    // when there's no value, show a placeholder
+    if (!field.value) fieldProps.labelFunc = () => "(Select)";
 
     return (
         <div className={clsx(classes.root, hide && classes.fieldHidden)}>
@@ -93,27 +99,23 @@ function FormikDateTime({ classes, fieldKey, label, hide }: FormikDateTimeProps)
                 <div className={clsx(classes.fields, !hide && classes.spaceFields)}>
                     {hide !== "date" && (
                         <DatePicker
-                            color="secondary"
+                            {...fieldProps}
                             name={`${field.name}_date`}
                             id={`${field.name}_date`}
-                            variant="inline"
                             disableToolbar
                             disableFuture
                             value={field.value}
                             onChange={(newDate) => setValue(newDate?.toISOString())}
-                            fullWidth
                         />
                     )}
 
                     {hide !== "time" && (
                         <TimePicker
-                            color="secondary"
+                            {...fieldProps}
                             name={`${field.name}_time`}
                             id={`${field.name}_time`}
                             value={field.value}
                             onChange={(newDate) => setValue(newDate)}
-                            variant="inline"
-                            fullWidth
                         />
                     )}
                 </div>
