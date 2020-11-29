@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
@@ -28,7 +28,12 @@ const styles = createStyles({
 
 type AssignmentsProps = MuiStyles & { user: UserSessionObject; assignments?: Assignment[]; users?: UserSessionObject[] };
 
-function Assignments({ classes, user, assignments = [] }: AssignmentsProps): JSX.Element {
+function Assignments({ classes, user, users, assignments = [] }: AssignmentsProps): JSX.Element {
+    const [searchString, setSearchString] = useState("");
+
+    const [showOwnAssignmentsOnly, setShowOwnAssignments] = useState(false);
+    const toggleShowOwnFilter = () => setShowOwnAssignments((prevState) => !prevState);
+
     function handleAssignmentStatusChange({ draggableId, destination, source }: DropResult) {
         console.log(draggableId, destination, source);
     }
@@ -36,7 +41,14 @@ function Assignments({ classes, user, assignments = [] }: AssignmentsProps): JSX
     return (
         <PageLayout noPadding user={user}>
             <div className={classes.root}>
-                <AssignmentsTopBar height="45px" />
+                <AssignmentsTopBar
+                    height="45px"
+                    users={users}
+                    searchString={searchString}
+                    onSearch={setSearchString}
+                    toggleShowOwnFilter={toggleShowOwnFilter}
+                    showOwnAssignmentsOnly={showOwnAssignmentsOnly}
+                />
                 <div className={classes.panelsWrapper}>
                     <DragDropContext onDragEnd={handleAssignmentStatusChange}>
                         <AssignmentsPanel
