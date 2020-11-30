@@ -38,6 +38,18 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
         console.log(draggableId, destination, source);
     }
 
+    function filterSortAssignments(status: AssignmentStatuses) {
+        let filteredAssignments = assignments.filter((a) => a.status === status).reverse();
+
+        if (showOwnAssignmentsOnly) filteredAssignments = filteredAssignments.filter((a) => a.assignee?.username === user.username);
+
+        if (!searchString) return filteredAssignments;
+
+        return filteredAssignments.filter((assignment: Assignment) =>
+            Object.values(assignment).some((p: unknown) => p && typeof p === "string" && p.match(searchString))
+        );
+    }
+
     return (
         <PageLayout noPadding user={user}>
             <div className={classes.root}>
@@ -56,20 +68,20 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
                             marginRight="15px"
                             hiddenProps={{ smDown: true }}
                             status={AssignmentStatuses.TODO}
-                            assignments={assignments.filter((a) => a.status === AssignmentStatuses.TODO)}
+                            assignments={filterSortAssignments(AssignmentStatuses.TODO)}
                         />
                         <AssignmentsPanel
                             flexBasis={"40%"}
                             flexGrow={1}
                             status={AssignmentStatuses.IN_PROGRESS}
-                            assignments={assignments.filter((a) => a.status === AssignmentStatuses.IN_PROGRESS)}
+                            assignments={filterSortAssignments(AssignmentStatuses.IN_PROGRESS)}
                         />
                         <AssignmentsPanel
                             flexBasis={"29%"}
                             marginLeft="15px"
                             hiddenProps={{ mdDown: true }}
                             status={AssignmentStatuses.DONE}
-                            assignments={assignments.filter((a) => a.status === AssignmentStatuses.DONE)}
+                            assignments={filterSortAssignments(AssignmentStatuses.DONE)}
                         />
                     </DragDropContext>
                 </div>
