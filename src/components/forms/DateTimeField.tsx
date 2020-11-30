@@ -2,7 +2,7 @@ import React from "react";
 import { useField } from "formik";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider, DatePicker, TimePicker } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker, TimePicker, TimePickerProps, DatePickerProps } from "@material-ui/pickers";
 import { WithPureInputProps } from "@material-ui/pickers/Picker/makePickerWithState";
 import InputLabel from "@material-ui/core/InputLabel";
 import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
@@ -83,8 +83,18 @@ const styles = (theme: Theme) =>
         },
     });
 
-type FormikDateTimeProps = MuiStyles & { fieldKey: string; label: string; hide?: "date" | "time"; disabled?: boolean };
-function FormikDateTime({ classes, fieldKey, label, hide, disabled }: FormikDateTimeProps) {
+type FormikDateTimeProps = MuiStyles & {
+    fieldKey: string;
+    label: string;
+    hide?: "date" | "time";
+    disabled?: boolean;
+    datePickerProps?: Partial<DatePickerProps>;
+    timePickerProps?: Partial<TimePickerProps>;
+};
+
+function FormikDateTime({ classes, fieldKey, label, hide, disabled, ...otherProps }: FormikDateTimeProps) {
+    const { datePickerProps = {} as DatePickerProps, timePickerProps = {} as TimePickerProps } = otherProps;
+
     const [field /* meta */, , { setValue }] = useField(fieldKey);
 
     const fieldProps: Partial<WithPureInputProps> = { disabled, color: "secondary", variant: "inline", fullWidth: true };
@@ -100,10 +110,10 @@ function FormikDateTime({ classes, fieldKey, label, hide, disabled }: FormikDate
                     {hide !== "date" && (
                         <DatePicker
                             {...fieldProps}
+                            {...datePickerProps}
                             name={`${field.name}_date`}
                             id={`${field.name}_date`}
                             disableToolbar
-                            disableFuture
                             value={field.value}
                             onChange={(newDate) => setValue(newDate?.toISOString())}
                         />
@@ -112,6 +122,7 @@ function FormikDateTime({ classes, fieldKey, label, hide, disabled }: FormikDate
                     {hide !== "time" && (
                         <TimePicker
                             {...fieldProps}
+                            {...timePickerProps}
                             name={`${field.name}_time`}
                             id={`${field.name}_time`}
                             value={field.value}

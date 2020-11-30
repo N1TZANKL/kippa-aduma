@@ -1,7 +1,7 @@
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import { getAllAssignments, createAssignment, deleteAssignment } from "server/db/assignment/controller";
+import { getAllAssignments, createAssignment } from "server/db/assignment/controller";
 import { APIFunctionObject } from "src/utils/interfaces";
 
 // this NextJS config is to prevent the message "API resolved without sending a response"
@@ -20,17 +20,18 @@ const methodToFunction: APIFunctionObject = {
             return res.status(500).send(GeneralErrors.UnknownError);
         }
     },
-    POST: async (res, req) => {
+    POST: async (res, req, user) => {
         if (!req.body) return res.status(400).send("No assignment sent");
 
         try {
-            return res.status(200).json(await createAssignment(req.body));
+            const { assigneeId, ...reqData } = req.body;
+            return res.status(200).json(await createAssignment(user.id, reqData, assigneeId));
         } catch (error) {
             log("Caught error while attempting to create assignment:", LogTypes.ERROR, error);
             return res.status(500).send(GeneralErrors.UnknownError);
         }
     },
-    DELETE: async (res, req) => {
+    /*     DELETE: async (res, req) => {
         if (!req.body.id) return res.status(400).send("No assignment id sent");
 
         try {
@@ -40,7 +41,7 @@ const methodToFunction: APIFunctionObject = {
             log("Caught error while attempting to batch delete credentials:", LogTypes.ERROR, error);
             return res.status(500).send(GeneralErrors.UnknownError);
         }
-    },
+    }, */
 };
 
 export default withAuthenticatedUser(async (req, res, user) => {

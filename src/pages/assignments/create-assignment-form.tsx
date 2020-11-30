@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import * as Yup from "yup";
 import { FormikProps } from "formik";
+import moment from "moment";
 import Box from "@material-ui/core/Box";
 
 import { AssignmentStatuses } from "server/db/assignment/model";
@@ -17,8 +18,15 @@ const validationSchema = Yup.object({
     description: Yup.string().required("Required"),
     additionalInformation: Yup.string(),
     status: Yup.string().oneOf(newAssignmentStatusOptions).default(AssignmentStatuses.TODO).required("Required"),
-    deadlineAt: Yup.date(), //.required("Required"),
-    //assigneeId: Yup.string(), //.required("Required"),
+    deadlineAt: Yup.date().when("status", {
+        is: AssignmentStatuses.IN_PROGRESS,
+        then: Yup.date().required("Required"),
+        otherwise: Yup.date().nullable(),
+    }),
+    assigneeId: Yup.string().when("status", {
+        is: AssignmentStatuses.IN_PROGRESS,
+        then: Yup.string().required("Required"),
+    }),
 });
 
 interface AssignmentFormValues {
@@ -29,25 +37,39 @@ interface AssignmentFormValues {
     assigneeId?: string;
 }
 
-type CreateAssignmentFormProps = { addAssignment: (newAssignment: Assignment) => void; onClose?: () => void; users: UserSessionObject[] };
+type CreateAssignmentFormProps = {
+    addAssignment: (newAssignment: Assignment) => void;
+    onClose?: () => void;
+    users: UserSessionObject[];
+    user: UserSessionObject;
+};
 
-export default function CreateAssignmentForm({ addAssignment, onClose, users }: CreateAssignmentFormProps): JSX.Element {
+export default function CreateAssignmentForm({ addAssignment, onClose, users, user }: CreateAssignmentFormProps): JSX.Element {
     const formRef = useRef<FormikProps<AssignmentFormValues> | null>(null);
 
     const initialValues: AssignmentFormValues = { status: AssignmentStatuses.TODO, description: "", assigneeId: "", deadlineAt: null };
 
-    const onSubmit: FormBaseOnSubmit = (formData) =>
-        Post("assignment", formData).then(async (res) => {
+    const onSubmit: FormBaseOnSubmit = (formData) => {
+        const { deadlineAt, assigneeId, ...todoFormData } = formData;
+        const requestData = formData.status === AssignmentStatuses.TODO ? todoFormData : formData;
+
+        return Post("assignment", requestData).then(async (res) => {
             if (res.ok) res.json().then((newAssignment) => addAssignment(newAssignment));
             else {
                 const errorMessage = await res.text();
                 throw new Error(errorMessage);
             }
         });
+    };
 
     function onToggleAssignCheckbox(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) {
         if (!formRef.current) return;
-        formRef.current.setFieldValue("status", checked ? AssignmentStatuses.IN_PROGRESS : AssignmentStatuses.TODO);
+
+        const { setFieldValue, values } = formRef.current;
+
+        setFieldValue("status", checked ? AssignmentStatuses.IN_PROGRESS : AssignmentStatuses.TODO);
+        if (!values.deadlineAt) setFieldValue("deadlineAt", moment().add(1, "day").toISOString());
+        if (!values.assigneeId) setFieldValue("assigneeId", user.id);
     }
 
     return (
@@ -67,7 +89,13 @@ export default function CreateAssignmentForm({ addAssignment, onClose, users }: 
                             selectionList={users.map((u) => ({ label: `${u.nickname} (${u.username})`, value: u.id }))}
                             disabled={!isAssigned}
                         />
-                        <DateTimeField fieldKey="deadlineAt" label="Deadline" hide="time" disabled={!isAssigned} />
+                        <DateTimeField
+                            fieldKey="deadlineAt"
+                            label="Deadline"
+                            hide="time"
+                            disabled={!isAssigned}
+                            datePickerProps={{ disablePast: true }}
+                        />
                     </>
                 );
             }}

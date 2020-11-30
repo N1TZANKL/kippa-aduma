@@ -4,8 +4,9 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 
-import cssStyles from "./Assignment.module.css";
 import { AssignmentStatuses } from "server/db/assignment/model";
+
+import cssStyles from "./Assignment.module.css";
 
 type StyleProps = { color: string; isBeingDragged: boolean };
 
@@ -55,7 +56,7 @@ function AssignmentCard({ theme, description, status, userColor = "black", isBei
     });
 
     return (
-        <Paper square elevation={isBeingDragged ? 8 : 2} className={clsx(classes.root, cssStyles["triangle"])}>
+        <Paper square elevation={isBeingDragged ? 8 : 2} className={clsx(classes.root, cssStyles.triangle)}>
             <Typography variant="body2">{description}</Typography>
             <div>{children}</div>
         </Paper>

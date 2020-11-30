@@ -6,11 +6,13 @@ import { PanelButton } from "src/components/general/Panel";
 import SearchBox from "src/components/general/SearchBox";
 import { Assignment, SetState } from "src/utils/interfaces";
 import { UserSessionObject } from "utils/session";
-import CreateAssignmentForm from "./create-assignment-form";
 import FormDialog from "src/components/dialogs/FormDialog";
+
+import CreateAssignmentForm from "./create-assignment-form";
 
 type AssignmentsTopBarProps = BoxProps & {
     users?: UserSessionObject[];
+    user: UserSessionObject;
     addAssignment: (newAssignment: Assignment) => void;
     toggleShowOwnFilter: () => void;
     showOwnAssignmentsOnly: boolean;
@@ -20,8 +22,8 @@ type AssignmentsTopBarProps = BoxProps & {
 
 // TODO: Create assignment form context instead of passing all these props
 
-export default function AssignmentsTopBar(props: AssignmentsTopBarProps) {
-    const { users = [], addAssignment, toggleShowOwnFilter, showOwnAssignmentsOnly, onSearch, searchString = "", ...boxProps } = props;
+export default function AssignmentsTopBar(props: AssignmentsTopBarProps): JSX.Element {
+    const { users = [], user, addAssignment, toggleShowOwnFilter, showOwnAssignmentsOnly, onSearch, searchString = "", ...boxProps } = props;
 
     const [formOpen, setFormOpen] = useState(false);
     const toggleFormOpen = () => setFormOpen((prev) => !prev);
@@ -43,7 +45,7 @@ export default function AssignmentsTopBar(props: AssignmentsTopBarProps) {
                 Only My Assignments {showOwnAssignmentsOnly ? "[ON]" : ""}
             </PanelButton>
             <FormDialog title="Create Assignment" open={formOpen} onClose={toggleFormOpen}>
-                <CreateAssignmentForm addAssignment={addAssignment} onClose={toggleFormOpen} users={users} />
+                <CreateAssignmentForm addAssignment={addAssignment} onClose={toggleFormOpen} users={users} user={user} />
             </FormDialog>
         </Box>
     );

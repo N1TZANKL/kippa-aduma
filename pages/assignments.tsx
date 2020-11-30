@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import PageLayout from "src/components/layouts/MainLayout";
 import { UserSessionObject, withUserSession } from "utils/session";
-import { AssignmentsTopBar, AssignmentsPanel } from "src/pages/assignments/";
+import { AssignmentsTopBar, AssignmentBoards } from "src/pages/assignments/";
 import { Assignment, MuiStyles } from "src/utils/interfaces";
 import { getAllUsers } from "server/db/user/controller";
 import { getAllAssignments } from "server/db/assignment/controller";
-import { AssignmentStatuses } from "server/db/assignment/model";
 
 const styles = createStyles({
     root: {
@@ -34,21 +32,20 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
     const [showOwnAssignmentsOnly, setShowOwnAssignments] = useState(false);
     const toggleShowOwnFilter = () => setShowOwnAssignments((prevState) => !prevState);
 
-    function handleAssignmentStatusChange({ draggableId, destination, source }: DropResult) {
-        console.log(draggableId, destination, source);
-    }
+    const [allAssignments, setAssignments] = useState(assignments);
+    const addAssignment = (newAssignment: Assignment) => setAssignments((prevState) => [...prevState, newAssignment]);
 
-    function filterSortAssignments(status: AssignmentStatuses) {
-        let filteredAssignments = assignments.filter((a) => a.status === status).reverse();
+    const filteredSortedAssignments = allAssignments
+        .filter((assignment) => {
+            // filter by own-assignments filter
+            if (showOwnAssignmentsOnly && assignment.assignee?.username !== user.username) return false;
 
-        if (showOwnAssignmentsOnly) filteredAssignments = filteredAssignments.filter((a) => a.assignee?.username === user.username);
+            // filter by search string
+            if (searchString && !Object.values(assignment).some((p: unknown) => p && typeof p === "string" && p.match(searchString))) return false;
 
-        if (!searchString) return filteredAssignments;
-
-        return filteredAssignments.filter((assignment: Assignment) =>
-            Object.values(assignment).some((p: unknown) => p && typeof p === "string" && p.match(searchString))
-        );
-    }
+            return true;
+        })
+        .reverse();
 
     return (
         <PageLayout noPadding user={user}>
@@ -56,34 +53,15 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
                 <AssignmentsTopBar
                     height="45px"
                     users={users}
+                    user={user}
                     searchString={searchString}
                     onSearch={setSearchString}
                     toggleShowOwnFilter={toggleShowOwnFilter}
                     showOwnAssignmentsOnly={showOwnAssignmentsOnly}
+                    addAssignment={addAssignment}
                 />
                 <div className={classes.panelsWrapper}>
-                    <DragDropContext onDragEnd={handleAssignmentStatusChange}>
-                        <AssignmentsPanel
-                            flexBasis={"29%"}
-                            marginRight="15px"
-                            hiddenProps={{ smDown: true }}
-                            status={AssignmentStatuses.TODO}
-                            assignments={filterSortAssignments(AssignmentStatuses.TODO)}
-                        />
-                        <AssignmentsPanel
-                            flexBasis={"40%"}
-                            flexGrow={1}
-                            status={AssignmentStatuses.IN_PROGRESS}
-                            assignments={filterSortAssignments(AssignmentStatuses.IN_PROGRESS)}
-                        />
-                        <AssignmentsPanel
-                            flexBasis={"29%"}
-                            marginLeft="15px"
-                            hiddenProps={{ mdDown: true }}
-                            status={AssignmentStatuses.DONE}
-                            assignments={filterSortAssignments(AssignmentStatuses.DONE)}
-                        />
-                    </DragDropContext>
+                    <AssignmentBoards assignments={filteredSortedAssignments} />
                 </div>
             </div>
         </PageLayout>

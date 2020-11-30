@@ -6,12 +6,12 @@ import TodoIcon from "@material-ui/icons/Schedule";
 import InProgressIcon from "@material-ui/icons/Timer";
 import clsx from "clsx";
 import { red } from "@material-ui/core/colors";
+import { SvgIconComponent } from "@material-ui/icons";
 
 import { Assignment, MuiStyles } from "src/utils/interfaces";
-
 import { AssignmentStatuses } from "server/db/assignment/model";
 import { formatDate, getDatesDifference } from "src/utils/helpers/dates";
-import { SvgIconComponent } from "@material-ui/icons";
+
 import AssignmentCard from "./assignment-card";
 
 const styles = createStyles({
@@ -28,7 +28,7 @@ const styles = createStyles({
         fontWeight: "bold",
     },
     deadlinePassed: {
-        //borderTop: `2px solid ${red[700]}`,
+        // borderTop: `2px solid ${red[700]}`,
         borderBottom: `3px solid ${red[700]}`,
         color: "white",
         width: "fit-content",
@@ -38,11 +38,11 @@ const styles = createStyles({
 
 type AssignmentNoteProps = MuiStyles & { assignment: Assignment; isBeingDragged: boolean };
 
-const assignmentStatusToTimestampTitle: Record<AssignmentStatuses, string> = {
+/* const assignmentStatusToTimestampTitle: Record<AssignmentStatuses, string> = {
     [AssignmentStatuses.TODO]: "Created At",
     [AssignmentStatuses.IN_PROGRESS]: "Started At",
     [AssignmentStatuses.DONE]: "Finished At",
-};
+}; */
 
 const assignmentStatusToIconTimestamp: Record<
     AssignmentStatuses,
