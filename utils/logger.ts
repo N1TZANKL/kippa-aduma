@@ -1,6 +1,5 @@
 import chalk from "chalk";
-
-import { getCurrentTimestamp } from "../src/utils/helpers/dates";
+import moment from "moment";
 
 // TODO: Switch to external library?
 
@@ -43,4 +42,8 @@ function logWarning(message: string) {
 
 function logInfo(message: string) {
     return chalk.cyan(`[kippa-aduma] ${message}`);
+}
+
+function getCurrentTimestamp(): string {
+    return moment(new Date()).locale("en-il").format("L LTS");
 }

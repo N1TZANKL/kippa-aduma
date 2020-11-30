@@ -1,20 +1,25 @@
 import moment, { MomentInput } from "moment";
 
+const CALENDAR_FORMATS = {
+    lastDay: "[Yesterday]",
+    sameDay: "[Today]",
+    nextDay: "[Tomorrow]",
+    lastWeek: "dddd (MMM. D)",
+    sameElse: "MMM DD",
+};
+
 export function areSameDates(firstDate: MomentInput, secondDate: MomentInput): boolean {
     return moment(firstDate).isSame(moment(secondDate), "date");
 }
 
+export function getDatesDifference(date: MomentInput, newerDate: MomentInput, unitOfTime: moment.unitOfTime.Diff): number {
+    const dateA = moment(date);
+    const dateB = moment(newerDate);
+    return dateB.diff(dateA, unitOfTime);
+}
+
 export function formatDate(date: MomentInput, withTime = false): string {
-    moment.updateLocale("en", {
-        calendar: {
-            lastDay: "[Yesterday]",
-            sameDay: "[Today]",
-            nextDay: "[Tomorrow]",
-            lastWeek: "dddd (MMM. D)",
-            nextWeek: "[Next] dddd",
-            sameElse: "MMM DD",
-        },
-    });
+    moment.updateLocale("en", { calendar: CALENDAR_FORMATS });
 
     const parsedDate = moment(date).calendar();
 
@@ -36,14 +41,4 @@ export function sortObjectArrayByDate<T extends Record<string, unknown>>(array: 
     });
 
     return sortType === "asc" ? sortedArray : sortedArray.reverse();
-}
-
-export function getDatesDifference(a: MomentInput, b: MomentInput, unitOfTime: moment.unitOfTime.Diff): number {
-    const dateA = moment(a);
-    const dateB = moment(b);
-    return dateB.diff(dateA, unitOfTime);
-}
-
-export function getCurrentTimestamp(): string {
-    return moment(new Date()).locale("en-il").format("L LTS");
 }
