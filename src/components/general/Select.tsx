@@ -27,7 +27,7 @@ export default function Select(props: SelectProps): JSX.Element {
     const { selectionList, label, helperText, errorMessage, value, className, ...otherProps } = props;
 
     return (
-        <FormControl fullWidth className={className}>
+        <FormControl fullWidth className={className} color="secondary">
             <InputLabel shrink={!!label} error={!!errorMessage}>
                 {label}
             </InputLabel>
