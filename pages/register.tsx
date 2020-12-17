@@ -56,10 +56,16 @@ export default function Register(): JSX.Element {
                 loading={isLoading}
                 subtitle={<FormSubtitle actionName="login" href="/login" prompt="Already have a user?" />}
             >
-                <TextField label="Username" inputRef={usernameInput} required />
-                <TextField label="Nickname" inputRef={nicknameInput} required />
-                <SensitiveTextField label="Password" inputRef={passwordInput} required />
-                <SensitiveTextField label="Re-type Password" inputRef={retypePasswordInput} required errorMessage={passwordError} />
+                <TextField label="Username" name="username" inputRef={usernameInput} required />
+                <TextField label="Nickname" name="nickname" inputRef={nicknameInput} required />
+                <SensitiveTextField label="Password" name="password" inputRef={passwordInput} required />
+                <SensitiveTextField
+                    label="Re-type Password"
+                    name="password-validate"
+                    inputRef={retypePasswordInput}
+                    required
+                    errorMessage={passwordError}
+                />
             </Form>
         </ExteriorPageLayout>
     );
