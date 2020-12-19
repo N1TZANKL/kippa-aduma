@@ -25,7 +25,11 @@ export async function createAssignment(userId: string, assignmentData: Omit<Assi
 
     await newAssignmentDoc.save();
 
-    return newAssignmentDoc.populate("creator assignee", "-_id -passwordHash").execPopulate();
+    const {
+        _doc: { _id: id, ...newAssignment },
+    } = await newAssignmentDoc.populate("creator assignee", "-_id -passwordHash").execPopulate();
+
+    return { id, ...newAssignment };
 }
 
 /* export async function startAssignment(assignmentId: string, assigneeId: string): Promise<Assignment> {
