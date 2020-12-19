@@ -1,9 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CSSProperties } from "@material-ui/styles";
 import * as muiColors from "@material-ui/core/colors";
 
-import { textEllipsis } from "src/utils/helpers/css";
 import { OperationPostTypes } from "server/db/post/model";
 
 export const PostTypeToColor: Record<OperationPostTypes, string> = {
@@ -14,43 +12,27 @@ export const PostTypeToColor: Record<OperationPostTypes, string> = {
     [OperationPostTypes.UPDATE]: muiColors.grey[400],
 };
 
-const POST_TYPE_INDICATOR_CHIP_STYLE: CSSProperties = {
-    borderRadius: 3,
-    padding: "2px 8px",
-    color: "white",
-    textTransform: "uppercase",
-    marginRight: 8,
-    fontFamily: "Inconsolata",
-    letterSpacing: 1.15,
-    textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-    marginBottom: 3,
-    display: "flex",
-    justifyContent: "center",
-    width: 62,
-    maxWidth: 62,
-    fontSize: 11,
-    fontWeight: 600,
-};
-
 type UseStylesProps = { postType: OperationPostTypes };
 
 const useStyles = makeStyles({
     indicatorChip: {
-        ...POST_TYPE_INDICATOR_CHIP_STYLE,
+        borderRadius: 3,
+        padding: "1px 8px",
+        color: "white",
+        textTransform: "uppercase",
+        fontFamily: "Inconsolata",
+        letterSpacing: 1.15,
+        textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+        marginBottom: 3,
+        display: "flex",
+        justifyContent: "center",
+        fontSize: 11,
+        fontWeight: 600,
+        marginLeft: 10,
+        fontStyle: "normal",
         backgroundColor: (props: UseStylesProps) => PostTypeToColor[props.postType],
     },
-    descriptionIndicatorChip: (props: UseStylesProps) => ({
-        "&::before": {
-            content: `"${props.postType}"`,
-            ...POST_TYPE_INDICATOR_CHIP_STYLE,
-            backgroundColor: PostTypeToColor[props.postType],
-            position: "absolute",
-            ...textEllipsis,
-        },
-    }),
 });
-
-export const POST_TYPE_INDICATOR_PLACEHOLDER = "                 ";
 
 type PostTypeIndicatorProps = { type: OperationPostTypes };
 
@@ -59,8 +41,3 @@ export default function PostTypeIndicator({ type }: PostTypeIndicatorProps): JSX
 
     return <div className={classes.indicatorChip}>{type}</div>;
 }
-
-export const PostTypeIndicatorStyle = (postType: OperationPostTypes): string => {
-    const classes = useStyles({ postType });
-    return classes.descriptionIndicatorChip;
-};

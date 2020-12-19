@@ -40,7 +40,7 @@ function Post(props: PostProps) {
                 {title ? <PostTitle title={title} type={type} /> : null}
                 <PostContent post={post} />
                 <div className={classes.postBottomBar}>
-                    <PostMetadata author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />
+                    <PostMetadata type={type} author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />
                 </div>
             </Paper>
         </Box>

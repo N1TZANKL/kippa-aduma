@@ -4,36 +4,28 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
 import { MuiStyles } from "src/utils/interfaces";
-import { OperationPostTypes } from "server/db/post/model";
-
-import PostTypeIndicator from "./post-type-indicator";
 
 const styles = () =>
     createStyles({
         title: {
-            display: "flex",
-        },
-        titleText: {
             fontWeight: "bold",
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",
+            marginRight: 15,
         },
         titleDivider: {
             margin: "5px 0 5px",
         },
     });
 
-type PostTitleProps = MuiStyles & { title: string; type: OperationPostTypes };
+type PostTitleProps = MuiStyles & { title: string };
 
-function PostTitle(props: PostTitleProps) {
-    const { classes, title, type } = props;
-
+function PostTitle({ classes, title }: PostTitleProps) {
     return (
         <>
             <Typography variant="subtitle2" component="div" className={classes.title}>
-                <PostTypeIndicator type={type} />
-                <div className={classes.titleText}>{title}</div>
+                {title}
             </Typography>
             <Divider className={classes.titleDivider} />
         </>

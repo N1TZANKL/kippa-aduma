@@ -10,6 +10,9 @@ import { formatDate, formatTime } from "src/utils/helpers/dates";
 import { MuiStyles } from "src/utils/interfaces";
 import { spaceChildren } from "src/utils/helpers/css";
 import { UserSessionObject } from "utils/session";
+import { OperationPostTypes } from "server/db/post/model";
+
+import PostTypeIndicator from "./post-type-indicator";
 
 const styles = () =>
     createStyles({
@@ -17,7 +20,6 @@ const styles = () =>
             fontStyle: "italic",
             display: "flex",
             alignItems: "center",
-            marginRight: 5,
         },
         metadataIcon: {
             fontSize: 16,
@@ -39,7 +41,7 @@ const styles = () =>
         },
     });
 
-type PostMetadataProps = MuiStyles & { author: UserSessionObject; writtenTimestamp: string; happenedTimestamp: string };
+type PostMetadataProps = MuiStyles & { author: UserSessionObject; writtenTimestamp: string; happenedTimestamp: string; type: OperationPostTypes };
 
 function PostMetadata(props: PostMetadataProps) {
     const { classes } = props;
@@ -64,6 +66,7 @@ function PostMetadata(props: PostMetadataProps) {
                 </span>
                 <span>at {formatTime(props.happenedTimestamp)}</span>
             </div>
+            <PostTypeIndicator type={props.type} />
         </Typography>
     );
 }

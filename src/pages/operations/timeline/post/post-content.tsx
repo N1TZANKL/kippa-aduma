@@ -9,8 +9,6 @@ import Fade from "@material-ui/core/Fade";
 import { isElementOverflowing } from "src/utils/helpers/css";
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
 
-import { PostTypeIndicatorStyle, POST_TYPE_INDICATOR_PLACEHOLDER } from "./post-type-indicator";
-
 const styles = () =>
     createStyles({
         multilineText: {
@@ -54,7 +52,7 @@ function PostContent(props: PostContentProps) {
     const descriptionRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
     const { classes, post } = props;
-    const { title, additionalInformation, type } = post;
+    const { additionalInformation } = post;
 
     useEffect(() => {
         setCanExpand(!!additionalInformation || expanded || isElementOverflowing(descriptionRef.current));
@@ -71,11 +69,8 @@ function PostContent(props: PostContentProps) {
             className={clsx(classes.postContent, canExpand && classes.clickable)}
             onClick={canExpand ? toggleExpanded : undefined}
         >
-            <div
-                ref={descriptionRef}
-                className={clsx(classes.multilineText, !expanded && classes.truncatedDescription, !title && PostTypeIndicatorStyle(type))}
-            >
-                {`${!title ? POST_TYPE_INDICATOR_PLACEHOLDER : ""}${post.description}`}
+            <div ref={descriptionRef} className={clsx(classes.multilineText, !expanded && classes.truncatedDescription)}>
+                {post.description}
             </div>
             <Fade in={!expanded && canExpand} mountOnEnter unmountOnExit timeout={{ enter: 1000 }}>
                 <div className={classes.toggleExpandText}>Show More</div>
