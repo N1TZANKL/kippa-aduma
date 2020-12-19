@@ -7,9 +7,9 @@ import { PanelButton, PanelTitle } from "src/components/general/Panel";
 import { spaceChildren } from "src/utils/helpers/css";
 import { MuiStyles, OperationPost, SetState } from "src/utils/interfaces";
 import FormDialog from "src/components/dialogs/FormDialog";
+import SearchBox from "src/components/general/SearchBox";
 
 import CreatePostForm from "../create-post-form";
-import SearchBox from "src/components/general/SearchBox";
 
 const styles = createStyles({
     flexCenter: {

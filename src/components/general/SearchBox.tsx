@@ -3,6 +3,7 @@ import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import Input, { InputProps } from "@material-ui/core/Input";
 import Box, { BoxProps } from "@material-ui/core/Box";
 import SearchIcon from "@material-ui/icons/Search";
+
 import { MuiStyles } from "src/utils/interfaces";
 
 const styles = (theme: Theme) =>

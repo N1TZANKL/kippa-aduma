@@ -1,5 +1,6 @@
-import * as dateHelpers from "../dates";
 import moment, { MomentInput } from "moment";
+
+import * as dateHelpers from "../dates";
 
 // function: areSameDates
 
