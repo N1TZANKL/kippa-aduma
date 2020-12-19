@@ -19,7 +19,7 @@ type AssignmentPanelProps = Omit<BoxProps, "clone" | "children"> & {
 
 export default function AssignmentPanel({ hiddenProps, assignments = [], status, ...boxProps }: AssignmentPanelProps): JSX.Element {
     const BasePanelWrapper = ({ children }: { children: React.ReactChild }) => (
-        <Box {...boxProps} clone>
+        <Box minHeight="400px" {...boxProps} clone>
             {children}
         </Box>
     );
@@ -35,7 +35,7 @@ export default function AssignmentPanel({ hiddenProps, assignments = [], status,
 
     return (
         <PanelWrapper>
-            <Panel fullHeight>
+            <Panel>
                 <PanelTitle padding={"3px"} withBackground>
                     {assignmentStatusToTitle[status].toUpperCase()}
                 </PanelTitle>

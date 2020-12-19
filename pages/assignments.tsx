@@ -11,16 +11,18 @@ import { getAllAssignments } from "server/db/assignment/controller";
 const styles = createStyles({
     root: {
         width: "100%",
-        height: "100%",
         minWidth: 725,
-        minHeight: 400,
         padding: 15,
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100%",
+        //minHeight: 400,
     },
     panelsWrapper: {
         display: "flex",
         justifyContent: "space-between",
-        height: "calc(100% - 45px)",
         width: "100%",
+        flexGrow: 1,
     },
 });
 
