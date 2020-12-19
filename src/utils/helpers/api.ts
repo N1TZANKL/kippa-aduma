@@ -13,3 +13,7 @@ export function Post(relativePath: string, data: unknown): Promise<Response> {
 export function Delete(relativePath: string, data: unknown): Promise<Response> {
     return fetchJSON(relativePath, data, "DELETE");
 }
+
+export function Patch(relativePath: string, data: unknown): Promise<Response> {
+    return fetchJSON(relativePath, data, "PATCH");
+}

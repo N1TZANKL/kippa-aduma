@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
+import { resetServerContext } from "react-beautiful-dnd";
 
 import PageLayout from "src/components/layouts/MainLayout";
 import { UserSessionObject, withUserSession } from "utils/session";
@@ -16,7 +17,7 @@ const styles = createStyles({
         display: "flex",
         flexDirection: "column",
         minHeight: "100%",
-        //minHeight: 400,
+        // minHeight: 400,
     },
     panelsWrapper: {
         display: "flex",
@@ -35,7 +36,12 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
     const toggleShowOwnFilter = () => setShowOwnAssignments((prevState) => !prevState);
 
     const [allAssignments, setAssignments] = useState(assignments);
+
     const addAssignment = (newAssignment: Assignment) => setAssignments((prevState) => [...prevState, newAssignment]);
+
+    function replaceAssignment(assignment: Assignment) {
+        setAssignments((prevState) => [...prevState.filter((a) => a.id !== assignment.id), assignment]);
+    }
 
     const filteredSortedAssignments = allAssignments
         .filter((assignment) => {
@@ -63,7 +69,7 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
                     addAssignment={addAssignment}
                 />
                 <div className={classes.panelsWrapper}>
-                    <AssignmentBoards assignments={filteredSortedAssignments} />
+                    <AssignmentBoards assignments={filteredSortedAssignments} replaceAssignment={replaceAssignment} />
                 </div>
             </div>
         </PageLayout>
@@ -92,6 +98,10 @@ export const getServerSideProps = withUserSession(async () => {
         });
 
     await Promise.all([allUsersPromise, allAssignmentsPromise]);
+
+    // this shit is called to prevent errors from react-beautiful-dnd library,
+    // which is used to animate the assignment drag-and-drop
+    resetServerContext();
 
     return { props };
 });

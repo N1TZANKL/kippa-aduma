@@ -46,7 +46,7 @@ export default function AssignmentPanel({ hiddenProps, assignments = [], status,
                                 {assignments.map((assignment, index) => (
                                     <Draggable key={assignment.id} draggableId={assignment.id} index={index}>
                                         {(providedItem, snapshot) => (
-                                            <Grid item {...providedItem.draggableProps} {...providedItem.dragHandleProps} ref={providedItem.innerRef}>
+                                            <Grid item ref={providedItem.innerRef} {...providedItem.draggableProps} {...providedItem.dragHandleProps}>
                                                 <AssignmentNote
                                                     isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
                                                     assignment={assignment}
@@ -55,6 +55,7 @@ export default function AssignmentPanel({ hiddenProps, assignments = [], status,
                                         )}
                                     </Draggable>
                                 ))}
+                                {provided.placeholder}
                             </Grid>
                         </Box>
                     )}
