@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         maxHeight: 150,
         position: "relative",
         padding: 20,
-        backgroundColor: ({ color }: StyleProps) => lighten(color, 0.25),
+        backgroundColor: ({ color, isBeingDragged }: StyleProps) => lighten(color, isBeingDragged ? 0.35 : 0.25),
         "&:hover": {
             backgroundColor: ({ color }: StyleProps) => lighten(color, 0.35),
         },
@@ -29,6 +29,7 @@ const useStyles = makeStyles({
             outline: "none",
         },
         transform: ({ isBeingDragged }: StyleProps) => (isBeingDragged ? "rotate(3deg)" : "none"),
+        boxShadow: ({ isBeingDragged }: StyleProps) => (isBeingDragged ? "0 0 5px 3px rgba(255,255,255,0.7)" : "none"),
     },
     timestampDiv: {
         display: "flex",
