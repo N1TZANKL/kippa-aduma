@@ -57,20 +57,28 @@ export async function patchAssignment(action: PatchActions, data: Record<PatchDa
 }
 
 async function startAssignment(assignmentId: string, currentUserId: string): Promise<Assignment> {
-    const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, {
-        status: AssignmentStatuses.IN_PROGRESS,
-        assignee: mongoose.Types.ObjectId(currentUserId),
-        changedAt: new Date().toISOString(),
-    });
+    const assignment = await assignmentModel.findByIdAndUpdate(
+        assignmentId,
+        {
+            status: AssignmentStatuses.IN_PROGRESS,
+            assignee: mongoose.Types.ObjectId(currentUserId),
+            changedAt: new Date().toISOString(),
+        },
+        { new: true }
+    );
 
     return populateAssignmentWithId(assignment);
 }
 
 async function finishAssignment(assignmentId: string): Promise<Assignment> {
-    const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, {
-        status: AssignmentStatuses.DONE,
-        changedAt: new Date().toISOString(),
-    });
+    const assignment = await assignmentModel.findByIdAndUpdate(
+        assignmentId,
+        {
+            status: AssignmentStatuses.DONE,
+            changedAt: new Date().toISOString(),
+        },
+        { new: true }
+    );
 
     return populateAssignmentWithId(assignment);
 }
@@ -84,6 +92,6 @@ async function editAssignment(requestData: Record<PatchDataKey, any>): Promise<A
 
     if (assigneeId) newAssignmentData.assignee = mongoose.Types.ObjectId(assigneeId);
 
-    const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, newAssignmentData);
+    const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, newAssignmentData, { new: true });
     return populateAssignmentWithId(assignment);
 }

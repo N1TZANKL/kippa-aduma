@@ -19,7 +19,7 @@ type AssignmentPanelProps = Omit<BoxProps, "clone" | "children"> & {
 
 export default function AssignmentPanel({ hiddenProps, assignments = [], status, ...boxProps }: AssignmentPanelProps): JSX.Element {
     const BasePanelWrapper = ({ children }: { children: React.ReactChild }) => (
-        <Box minHeight="400px" {...boxProps} clone>
+        <Box {...boxProps} minHeight="400px" display="flex" flexDirection="column" clone>
             {children}
         </Box>
     );
@@ -41,23 +41,32 @@ export default function AssignmentPanel({ hiddenProps, assignments = [], status,
                 </PanelTitle>
                 <Droppable key={status} droppableId={status}>
                     {(provided) => (
-                        <Box padding="15px" clone>
-                            <Grid container justify="center" {...provided.droppableProps} ref={provided.innerRef} spacing={2}>
-                                {assignments.map((assignment, index) => (
-                                    <Draggable key={assignment.id} draggableId={assignment.id} index={index}>
-                                        {(providedItem, snapshot) => (
-                                            <Grid item ref={providedItem.innerRef} {...providedItem.draggableProps} {...providedItem.dragHandleProps}>
-                                                <AssignmentNote
-                                                    isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
-                                                    assignment={assignment}
-                                                />
-                                            </Grid>
-                                        )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </Grid>
-                        </Box>
+                        <div {...provided.droppableProps} ref={provided.innerRef} style={{ height: "100%" }}>
+                            <Box padding="15px" width="100% !important" margin="0px !important" clone>
+                                <Grid container justify="center" spacing={2}>
+                                    {assignments.map((assignment, index) => (
+                                        <Draggable key={assignment.id} draggableId={assignment.id} index={index}>
+                                            {(providedItem, snapshot) => (
+                                                <Box height="fit-content" clone>
+                                                    <Grid
+                                                        item
+                                                        ref={providedItem.innerRef}
+                                                        {...providedItem.draggableProps}
+                                                        {...providedItem.dragHandleProps}
+                                                    >
+                                                        <AssignmentNote
+                                                            isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
+                                                            assignment={assignment}
+                                                        />
+                                                    </Grid>
+                                                </Box>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </Grid>
+                            </Box>
+                        </div>
                     )}
                 </Droppable>
             </Panel>
