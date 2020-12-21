@@ -44,54 +44,33 @@ export async function createAssignment(userId: string, assignmentData: Omit<Assi
 
 export async function patchAssignment(action: PatchActions, data: Record<PatchDataKey, string>, currentUserId: string): Promise<Assignment> {
     const { assignmentId } = data;
+
+    let updateData: Partial<AssignmentModel> = {};
+
     switch (action) {
         case PatchActions.START:
-            return startAssignment(assignmentId, currentUserId);
+            updateData = {
+                status: AssignmentStatuses.IN_PROGRESS,
+                assignee: mongoose.Types.ObjectId(currentUserId),
+                changedAt: new Date().toISOString(),
+            };
+            break;
         case PatchActions.FINISH:
-            return finishAssignment(assignmentId);
+            updateData = { status: AssignmentStatuses.DONE, changedAt: new Date().toISOString() };
+            break;
         case PatchActions.EDIT:
-            return editAssignment(data);
+            // assignee, creator, changedAt & status are not used because these values
+            // can't be changed through this request.
+            const { assigneeId, assignee, creator, changedAt, status, ...otherData } = data;
+
+            updateData = { ...otherData };
+            if (assigneeId) updateData.assignee = mongoose.Types.ObjectId(assigneeId);
+
+            break;
         default:
             throw new Error("action not implemented!");
     }
-}
 
-async function startAssignment(assignmentId: string, currentUserId: string): Promise<Assignment> {
-    const assignment = await assignmentModel.findByIdAndUpdate(
-        assignmentId,
-        {
-            status: AssignmentStatuses.IN_PROGRESS,
-            assignee: mongoose.Types.ObjectId(currentUserId),
-            changedAt: new Date().toISOString(),
-        },
-        { new: true }
-    );
-
-    return populateAssignmentWithId(assignment);
-}
-
-async function finishAssignment(assignmentId: string): Promise<Assignment> {
-    const assignment = await assignmentModel.findByIdAndUpdate(
-        assignmentId,
-        {
-            status: AssignmentStatuses.DONE,
-            changedAt: new Date().toISOString(),
-        },
-        { new: true }
-    );
-
-    return populateAssignmentWithId(assignment);
-}
-
-async function editAssignment(requestData: Record<PatchDataKey, any>): Promise<Assignment> {
-    // creator, changedAt & status are not used because these values
-    // can't be changed through this request.
-    const { assignmentId, assigneeId, creator, changedAt, status, ...otherData } = requestData;
-
-    const newAssignmentData: Partial<AssignmentModel> = { ...otherData };
-
-    if (assigneeId) newAssignmentData.assignee = mongoose.Types.ObjectId(assigneeId);
-
-    const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, newAssignmentData, { new: true });
+    const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, updateData, { new: true });
     return populateAssignmentWithId(assignment);
 }

@@ -38,8 +38,16 @@ export default function AssignmentBoards({ assignments, replaceAssignment }: Ass
         const matchedAction = Object.keys(actionToMatch).find((key) => !!actionToMatch[key as PatchActions]);
         if (!matchedAction) return;
 
-        const patchedAssignment = await patchAssignment(draggableId, matchedAction as PatchActions);
-        replaceAssignment(patchedAssignment);
+        const assignment = assignments.find((a) => a.id === draggableId);
+        if (!assignment) return;
+
+        try {
+            replaceAssignment({ ...assignment, status: newStatus }); // for UI smoothness - we will assume it worked
+            const patchedAssignment = await patchAssignment(draggableId, matchedAction as PatchActions);
+            replaceAssignment(patchedAssignment);
+        } catch (e) {
+            replaceAssignment(assignment);
+        }
 
         // if action = start, open deadline popup
     }

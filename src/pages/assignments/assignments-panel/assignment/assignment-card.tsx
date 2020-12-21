@@ -50,7 +50,7 @@ type AssignmentCardProps = WithTheme & {
     children?: React.ReactChild | null;
 };
 
-function AssignmentCard({ theme, description, status, userColor = "black", isBeingDragged, children }: AssignmentCardProps) {
+function AssignmentCard({ theme, description, status, userColor = "#000", isBeingDragged, children }: AssignmentCardProps) {
     const classes = useStyles({
         color: status === AssignmentStatuses.TODO ? theme.constants.appBackground : userColor,
         isBeingDragged,
