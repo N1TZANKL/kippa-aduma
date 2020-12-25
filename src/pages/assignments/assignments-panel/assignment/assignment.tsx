@@ -58,7 +58,9 @@ function AssignmentNote({ classes, assignment, isBeingDragged }: AssignmentNoteP
 
     const { icon: AssignmentIcon, timestampKey, timestampText } = assignmentStatusToIconTimestamp[status];
 
-    const deadlinePassed = deadlineAt && getDatesDifference(deadlineAt, new Date(), "day") > 0;
+    const deadlinePassed = status === AssignmentStatuses.IN_PROGRESS && deadlineAt && getDatesDifference(deadlineAt, new Date(), "day") > 0;
+
+    const timestamp = assignment[timestampKey];
 
     return (
         <AssignmentCard status={status} description={description} isBeingDragged={isBeingDragged} userColor={assignee?.color}>
@@ -71,8 +73,12 @@ function AssignmentNote({ classes, assignment, isBeingDragged }: AssignmentNoteP
                     deadlinePassed && classes.deadlinePassed
                 )}
             >
-                <AssignmentIcon fontSize="small" /> <span className={classes.timestampText}>{timestampText}:</span>{" "}
-                <span className={classes.timestampText}>{formatDate(assignment[timestampKey])}</span>
+                {timestamp && (
+                    <>
+                        <AssignmentIcon fontSize="small" /> <span className={classes.timestampText}>{timestampText}:</span>{" "}
+                        <span className={classes.timestampText}>{formatDate(assignment[timestampKey])}</span>
+                    </>
+                )}
             </Typography>
         </AssignmentCard>
     );
