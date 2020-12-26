@@ -2,9 +2,9 @@ import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import clsx from "clsx";
 
 import { MuiStyles } from "src/utils/interfaces";
-import { CredentialTypes } from "server/db/cred/model";
 
 const styles = () =>
     createStyles({
@@ -21,15 +21,15 @@ const styles = () =>
         },
     });
 
-type CredTypeCellProps = MuiStyles & { type: CredentialTypes };
-function CredTypeCell({ classes, type }: CredTypeCellProps) {
+type DataTypeTextProps = MuiStyles & { children: string; className?: string };
+function DataTypeText({ classes, className, children }: DataTypeTextProps) {
     return (
-        <Paper className={classes.root}>
+        <Paper className={clsx(classes.root, className)}>
             <Typography variant="body1" className={classes.text}>
-                {type}
+                {children}
             </Typography>
         </Paper>
     );
 }
 
-export default withStyles(styles)(CredTypeCell);
+export default withStyles(styles)(DataTypeText);

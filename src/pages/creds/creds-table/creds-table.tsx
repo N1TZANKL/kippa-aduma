@@ -12,9 +12,10 @@ import { NotFoundAnimation } from "src/components/animations";
 import { PanelButton } from "src/components/general/Panel";
 import ConfirmationDialog from "src/components/dialogs/ConfirmationDialog";
 import { Delete } from "src/utils/helpers/api";
+import { DELETE_BUTTON_COLOR } from "src/components/forms/DeleteButton";
+import DataTypeText from "src/components/general/DataTypeText";
 
 import PasswordCell from "./password-cell";
-import CredTypeCell from "./cred-type-cell";
 
 const styles = () =>
     createStyles({
@@ -111,7 +112,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
             disabledText: isDeleting ? "Deleting..." : "Select the cred/s you want to delete first!",
             icon: <DeleteIcon className={classes.buttonIcon} />,
             onClick: toggleDeleteDialogOpen,
-            color: "deepOrange",
+            color: DELETE_BUTTON_COLOR,
         },
     ];
 
@@ -130,7 +131,7 @@ function CredsTable({ classes, creds, toggleFormOpen, removeDeletedCredsFromLoca
         );
 
     const renderPasswordCell = (rowData: Credential) => <PasswordCell password={rowData.password} />;
-    const renderCredTypeCell = (rowData: Credential) => <CredTypeCell type={rowData.type} />;
+    const renderCredTypeCell = (rowData: Credential) => <DataTypeText>{rowData.type}</DataTypeText>;
 
     return (
         <>
