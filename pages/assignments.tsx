@@ -4,10 +4,11 @@ import { resetServerContext } from "react-beautiful-dnd";
 
 import PageLayout from "src/components/layouts/MainLayout";
 import { UserSessionObject, withUserSession } from "utils/session";
-import { AssignmentsTopBar, AssignmentBoards } from "src/pages/assignments/";
+import { AssignmentsTopBar, AssignmentBoards } from "src/pages/assignments";
 import { Assignment, MuiStyles } from "src/utils/interfaces";
 import { getAllUsers } from "server/db/user/controller";
 import { getAllAssignments } from "server/db/assignment/controller";
+import AssignmentsContext from "src/pages/assignments/context";
 
 const styles = createStyles({
     root: {
@@ -29,7 +30,7 @@ const styles = createStyles({
 
 type AssignmentsProps = MuiStyles & { user: UserSessionObject; assignments?: Assignment[]; users?: UserSessionObject[] };
 
-function Assignments({ classes, user, users, assignments = [] }: AssignmentsProps): JSX.Element {
+function Assignments({ classes, user, users = [], assignments = [] }: AssignmentsProps): JSX.Element {
     const [searchString, setSearchString] = useState("");
 
     const [showOwnAssignmentsOnly, setShowOwnAssignments] = useState(false);
@@ -62,23 +63,22 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
     return (
         <PageLayout noPadding user={user}>
             <div className={classes.root}>
-                <AssignmentsTopBar
-                    height="45px"
-                    users={users}
-                    user={user}
-                    searchString={searchString}
-                    onSearch={setSearchString}
-                    toggleShowOwnFilter={toggleShowOwnFilter}
-                    showOwnAssignmentsOnly={showOwnAssignmentsOnly}
-                    addAssignment={addAssignment}
-                />
-                <div className={classes.panelsWrapper}>
-                    <AssignmentBoards
-                        assignments={filteredSortedAssignments}
-                        replaceAssignment={replaceAssignment}
-                        deleteAssignment={deleteAssignment}
+                <AssignmentsContext.Provider value={{ user, users, addAssignment, replaceAssignment, deleteAssignment }}>
+                    <AssignmentsTopBar
+                        height="45px"
+                        searchString={searchString}
+                        onSearch={setSearchString}
+                        toggleShowOwnFilter={toggleShowOwnFilter}
+                        showOwnAssignmentsOnly={showOwnAssignmentsOnly}
                     />
-                </div>
+                    <div className={classes.panelsWrapper}>
+                        <AssignmentBoards
+                            assignments={filteredSortedAssignments}
+                            replaceAssignment={replaceAssignment}
+                            deleteAssignment={deleteAssignment}
+                        />
+                    </div>
+                </AssignmentsContext.Provider>
             </div>
         </PageLayout>
     );

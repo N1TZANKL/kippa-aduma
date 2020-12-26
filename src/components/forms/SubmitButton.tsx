@@ -19,15 +19,16 @@ const styles = () =>
         margin: { marginTop: "35px !important" },
     });
 
-type SubmitButtonProps = MuiStyles & ButtonProps & { isSubmitting: boolean };
-function SubmitButton({ classes, children, className, isSubmitting, ...props }: SubmitButtonProps) {
+type SubmitButtonProps = MuiStyles & ButtonProps & { isSubmitting: boolean; noMargin?: boolean };
+
+function SubmitButton({ classes, children, className, isSubmitting, noMargin, ...props }: SubmitButtonProps) {
     return (
         <Button
             type="submit"
             color="secondary"
             variant="contained"
             size="small"
-            className={clsx(classes.root, classes.margin, className)}
+            className={clsx(classes.root, !noMargin && classes.margin, className)}
             {...props}
             disabled={isSubmitting}
         >

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import { Assignment } from "src/utils/interfaces";
 import { AssignmentStatuses } from "server/db/assignment/model";
-import { Patch, Delete } from "src/utils/helpers/api";
+import { Patch } from "src/utils/helpers/api";
 import { PatchActions } from "server/db/assignment/controller";
+import AssignmentsContext from "src/pages/assignments/context";
 
 import AssignmentsPanel from "./assignments-panel";
 import AssignmentInfoDialog from "./assignment-info-dialog";
@@ -19,12 +20,12 @@ async function patchAssignment(assignmentId: string, action: PatchActions, data?
 
 type AssignmentBoardsProps = {
     assignments: Assignment[];
-    replaceAssignment: (newAssignment: Assignment) => void;
-    deleteAssignment: (assignmentId: string) => void;
 };
 
-export default function AssignmentBoards({ assignments, replaceAssignment, deleteAssignment }: AssignmentBoardsProps): JSX.Element {
+export default function AssignmentBoards({ assignments }: AssignmentBoardsProps): JSX.Element {
     const [openAssignmentId, setOpenAssignmentId] = useState<string | null>(null);
+
+    const { replaceAssignment } = useContext(AssignmentsContext);
 
     async function handleAssignmentStatusChange(dropResult: DropResult) {
         if (!dropResult.destination) return;
@@ -57,13 +58,6 @@ export default function AssignmentBoards({ assignments, replaceAssignment, delet
         }
 
         // if action = start, open deadline popup
-    }
-
-    async function handleDeleteAssignment() {
-        if (!openAssignmentId) return;
-
-        const res = await Delete("assignment", { id: openAssignmentId });
-        if (res.ok) deleteAssignment(openAssignmentId);
     }
 
     function getAssignmentsByStatus(status: AssignmentStatuses) {
@@ -100,11 +94,7 @@ export default function AssignmentBoards({ assignments, replaceAssignment, delet
                     showAssignmentInfo={showAssignmentInfo}
                 />
             </DragDropContext>
-            <AssignmentInfoDialog
-                onClose={hideAssignmentInfo}
-                assignment={assignments.find((a) => a.id === openAssignmentId)}
-                deleteAssignment={handleDeleteAssignment}
-            />
+            <AssignmentInfoDialog onClose={hideAssignmentInfo} assignment={assignments.find((a) => a.id === openAssignmentId)} />
         </>
     );
 }

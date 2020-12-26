@@ -68,18 +68,15 @@ function AssignmentNote({ classes, assignment, isBeingDragged, showAssignmentInf
             <Typography
                 variant="caption"
                 color="textSecondary"
+                component="div"
                 className={clsx(
                     classes.timestampDiv,
                     status === AssignmentStatuses.IN_PROGRESS && classes.progressTimestamp,
                     deadlinePassed && classes.deadlinePassed
                 )}
             >
-                {timestamp && (
-                    <>
-                        <AssignmentIcon fontSize="small" /> <span className={classes.timestampText}>{timestampText}:</span>{" "}
-                        <span className={classes.timestampText}>{formatDate(assignment[timestampKey])}</span>
-                    </>
-                )}
+                <AssignmentIcon fontSize="small" /> <span className={classes.timestampText}>{timestampText}:</span>{" "}
+                <span className={classes.timestampText}>{formatDate(timestamp) || "(Not set)"}</span>
             </Typography>
         </AssignmentCard>
     );

@@ -18,7 +18,7 @@ export default function DeleteButton({ children = "Delete", ...otherProps }: Omi
 
     return (
         <MuiThemeProvider theme={buttonTheme}>
-            <Button color="primary" variant="contained" style={{ minWidth: 95 }} {...otherProps}>
+            <Button color="primary" variant="contained" style={{ minWidth: 95 }} size="small" {...otherProps}>
                 {children}
             </Button>
         </MuiThemeProvider>

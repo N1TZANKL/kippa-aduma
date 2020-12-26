@@ -14,16 +14,32 @@ type PatchDataKey = keyof AssignmentModel | "assignmentId" | "assigneeId";
 
 async function populateAssignmentWithId(assignmentDoc: mongoose.Document): Promise<Assignment> {
     const {
-        _doc: { _id: id, ...assignment },
-    } = await assignmentDoc.populate("creator assignee", "-_id -passwordHash").execPopulate();
+        _doc: {
+            _id: id,
+            assignee: {
+                _doc: { _id: assigneeId, ...assignee },
+            },
+            creator: {
+                _doc: { _id: creatorId, ...creator },
+            },
+            ...assignment
+        },
+    } = await assignmentDoc.populate("creator assignee", "-passwordHash").execPopulate();
 
-    return { id, ...assignment };
+    return { id, ...assignment, assignee: { ...assignee, id: assigneeId.toString() }, creator: { ...creator, id: creatorId.toString() } };
 }
 
 export async function getAllAssignments(): Promise<Assignment[]> {
-    const assignments = await assignmentModel.find({}).populate("creator assignee", "-_id -passwordHash").lean();
+    const assignments = await assignmentModel.find({}).populate("creator assignee", "-passwordHash").lean();
 
-    return assignments.map(({ _id, __v, ...assignment }) => ({ ...assignment, id: _id.toString() } as Assignment));
+    return assignments.map(({ _id, __v, assignee, creator: { _id: creatorId, ...creator }, ...assignment }) => {
+        const baseAssignment: Assignment = { ...assignment, id: _id.toString(), creator: { ...creator, id: creatorId.toString() } };
+        if (assignee) {
+            const { _id: assigneeId, ...assigneeData } = assignee;
+            return { ...baseAssignment, assignee: { id: assigneeId.toString(), ...assigneeData } };
+        }
+        return baseAssignment;
+    });
 }
 
 export async function createAssignment(userId: string, assignmentData: Omit<Assignment, "assignee">, assigneeId?: string): Promise<Assignment> {
