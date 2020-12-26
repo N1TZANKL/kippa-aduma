@@ -38,7 +38,7 @@ export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps
                     <TextField fieldKey="description" type="multiline" />
                     <TextField fieldKey="additionalInformation" label="Additional Info (Optional)" type="multiline" />
                     <Select fieldKey="type" selectionList={ArrayToSelectionList(Object.values(OperationPostTypes))} />
-                    <DateTimeField fieldKey="happenedAt" />
+                    <DateTimeField fieldKey="happenedAt" label="Date & Time Happened" datePickerProps={{ disableFuture: true }} />
                 </>
             )}
         </FormBase>

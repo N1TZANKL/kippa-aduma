@@ -37,7 +37,7 @@ const styles = createStyles({
 });
 
 type TimelineTopBarProps = MuiStyles & { onSearch: SetState<string>; searchString?: string; addPost: (newPost: OperationPost) => void };
-function TimelineTopBar({ classes, onSearch, searchString, addPost }: TimelineTopBarProps) {
+function TimelineTopBar({ classes, onSearch, searchString = "", addPost }: TimelineTopBarProps) {
     const [formOpen, setFormOpen] = useState(false);
 
     const toggleFormOpen = () => setFormOpen((prev) => !prev);

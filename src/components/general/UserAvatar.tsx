@@ -10,8 +10,6 @@ const useStyles = makeStyles({
     root: {
         color: "white",
         borderRadius: 3,
-        height: 38,
-        width: 38,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -36,7 +34,7 @@ type UserAvatarProps = {
     withBorder?: boolean;
 };
 
-export default function UserAvatar({ size, variant, withBorder, color, nickname }: UserAvatarProps): JSX.Element {
+export default function UserAvatar({ size = 38, variant, withBorder, color, nickname }: UserAvatarProps): JSX.Element {
     const classes = useStyles({ color });
 
     return (

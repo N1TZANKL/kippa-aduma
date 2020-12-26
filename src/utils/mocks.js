@@ -1,5 +1,6 @@
 import * as muiColors from "@material-ui/core/colors";
-import { OperationPostTypes } from "db/models/post";
+import { AssignmentStatuses } from "server/db/assignment/model";
+import { OperationPostTypes } from "server/db/post/model";
 
 const LONG_STRING =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the";
@@ -12,6 +13,7 @@ export const CURRENT_USER = {
     nickname: "nitz",
     color: muiColors.purple[400],
     online: true,
+    id: "1",
 };
 
 export const ALL_USERS = [
@@ -21,12 +23,14 @@ export const ALL_USERS = [
         nickname: "redhood",
         color: muiColors.red[300],
         online: false,
+        id: "2",
     },
     {
         username: "Jennifer Lawrence",
         nickname: "JLaw",
         color: muiColors.cyan[200],
         online: true,
+        id: "3",
     },
 ];
 
@@ -86,5 +90,39 @@ export const DUMMY_OPERATION_POSTS = [
         type: OperationPostTypes.RECON,
         writtenAt: "2020-08-26T11:42:47.237Z",
         happenedAt: "2020-08-25T11:42:47.237Z",
+    },
+];
+
+export const DUMMY_ASSIGNMENTS = [
+    {
+        id: "1",
+        status: AssignmentStatuses.TODO,
+        description: "this is a test!",
+        changedAt: new Date().toISOString(),
+        creator: CURRENT_USER,
+    },
+    {
+        id: "2",
+        status: AssignmentStatuses.TODO,
+        description: "this is another test!",
+        changedAt: new Date().toISOString(),
+        creator: CURRENT_USER,
+    },
+    {
+        id: "3",
+        status: AssignmentStatuses.IN_PROGRESS,
+        description: "now this is an even bigger test than the ones that came before it!!",
+        changedAt: new Date().toISOString(),
+        deadlineAt: new Date("11-26-2020").toISOString(),
+        creator: ALL_USERS[1],
+        assignee: CURRENT_USER,
+    },
+    {
+        id: "4",
+        status: AssignmentStatuses.DONE,
+        description: "now this is an even bigger test than the ones that came before it that came before it!!",
+        changedAt: new Date("08-02-2021").toISOString(),
+        creator: ALL_USERS[1],
+        assignee: ALL_USERS[1],
     },
 ];

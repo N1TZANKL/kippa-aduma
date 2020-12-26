@@ -2,9 +2,11 @@ import React from "react";
 import { useField } from "formik";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider, DatePicker, TimePicker } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker, TimePicker, TimePickerProps, DatePickerProps } from "@material-ui/pickers";
+import { WithPureInputProps } from "@material-ui/pickers/Picker/makePickerWithState";
 import InputLabel from "@material-ui/core/InputLabel";
 import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 
 import { MuiStyles } from "src/utils/interfaces";
 import { notFirstChild, spaceChildren } from "src/utils/helpers/css";
@@ -16,14 +18,27 @@ const styles = (theme: Theme) =>
         root: {
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             marginTop: "20px !important",
+        },
+        fieldHidden: {
+            display: "block",
         },
         label: {
             fontSize: 13,
             lineHeight: 1.25,
             width: "min-content",
             minWidth: 90,
+        },
+        fields: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+        },
+        spaceFields: {
+            "& > *": {
+                marginLeft: 10,
+            },
         },
         "@global": {
             // both pickers overrides
@@ -68,33 +83,53 @@ const styles = (theme: Theme) =>
         },
     });
 
-type FormikDateTimeProps = MuiStyles & { fieldKey: string };
-function FormikDateTime({ classes, fieldKey }: FormikDateTimeProps) {
+type FormikDateTimeProps = MuiStyles & {
+    fieldKey: string;
+    label: string;
+    hide?: "date" | "time";
+    disabled?: boolean;
+    datePickerProps?: Partial<DatePickerProps>;
+    timePickerProps?: Partial<TimePickerProps>;
+};
+
+function FormikDateTime({ classes, fieldKey, label, hide, disabled, ...otherProps }: FormikDateTimeProps) {
+    const { datePickerProps = {} as DatePickerProps, timePickerProps = {} as TimePickerProps } = otherProps;
+
     const [field /* meta */, , { setValue }] = useField(fieldKey);
 
-    return (
-        <div className={classes.root}>
-            <InputLabel className={classes.label}>Date & Time Happened</InputLabel>
-            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
-                <DatePicker
-                    color="secondary"
-                    name={`${field.name}_date`}
-                    id={`${field.name}_date`}
-                    variant="inline"
-                    disableToolbar
-                    disableFuture
-                    value={field.value}
-                    onChange={(newDate) => setValue(newDate?.toISOString())}
-                />
+    const fieldProps: Partial<WithPureInputProps> = { disabled, color: "secondary", variant: "inline", fullWidth: true };
 
-                <TimePicker
-                    color="secondary"
-                    name={`${field.name}_time`}
-                    id={`${field.name}_time`}
-                    value={field.value}
-                    onChange={(newDate) => setValue(newDate)}
-                    variant="inline"
-                />
+    // when there's no value, show a placeholder
+    if (!field.value) fieldProps.labelFunc = () => "(Select)";
+
+    return (
+        <div className={clsx(classes.root, hide && classes.fieldHidden)}>
+            <InputLabel className={classes.label}>{label}</InputLabel>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+                <div className={clsx(classes.fields, !hide && classes.spaceFields)}>
+                    {hide !== "date" && (
+                        <DatePicker
+                            {...fieldProps}
+                            {...datePickerProps}
+                            name={`${field.name}_date`}
+                            id={`${field.name}_date`}
+                            disableToolbar
+                            value={field.value}
+                            onChange={(newDate) => setValue(newDate?.toISOString())}
+                        />
+                    )}
+
+                    {hide !== "time" && (
+                        <TimePicker
+                            {...fieldProps}
+                            {...timePickerProps}
+                            name={`${field.name}_time`}
+                            id={`${field.name}_time`}
+                            value={field.value}
+                            onChange={(newDate) => setValue(newDate)}
+                        />
+                    )}
+                </div>
             </MuiPickersUtilsProvider>
         </div>
     );

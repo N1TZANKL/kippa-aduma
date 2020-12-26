@@ -4,8 +4,9 @@ const CALENDAR_FORMATS = {
     lastDay: "[Yesterday]",
     sameDay: "[Today]",
     nextDay: "[Tomorrow]",
-    lastWeek: "dddd (MMM. D)",
-    sameElse: "MMM DD",
+    lastWeek: "[Last] dddd",
+    nextWeek: "dddd",
+    sameElse: "MMMM DD",
 };
 
 export function areSameDates(firstDate: MomentInput, secondDate: MomentInput): boolean {
@@ -20,6 +21,8 @@ export function getDatesDifference(date: MomentInput, newerDate: MomentInput, un
 
 export function formatDate(date: MomentInput, withTime = false): string {
     moment.updateLocale("en", { calendar: CALENDAR_FORMATS });
+
+    if (!date) return "";
 
     const parsedDate = moment(date).calendar();
 
