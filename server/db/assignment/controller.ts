@@ -43,7 +43,9 @@ export async function createAssignment(userId: string, assignmentData: Omit<Assi
 }
 
 export async function patchAssignment(action: PatchActions, data: Record<PatchDataKey, string>, currentUserId: string): Promise<Assignment> {
-    const { assignmentId } = data;
+    // assignee, creator, changedAt & status are not used because these values
+    // can't be changed through this request.
+    const { assignmentId, assigneeId, assignee, creator, changedAt, status, ...otherData } = data;
 
     let updateData: Partial<AssignmentModel> = {};
 
@@ -59,10 +61,6 @@ export async function patchAssignment(action: PatchActions, data: Record<PatchDa
             updateData = { status: AssignmentStatuses.DONE, changedAt: new Date().toISOString() };
             break;
         case PatchActions.EDIT:
-            // assignee, creator, changedAt & status are not used because these values
-            // can't be changed through this request.
-            const { assigneeId, assignee, creator, changedAt, status, ...otherData } = data;
-
             updateData = { ...otherData };
             if (assigneeId) updateData.assignee = mongoose.Types.ObjectId(assigneeId);
 
@@ -73,4 +71,8 @@ export async function patchAssignment(action: PatchActions, data: Record<PatchDa
 
     const assignment = await assignmentModel.findByIdAndUpdate(assignmentId, updateData, { new: true });
     return populateAssignmentWithId(assignment);
+}
+
+export async function deleteAssignment(assignmentId: string): Promise<void> {
+    return assignmentModel.findByIdAndRemove(assignmentId);
 }

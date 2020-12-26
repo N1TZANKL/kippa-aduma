@@ -1,20 +1,27 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import DoneIcon from "@material-ui/icons/Done";
-import TodoIcon from "@material-ui/icons/Schedule";
-import InProgressIcon from "@material-ui/icons/Timer";
 import clsx from "clsx";
 import { red } from "@material-ui/core/colors";
-import { SvgIconComponent } from "@material-ui/icons";
 
 import { Assignment, MuiStyles } from "src/utils/interfaces";
 import { AssignmentStatuses } from "server/db/assignment/model";
 import { formatDate, getDatesDifference } from "src/utils/helpers/dates";
+import UserAvatar from "src/components/general/UserAvatar";
 
 import AssignmentCard from "./assignment-card";
+import { STATUS_TO_ICON, STATUS_TO_DISPLAYED_TIMESTAMP } from "../../assignment-utils";
 
 const styles = createStyles({
+    content: {
+        lineHeight: 1.75,
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+    },
+    avatar: {
+        display: "inline-block",
+        marginRight: 5,
+    },
     timestampDiv: {
         display: "flex",
         alignItems: "center",
@@ -36,34 +43,28 @@ const styles = createStyles({
     },
 });
 
-type AssignmentNoteProps = MuiStyles & { assignment: Assignment; isBeingDragged: boolean };
+type AssignmentNoteProps = MuiStyles & { assignment: Assignment; isBeingDragged: boolean; showAssignmentInfo: (assignmentId: string) => void };
 
-/* const assignmentStatusToTimestampTitle: Record<AssignmentStatuses, string> = {
-    [AssignmentStatuses.TODO]: "Created At",
-    [AssignmentStatuses.IN_PROGRESS]: "Started At",
-    [AssignmentStatuses.DONE]: "Finished At",
-}; */
-
-const assignmentStatusToIconTimestamp: Record<
-    AssignmentStatuses,
-    { icon: SvgIconComponent; timestampKey: "changedAt" | "deadlineAt"; timestampText: string }
-> = {
-    [AssignmentStatuses.TODO]: { icon: TodoIcon, timestampKey: "changedAt", timestampText: "Created" },
-    [AssignmentStatuses.IN_PROGRESS]: { icon: InProgressIcon, timestampKey: "deadlineAt", timestampText: "Deadline" },
-    [AssignmentStatuses.DONE]: { icon: DoneIcon, timestampKey: "changedAt", timestampText: "Finished" },
-};
-
-function AssignmentNote({ classes, assignment, isBeingDragged }: AssignmentNoteProps) {
+function AssignmentNote({ classes, assignment, isBeingDragged, showAssignmentInfo }: AssignmentNoteProps) {
     const { description, status, assignee, deadlineAt } = assignment;
 
-    const { icon: AssignmentIcon, timestampKey, timestampText } = assignmentStatusToIconTimestamp[status];
+    const { timestampKey, timestampText } = STATUS_TO_DISPLAYED_TIMESTAMP[status];
+    const AssignmentIcon = STATUS_TO_ICON[status];
 
     const deadlinePassed = status === AssignmentStatuses.IN_PROGRESS && deadlineAt && getDatesDifference(deadlineAt, new Date(), "day") > 0;
 
     const timestamp = assignment[timestampKey];
 
     return (
-        <AssignmentCard status={status} description={description} isBeingDragged={isBeingDragged} userColor={assignee?.color}>
+        <AssignmentCard isBeingDragged={isBeingDragged} onClick={() => showAssignmentInfo(assignment.id)} title="Click for more information">
+            <Typography variant="body2" component="div" className={classes.content}>
+                {assignee && (
+                    <div className={classes.avatar}>
+                        <UserAvatar {...assignee} variant="circle" size={25} />
+                    </div>
+                )}
+                {description}
+            </Typography>
             <Typography
                 variant="caption"
                 color="textSecondary"

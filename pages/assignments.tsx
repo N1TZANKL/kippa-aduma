@@ -43,6 +43,10 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
         setAssignments((prevState) => [...prevState.filter((a) => a.id !== assignment.id), assignment]);
     }
 
+    function deleteAssignment(assignmentId: string) {
+        setAssignments((prevState) => prevState.filter((a) => a.id !== assignmentId));
+    }
+
     const filteredSortedAssignments = allAssignments
         .filter((assignment) => {
             // filter by own-assignments filter
@@ -69,7 +73,11 @@ function Assignments({ classes, user, users, assignments = [] }: AssignmentsProp
                     addAssignment={addAssignment}
                 />
                 <div className={classes.panelsWrapper}>
-                    <AssignmentBoards assignments={filteredSortedAssignments} replaceAssignment={replaceAssignment} />
+                    <AssignmentBoards
+                        assignments={filteredSortedAssignments}
+                        replaceAssignment={replaceAssignment}
+                        deleteAssignment={deleteAssignment}
+                    />
                 </div>
             </div>
         </PageLayout>

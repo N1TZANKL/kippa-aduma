@@ -7,17 +7,24 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import Panel, { PanelTitle } from "src/components/general/Panel";
 import { Assignment } from "src/utils/interfaces";
 import { AssignmentStatuses } from "server/db/assignment/model";
-import { assignmentStatusToTitle } from "src/pages/assignments";
 
 import AssignmentNote from "./assignment/assignment";
+import { STATUS_TO_TEXT } from "../assignment-utils";
 
 type AssignmentPanelProps = Omit<BoxProps, "clone" | "children"> & {
     hiddenProps?: HiddenProps;
     status: AssignmentStatuses;
     assignments: Assignment[];
+    showAssignmentInfo: (assignmentId: string) => void;
 };
 
-export default function AssignmentPanel({ hiddenProps, assignments = [], status, ...boxProps }: AssignmentPanelProps): JSX.Element {
+export default function AssignmentPanel({
+    hiddenProps,
+    assignments = [],
+    status,
+    showAssignmentInfo,
+    ...boxProps
+}: AssignmentPanelProps): JSX.Element {
     const BasePanelWrapper = ({ children }: { children: React.ReactChild }) => (
         <Box {...boxProps} minHeight="400px" display="flex" flexDirection="column" clone>
             {children}
@@ -37,7 +44,7 @@ export default function AssignmentPanel({ hiddenProps, assignments = [], status,
         <PanelWrapper>
             <Panel>
                 <PanelTitle padding={"3px"} withBackground>
-                    {assignmentStatusToTitle[status].toUpperCase()}
+                    {STATUS_TO_TEXT[status].toUpperCase()}
                 </PanelTitle>
                 <Droppable key={status} droppableId={status}>
                     {(provided) => (
@@ -57,6 +64,7 @@ export default function AssignmentPanel({ hiddenProps, assignments = [], status,
                                                         <AssignmentNote
                                                             isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
                                                             assignment={assignment}
+                                                            showAssignmentInfo={showAssignmentInfo}
                                                         />
                                                     </Grid>
                                                 </Box>

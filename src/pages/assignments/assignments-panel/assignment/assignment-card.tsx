@@ -1,10 +1,7 @@
 import React from "react";
 import { withTheme, lighten, makeStyles, WithTheme } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import Paper, { PaperProps } from "@material-ui/core/Paper";
 import clsx from "clsx";
-
-import { AssignmentStatuses } from "server/db/assignment/model";
 
 import cssStyles from "./Assignment.module.css";
 
@@ -20,7 +17,7 @@ const useStyles = makeStyles({
         height: 150,
         maxHeight: 150,
         position: "relative",
-        padding: 20,
+        padding: 15,
         backgroundColor: ({ color, isBeingDragged }: StyleProps) => lighten(color, isBeingDragged ? 0.35 : 0.25),
         "&:hover": {
             backgroundColor: ({ color }: StyleProps) => lighten(color, 0.35),
@@ -42,26 +39,12 @@ const useStyles = makeStyles({
     },
 });
 
-type AssignmentCardProps = WithTheme & {
-    description: string;
-    status: AssignmentStatuses;
-    userColor?: string;
-    isBeingDragged: boolean;
-    children?: React.ReactChild | null;
-};
+type AssignmentCardProps = WithTheme & PaperProps & { isBeingDragged: boolean };
 
-function AssignmentCard({ theme, description, status, userColor = "#000", isBeingDragged, children }: AssignmentCardProps) {
-    const classes = useStyles({
-        color: status === AssignmentStatuses.TODO ? theme.constants.appBackground : userColor,
-        isBeingDragged,
-    });
+function AssignmentCard({ theme, isBeingDragged, ...otherProps }: AssignmentCardProps) {
+    const classes = useStyles({ color: theme.constants.appBackground, isBeingDragged });
 
-    return (
-        <Paper square elevation={isBeingDragged ? 8 : 2} className={clsx(classes.root, cssStyles.triangle)}>
-            <Typography variant="body2">{description}</Typography>
-            <div>{children}</div>
-        </Paper>
-    );
+    return <Paper square elevation={isBeingDragged ? 8 : 2} className={clsx(classes.root, cssStyles.triangle)} {...otherProps} />;
 }
 
 export default withTheme(AssignmentCard);
