@@ -9,21 +9,28 @@ import { MuiStyles } from "src/utils/interfaces";
 const styles = () =>
     createStyles({
         root: {
-            padding: "3px 20px",
             width: 150,
-            marginTop: "35px !important",
             alignSelf: "center",
         },
         progress: {
             marginRight: 20,
             color: "white",
         },
+        margin: { marginTop: "35px !important" },
     });
 
 type SubmitButtonProps = MuiStyles & ButtonProps & { isSubmitting: boolean };
 function SubmitButton({ classes, children, className, isSubmitting, ...props }: SubmitButtonProps) {
     return (
-        <Button type="submit" color="secondary" variant="contained" className={clsx(classes.root, className)} {...props} disabled={isSubmitting}>
+        <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            size="small"
+            className={clsx(classes.root, classes.margin, className)}
+            {...props}
+            disabled={isSubmitting}
+        >
             {isSubmitting && <CircularProgress color="inherit" size={18} className={classes.progress} />}
             {children || "Submit!"}
         </Button>
