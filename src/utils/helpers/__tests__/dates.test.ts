@@ -42,14 +42,14 @@ describe("date difference", () => {
 // function: formatDate
 
 describe("formatted date", () => {
-    test('should match "Jan 11"', () => {
+    test('should match "January 11"', () => {
         const randomOldDate = "1998-01-11";
-        expect(dateHelpers.formatDate(randomOldDate)).toBe("Jan 11");
+        expect(dateHelpers.formatDate(randomOldDate)).toBe("January 11");
     });
 
-    test('should match "[weekday] ([Mon]. [Date])"', () => {
+    test('should match "Last [weekday]"', () => {
         const sixDaysAgo = moment().subtract(6, "day");
-        expect(dateHelpers.formatDate(sixDaysAgo)).toMatch(/^[A-Za-z]* \([A-Za-z]{3}\. \d{2}\)$/);
+        expect(dateHelpers.formatDate(sixDaysAgo)).toMatch(/^Last [A-Za-z]*day$/);
     });
 
     test('should match "Today"', () => {
@@ -66,7 +66,7 @@ describe("formatted date", () => {
         expect(dateHelpers.formatDate(tomorrow)).toBe("Tomorrow");
     });
 
-    test('should match "Tomorrow at 12:34" (withTime = true)', () => {
+    test('should match "Tomorrow at 12:34" (withTime flag)', () => {
         const tomorrow = moment(new Date()).add(1, "day").set({ hour: 12, minute: 34 });
         expect(dateHelpers.formatDate(tomorrow, true)).toBe("Tomorrow at 12:34");
     });

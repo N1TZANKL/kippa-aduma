@@ -4,8 +4,9 @@ const CALENDAR_FORMATS = {
     lastDay: "[Yesterday]",
     sameDay: "[Today]",
     nextDay: "[Tomorrow]",
-    lastWeek: "dddd (MMM. D)",
-    sameElse: "MMM DD",
+    lastWeek: "[Last] dddd",
+    nextWeek: "dddd",
+    sameElse: "MMMM DD",
 };
 
 export function areSameDates(firstDate: MomentInput, secondDate: MomentInput): boolean {
