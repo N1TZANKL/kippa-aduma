@@ -21,6 +21,8 @@ export function getDatesDifference(date: MomentInput, newerDate: MomentInput, un
 export function formatDate(date: MomentInput, withTime = false): string {
     moment.updateLocale("en", { calendar: CALENDAR_FORMATS });
 
+    if (!date) return "";
+
     const parsedDate = moment(date).calendar();
 
     if (withTime) return `${parsedDate} at ${formatTime(date)}`;
