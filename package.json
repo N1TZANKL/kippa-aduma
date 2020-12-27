@@ -25,7 +25,7 @@
         "@material-ui/pickers": "^3.2.10",
         "@material-ui/styles": "^4.10.0",
         "@material-ui/system": "^4.9.14",
-        "@mdi/js": "^5.5.55",
+        "@mdi/js": "^5.8.55",
         "bcryptjs": "^2.4.3",
         "chalk": "^4.1.0",
         "clsx": "^1.1.1",
