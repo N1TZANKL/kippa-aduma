@@ -29,6 +29,9 @@ const styles = () =>
             borderRadius: "50%",
             marginRight: 8,
         },
+        filterTitle: {
+            marginTop: 15,
+        },
     });
 
 export enum SortOptions {
@@ -84,7 +87,7 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                 variant="filled"
                 onChange={(e) => setSort(e.target.value as SortOptions)}
             />
-            <PanelTitle>Filter</PanelTitle>
+            <PanelTitle className={classes.filterTitle}>Filter</PanelTitle>
             <PanelSubtitle>By Post Type</PanelSubtitle>
             <Radio
                 value={"null"}
@@ -115,10 +118,6 @@ function SortFilterPanel(props: SortFilterPanelProps) {
                     />
                 ))}
             </div>
-            <PanelSubtitle>By Post Author</PanelSubtitle>
-            To be implemented!
-            <PanelSubtitle>By Date Range</PanelSubtitle>
-            To be implemented!
         </Panel>
     );
 }

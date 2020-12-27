@@ -83,7 +83,7 @@ function UserListItem({ classes, online, color, nickname, onClick, isCurrentUser
                     ) : null}
                 </div>
             </div>
-            {online || isCurrentUser ? <div className={classes.onlineIndicator} /> : null}
+            {online /* || isCurrentUser */ ? <div className={classes.onlineIndicator} /> : null}
         </div>
     );
 }

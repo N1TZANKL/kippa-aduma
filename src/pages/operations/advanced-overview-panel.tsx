@@ -4,7 +4,7 @@ import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import Box from "@material-ui/core/Box";
 
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
-import Panel, { PanelButton, PanelTextStat, PanelTitle } from "src/components/general/Panel";
+import Panel, { ComingSoon, PanelButton, PanelTextStat, PanelTitle } from "src/components/general/Panel";
 import { notFirstChild, spaceChildren } from "src/utils/helpers/css";
 import { areSameDates } from "src/utils/helpers/dates";
 import { filterDuplicatesFromArray } from "src/utils/helpers/objects";
@@ -20,9 +20,6 @@ const styles = () =>
             display: "flex",
             flexDirection: "column",
             ...spaceChildren("vertically", 10),
-            "& > *": {
-                height: 40,
-            },
         },
         icon: { marginRight: "10px !important" },
         stats: {
@@ -45,6 +42,9 @@ const styles = () =>
             "& > *": {
                 margin: "0 4px",
             },
+        },
+        overviewTitle: {
+            marginTop: 15,
         },
     });
 
@@ -71,9 +71,9 @@ function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPa
                     <SaveAltIcon className={classes.icon} />
                     Export as PDF
                 </PanelButton>
-                To be implemented!
+                <ComingSoon />
             </div>
-            <PanelTitle>Overview</PanelTitle>
+            <PanelTitle className={classes.overviewTitle}>Overview</PanelTitle>
             <div className={classes.stats}>
                 <PanelTextStat title={`${posts.length} Posts written overall`}>since operation started</PanelTextStat>
                 <PanelTextStat title={`${postsFromToday.length} Post${postsFromToday.length !== 1 ? "s" : ""} written today`}>

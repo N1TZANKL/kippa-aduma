@@ -77,6 +77,9 @@ const styles = (theme: Theme) =>
             position: "relative",
             padding: "0 8px",
             userSelect: "none",
+            width: "fit-content",
+            height: "fit-content",
+            alignSelf: "center",
         },
         comingSoonBackground: {
             backgroundColor: "yellow",

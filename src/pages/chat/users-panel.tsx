@@ -33,7 +33,7 @@ const styles = (theme: Theme) =>
 type UsersPanelProps = MuiStyles & { user: UserSessionObject; className: string; users?: UserSessionObject[] };
 
 function UsersPanel({ classes, user, users, className }: UsersPanelProps) {
-    const onlineUsersAmount = 1; // TODO: Implement user online states
+    //const onlineUsersAmount = 1; // TODO: Implement user online states
     const allUsersAmount = users?.length || 0;
 
     const usersListWithCurrentUserFirst = [user, ...(users?.filter((u) => u.nickname !== user.nickname) || [])];
@@ -42,7 +42,7 @@ function UsersPanel({ classes, user, users, className }: UsersPanelProps) {
         <Panel className={className} fullHeight>
             <div className={classes.usersTitleDiv}>
                 <Typography variant="caption">{`Group Members (${allUsersAmount})`}</Typography>
-                <Typography variant="caption" className={classes.onlineTitle}>{`${onlineUsersAmount} Online`}</Typography>
+                {/* <Typography variant="caption" className={classes.onlineTitle}>{`${onlineUsersAmount} Online`}</Typography> */}
             </div>
             <div className={classes.usersContainer}>
                 {usersListWithCurrentUserFirst.map((userData) => (
