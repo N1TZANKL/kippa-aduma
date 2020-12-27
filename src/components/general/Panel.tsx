@@ -17,9 +17,11 @@ const styles = (theme: Theme) =>
         },
         subtitle: {
             width: "fit-content",
-            borderBottom: "2px solid rgba(255,255,255,0.6)",
             margin: "5px 0",
             fontSize: 16,
+        },
+        subtitleUnderline: {
+            borderBottom: "2px solid rgba(255,255,255,0.6)",
         },
         panel: {
             borderRadius: 2,
@@ -77,7 +79,7 @@ const Panel = withStyles(styles)((props: PanelProps) => {
 
 export default Panel;
 
-type PanelTitleProps = MuiStyles & BoxProps & { withBackground?: boolean; className?: string; children: React.ReactChild };
+type PanelTitleProps = MuiStyles & BoxProps & { withBackground?: boolean; className?: string; children: React.ReactNode };
 export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
     const { classes, withBackground, className, children, ...boxProps } = props;
 
@@ -95,9 +97,9 @@ export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
     );
 });
 
-type PanelSubtitleProps = MuiStyles & TypographyProps;
-export const PanelSubtitle = withStyles(styles)(({ classes, ...otherProps }: PanelSubtitleProps) => (
-    <Typography className={clsx(classes.title, classes.subtitle)} variant="h5" {...otherProps} />
+type PanelSubtitleProps = MuiStyles & TypographyProps & { noUnderline?: boolean };
+export const PanelSubtitle = withStyles(styles)(({ classes, noUnderline, ...otherProps }: PanelSubtitleProps) => (
+    <Typography className={clsx(classes.title, classes.subtitle, !noUnderline && classes.subtitleUnderline)} variant="h5" {...otherProps} />
 ));
 
 type PanelBottomBarProps = MuiStyles & { children: React.ReactChild; className?: string };
