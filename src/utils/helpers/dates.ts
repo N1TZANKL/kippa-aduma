@@ -46,6 +46,6 @@ export function sortObjectArrayByDate<T extends Record<string, unknown>>(array: 
     return sortType === "asc" ? sortedArray : sortedArray.reverse();
 }
 
-export function getTodaysData() {
+export function getTodaysData(): string {
     return moment().format("dddd, MMMM DD [at] LT");
 }

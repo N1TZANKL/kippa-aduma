@@ -118,6 +118,6 @@ describe("sorted array", () => {
 
 describe("today's data", () => {
     test("should match format [weekday], [month] [day] at XX:XX AM/PM", () => {
-        expect(dateHelpers.getTodaysData()).toMatch(/^[a-z]*day\, [a-z]* \d{1,2} at \d{1,2}\:\d{1,2} [AP]M$/i);
+        expect(dateHelpers.getTodaysData()).toMatch(/^[a-z]*day, [a-z]* \d{1,2} at \d{1,2}:\d{1,2} [AP]M$/i);
     });
 });
