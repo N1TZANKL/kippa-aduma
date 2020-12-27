@@ -14,11 +14,11 @@ const useStyles = makeStyles({
 
 type FormTextProps = Omit<TypographyProps, "color"> & { color: string };
 
-function FormText({ color, ...props }: FormTextProps) {
+function FormText({ color, ...props }: FormTextProps): JSX.Element {
     const classes = useStyles({ color });
 
     return <Typography variant="h6" className={classes.root} align="center" {...props} />;
 }
 
-export const FormError = (props: Omit<TypographyProps, "color">) => <FormText {...props} color={red[400]} />;
-export const FormSuccess = (props: Omit<TypographyProps, "color">) => <FormText {...props} color={green.A400} />;
+export const FormError = (props: Omit<TypographyProps, "color">): JSX.Element => <FormText {...props} color={red[400]} />;
+export const FormSuccess = (props: Omit<TypographyProps, "color">): JSX.Element => <FormText {...props} color={green.A400} />;

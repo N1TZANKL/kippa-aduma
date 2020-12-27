@@ -16,14 +16,17 @@ const validationSchema = Yup.object({
     happenedAt: Yup.date().required("Required"),
 });
 
-type CreatePostFormProps = { addPost: (newPost: OperationPost) => void; onClose?: () => void };
+type CreatePostFormProps = { onSubmitSuccess?: (newPost: OperationPost) => void; onClose?: () => void };
 
-export default function CreatePostForm({ addPost, onClose }: CreatePostFormProps): JSX.Element {
+export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostFormProps): JSX.Element {
     const initialValues = { type: OperationPostTypes.UPDATE, happenedAt: new Date().toISOString(), description: "" };
 
     const onSubmit: FormBaseOnSubmit = (formData) =>
         Post("post", formData).then(async (res) => {
-            if (res.ok) res.json().then((newPost) => addPost(newPost));
+            if (res.ok)
+                res.json().then((newPost) => {
+                    if (onSubmitSuccess) onSubmitSuccess(newPost);
+                });
             else {
                 const errorMessage = await res.text();
                 throw new Error(errorMessage);

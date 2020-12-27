@@ -27,7 +27,7 @@ export default function CredentialsPage({ user, creds }: CredentialsPageProps): 
                 <CredsTable creds={allCreds} toggleFormOpen={toggleFormOpen} removeDeletedCredsFromLocalState={removeDeletedCredsFromLocalState} />
             </Box>
             <FormDialog title="Add Cred" open={isFormOpen} onClose={toggleFormOpen}>
-                <CreateCredForm addCred={addCredential} onClose={toggleFormOpen} />
+                <CreateCredForm onSubmitSuccess={addCredential} onClose={toggleFormOpen} />
             </FormDialog>
         </PageLayout>
     );
