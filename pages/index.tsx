@@ -17,8 +17,8 @@ const styles = (theme: Theme) =>
             justifyContent: "space-between",
             height: "100%",
             width: "100%",
-            minHeight: 610,
-            minWidth: 700,
+            minHeight: 700,
+            minWidth: 1250,
         },
         row: {
             display: "flex",
@@ -41,19 +41,6 @@ const styles = (theme: Theme) =>
         },
         sideCenterPanel: {
             flexBasis: "29%",
-        },
-        timelineRoot: {
-            maxWidth: "100%",
-            minWidth: "40%",
-            flexGrow: 1,
-        },
-        optionsRoot: {
-            flexBasis: "15%",
-            height: "100%",
-            maxWidth: 275,
-            padding: 15,
-            display: "flex",
-            flexDirection: "column",
         },
     });
 

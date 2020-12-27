@@ -19,9 +19,17 @@ import TasksContext from "../tasks/context";
 
 const styles = () =>
     createStyles({
+        root: {
+            padding: "15px 15px 0px",
+        },
         titleWrapper: {
             flexDirection: "column",
             marginBottom: 25,
+        },
+        wrap: {
+            justifyContent: "center",
+            flexWrap: "wrap",
+            wordBreak: "break-word",
         },
         center: {
             display: "flex",
@@ -29,15 +37,18 @@ const styles = () =>
         },
         icon: {
             marginLeft: 7,
+            display: "inline-block",
         },
         actionsText: {
             display: "flex",
             alignItems: "center",
             ...spaceChildren("horizontally", 7),
+            paddingBottom: 10,
         },
         actions: {
             display: "flex",
             marginLeft: 15,
+            paddingBottom: 15,
             ...spaceChildren("horizontally", 12),
         },
     });
@@ -115,19 +126,19 @@ function GreetingPanel({ classes, className, user, users }: GreetingPanelProps) 
 
     return (
         <>
-            <Panel className={className}>
+            <Panel className={clsx(className, classes.root)}>
                 <span className={clsx(classes.center, classes.titleWrapper)}>
                     <Typography variant="caption" color="textSecondary" align="center">
                         {currentTime}
                     </Typography>
-                    <PanelTitle className={classes.center}>
-                        {greeting}, {user.nickname}!
+                    <PanelTitle className={clsx(classes.center, classes.wrap)}>
+                        {`${greeting}, ${user.nickname}!`}
                         <SvgIcon className={classes.icon}>
                             <path d={greetingIcon} />
                         </SvgIcon>
                     </PanelTitle>
                 </span>
-                <span className={classes.center}>
+                <span className={clsx(classes.center, classes.wrap)}>
                     <div className={classes.actionsText}>
                         <PanelSubtitle>Quick Actions</PanelSubtitle> <PanelSubtitle noUnderline>{">"}</PanelSubtitle>
                     </div>
