@@ -4,13 +4,13 @@ import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import { red } from "@material-ui/core/colors";
 
-import { Assignment, MuiStyles } from "src/utils/interfaces";
-import { AssignmentStatuses } from "server/db/assignment/model";
+import { Task, MuiStyles } from "src/utils/interfaces";
+import { TaskStatuses } from "server/db/task/model";
 import { formatDate, getDatesDifference } from "src/utils/helpers/dates";
 import UserAvatar from "src/components/general/UserAvatar";
 
-import AssignmentCard from "./assignment-card";
-import { STATUS_TO_ICON, STATUS_TO_DISPLAYED_TIMESTAMP } from "../../assignment-utils";
+import TaskCard from "./task-card";
+import { STATUS_TO_ICON, STATUS_TO_DISPLAYED_TIMESTAMP } from "../../task-utils";
 
 const styles = createStyles({
     content: {
@@ -43,20 +43,20 @@ const styles = createStyles({
     },
 });
 
-type AssignmentNoteProps = MuiStyles & { assignment: Assignment; isBeingDragged: boolean; showAssignmentInfo: (assignmentId: string) => void };
+type TaskNoteProps = MuiStyles & { task: Task; isBeingDragged: boolean; showTaskInfo: (taskId: string) => void };
 
-function AssignmentNote({ classes, assignment, isBeingDragged, showAssignmentInfo }: AssignmentNoteProps) {
-    const { description, status, assignee, deadlineAt } = assignment;
+function TaskNote({ classes, task, isBeingDragged, showTaskInfo }: TaskNoteProps) {
+    const { description, status, assignee, deadlineAt } = task;
 
     const { timestampKey, timestampText } = STATUS_TO_DISPLAYED_TIMESTAMP[status];
-    const AssignmentIcon = STATUS_TO_ICON[status];
+    const TaskIcon = STATUS_TO_ICON[status];
 
-    const deadlinePassed = status === AssignmentStatuses.IN_PROGRESS && deadlineAt && getDatesDifference(deadlineAt, new Date(), "day") > 0;
+    const deadlinePassed = status === TaskStatuses.IN_PROGRESS && deadlineAt && getDatesDifference(deadlineAt, new Date(), "day") > 0;
 
-    const timestamp = assignment[timestampKey];
+    const timestamp = task[timestampKey];
 
     return (
-        <AssignmentCard isBeingDragged={isBeingDragged} onClick={() => showAssignmentInfo(assignment.id)} title="Click for more information">
+        <TaskCard isBeingDragged={isBeingDragged} onClick={() => showTaskInfo(task.id)} title="Click for more information">
             <Typography variant="body2" component="div" className={classes.content}>
                 {assignee && (
                     <div className={classes.avatar}>
@@ -71,15 +71,15 @@ function AssignmentNote({ classes, assignment, isBeingDragged, showAssignmentInf
                 component="div"
                 className={clsx(
                     classes.timestampDiv,
-                    status === AssignmentStatuses.IN_PROGRESS && classes.progressTimestamp,
+                    status === TaskStatuses.IN_PROGRESS && classes.progressTimestamp,
                     deadlinePassed && classes.deadlinePassed
                 )}
             >
-                <AssignmentIcon fontSize="small" /> <span className={classes.timestampText}>{timestampText}:</span>{" "}
+                <TaskIcon fontSize="small" /> <span className={classes.timestampText}>{timestampText}:</span>{" "}
                 <span className={classes.timestampText}>{formatDate(timestamp) || "(Not set)"}</span>
             </Typography>
-        </AssignmentCard>
+        </TaskCard>
     );
 }
 
-export default withStyles(styles)(AssignmentNote);
+export default withStyles(styles)(TaskNote);

@@ -4,21 +4,21 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 
-import { Assignment, MuiStyles } from "src/utils/interfaces";
+import { Task, MuiStyles } from "src/utils/interfaces";
 import DialogBase from "src/components/general/DialogBase";
 import DeleteButton from "src/components/forms/DeleteButton";
 import { formatDate } from "src/utils/helpers/dates";
-import { AssignmentStatuses } from "server/db/assignment/model";
+import { TaskStatuses } from "server/db/task/model";
 import DataTypeText from "src/components/general/DataTypeText";
 import UserListItem from "src/components/general/UserListItem";
 import ConfirmationDialog from "src/components/dialogs/ConfirmationDialog";
 import { SubmitButton } from "src/components/forms";
 import { spaceChildren } from "src/utils/helpers/css";
 import { Delete } from "src/utils/helpers/api";
-import AssignmentsContext from "src/pages/assignments/context";
+import TasksContext from "src/pages/tasks/context";
 
-import { STATUS_TO_CHANGED_TIMESTAMP_MEANING, STATUS_TO_TEXT } from "./assignment-utils";
-import CreateAssignmentForm from "./create-assignment-form";
+import { STATUS_TO_CHANGED_TIMESTAMP_MEANING, STATUS_TO_TEXT } from "./task-utils";
+import CreateTaskForm from "./create-task-form";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -76,24 +76,24 @@ const InfoPair = withStyles(styles)(({ classes, title, info }: InfoPairProps) =>
     </>
 ));
 
-type AssignmentInfoDialogProps = MuiStyles & {
-    assignment?: Assignment;
+type TaskInfoDialogProps = MuiStyles & {
+    task?: Task;
     onClose: () => void;
 };
 
-function AssignmentInfoDialog({ classes, assignment, onClose }: AssignmentInfoDialogProps) {
+function TaskInfoDialog({ classes, task, onClose }: TaskInfoDialogProps) {
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
 
-    const { deleteAssignment } = useContext(AssignmentsContext);
+    const { deleteTask } = useContext(TasksContext);
 
     async function onConfirmDelete() {
-        if (!assignment) return;
+        if (!task) return;
 
         onClose();
 
-        const res = await Delete("assignment", { id: assignment.id });
-        if (res.ok) deleteAssignment(assignment.id);
+        const res = await Delete("task", { id: task.id });
+        if (res.ok) deleteTask(task.id);
     }
 
     function editModeOnClose() {
@@ -104,42 +104,40 @@ function AssignmentInfoDialog({ classes, assignment, onClose }: AssignmentInfoDi
     return (
         <>
             <DialogBase
-                title={`Assignment Info ${isEditMode ? "(Edit Mode)" : ""}`}
-                open={Boolean(assignment?.id)}
+                title={`Task Info ${isEditMode ? "(Edit Mode)" : ""}`}
+                open={Boolean(task?.id)}
                 onClose={isEditMode ? editModeOnClose : onClose}
             >
-                {assignment && (
+                {task && (
                     <>
                         <DialogContent className={classes.content}>
                             {isEditMode ? (
-                                <CreateAssignmentForm onClose={editModeOnClose} editedAssignment={assignment} />
+                                <CreateTaskForm onClose={editModeOnClose} editedTask={task} />
                             ) : (
                                 <>
                                     <div className={classes.infoGrid}>
-                                        <InfoPair title="Description" info={assignment.description} />
-                                        <InfoPair title="More Info" info={assignment.additionalInformation} />
+                                        <InfoPair title="Description" info={task.description} />
+                                        <InfoPair title="More Info" info={task.additionalInformation} />
                                     </div>
                                     <div className={clsx(classes.infoGrid, classes.borderTop)}>
-                                        <InfoPair title="Status" info={<DataTypeText>{STATUS_TO_TEXT[assignment.status]}</DataTypeText>} />
-                                        <InfoPair title="Created By" info={<UserListItem {...assignment.creator} avatarSize={25} />} />
-                                        {assignment.status !== AssignmentStatuses.TODO && (
-                                            <InfoPair title="Assigned To" info={<UserListItem {...assignment.assignee} avatarSize={25} />} />
+                                        <InfoPair title="Status" info={<DataTypeText>{STATUS_TO_TEXT[task.status]}</DataTypeText>} />
+                                        <InfoPair title="Created By" info={<UserListItem {...task.creator} avatarSize={25} />} />
+                                        {task.status !== TaskStatuses.TODO && (
+                                            <InfoPair title="Assigned To" info={<UserListItem {...task.assignee} avatarSize={25} />} />
                                         )}
                                         <InfoPair
-                                            title={`${STATUS_TO_CHANGED_TIMESTAMP_MEANING[assignment.status]} At`}
-                                            info={formatDate(assignment.changedAt, true)}
+                                            title={`${STATUS_TO_CHANGED_TIMESTAMP_MEANING[task.status]} At`}
+                                            info={formatDate(task.changedAt, true)}
                                         />
-                                        {assignment.status !== AssignmentStatuses.TODO && (
-                                            <InfoPair title="Deadline" info={formatDate(assignment.deadlineAt)} />
-                                        )}
+                                        {task.status !== TaskStatuses.TODO && <InfoPair title="Deadline" info={formatDate(task.deadlineAt)} />}
                                     </div>
                                     <div className={classes.buttons}>
-                                        {assignment.status !== AssignmentStatuses.DONE && (
+                                        {task.status !== TaskStatuses.DONE && (
                                             <SubmitButton noMargin isSubmitting={false} onClick={() => setEditMode(true)}>
-                                                Edit Assignment
+                                                Edit Task
                                             </SubmitButton>
                                         )}
-                                        <DeleteButton onClick={() => setDeleteDialogOpen(true)}>Delete Assignment</DeleteButton>
+                                        <DeleteButton onClick={() => setDeleteDialogOpen(true)}>Delete Task</DeleteButton>
                                     </div>
                                 </>
                             )}
@@ -153,10 +151,10 @@ function AssignmentInfoDialog({ classes, assignment, onClose }: AssignmentInfoDi
                 onConfirm={onConfirmDelete}
                 confirmText="Yes, Delete"
             >
-                Are you sure you want to delete this assignment? This action is irreversible!
+                Are you sure you want to delete this task? This action is irreversible!
             </ConfirmationDialog>
         </>
     );
 }
 
-export default withStyles(styles)(AssignmentInfoDialog);
+export default withStyles(styles)(TaskInfoDialog);

@@ -7,19 +7,19 @@ import SearchBox from "src/components/general/SearchBox";
 import { SetState } from "src/utils/interfaces";
 import FormDialog from "src/components/dialogs/FormDialog";
 
-import CreateAssignmentForm from "./create-assignment-form";
+import CreateTaskForm from "./create-task-form";
 
-type AssignmentsTopBarProps = BoxProps & {
+type TasksTopBarProps = BoxProps & {
     toggleShowOwnFilter: () => void;
-    showOwnAssignmentsOnly: boolean;
+    showOwnTasksOnly: boolean;
     onSearch: SetState<string>;
     searchString?: string;
 };
 
-// TODO: Create assignment form context instead of passing all these props
+// TODO: Create task form context instead of passing all these props
 
-export default function AssignmentsTopBar(props: AssignmentsTopBarProps): JSX.Element {
-    const { toggleShowOwnFilter, showOwnAssignmentsOnly, onSearch, searchString = "", ...boxProps } = props;
+export default function TasksTopBar(props: TasksTopBarProps): JSX.Element {
+    const { toggleShowOwnFilter, showOwnTasksOnly, onSearch, searchString = "", ...boxProps } = props;
 
     const [formOpen, setFormOpen] = useState(false);
     const toggleFormOpen = () => setFormOpen((prev) => !prev);
@@ -31,17 +31,17 @@ export default function AssignmentsTopBar(props: AssignmentsTopBarProps): JSX.El
                 Create
             </PanelButton>
             <SearchBox
-                placeholder="Search assignment by text, assignee..."
+                placeholder="Search task by text, assignee..."
                 value={searchString}
                 onChange={(e) => onSearch(e.target.value)}
                 width={350}
                 margin="0 10px 0 20px"
             />
-            <PanelButton variant="text" onClick={toggleShowOwnFilter} color={showOwnAssignmentsOnly ? "secondary" : "default"}>
-                Only My Assignments {showOwnAssignmentsOnly ? "[ON]" : ""}
+            <PanelButton variant="text" onClick={toggleShowOwnFilter} color={showOwnTasksOnly ? "secondary" : "default"}>
+                Only My Tasks {showOwnTasksOnly ? "[ON]" : ""}
             </PanelButton>
-            <FormDialog title="Create Assignment" open={formOpen} onClose={toggleFormOpen}>
-                <CreateAssignmentForm onClose={toggleFormOpen} />
+            <FormDialog title="Create Task" open={formOpen} onClose={toggleFormOpen}>
+                <CreateTaskForm onClose={toggleFormOpen} />
             </FormDialog>
         </Box>
     );

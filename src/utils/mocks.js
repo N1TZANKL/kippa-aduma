@@ -1,5 +1,5 @@
 import * as muiColors from "@material-ui/core/colors";
-import { AssignmentStatuses } from "server/db/assignment/model";
+import { TaskStatuses } from "server/db/task/model";
 import { OperationPostTypes } from "server/db/post/model";
 
 const LONG_STRING =
@@ -93,24 +93,24 @@ export const DUMMY_OPERATION_POSTS = [
     },
 ];
 
-export const DUMMY_ASSIGNMENTS = [
+export const DUMMY_TASKS = [
     {
         id: "1",
-        status: AssignmentStatuses.TODO,
+        status: TaskStatuses.TODO,
         description: "this is a test!",
         changedAt: new Date().toISOString(),
         creator: CURRENT_USER,
     },
     {
         id: "2",
-        status: AssignmentStatuses.TODO,
+        status: TaskStatuses.TODO,
         description: "this is another test!",
         changedAt: new Date().toISOString(),
         creator: CURRENT_USER,
     },
     {
         id: "3",
-        status: AssignmentStatuses.IN_PROGRESS,
+        status: TaskStatuses.IN_PROGRESS,
         description: "now this is an even bigger test than the ones that came before it!!",
         changedAt: new Date().toISOString(),
         deadlineAt: new Date("11-26-2020").toISOString(),
@@ -119,7 +119,7 @@ export const DUMMY_ASSIGNMENTS = [
     },
     {
         id: "4",
-        status: AssignmentStatuses.DONE,
+        status: TaskStatuses.DONE,
         description: "now this is an even bigger test than the ones that came before it that came before it!!",
         changedAt: new Date("08-02-2021").toISOString(),
         creator: ALL_USERS[1],

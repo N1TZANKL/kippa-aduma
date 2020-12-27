@@ -6,7 +6,7 @@ import { CredModel } from "server/db/cred/model";
 import { ChatMessageModel } from "server/db/message/model";
 import { OperationPostModel } from "server/db/post/model";
 import { UserSessionObject } from "utils/session";
-import { AssignmentModel } from "server/db/assignment/model";
+import { TaskModel } from "server/db/task/model";
 
 export type MuiStyles = WithStyles<string>;
 export type SetState<T> = Dispatch<SetStateAction<T>>;
@@ -19,4 +19,4 @@ export type OperationPost = Omit<OperationPostModel, "author"> & { author: UserS
 
 export type Credential = CredModel & { id: string };
 
-export type Assignment = Omit<AssignmentModel, "creator" | "assignee"> & { creator: UserSessionObject; assignee?: UserSessionObject; id: string };
+export type Task = Omit<TaskModel, "creator" | "assignee"> & { creator: UserSessionObject; assignee?: UserSessionObject; id: string };

@@ -6,7 +6,7 @@ enum Models {
     CHAT_MESSAGE = "message",
     OPERATION_POST = "post",
     CREDENTIAL = "cred",
-    ASSIGNMENT = "assignment",
+    TASK = "task",
 }
 
 export default Models;

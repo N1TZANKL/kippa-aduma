@@ -23,9 +23,9 @@ export default [
         path: "/credentials",
     },
     {
-        title: "Assignments",
+        title: "Tasks",
         icon: mdiClipboardList,
-        path: "/assignments",
+        path: "/tasks",
     },
     {
         title: "Operations",

@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 
 import Models from "server/db/models";
 
-export enum AssignmentStatuses {
+export enum TaskStatuses {
     TODO = "todo", // default
     IN_PROGRESS = "progress",
     DONE = "done",
 }
 
-export type AssignmentModel = {
+export type TaskModel = {
     description: string;
     additionalInformation?: string;
-    status: AssignmentStatuses;
+    status: TaskStatuses;
     changedAt: string;
     deadlineAt?: string;
     creator: mongoose.Types.ObjectId;
     assignee?: mongoose.Types.ObjectId;
 };
 
-const assignmentsSchema = new mongoose.Schema({
+const tasksSchema = new mongoose.Schema({
     description: String,
     additionalInformation: String,
     status: String,
@@ -34,4 +34,4 @@ const assignmentsSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.models?.[Models.ASSIGNMENT] || mongoose.model<AssignmentModel & mongoose.Document>(Models.ASSIGNMENT, assignmentsSchema);
+export default mongoose.models?.[Models.TASK] || mongoose.model<TaskModel & mongoose.Document>(Models.TASK, tasksSchema);

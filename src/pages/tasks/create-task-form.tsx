@@ -4,69 +4,68 @@ import { FormikProps } from "formik";
 import moment from "moment";
 import Box from "@material-ui/core/Box";
 
-import { AssignmentStatuses } from "server/db/assignment/model";
+import { TaskStatuses } from "server/db/task/model";
 import { FormBase, TextField, DateTimeField, Select } from "src/components/forms";
-import { Assignment } from "src/utils/interfaces";
+import { Task } from "src/utils/interfaces";
 import { Patch, Post } from "src/utils/helpers/api";
 import { FormBaseOnSubmit } from "src/components/forms/FormBase";
 import Checkbox from "src/components/general/Checkbox";
-import AssignmentsContext from "src/pages/assignments/context";
+import TasksContext from "src/pages/tasks/context";
 
-const newAssignmentStatusOptions = [AssignmentStatuses.TODO, AssignmentStatuses.IN_PROGRESS];
+const newTaskStatusOptions = [TaskStatuses.TODO, TaskStatuses.IN_PROGRESS];
 
 const validationSchema = Yup.object({
     description: Yup.string().required("Required"),
     additionalInformation: Yup.string(),
-    status: Yup.string().oneOf(newAssignmentStatusOptions).default(AssignmentStatuses.TODO).required("Required"),
+    status: Yup.string().oneOf(newTaskStatusOptions).default(TaskStatuses.TODO).required("Required"),
     deadlineAt: Yup.date().when("status", {
-        is: AssignmentStatuses.IN_PROGRESS,
+        is: TaskStatuses.IN_PROGRESS,
         then: Yup.date().required("Required"),
         otherwise: Yup.date().nullable(),
     }),
     assigneeId: Yup.string().when("status", {
-        is: AssignmentStatuses.IN_PROGRESS,
+        is: TaskStatuses.IN_PROGRESS,
         then: Yup.string().required("Required"),
     }),
 });
 
-interface AssignmentFormValues {
+interface TaskFormValues {
     description: string;
-    status: AssignmentStatuses.TODO | AssignmentStatuses.IN_PROGRESS;
+    status: TaskStatuses.TODO | TaskStatuses.IN_PROGRESS;
     additionalInformation?: string;
     deadlineAt?: string | null;
     assigneeId?: string;
 }
 
-type CreateAssignmentFormProps = {
+type CreateTaskFormProps = {
     onClose?: () => void;
     // a non-finished task
-    editedAssignment?: Omit<Assignment, "status"> & { status: AssignmentStatuses.TODO | AssignmentStatuses.IN_PROGRESS };
+    editedTask?: Omit<Task, "status"> & { status: TaskStatuses.TODO | TaskStatuses.IN_PROGRESS };
 };
 
-export default function CreateAssignmentForm({ onClose, editedAssignment }: CreateAssignmentFormProps): JSX.Element {
-    const formRef = useRef<FormikProps<AssignmentFormValues> | null>(null);
+export default function CreateTaskForm({ onClose, editedTask }: CreateTaskFormProps): JSX.Element {
+    const formRef = useRef<FormikProps<TaskFormValues> | null>(null);
 
-    const { addAssignment, replaceAssignment, users, user } = useContext(AssignmentsContext);
+    const { addTask, replaceTask, users, user } = useContext(TasksContext);
 
-    const initialValues: AssignmentFormValues = {
-        status: editedAssignment?.status || AssignmentStatuses.TODO,
-        description: editedAssignment?.description || "",
-        additionalInformation: editedAssignment?.additionalInformation || "",
-        assigneeId: editedAssignment?.assignee?.id || "",
-        deadlineAt: editedAssignment?.deadlineAt || null,
+    const initialValues: TaskFormValues = {
+        status: editedTask?.status || TaskStatuses.TODO,
+        description: editedTask?.description || "",
+        additionalInformation: editedTask?.additionalInformation || "",
+        assigneeId: editedTask?.assignee?.id || "",
+        deadlineAt: editedTask?.deadlineAt || null,
     };
 
     const onSubmit: FormBaseOnSubmit = (formData) => {
         const { deadlineAt, assigneeId, ...todoFormData } = formData;
-        const requestData = formData.status === AssignmentStatuses.TODO ? todoFormData : formData;
+        const requestData = formData.status === TaskStatuses.TODO ? todoFormData : formData;
 
-        const assignmentId = editedAssignment?.id;
-        const request = () =>
-            assignmentId ? Patch("assignment", { action: "edit", data: { ...requestData, assignmentId } }) : Post("assignment", requestData);
-        const callback = assignmentId ? replaceAssignment : addAssignment;
+        const taskId = editedTask?.id;
+        const request = () => (taskId ? Patch("task", { action: "edit", data: { ...requestData, taskId } }) : Post("task", requestData));
+        const callback = taskId ? replaceTask : addTask;
 
         return request().then(async (res) => {
-            if (res.ok) res.json().then((newAssignment) => callback(newAssignment));
+            if (res.ok) res.json().then((newTask) => callback(newTask));
             else {
                 const errorMessage = await res.text();
                 throw new Error(errorMessage);
@@ -79,15 +78,15 @@ export default function CreateAssignmentForm({ onClose, editedAssignment }: Crea
 
         const { setFieldValue, values } = formRef.current;
 
-        setFieldValue("status", checked ? AssignmentStatuses.IN_PROGRESS : AssignmentStatuses.TODO);
+        setFieldValue("status", checked ? TaskStatuses.IN_PROGRESS : TaskStatuses.TODO);
         if (!values.deadlineAt) setFieldValue("deadlineAt", moment().add(1, "day").toISOString());
         if (!values.assigneeId) setFieldValue("assigneeId", user.id);
     }
 
     return (
         <FormBase validationSchema={validationSchema} onSubmit={onSubmit} initialValues={initialValues} onClose={onClose} ref={formRef}>
-            {({ values }: FormikProps<Partial<AssignmentFormValues>>) => {
-                const isAssigned = values.status === AssignmentStatuses.IN_PROGRESS;
+            {({ values }: FormikProps<Partial<TaskFormValues>>) => {
+                const isAssigned = values.status === TaskStatuses.IN_PROGRESS;
                 return (
                     <>
                         <TextField fieldKey="description" type="multiline" />
@@ -97,8 +96,8 @@ export default function CreateAssignmentForm({ onClose, editedAssignment }: Crea
                                 label="Set assignee & deadline"
                                 checked={isAssigned}
                                 onChange={onToggleAssignCheckbox}
-                                // if assignment was already started - cannot go back
-                                disabled={editedAssignment?.status === AssignmentStatuses.IN_PROGRESS}
+                                // if task was already started - cannot go back
+                                disabled={editedTask?.status === TaskStatuses.IN_PROGRESS}
                             />
                         </Box>
                         <Select

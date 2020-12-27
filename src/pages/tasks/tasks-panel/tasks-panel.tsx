@@ -5,26 +5,20 @@ import Grid from "@material-ui/core/Grid";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 import Panel, { PanelTitle } from "src/components/general/Panel";
-import { Assignment } from "src/utils/interfaces";
-import { AssignmentStatuses } from "server/db/assignment/model";
+import { Task } from "src/utils/interfaces";
+import { TaskStatuses } from "server/db/task/model";
 
-import AssignmentNote from "./assignment/assignment";
-import { STATUS_TO_TEXT } from "../assignment-utils";
+import TaskNote from "./task/task";
+import { STATUS_TO_TEXT } from "../task-utils";
 
-type AssignmentPanelProps = Omit<BoxProps, "clone" | "children"> & {
+type TaskPanelProps = Omit<BoxProps, "clone" | "children"> & {
     hiddenProps?: HiddenProps;
-    status: AssignmentStatuses;
-    assignments: Assignment[];
-    showAssignmentInfo: (assignmentId: string) => void;
+    status: TaskStatuses;
+    tasks: Task[];
+    showTaskInfo: (taskId: string) => void;
 };
 
-export default function AssignmentPanel({
-    hiddenProps,
-    assignments = [],
-    status,
-    showAssignmentInfo,
-    ...boxProps
-}: AssignmentPanelProps): JSX.Element {
+export default function TaskPanel({ hiddenProps, tasks = [], status, showTaskInfo, ...boxProps }: TaskPanelProps): JSX.Element {
     const BasePanelWrapper = ({ children }: { children: React.ReactChild }) => (
         <Box {...boxProps} minHeight="400px" display="flex" flexDirection="column" clone>
             {children}
@@ -51,8 +45,8 @@ export default function AssignmentPanel({
                         <div {...provided.droppableProps} ref={provided.innerRef} style={{ height: "100%" }}>
                             <Box padding="15px" width="100% !important" margin="0px !important" clone>
                                 <Grid container justify="center" spacing={2}>
-                                    {assignments.map((assignment, index) => (
-                                        <Draggable key={assignment.id} draggableId={assignment.id} index={index}>
+                                    {tasks.map((task, index) => (
+                                        <Draggable key={task.id} draggableId={task.id} index={index}>
                                             {(providedItem, snapshot) => (
                                                 <Box height="fit-content" clone>
                                                     <Grid
@@ -61,10 +55,10 @@ export default function AssignmentPanel({
                                                         {...providedItem.draggableProps}
                                                         {...providedItem.dragHandleProps}
                                                     >
-                                                        <AssignmentNote
+                                                        <TaskNote
                                                             isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
-                                                            assignment={assignment}
-                                                            showAssignmentInfo={showAssignmentInfo}
+                                                            task={task}
+                                                            showTaskInfo={showTaskInfo}
                                                         />
                                                     </Grid>
                                                 </Box>

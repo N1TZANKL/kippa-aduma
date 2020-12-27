@@ -3,7 +3,7 @@ import { withTheme, lighten, makeStyles, WithTheme } from "@material-ui/core/sty
 import Paper, { PaperProps } from "@material-ui/core/Paper";
 import clsx from "clsx";
 
-import cssStyles from "./Assignment.module.css";
+import cssStyles from "./Task.module.css";
 
 type StyleProps = { color: string; isBeingDragged: boolean };
 
@@ -39,12 +39,12 @@ const useStyles = makeStyles({
     },
 });
 
-type AssignmentCardProps = WithTheme & PaperProps & { isBeingDragged: boolean };
+type TaskCardProps = WithTheme & PaperProps & { isBeingDragged: boolean };
 
-function AssignmentCard({ theme, isBeingDragged, ...otherProps }: AssignmentCardProps) {
+function TaskCard({ theme, isBeingDragged, ...otherProps }: TaskCardProps) {
     const classes = useStyles({ color: theme.constants.appBackground, isBeingDragged });
 
     return <Paper square elevation={isBeingDragged ? 8 : 2} className={clsx(classes.root, cssStyles.triangle)} {...otherProps} />;
 }
 
-export default withTheme(AssignmentCard);
+export default withTheme(TaskCard);
