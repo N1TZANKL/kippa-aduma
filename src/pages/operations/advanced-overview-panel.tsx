@@ -4,7 +4,7 @@ import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import Box from "@material-ui/core/Box";
 
 import { MuiStyles, OperationPost } from "src/utils/interfaces";
-import Panel, { PanelButton, PanelStat, PanelTitle } from "src/components/general/Panel";
+import Panel, { PanelButton, PanelTextStat, PanelTitle } from "src/components/general/Panel";
 import { notFirstChild, spaceChildren } from "src/utils/helpers/css";
 import { areSameDates } from "src/utils/helpers/dates";
 import { filterDuplicatesFromArray } from "src/utils/helpers/objects";
@@ -75,8 +75,8 @@ function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPa
             </div>
             <PanelTitle>Overview</PanelTitle>
             <div className={classes.stats}>
-                <PanelStat title={`${posts.length} Posts written overall`}>since operation started</PanelStat>
-                <PanelStat title={`${postsFromToday.length} Post${postsFromToday.length !== 1 ? "s" : ""} written today`}>
+                <PanelTextStat title={`${posts.length} Posts written overall`}>since operation started</PanelTextStat>
+                <PanelTextStat title={`${postsFromToday.length} Post${postsFromToday.length !== 1 ? "s" : ""} written today`}>
                     {todaysPostAuthors.length !== 1 ? (
                         `by ${todaysPostAuthors.length} different people`
                     ) : (
@@ -84,8 +84,8 @@ function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPa
                             By User <span className={classes.userText}>{todaysPostAuthors[0]}</span>
                         </>
                     )}
-                </PanelStat>
-                <PanelStat title={postTypesUsedCount === 1 ? "One post type used:" : `${postTypesUsedCount} post types used:`}>
+                </PanelTextStat>
+                <PanelTextStat title={postTypesUsedCount === 1 ? "One post type used:" : `${postTypesUsedCount} post types used:`}>
                     {postTypesUsedCount === 0 ? (
                         "(none used)"
                     ) : (
@@ -101,7 +101,7 @@ function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPa
                             ))}
                         </div>
                     )}
-                </PanelStat>
+                </PanelTextStat>
             </div>
         </Panel>
     );

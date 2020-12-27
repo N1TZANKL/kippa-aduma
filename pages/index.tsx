@@ -6,7 +6,7 @@ import { UserSessionObject, withUserSession } from "utils/session";
 import PageLayout from "src/components/layouts/MainLayout";
 import { MuiStyles } from "src/utils/interfaces";
 import Panel from "src/components/general/Panel";
-import { GreetingPanel } from "src/pages/home";
+import { GreetingPanel, LatestActivitiesPanel, OverviewPanel } from "src/pages/home";
 import { getAllUsers } from "server/db/user/controller";
 
 const styles = (theme: Theme) =>
@@ -51,8 +51,8 @@ function Home({ classes, user, users = [] }: HomeProps): JSX.Element {
         <PageLayout user={user}>
             <div className={classes.root}>
                 <div className={classes.row}>
-                    <Panel className={clsx(classes.panel, classes.halfPanel)}>- WIP -</Panel>
-                    <Panel className={clsx(classes.panel, classes.halfPanel)}>- WIP -</Panel>
+                    <OverviewPanel className={clsx(classes.panel, classes.halfPanel)} />
+                    <LatestActivitiesPanel className={clsx(classes.panel, classes.halfPanel)} />
                 </div>
                 <div className={classes.row}>
                     <Panel className={clsx(classes.panel, classes.sideCenterPanel)}>- WIP -</Panel>

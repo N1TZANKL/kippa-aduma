@@ -51,12 +51,16 @@ const styles = (theme: Theme) =>
         },
         stat: {
             padding: 10,
+            borderRadius: 4,
             backgroundColor: "rgba(255,255,255,0.07)",
             // background: "repeating-linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 10px, transparent 10px, transparent 20px)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+        },
+        numberStat: {
+            padding: "15px 25px",
         },
         statTitle: {
             fontFamily: "Inconsolata",
@@ -67,6 +71,26 @@ const styles = (theme: Theme) =>
         statContent: {
             fontFamily: "Inconsolata",
             letterSpacing: 1.15,
+            wordBreak: "break-word",
+        },
+        comingSoon: {
+            position: "relative",
+            padding: "0 8px",
+            userSelect: "none",
+        },
+        comingSoonBackground: {
+            backgroundColor: "yellow",
+            opacity: 0.2,
+            transform: "rotate(-2deg)",
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+        comingSoonText: {
+            backgroundColor: "rgba(0,0,0,0.1)",
+            textShadow: "1px 1px 1px black",
         },
     });
 
@@ -97,9 +121,23 @@ export const PanelTitle = withStyles(styles)((props: PanelTitleProps) => {
     );
 });
 
-type PanelSubtitleProps = MuiStyles & TypographyProps & { noUnderline?: boolean };
-export const PanelSubtitle = withStyles(styles)(({ classes, noUnderline, ...otherProps }: PanelSubtitleProps) => (
-    <Typography className={clsx(classes.title, classes.subtitle, !noUnderline && classes.subtitleUnderline)} variant="h5" {...otherProps} />
+type PanelSubtitleProps = MuiStyles & TypographyProps & { noUnderline?: boolean; className?: string };
+export const PanelSubtitle = withStyles(styles)(({ classes, noUnderline, className, ...otherProps }: PanelSubtitleProps) => (
+    <Typography
+        className={clsx(classes.title, classes.subtitle, !noUnderline && classes.subtitleUnderline, className)}
+        variant="h5"
+        {...otherProps}
+    />
+));
+
+type ComingSoonProps = MuiStyles & { className?: string };
+export const ComingSoon = withStyles(styles)(({ className, classes }: ComingSoonProps) => (
+    <div className={clsx(classes.comingSoon, className)}>
+        <div className={classes.comingSoonBackground} />
+        <PanelSubtitle noUnderline className={classes.comingSoonText}>
+            Coming Soon!
+        </PanelSubtitle>
+    </div>
 ));
 
 type PanelBottomBarProps = MuiStyles & { children: React.ReactChild; className?: string };
@@ -112,14 +150,26 @@ export const PanelButton = withStyles(styles)(({ classes, className, ...otherPro
     <Button className={clsx(classes.button, className)} variant="contained" {...otherProps} />
 ));
 
-type PanelStatProps = MuiStyles & { title: string; children: React.ReactChild };
-export const PanelStat = withStyles(styles)(({ classes, title, children }: PanelStatProps) => (
-    <Paper className={classes.stat} variant="outlined">
+type PanelTextStatProps = MuiStyles & { title: string; children: React.ReactChild };
+export const PanelTextStat = withStyles(styles)(({ classes, title, children }: PanelTextStatProps) => (
+    <div className={classes.stat}>
         <Typography variant="h6" className={classes.statTitle}>
             {title}
         </Typography>
         <Typography variant="body1" component="div" color="textSecondary" className={classes.statContent}>
             {children}
         </Typography>
-    </Paper>
+    </div>
+));
+
+type PanelNumberStatProps = MuiStyles & { title: string; number: number };
+export const PanelNumberStat = withStyles(styles)(({ classes, title, number }: PanelNumberStatProps) => (
+    <div className={clsx(classes.stat, classes.numberStat)}>
+        <Typography variant="h3" className={classes.statTitle}>
+            {number}
+        </Typography>
+        <Typography variant="body1" component="div" color="textSecondary" align="center" className={classes.statContent}>
+            {title}
+        </Typography>
+    </div>
 ));

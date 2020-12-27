@@ -48,7 +48,7 @@ const styles = () =>
         actions: {
             display: "flex",
             marginLeft: 15,
-            paddingBottom: 15,
+            paddingBottom: 10,
             ...spaceChildren("horizontally", 12),
         },
     });
