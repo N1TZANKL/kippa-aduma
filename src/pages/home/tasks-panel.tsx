@@ -8,7 +8,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 import { MuiStyles, Task } from "src/utils/interfaces";
-import Panel, { PanelTitle } from "src/components/general/Panel";
+import Panel, { PanelSubtitle, PanelTitle } from "src/components/general/Panel";
 import { sortObjectArrayByDate } from "src/utils/helpers/dates";
 import { repeatElement } from "src/utils/helpers/jsx";
 import { replaceLineBreaksWithSymbol } from "src/utils/helpers/strings";
@@ -69,6 +69,11 @@ const styles = () =>
             alignItems: "center",
             ...spaceChildren("horizontally", 6),
         },
+        noTasksText: {
+            width: "100%",
+            textAlign: "center",
+            marginTop: 15,
+        },
     });
 
 const TaskUser = withStyles(styles)(({ user, type, classes }: MuiStyles & { user: UserSessionObject; type: string }) => (
@@ -89,6 +94,22 @@ const StatusToggleButtons = withStyles(styles)(({ classes, selected, setSelected
     </ButtonGroup>
 ));
 
+type TaskRowProps = MuiStyles & { task: Task };
+const TaskRow = withStyles(styles)(({ classes, task }: TaskRowProps) => (
+    <div className={classes.task}>
+        <span className={clsx(classes.center, classes.taskTextWrapper)}>
+            <SvgIcon fontSize="small">
+                <path d={mdiNote} />
+            </SvgIcon>
+            <span className={classes.taskText}>{replaceLineBreaksWithSymbol(task.description)}</span>
+        </span>
+        <span className={classes.center}>
+            <TaskUser type="Reporter" user={task.creator} />
+            {task.assignee && <TaskUser type="Assignee" user={task.assignee} />}
+        </span>
+    </div>
+));
+
 type TasksPanelProps = MuiStyles & { className: string };
 
 function TasksPanel({ classes, className }: TasksPanelProps) {
@@ -105,6 +126,8 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
         fetchTasks();
     }, []);
 
+    const displayedTasks = tasks ? tasks.filter((t) => t.status === selectedStatus) : [];
+
     return (
         <Panel className={clsx(className, classes.root)}>
             <PanelTitle className={clsx(classes.center, classes.title)}>
@@ -113,22 +136,13 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
             </PanelTitle>
             <div className={classes.tasksWrapper}>
                 {tasks ? (
-                    tasks
-                        .filter((t) => t.status === selectedStatus)
-                        .map((task) => (
-                            <div key={task.id} className={classes.task}>
-                                <span className={clsx(classes.center, classes.taskTextWrapper)}>
-                                    <SvgIcon fontSize="small">
-                                        <path d={mdiNote} />
-                                    </SvgIcon>
-                                    <span className={classes.taskText}>{replaceLineBreaksWithSymbol(task.description)}</span>
-                                </span>
-                                <span className={classes.center}>
-                                    <TaskUser type="Reporter" user={task.creator} />
-                                    {task.assignee && <TaskUser type="Assignee" user={task.assignee} />}
-                                </span>
-                            </div>
-                        ))
+                    displayedTasks.length > 0 ? (
+                        displayedTasks.map((task) => <TaskRow key={task.id} task={task} />)
+                    ) : (
+                        <PanelSubtitle className={classes.noTasksText} noUnderline>
+                            (No tasks to show)
+                        </PanelSubtitle>
+                    )
                 ) : (
                     <div>{repeatElement(<Skeleton height="35px" />, 4)}</div>
                 )}

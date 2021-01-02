@@ -16,15 +16,23 @@ const styles = () =>
         root: {
             justifyContent: "space-evenly",
         },
-        listWrapper: {
+        flexWrap: {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexWrap: "wrap",
+        },
+        listWrapper: {
             ...spaceChildren("horizontally", 15),
         },
         avatarWrapper: {
             marginTop: 10,
+        },
+        manageButtonWrapper: {
+            borderTop: "1px solid rgba(255,255,255,0.1)",
+            marginTop: 15,
+            paddingTop: 12,
+            width: "100%",
         },
     });
 
@@ -36,7 +44,7 @@ function UsersPanel({ classes, className, users }: UsersPanelProps) {
     return (
         <Panel className={clsx(className, classes.root)}>
             <PanelTitle>Campaign Team</PanelTitle>
-            <div className={classes.listWrapper}>
+            <div className={clsx(classes.flexWrap, classes.listWrapper)}>
                 {users ? (
                     users.map(({ nickname, color, username, id }) => (
                         <div key={id} className={classes.avatarWrapper} title={`${nickname} ${username !== nickname ? `(${username})` : ""}`}>
@@ -47,23 +55,14 @@ function UsersPanel({ classes, className, users }: UsersPanelProps) {
                     <>{repeatElement(<Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />, 5)}</>
                 )}
             </div>
-            <Box
-                display="flex"
-                flexWrap="wrap"
-                alignItems="center"
-                justifyContent="center"
-                borderTop="1px solid rgba(255,255,255,0.1)"
-                paddingTop="12px"
-                marginTop="15px"
-                width="100%"
-            >
+            <div className={clsx(classes.flexWrap, classes.manageButtonWrapper)}>
                 <PanelButton variant="outlined" disabled={!users}>
                     Manage Users
                 </PanelButton>
                 <Box margin="5px 0 5px 15px" clone>
                     <ComingSoon />
                 </Box>
-            </Box>
+            </div>
         </Panel>
     );
 }
