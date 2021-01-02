@@ -5,6 +5,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 
 import { MuiStyles } from "src/utils/interfaces";
 import { spaceChildren } from "src/utils/helpers/css";
+import { repeatElement } from "src/utils/helpers/jsx";
 import Panel, { PanelNumberStat, PanelTitle } from "src/components/general/Panel";
 import { Get } from "src/utils/helpers/api";
 
@@ -54,11 +55,7 @@ function OverviewPanel({ classes, className }: OverviewPanelProps) {
                         <PanelNumberStat number={overviewNumbers.finishedTasksAmount} title={"Tasks finished"} />
                     </>
                 ) : (
-                    <>
-                        <Skeleton width="30%" />
-                        <Skeleton width="30%" />
-                        <Skeleton width="30%" />
-                    </>
+                    <>{repeatElement(<Skeleton width="30%" />, 3)}</>
                 )}
             </div>
         </Panel>

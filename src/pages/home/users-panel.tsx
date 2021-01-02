@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 import { MuiStyles } from "src/utils/interfaces";
+import { repeatElement } from "src/utils/helpers/jsx";
 import Panel, { PanelTitle, PanelButton, ComingSoon } from "src/components/general/Panel";
 import { UserSessionObject } from "utils/session";
 import { spaceChildren } from "src/utils/helpers/css";
@@ -43,13 +44,7 @@ function UsersPanel({ classes, className, users }: UsersPanelProps) {
                         </div>
                     ))
                 ) : (
-                    <>
-                        <Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />
-                        <Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />
-                        <Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />
-                        <Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />
-                        <Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />
-                    </>
+                    <>{repeatElement(<Skeleton variant="circle" width={AVATAR_SIZE} height={AVATAR_SIZE} />, 5)}</>
                 )}
             </div>
             <Box

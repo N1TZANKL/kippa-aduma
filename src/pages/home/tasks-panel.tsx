@@ -10,6 +10,8 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import { MuiStyles, Task } from "src/utils/interfaces";
 import Panel, { PanelTitle } from "src/components/general/Panel";
 import { sortObjectArrayByDate } from "src/utils/helpers/dates";
+import { repeatElement } from "src/utils/helpers/jsx";
+import { replaceLineBreaksWithSymbol } from "src/utils/helpers/strings";
 import { notLastChild, spaceChildren } from "src/utils/helpers/css";
 import { Get } from "src/utils/helpers/api";
 import { TaskStatuses } from "server/db/task/model";
@@ -76,6 +78,17 @@ const TaskUser = withStyles(styles)(({ user, type, classes }: MuiStyles & { user
     </div>
 ));
 
+type StatusToggleButtonsProps = MuiStyles & { selected: TaskStatuses; setSelected: (newStatus: TaskStatuses) => void };
+const StatusToggleButtons = withStyles(styles)(({ classes, selected, setSelected }: StatusToggleButtonsProps) => (
+    <ButtonGroup variant="outlined" size="small" className={classes.buttonGroup}>
+        {Object.values(TaskStatuses).map((status) => (
+            <Button key={status} className={clsx(selected === status && classes.selectedStatus)} onClick={() => setSelected(status)}>
+                {STATUS_TO_TEXT[status]}
+            </Button>
+        ))}
+    </ButtonGroup>
+));
+
 type TasksPanelProps = MuiStyles & { className: string };
 
 function TasksPanel({ classes, className }: TasksPanelProps) {
@@ -96,17 +109,7 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
         <Panel className={clsx(className, classes.root)}>
             <PanelTitle className={clsx(classes.center, classes.title)}>
                 Tasks Overview:
-                <ButtonGroup variant="outlined" size="small" className={classes.buttonGroup}>
-                    {Object.values(TaskStatuses).map((status) => (
-                        <Button
-                            key={status}
-                            className={clsx(selectedStatus === status && classes.selectedStatus)}
-                            onClick={() => setSelectedStatus(status)}
-                        >
-                            {STATUS_TO_TEXT[status]}
-                        </Button>
-                    ))}
-                </ButtonGroup>
+                <StatusToggleButtons selected={selectedStatus} setSelected={setSelectedStatus} />
             </PanelTitle>
             <div className={classes.tasksWrapper}>
                 {tasks ? (
@@ -118,7 +121,7 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
                                     <SvgIcon fontSize="small">
                                         <path d={mdiNote} />
                                     </SvgIcon>
-                                    <span className={classes.taskText}>{task.description.replace(/\n/g, " ↵ ")}</span>
+                                    <span className={classes.taskText}>{replaceLineBreaksWithSymbol(task.description)}</span>
                                 </span>
                                 <span className={classes.center}>
                                     <TaskUser type="Reporter" user={task.creator} />
@@ -127,12 +130,7 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
                             </div>
                         ))
                 ) : (
-                    <div>
-                        <Skeleton height="35px" />
-                        <Skeleton height="35px" />
-                        <Skeleton height="35px" />
-                        <Skeleton height="35px" />
-                    </div>
+                    <div>{repeatElement(<Skeleton height="35px" />, 4)}</div>
                 )}
             </div>
         </Panel>

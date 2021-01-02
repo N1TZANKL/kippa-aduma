@@ -7,9 +7,9 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import { MuiStyles, Credential, OperationPost } from "src/utils/interfaces";
 import Panel, { PanelTitle, PanelIconStat } from "src/components/general/Panel";
 import { spaceChildren } from "src/utils/helpers/css";
+import { replaceLineBreaksWithSymbol, firstLetterUppercase } from "src/utils/helpers/strings";
 import DataTypeText from "src/components/general/DataTypeText";
 import { Get } from "src/utils/helpers/api";
-import { firstLetterUppercase } from "src/utils/helpers/strings";
 import UserListItem from "src/components/general/UserListItem";
 
 const styles = () =>
@@ -67,7 +67,7 @@ const DataType = withStyles(styles)(({ children, classes }: StringProp & MuiStyl
 ));
 
 const PossiblyLongText = withStyles(styles)(({ children = "(None)", classes }: MuiStyles & { children?: string }) => (
-    <span className={classes.longText}>{children.replace(/\n/g, " ↵ ")}</span>
+    <span className={classes.longText}>{replaceLineBreaksWithSymbol(children)}</span>
 ));
 
 type RecentHighlightsPanelProps = MuiStyles & { className: string };
