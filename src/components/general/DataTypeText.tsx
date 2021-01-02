@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 
@@ -13,6 +13,7 @@ const styles = () =>
             padding: "1px 8px",
             backgroundColor: "rgba(255,255,255,0.1)",
             width: "fit-content",
+            display: "inline-block",
         },
         text: {
             fontFamily: "Inconsolata",
@@ -21,11 +22,11 @@ const styles = () =>
         },
     });
 
-type DataTypeTextProps = MuiStyles & { children: string; className?: string };
-function DataTypeText({ classes, className, children }: DataTypeTextProps) {
+type DataTypeTextProps = MuiStyles & TypographyProps & { children: string; className?: string };
+function DataTypeText({ classes, className, children, ...typographyProps }: DataTypeTextProps) {
     return (
         <Paper className={clsx(classes.root, className)}>
-            <Typography variant="body1" className={classes.text}>
+            <Typography variant="body1" className={classes.text} {...typographyProps}>
                 {children}
             </Typography>
         </Paper>

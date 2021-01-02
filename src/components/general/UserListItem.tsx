@@ -65,11 +65,12 @@ type UserListItemProps = MuiStyles &
         online?: boolean;
         onClick?: MouseEventHandler;
         avatarSize?: number;
+        className?: string;
     };
 
-function UserListItem({ classes, online, color, nickname, onClick, isCurrentUser, avatarSize }: UserListItemProps) {
+function UserListItem({ classes, className, online, color, nickname, onClick, isCurrentUser, avatarSize }: UserListItemProps) {
     return (
-        <div className={clsx(classes.root, onClick && classes.clickable)} onClick={onClick}>
+        <div className={clsx(classes.root, onClick && classes.clickable, className)} onClick={onClick}>
             <div className={classes.flex}>
                 <UserAvatar color={color} nickname={nickname} size={avatarSize} />
                 <div className={classes.nicknameWrapper}>

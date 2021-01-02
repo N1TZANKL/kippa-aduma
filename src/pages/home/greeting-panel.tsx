@@ -17,41 +17,40 @@ import CreateCredForm from "../creds/create-cred-form";
 import CreateTaskForm from "../tasks/create-task-form";
 import TasksContext from "../tasks/context";
 
-const styles = () =>
-    createStyles({
-        root: {
-            padding: "15px 15px 0px",
-        },
-        titleWrapper: {
-            flexDirection: "column",
-            marginBottom: 25,
-        },
-        wrap: {
-            justifyContent: "center",
-            flexWrap: "wrap",
-            wordBreak: "break-word",
-        },
-        center: {
-            display: "flex",
-            alignItems: "center",
-        },
-        icon: {
-            marginLeft: 7,
-            display: "inline-block",
-        },
-        actionsText: {
-            display: "flex",
-            alignItems: "center",
-            ...spaceChildren("horizontally", 7),
-            paddingBottom: 10,
-        },
-        actions: {
-            display: "flex",
-            marginLeft: 15,
-            paddingBottom: 10,
-            ...spaceChildren("horizontally", 12),
-        },
-    });
+const styles = createStyles({
+    root: {
+        padding: "15px 15px 0px",
+    },
+    titleWrapper: {
+        flexDirection: "column",
+        marginBottom: 25,
+    },
+    wrap: {
+        justifyContent: "center",
+        flexWrap: "wrap",
+        wordBreak: "break-word",
+    },
+    center: {
+        display: "flex",
+        alignItems: "center",
+    },
+    icon: {
+        marginLeft: 7,
+        display: "inline-block",
+    },
+    actionsText: {
+        display: "flex",
+        alignItems: "center",
+        ...spaceChildren("horizontally", 7),
+        paddingBottom: 10,
+    },
+    actions: {
+        display: "flex",
+        marginLeft: 15,
+        paddingBottom: 10,
+        ...spaceChildren("horizontally", 12),
+    },
+});
 
 const UPDATE_INTERVAL = 1000 * 15;
 
@@ -108,9 +107,9 @@ function useQuickAction(users: UserSessionObject[], user: UserSessionObject): [(
     return [setOpenFormTitle, DialogComponent];
 }
 
-type GreetingPanelProps = MuiStyles & { users: UserSessionObject[]; user: UserSessionObject; className: string };
+type GreetingPanelProps = MuiStyles & { users?: UserSessionObject[]; user: UserSessionObject; className: string };
 
-function GreetingPanel({ classes, className, user, users }: GreetingPanelProps) {
+function GreetingPanel({ classes, className, user, users = [] }: GreetingPanelProps) {
     const [currentTime, setCurrentTime] = useState(getTodaysData());
     const [greeting, greetingIcon, getNewGreeting] = useRandomGreeting();
     const [setAction, OpenFormDialog] = useQuickAction(users, user);

@@ -34,7 +34,7 @@ type UserAvatarProps = {
     withBorder?: boolean;
 };
 
-export default function UserAvatar({ size = 38, variant, withBorder, color, nickname }: UserAvatarProps): JSX.Element {
+export default function UserAvatar({ size = 38, variant = "box", withBorder, color, nickname }: UserAvatarProps): JSX.Element {
     const classes = useStyles({ color });
 
     return (

@@ -5,8 +5,10 @@ import clsx from "clsx";
 import Paper, { PaperProps } from "@material-ui/core/Paper";
 import Button, { ButtonProps } from "@material-ui/core/Button";
 import Box, { BoxProps } from "@material-ui/core/Box";
+import SvgIcon from "@material-ui/core/SvgIcon";
 
 import { MuiStyles } from "src/utils/interfaces";
+import { spaceChildren } from "src/utils/helpers/css";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -95,6 +97,33 @@ const styles = (theme: Theme) =>
             backgroundColor: "rgba(0,0,0,0.1)",
             textShadow: "1px 1px 1px black",
         },
+        iconStat: {
+            height: "100%",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            padding: 0,
+            "& > *": { padding: 10 },
+        },
+        statIcon: {
+            fontSize: 52,
+        },
+        statIconWrapper: {
+            height: "100%",
+            backgroundColor: "rgba(255,255,255,0.05)",
+            marginRight: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 150,
+            minWidth: 150,
+            ...spaceChildren("vertically", 10),
+        },
+        iconStatContent: {
+            minWidth: 175,
+            display: "flex",
+            flexDirection: "column",
+        },
     });
 
 type PanelProps = MuiStyles & PaperProps & { fullHeight?: boolean; className?: string };
@@ -173,6 +202,23 @@ export const PanelNumberStat = withStyles(styles)(({ classes, title, number }: P
         </Typography>
         <Typography variant="body1" component="div" color="textSecondary" align="center" className={classes.statContent}>
             {title}
+        </Typography>
+    </div>
+));
+
+type PanelIconStatProps = MuiStyles & { title: string; icon: string; children: React.ReactNode; className?: string };
+export const PanelIconStat = withStyles(styles)(({ classes, title, icon, children, className }: PanelIconStatProps) => (
+    <div className={clsx(classes.stat, classes.iconStat, className)}>
+        <div className={classes.statIconWrapper}>
+            <SvgIcon className={classes.statIcon}>
+                <path d={icon} />
+            </SvgIcon>
+            <PanelSubtitle align="center" noUnderline>
+                {title}
+            </PanelSubtitle>
+        </div>
+        <Typography variant="body1" component="div" color="textSecondary" className={clsx(classes.statContent, classes.iconStatContent)}>
+            {children}
         </Typography>
     </div>
 ));
