@@ -33,7 +33,7 @@ const styles = (theme: Theme) =>
 type UsersPanelProps = MuiStyles & { user: UserSessionObject; className: string; users?: UserSessionObject[] };
 
 function UsersPanel({ classes, user, users, className }: UsersPanelProps) {
-    //const onlineUsersAmount = 1; // TODO: Implement user online states
+    // const onlineUsersAmount = 1; // TODO: Implement user online states
     const allUsersAmount = users?.length || 0;
 
     const usersListWithCurrentUserFirst = [user, ...(users?.filter((u) => u.nickname !== user.nickname) || [])];

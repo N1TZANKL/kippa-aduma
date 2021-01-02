@@ -98,7 +98,11 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
                 Tasks Overview:
                 <ButtonGroup variant="outlined" size="small" className={classes.buttonGroup}>
                     {Object.values(TaskStatuses).map((status) => (
-                        <Button className={clsx(selectedStatus === status && classes.selectedStatus)} onClick={() => setSelectedStatus(status)}>
+                        <Button
+                            key={status}
+                            className={clsx(selectedStatus === status && classes.selectedStatus)}
+                            onClick={() => setSelectedStatus(status)}
+                        >
                             {STATUS_TO_TEXT[status]}
                         </Button>
                     ))}

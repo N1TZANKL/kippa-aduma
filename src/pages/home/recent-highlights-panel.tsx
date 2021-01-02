@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import { mdiKeyStar, mdiNotebookEdit } from "@mdi/js";
 import clsx from "clsx";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 import { MuiStyles, Credential, OperationPost } from "src/utils/interfaces";
 import Panel, { PanelTitle, PanelIconStat } from "src/components/general/Panel";
@@ -10,7 +11,6 @@ import DataTypeText from "src/components/general/DataTypeText";
 import { Get } from "src/utils/helpers/api";
 import { firstLetterUppercase } from "src/utils/helpers/strings";
 import UserListItem from "src/components/general/UserListItem";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 const styles = () =>
     createStyles({
@@ -33,7 +33,7 @@ const styles = () =>
             flexBasis: "59%",
         },
         longText: {
-            //whiteSpace: "pre-wrap",
+            // whiteSpace: "pre-wrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "-webkit-box",
@@ -49,7 +49,7 @@ const styles = () =>
             display: "inline-block",
         },
         highlight: {
-            //display: "flex",
+            // display: "flex",
             margin: "2px 0",
         },
     });
