@@ -17,3 +17,10 @@ export function Delete(relativePath: string, data: unknown): Promise<Response> {
 export function Patch(relativePath: string, data: unknown): Promise<Response> {
     return fetchJSON(relativePath, data, "PATCH");
 }
+
+export function Get(relativePath: string): Promise<Response> {
+    return fetch(`/api/${relativePath}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    });
+}

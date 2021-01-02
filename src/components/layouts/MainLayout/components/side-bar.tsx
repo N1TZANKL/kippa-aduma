@@ -66,7 +66,7 @@ const SidebarBox = withStyles(styles)(({ classes, route }: SidebarBoxProps) => {
     return (
         <Link href={route.path}>
             <div className={clsx(classes.sidebarBox, route.path === currentPath && classes.currentPathBox)} title={route.title}>
-                <SvgIcon className={classes.sidebarIcon} style={route.iconStyle}>
+                <SvgIcon className={classes.sidebarIcon}>
                     <path d={route.icon} />
                 </SvgIcon>
             </div>

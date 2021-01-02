@@ -6,6 +6,7 @@ import { ArrayToSelectionList } from "src/components/general/Select";
 import { FormBase, TextField, Select } from "src/components/forms";
 import { CredentialTypes } from "server/db/cred/model";
 import { Post } from "src/utils/helpers/api";
+import { Credential } from "src/utils/interfaces";
 import { FormBaseOnSubmit } from "src/components/forms/FormBase";
 
 const validationSchema = Yup.object({
@@ -24,9 +25,9 @@ interface CredFormValues {
     additionalInformation?: string;
 }
 
-type CreateCredFormProps = { addCred: (newCred: Credential) => void; onClose?: () => void };
+type CreateCredFormProps = { onSubmitSuccess?: (newCred: Credential) => void; onClose?: () => void };
 
-export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps): JSX.Element {
+export default function CreateCredForm({ onSubmitSuccess, onClose }: CreateCredFormProps): JSX.Element {
     const initialValues: CredFormValues = { username: "", password: "", type: CredentialTypes.DOMAIN, worksOn: "" };
 
     function getworksOnLabel(credType: CredentialTypes) {
@@ -44,7 +45,10 @@ export default function CreateCredForm({ addCred, onClose }: CreateCredFormProps
 
     const onSubmit: FormBaseOnSubmit = (formData) =>
         Post("cred", formData).then(async (res) => {
-            if (res.ok) res.json().then((newCred) => addCred(newCred));
+            if (res.ok)
+                res.json().then((newCred) => {
+                    if (onSubmitSuccess) onSubmitSuccess(newCred);
+                });
             else {
                 const errorMessage = await res.text();
                 throw new Error(errorMessage);

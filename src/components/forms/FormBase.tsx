@@ -6,7 +6,7 @@ import { ObjectSchema } from "yup";
 import { MuiStyles } from "src/utils/interfaces";
 import { spaceChildren } from "src/utils/helpers/css";
 
-import FormError from "./FormError";
+import { FormError, FormSuccess } from "./FormText";
 import SubmitButton from "./SubmitButton";
 
 const styles = () =>
@@ -33,14 +33,20 @@ type FormRef = MutableRefObject<FormikProps<any> | null>;
 
 function FormBase({ classes, initialValues, validationSchema, onSubmit, children, onClose }: FormBaseProps, ref: FormRef) {
     const [formError, setFormError] = useState<string>("");
+    const [formSuccess, setFormSuccess] = useState<string>("");
 
     async function onSubmitForm(values: FormikValues, { setSubmitting, resetForm }: FormikHelpers<FormikValues>) {
         setFormError("");
+        setFormSuccess("");
 
         try {
             await onSubmit(values);
-            if (onClose) onClose();
-            else resetForm();
+            if (onClose) {
+                onClose();
+                return;
+            }
+            resetForm();
+            setFormSuccess("Action completed successfully!");
         } catch (e) {
             setFormError(e.message);
         } finally {
@@ -55,6 +61,7 @@ function FormBase({ classes, initialValues, validationSchema, onSubmit, children
                     {children(formikProps)}
                     <SubmitButton isSubmitting={formikProps.isSubmitting} />
                     {formError ? <FormError>{formError}</FormError> : null}
+                    {formSuccess ? <FormSuccess>{formSuccess}</FormSuccess> : null}
                 </Form>
             )}
         </Formik>

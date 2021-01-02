@@ -62,10 +62,16 @@ export default function CreateTaskForm({ onClose, editedTask }: CreateTaskFormPr
 
         const taskId = editedTask?.id;
         const request = () => (taskId ? Patch("task", { action: "edit", data: { ...requestData, taskId } }) : Post("task", requestData));
-        const callback = taskId ? replaceTask : addTask;
+
+        // if created through home page, addTask/replaceTask would not be available, therefore this check.
+        let callback: typeof addTask | null = null;
+        if (addTask && replaceTask) callback = taskId ? replaceTask : addTask;
 
         return request().then(async (res) => {
-            if (res.ok) res.json().then((newTask) => callback(newTask));
+            if (res.ok)
+                res.json().then((newTask) => {
+                    if (callback) callback(newTask);
+                });
             else {
                 const errorMessage = await res.text();
                 throw new Error(errorMessage);

@@ -58,7 +58,7 @@ function TimelineTopBar({ classes, onSearch, searchString = "", addPost }: Timel
                     Create
                 </PanelButton>
                 <FormDialog title="Create Post" open={formOpen} onClose={toggleFormOpen}>
-                    <CreatePostForm addPost={addPost} onClose={toggleFormOpen} />
+                    <CreatePostForm onSubmitSuccess={addPost} onClose={toggleFormOpen} />
                 </FormDialog>
             </div>
         </PanelTitle>

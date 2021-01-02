@@ -1,13 +1,11 @@
 import React from "react";
-import { mdiHome, mdiAccountKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiClipboardList } from "@mdi/js";
-import { CSSProperties } from "@material-ui/styles";
+import { mdiHome, mdiFolderKey, mdiNotebook, mdiFolderAccount, mdiChat, mdiNote } from "@mdi/js";
 
 export type Route = {
     title: string;
     icon: string;
     path: string;
     component: React.ReactElement;
-    iconStyle?: CSSProperties;
 };
 
 export default [
@@ -18,13 +16,12 @@ export default [
     },
     {
         title: "Credentials",
-        icon: mdiAccountKey,
-        iconStyle: { marginRight: 6 },
+        icon: mdiFolderKey,
         path: "/credentials",
     },
     {
         title: "Tasks",
-        icon: mdiClipboardList,
+        icon: mdiNote,
         path: "/tasks",
     },
     {
