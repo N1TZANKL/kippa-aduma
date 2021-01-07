@@ -7,6 +7,7 @@ declare namespace NodeJS {
         readonly SECRET: string;
         readonly SITE_COOKIE: string;
         readonly CHAT_PORT: number;
+        readonly STORAGE_PORT: number;
         readonly DB_NAME: string;
     }
 }
