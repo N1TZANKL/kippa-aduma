@@ -175,6 +175,15 @@ const styles = (theme: Theme) =>
                     backgroundColor: `rgba(255,255,255,0.5) !important`,
                 },
             },
+            ".oc-fm--notification": {
+                backgroundColor: "transparent !important",
+            },
+            ".oc-fm--notification__header": {
+                backgroundColor: `${lighten(theme.constants.appBackground, 0.05)} !important`,
+            },
+            ".oc-fm--notification-progress-item": {
+                backgroundColor: `${theme.constants.appBackgroundHighlight} !important`,
+            },
         },
     });
 
