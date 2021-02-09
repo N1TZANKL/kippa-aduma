@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect, useMemo } from "react";
 import { WithStyles, withStyles, createStyles, Theme } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
@@ -9,11 +9,12 @@ import { mdiEmoticonConfusedOutline } from "@mdi/js";
 import { Get } from "src/utils/helpers/api";
 
 import DialogBase from "../general/DialogBase";
+import FileRenderer from "../general/FileRenderer";
 
 const styles = (theme: Theme) =>
     createStyles({
         content: {
-            paddingTop: 25,
+            padding: 15,
             backgroundColor: theme.constants.appBackgroundHighlight,
             display: "flex",
             flexDirection: "column",
@@ -51,8 +52,16 @@ export default withStyles(styles)(FilePreviewDialog);
 
 const FilePreview = withStyles(styles)(({ classes, filePath }: FilePreviewProps) => {
     const [fileBlobPath, setBlobPath] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const fileExtension = useMemo(() => {
+        const file = filePath.split("/").pop();
+        return file.split(".").reverse()[0];
+    }, [filePath]);
 
     function triggerErrorBoundary(errorMessage: string) {
+        setLoading(false);
+
         setBlobPath(() => {
             throw new Error(errorMessage);
         });
@@ -60,13 +69,21 @@ const FilePreview = withStyles(styles)(({ classes, filePath }: FilePreviewProps)
 
     // fetch file every time path changes
     useEffect(() => {
-        if (!filePath) return;
+        if (loading || !filePath) return;
+
+        setLoading(true);
+
         Get(`file?path=${filePath}`)
             .then(async (res) => {
                 if (!res.ok) {
                     triggerErrorBoundary(await res.text());
                     return;
                 }
+
+                setLoading(false);
+
+                // create blob only for supported files?
+
                 const blob = await res.blob();
                 const blobURL = URL.createObjectURL(blob);
                 setBlobPath(blobURL);
@@ -74,17 +91,15 @@ const FilePreview = withStyles(styles)(({ classes, filePath }: FilePreviewProps)
             .catch((e) => triggerErrorBoundary(e.message));
     }, [filePath]);
 
-    return (
+    return loading ? (
         <>
-            {fileBlobPath || (
-                <>
-                    <CircularProgress size={100} color="inherit" />
-                    <Typography variant="h5" className={classes.loadingText}>
-                        Loading file...
-                    </Typography>
-                </>
-            )}
+            <CircularProgress size={100} color="inherit" />
+            <Typography variant="h5" className={classes.loadingText}>
+                Loading file...
+            </Typography>
         </>
+    ) : (
+        <FileRenderer blobPath={fileBlobPath} extension={fileExtension} />
     );
 });
 
