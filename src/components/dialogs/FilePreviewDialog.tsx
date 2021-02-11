@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
             alignItems: "center",
             justifyContent: "center",
         },
-        loadingText: {
+        text: {
             fontStyle: "italic",
             fontFamily: "Inconsolata",
             marginTop: 25,
@@ -50,14 +50,9 @@ function FilePreviewDialog({ classes, filePath, onClose }: FilePreviewDialogProp
 
 export default withStyles(styles)(FilePreviewDialog);
 
-const FilePreview = withStyles(styles)(({ classes, filePath }: FilePreviewProps) => {
+const FilePreview = withStyles(styles)(({ classes, filePath = "" }: FilePreviewProps) => {
     const [fileBlobPath, setBlobPath] = useState("");
     const [loading, setLoading] = useState(false);
-
-    const fileExtension = useMemo(() => {
-        const file = filePath.split("/").pop();
-        return file.split(".").reverse()[0];
-    }, [filePath]);
 
     function triggerErrorBoundary(errorMessage: string) {
         setLoading(false);
@@ -80,26 +75,36 @@ const FilePreview = withStyles(styles)(({ classes, filePath }: FilePreviewProps)
                     return;
                 }
 
-                setLoading(false);
-
+                console.log("res", res);
                 // create blob only for supported files?
 
                 const blob = await res.blob();
                 const blobURL = URL.createObjectURL(blob);
+
                 setBlobPath(blobURL);
+                setLoading(false);
             })
             .catch((e) => triggerErrorBoundary(e.message));
     }, [filePath]);
 
+    if (!filePath)
+        return (
+            <Typography variant="h5" className={classes.text}>
+                (No file to display)
+            </Typography>
+        );
+
+    const filename = filePath.split("/").pop() || "";
+
     return loading ? (
         <>
             <CircularProgress size={100} color="inherit" />
-            <Typography variant="h5" className={classes.loadingText}>
+            <Typography variant="h5" className={classes.text}>
                 Loading file...
             </Typography>
         </>
     ) : (
-        <FileRenderer blobPath={fileBlobPath} extension={fileExtension} />
+        <FileRenderer blobPath={fileBlobPath} filename={filename} />
     );
 });
 
@@ -121,7 +126,7 @@ class FilePreviewErrorBoundaryClass extends Component<FilePreviewErrorBoundaryPr
         const { error } = this.state;
 
         return error ? (
-            <Typography component="div" variant="h5" color="error" align="center" className={classes.loadingText}>
+            <Typography component="div" variant="h5" color="error" align="center" className={classes.text}>
                 <SvgIcon color="error" className={classes.errorIcon}>
                     <path d={mdiEmoticonConfusedOutline} />
                 </SvgIcon>
