@@ -18,7 +18,7 @@ const validationSchema = Yup.object({
     type: Yup.string().oneOf(Object.values(OperationPostTypes)).default(OperationPostTypes.UPDATE).required("Required"),
     additionalInformation: Yup.string(),
     happenedAt: Yup.date().required("Required"),
-    attachments: Yup.array(),
+    attachments: Yup.mixed(),
 });
 
 type CreatePostFormProps = { onSubmitSuccess?: (newPost: OperationPost) => void; onClose?: () => void };
@@ -27,10 +27,7 @@ export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostF
     const [attachmentsFolderId, setAttachmentsFolderId] = useState("");
 
     useEffect(() => {
-        connectorNodeV1.api.getIdForPath(storageApiOptions, "/files/post-attachments").then((id: string) => {
-            setAttachmentsFolderId(id);
-            console.log("id", id);
-        });
+        connectorNodeV1.api.getIdForPath(storageApiOptions, "/post-attachments").then((id: string) => setAttachmentsFolderId(id));
     }, []);
 
     const initialValues = { type: OperationPostTypes.UPDATE, happenedAt: new Date().toISOString(), description: "", attachments: [] };
@@ -39,19 +36,26 @@ export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostF
         if (attachments.length === 0) return;
 
         try {
-            // IMPORTANT NOTE: This code depends on the library @opuscapita/filemanager,
-            // and could break if their API changes.
+            // IMPORTANT NOTE: This code depends heavily on the API of the library @opuscapita/filemanager,
+            // and could break if it changes.
 
             if (!attachmentsFolderId) throw new Error("Could not fetch ID of attachments folder in storage");
 
-            // step 1: find attachments folder
+            const res = await connectorNodeV1.api.createFolder(storageApiOptions, attachmentsFolderId, postId);
+            const newFolderId = res.body.id;
 
-            // step 2: create folder {postId}
-            // step 3: upload the attachments to that folder
-            // const promises = attachments.map(a => connectorNodeV1.api.uploadFileToId(a, ...));
-            // const results = await Promise.all(promises);
+            const promises = attachments.map((file) =>
+                connectorNodeV1.api.uploadFileToId({
+                    apiOptions: storageApiOptions,
+                    onProgress: () => {},
+                    file: { type: file.type, name: file.name, file },
+                    parentId: newFolderId,
+                })
+            );
+            await Promise.all(promises);
         } catch (e) {
-            // show snackbar
+            console.error(e);
+            // show snackbar?
         }
     }
 
@@ -62,7 +66,7 @@ export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostF
             const newPost: OperationPost = await res.json();
             if (onSubmitSuccess) {
                 onSubmitSuccess(newPost);
-                uploadAttachmentsToStorage(attachments, newPost.id);
+                uploadAttachmentsToStorage(Array.from(attachments), newPost.id);
             }
         } else {
             const errorMessage = await res.text();

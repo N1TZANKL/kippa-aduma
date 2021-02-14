@@ -36,7 +36,7 @@ export async function createPost(userId: string, postData: Omit<OperationPostMod
             },
             ...post
         },
-    } = newPostDoc.populate("author", "-passwordHash").execPopulate();
+    } = await newPostDoc.populate("author", "-passwordHash").execPopulate();
 
     return { id, ...post, author: { id: authorId, ...author } };
 }
