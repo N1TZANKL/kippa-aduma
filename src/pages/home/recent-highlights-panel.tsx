@@ -56,7 +56,7 @@ const styles = () =>
 
 type StringProp = { children: string };
 
-const HighlightTitle = ({ children }: StringProp) => <b>{children}: </b>;
+const HighlightTitle = ({ children }: StringProp) => <b>{children} </b>;
 
 const Highlight = withStyles(styles)(({ classes, ...props }: MuiStyles) => <div className={classes.highlight} {...props} />);
 
@@ -75,13 +75,16 @@ type RecentHighlightsPanelProps = MuiStyles & { className: string };
 function RecentHighlightsPanel({ classes, className }: RecentHighlightsPanelProps) {
     const [recentCred, setRecentCred] = useState<Credential | null>(null);
     const [recentPost, setRecentPost] = useState<OperationPost | null>(null);
+    const [fetching, setFetching] = useState(false);
 
     useEffect(() => {
         const fetchHighlights = async () => {
+            setFetching(true);
             const res = await Get("general/recent-highlights");
             const data = await res.json();
             setRecentCred(data.cred);
             setRecentPost(data.post);
+            setFetching(false);
         };
         fetchHighlights();
     }, []);
@@ -90,38 +93,55 @@ function RecentHighlightsPanel({ classes, className }: RecentHighlightsPanelProp
         <Panel className={clsx(className, classes.root)}>
             <PanelTitle>Recent Highlights</PanelTitle>
             <div className={classes.highlightsWrapper}>
-                {recentCred ? (
-                    <PanelIconStat title="Newest credential" icon={mdiKeyStar} className={classes.credHighlight}>
-                        <Highlight>
-                            <HighlightTitle>Username</HighlightTitle> {recentCred.username}
-                        </Highlight>
-                        <Highlight>
-                            <HighlightTitle>Type</HighlightTitle> <DataType>{recentCred.type}</DataType>
-                        </Highlight>
-                        <Highlight>
-                            <HighlightTitle>More Info</HighlightTitle>
-                            <PossiblyLongText>{recentCred.additionalInformation}</PossiblyLongText>
-                        </Highlight>
-                    </PanelIconStat>
+                {fetching ? (
+                    <>
+                        <Skeleton className={classes.credHighlight} height="100%" />
+                        <Skeleton className={classes.postHighlight} height="100%" />
+                    </>
                 ) : (
-                    <Skeleton className={classes.credHighlight} height="100%" />
-                )}
-                {recentPost ? (
-                    <PanelIconStat title="Newest Post" icon={mdiNotebookEdit} className={classes.postHighlight}>
-                        <Highlight>
-                            <HighlightTitle>Type</HighlightTitle> <DataType>{recentPost.type}</DataType>
-                        </Highlight>
-                        <Highlight>
-                            <HighlightTitle>Written By</HighlightTitle>
-                            <UserListItem {...recentPost.author} avatarSize={22} className={classes.postAuthor} />
-                        </Highlight>
-                        <Highlight>
-                            <HighlightTitle>{recentPost.title ? "Title" : "Description"}</HighlightTitle>
-                            <PossiblyLongText>{recentPost.title || recentPost.description}</PossiblyLongText>
-                        </Highlight>
-                    </PanelIconStat>
-                ) : (
-                    <Skeleton className={classes.postHighlight} height="100%" />
+                    <>
+                        <PanelIconStat title="Newest credential" icon={mdiKeyStar} className={classes.credHighlight}>
+                            {recentCred ? (
+                                <>
+                                    <Highlight>
+                                        <HighlightTitle>Username:</HighlightTitle> {recentCred.username}
+                                    </Highlight>
+                                    <Highlight>
+                                        <HighlightTitle>Type:</HighlightTitle> <DataType>{recentCred.type}</DataType>
+                                    </Highlight>
+                                    <Highlight>
+                                        <HighlightTitle>More Info:</HighlightTitle>
+                                        <PossiblyLongText>{recentCred.additionalInformation}</PossiblyLongText>
+                                    </Highlight>
+                                </>
+                            ) : (
+                                <i>
+                                    <HighlightTitle>(No cred to show)</HighlightTitle>
+                                </i>
+                            )}
+                        </PanelIconStat>
+                        <PanelIconStat title="Newest Post" icon={mdiNotebookEdit} className={classes.postHighlight}>
+                            {recentPost ? (
+                                <>
+                                    <Highlight>
+                                        <HighlightTitle>Type:</HighlightTitle> <DataType>{recentPost.type}</DataType>
+                                    </Highlight>
+                                    <Highlight>
+                                        <HighlightTitle>Written By:</HighlightTitle>
+                                        <UserListItem {...recentPost.author} avatarSize={22} className={classes.postAuthor} />
+                                    </Highlight>
+                                    <Highlight>
+                                        <HighlightTitle>{recentPost.title ? "Title:" : "Description:"}</HighlightTitle>
+                                        <PossiblyLongText>{recentPost.title || recentPost.description}</PossiblyLongText>
+                                    </Highlight>
+                                </>
+                            ) : (
+                                <i>
+                                    <HighlightTitle>(No post to show)</HighlightTitle>
+                                </i>
+                            )}
+                        </PanelIconStat>
+                    </>
                 )}
             </div>
         </Panel>
