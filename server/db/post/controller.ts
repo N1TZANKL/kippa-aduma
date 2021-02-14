@@ -5,7 +5,16 @@ import { OperationPost } from "src/utils/interfaces";
 import postModel, { OperationPostModel } from "./model";
 
 export async function getAllPosts(): Promise<OperationPost[]> {
-    return postModel.find({}, "-_id").populate("author", "-_id -passwordHash").lean();
+    return postModel
+        .find({})
+        .populate("author", "-passwordHash")
+        .then((posts) =>
+            posts.map(({ id, _doc: { _id, __v, author: { _doc: { _id: authorId, ...author } }, ...post } }) => ({
+                id,
+                ...post,
+                author: { id: authorId.toString(), ...author },
+            }))
+        );
 }
 
 export async function createPost(userId: string, postData: Omit<OperationPostModel, "writtenAt" | "author">): Promise<OperationPost> {
@@ -19,5 +28,15 @@ export async function createPost(userId: string, postData: Omit<OperationPostMod
 
     await newPostDoc.save();
 
-    return newPostDoc.populate("author", "-_id -passwordHash").execPopulate();
+    const {
+        _doc: {
+            _id: id,
+            author: {
+                _doc: { _id: authorId, ...author },
+            },
+            ...post
+        },
+    } = newPostDoc.populate("author", "-passwordHash").execPopulate();
+
+    return { id, ...post, author: { id: authorId, ...author } };
 }
