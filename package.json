@@ -7,7 +7,6 @@
         "build": "next build",
         "start": "next start",
         "type-check": "tsc",
-        "mongo-w": "mongod --port 27017 --bind_ip localhost --dbpath \"C:\\Program Files\\MongoDB\\Server\\4.4\\data\" --replSet rs0",
         "lint": "npx eslint --ext .ts,.tsx --color .",
         "lint-fix": "npx eslint --ext .ts,.tsx --color . --fix",
         "test": "jest",
