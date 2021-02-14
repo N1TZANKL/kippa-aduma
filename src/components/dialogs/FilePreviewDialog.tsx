@@ -75,7 +75,6 @@ const FilePreview = withStyles(styles)(({ classes, filePath = "" }: FilePreviewP
                     return;
                 }
 
-                console.log("res", res);
                 // create blob only for supported files?
 
                 const blob = await res.blob();

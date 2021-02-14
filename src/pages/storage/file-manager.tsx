@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FileManager as OrigFileManager, FileNavigator } from "@opuscapita/react-filemanager";
 import connectorNodeV1 from "@opuscapita/react-filemanager-connector-node-v1";
 import { mdiFileEye } from "@mdi/js";
+
 import FilePreviewDialog from "src/components/dialogs/FilePreviewDialog";
 
 const CUSTOM_FILE_VIEWER_CAPABILITY = {
