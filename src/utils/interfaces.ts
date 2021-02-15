@@ -15,7 +15,7 @@ export type APIFunctionObject = { [key: string]: (res: NextApiResponse<unknown>,
 
 export type ChatMessage = Omit<ChatMessageModel, "user"> & { user: UserSessionObject };
 
-export type OperationPost = Omit<OperationPostModel, "author"> & { author: UserSessionObject };
+export type OperationPost = Omit<OperationPostModel, "author"> & { author: UserSessionObject; id: string };
 
 export type Credential = CredModel & { id: string };
 

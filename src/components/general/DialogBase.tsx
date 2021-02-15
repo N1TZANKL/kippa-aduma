@@ -10,10 +10,16 @@ import { MuiStyles } from "src/utils/interfaces";
 
 const styles = (theme: Theme) =>
     createStyles({
-        dialogPaper: {
+        normalDialog: {
             minWidth: 500,
             width: "calc(20% + 175px)",
             maxWidth: "80%",
+        },
+        bigDialog: {
+            minWidth: 750,
+            width: "95vw",
+            maxWidth: "95vw",
+            height: "90vh",
         },
         title: {
             display: "flex",
@@ -29,11 +35,11 @@ const styles = (theme: Theme) =>
         },
     });
 
-export type DialogBaseProps = MuiStyles & DialogProps & { title: string; open: boolean; onClose: () => void };
+export type DialogBaseProps = MuiStyles & DialogProps & { title: string; open: boolean; onClose: () => void; size?: "normal" | "big" };
 
-function DialogBase({ classes, title, open, onClose, children }: DialogBaseProps) {
+function DialogBase({ classes, title, open, onClose, children, size = "normal" }: DialogBaseProps) {
     return (
-        <Dialog open={open} onClose={onClose} classes={{ paper: classes.dialogPaper }}>
+        <Dialog open={open} onClose={onClose} classes={{ paper: classes[`${size}Dialog`] }}>
             <DialogTitle disableTypography className={classes.title}>
                 <Typography variant="h5" className={classes.titleText}>
                     {title}

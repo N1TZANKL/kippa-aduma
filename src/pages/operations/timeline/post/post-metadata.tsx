@@ -16,10 +16,13 @@ import PostTypeIndicator from "./post-type-indicator";
 
 const styles = () =>
     createStyles({
-        postMetadata: {
+        root: {
             fontStyle: "italic",
             display: "flex",
             alignItems: "center",
+            flexWrap: "wrap-reverse",
+            justifyContent: "flex-end",
+            //maxWidth: "70%",
         },
         metadataIcon: {
             fontSize: 16,
@@ -39,6 +42,9 @@ const styles = () =>
             alignItems: "center",
             flexWrap: "wrap",
         },
+        justifyEnd: {
+            justifyContent: "flex-end",
+        },
     });
 
 type PostMetadataProps = MuiStyles & { author: UserSessionObject; writtenTimestamp: string; happenedTimestamp: string; type: OperationPostTypes };
@@ -47,11 +53,11 @@ function PostMetadata(props: PostMetadataProps) {
     const { classes } = props;
 
     return (
-        <Typography variant="caption" color="textSecondary" className={classes.postMetadata}>
-            <div className={clsx(classes.data, classes.flexCenter)}>
+        <Typography variant="caption" color="textSecondary" className={classes.root}>
+            <div className={clsx(classes.data, classes.flexCenter, classes.justifyEnd)}>
                 <span className={classes.flexCenter}>
                     <CreateIcon className={classes.metadataIcon} />
-                    Written {formatDate(props.writtenTimestamp)}
+                    {formatDate(props.writtenTimestamp)}
                 </span>
                 <span className={classes.flexCenter}>at {formatTime(props.writtenTimestamp)}</span>
                 <span className={classes.flexCenter}>
@@ -59,10 +65,10 @@ function PostMetadata(props: PostMetadataProps) {
                     <UserNicknameText className={classes.authorNameText} user={props.author} />
                 </span>
             </div>
-            <div className={clsx(classes.data, classes.flexCenter)}>
+            <div className={clsx(classes.data, classes.flexCenter, classes.justifyEnd)}>
                 <span className={classes.flexCenter}>
                     <AccessTimeIcon className={clsx(classes.metadataIcon, classes.timeIcon)} />
-                    Happened {formatDate(props.happenedTimestamp)}
+                    {formatDate(props.happenedTimestamp)}
                 </span>
                 <span>at {formatTime(props.happenedTimestamp)}</span>
             </div>

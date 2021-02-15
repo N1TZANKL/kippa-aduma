@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
+import fs from "fs";
 import { parse } from "url";
 import http, { createServer } from "http";
 
@@ -37,6 +38,7 @@ app.prepare().then(() => {
     connectToDb();
     const io = initializeChatSocket();
     distributeNewChatMessages(io);
+    initializeFileManager();
 
     // Promise.all([getDb(), initializeChatSocket()]).then(([db, io]) => watchNewChatMessages(db, io));
 });
@@ -62,4 +64,20 @@ function initializeChatSocket() {
 
     server.listen(process.env.CHAT_PORT, () => log(`Chat listening on port ${process.env.CHAT_PORT}`, LogTypes.INFO));
     return io;
+}
+
+function initializeFileManager() {
+    const config = {
+        fsRoot: __dirname + "/storage",
+        rootName: "(Storage root)",
+        port: process.env.STORAGE_PORT,
+        host: "localhost",
+    };
+
+    if (!fs.existsSync(config.fsRoot)) fs.mkdirSync(config.fsRoot);
+
+    const filemanager = require("@opuscapita/filemanager-server");
+    filemanager.server.run(config);
+
+    log(`Storage API listening on port ${process.env.STORAGE_PORT}`, LogTypes.INFO);
 }

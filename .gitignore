@@ -35,3 +35,10 @@ yarn-error.log*
 
 # custom
 todo.txt
+
+# storage - ignore everything but keep post-attachments folder
+!/server/storage
+/server/storage/*
+!/server/storage/post-attachments
+/server/storage/post-attachments/*
+!/server/storage/post-attachments/.gitkeep

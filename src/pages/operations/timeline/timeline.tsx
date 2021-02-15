@@ -9,6 +9,7 @@ import Panel from "src/components/general/Panel";
 import { notLastChild, spaceChildren } from "src/utils/helpers/css";
 import { NotFoundAnimation } from "src/components/animations";
 import { OperationPostTypes } from "server/db/post/model";
+import FilePreviewDialog from "src/components/dialogs/FilePreviewDialog";
 
 import Post from "./post";
 import TimelineTopBar from "./timeline-top-bar";
@@ -65,6 +66,7 @@ function PostsTimeline(props: PostTimelineProps) {
 
     const [shownPosts, setShownPosts] = useState<number>(POSTS_PER_PAGE);
     const [searchString, setSearchString] = useState<string>("");
+    const [previewedFile, setPreviewedFile] = useState("");
 
     function showMorePosts() {
         setShownPosts((prevState) => prevState + POSTS_PER_PAGE);
@@ -97,7 +99,9 @@ function PostsTimeline(props: PostTimelineProps) {
                     {filteredPosts.length > 0 ? (
                         sortPosts(filteredPosts)
                             .slice(0, shownPosts)
-                            .map((post: OperationPost) => <Post post={post} key={`${post.writtenAt}_${post.author.username}`} />)
+                            .map((post: OperationPost) => (
+                                <Post post={post} previewAttachment={setPreviewedFile} key={`${post.writtenAt}_${post.author.username}`} />
+                            ))
                     ) : (
                         <div className={classes.noPostsFoundWrapper}>
                             <NotFoundAnimation message={`No${posts.length > 0 ? " matching" : ""} posts found`} />
@@ -122,6 +126,7 @@ function PostsTimeline(props: PostTimelineProps) {
                     </>
                 )}
             </div>
+            <FilePreviewDialog onClose={() => setPreviewedFile("")} filePath={previewedFile} />
         </Panel>
     );
 }

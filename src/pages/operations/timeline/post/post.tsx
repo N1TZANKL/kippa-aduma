@@ -1,13 +1,14 @@
 import React from "react";
-import { withStyles, createStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 
-import { MuiStyles, OperationPost } from "src/utils/interfaces";
+import { OperationPost } from "src/utils/interfaces";
 
 import PostMetadata from "./post-metadata";
 import PostTitle from "./post-title";
 import PostContent from "./post-content";
+import PostAttachments from "./post-attachments";
 import { PostTypeToColor } from "./post-type-indicator";
 
 const styles = () =>
@@ -28,10 +29,9 @@ const styles = () =>
         },
     });
 
-type PostProps = MuiStyles & { post: OperationPost };
+type PostProps = WithStyles<typeof styles> & { post: OperationPost; previewAttachment: (attachmentPath: string) => void };
 
-function Post(props: PostProps) {
-    const { classes, post } = props;
+function Post({ classes, post, previewAttachment }: PostProps) {
     const { title, type } = post;
 
     return (
@@ -41,6 +41,7 @@ function Post(props: PostProps) {
                 <PostContent post={post} />
                 <div className={classes.postBottomBar}>
                     <PostMetadata type={type} author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />
+                    <PostAttachments postId={post.id} previewAttachment={previewAttachment} />
                 </div>
             </Paper>
         </Box>

@@ -44,7 +44,7 @@ function TimelineTopBar({ classes, onSearch, searchString = "", addPost }: Timel
 
     return (
         <PanelTitle className={clsx(classes.titleRoot, classes.flexCenter)} withBackground>
-            <span>Operation Timeline</span>
+            <span>Operation Feed</span>
             <div className={clsx(classes.flexCenter, classes.actionsRoot)}>
                 <SearchBox
                     placeholder="Search posts by text, type..."
