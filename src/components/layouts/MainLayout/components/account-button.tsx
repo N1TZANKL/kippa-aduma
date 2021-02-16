@@ -40,7 +40,7 @@ function AccountButton({ user }: AccountButtonProps): React.ReactElement {
                     horizontal: "right",
                 }}
                 items={[
-                    { title: "My Profile", icon: AccountCircleIcon },
+                    // { title: "My Profile", icon: AccountCircleIcon },
                     { title: "Sign Out", icon: LogoutIcon, onClick: signOut },
                 ]}
             />

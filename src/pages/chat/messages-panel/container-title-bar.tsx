@@ -1,10 +1,8 @@
 import React from "react";
 import { withStyles, createStyles } from "@material-ui/core/styles";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 import { MuiStyles } from "src/utils/interfaces";
 import { PanelTitle } from "src/components/general/Panel";
-import IconButton from "src/components/general/IconButton";
 
 const styles = () =>
     createStyles({
@@ -24,7 +22,7 @@ function ContainerTitleBar({ classes }: MuiStyles) {
     return (
         <PanelTitle className={classes.root} withBackground>
             Group Chat
-            <IconButton icon={AttachFileIcon} title="Send File" p={6} />
+            {/* <IconButton icon={AttachFileIcon} title="Send File" p={6} /> */}
         </PanelTitle>
     );
 }
