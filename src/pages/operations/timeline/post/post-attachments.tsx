@@ -9,7 +9,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { usePopoverState } from "src/utils/hooks";
 import Menu from "src/components/general/Menu";
 
-const storageApiOptions = { apiRoot: `http://localhost:${process.env.STORAGE_PORT}` };
+const storageApiOptions = { apiRoot: `http://${process.env.HOST}:${process.env.STORAGE_PORT}` };
 
 const styles = (theme: Theme) =>
     createStyles({

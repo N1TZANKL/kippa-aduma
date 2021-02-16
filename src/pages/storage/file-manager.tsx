@@ -21,7 +21,7 @@ export default function FileManager(): JSX.Element {
 
     const apiOptions = {
         ...connectorNodeV1.apiOptions,
-        apiRoot: `http://localhost:${process.env.STORAGE_PORT}`,
+        apiRoot: `http://${process.env.HOST}:${process.env.STORAGE_PORT}`,
     };
 
     function onDoubleClickItem({ rowData }) {

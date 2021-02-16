@@ -15,6 +15,7 @@ import log, { LogTypes } from "../utils/logger";
 import connectToDb from "./db";
 import messageModel from "./db/message/model";
 
+const host = process.env.HOST || "localhost";
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -33,7 +34,7 @@ app.prepare().then(() => {
     }).listen(port);
 
     // tslint:disable-next-line:no-console
-    log(`Server listening at http://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`, LogTypes.SUCCESS);
+    log(`Server listening at http://${host}:${port} as ${dev ? "development" : process.env.NODE_ENV}`, LogTypes.SUCCESS);
 
     connectToDb();
     const io = initializeChatSocket();
@@ -71,7 +72,7 @@ function initializeFileManager() {
         fsRoot: `${__dirname}/storage`,
         rootName: "(Storage root)",
         port: process.env.STORAGE_PORT,
-        host: "localhost",
+        host,
     };
 
     if (!fs.existsSync(config.fsRoot)) fs.mkdirSync(config.fsRoot);

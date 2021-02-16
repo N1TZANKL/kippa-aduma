@@ -9,5 +9,6 @@ declare namespace NodeJS {
         readonly CHAT_PORT: number;
         readonly STORAGE_PORT: number;
         readonly DB_NAME: string;
+        readonly HOST: string;
     }
 }
