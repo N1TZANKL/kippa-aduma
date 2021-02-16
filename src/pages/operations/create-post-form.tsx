@@ -64,9 +64,9 @@ export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostF
 
         if (res.ok) {
             const newPost: OperationPost = await res.json();
+            uploadAttachmentsToStorage(Array.from(attachments), newPost.id);
             if (onSubmitSuccess) {
                 onSubmitSuccess(newPost);
-                uploadAttachmentsToStorage(Array.from(attachments), newPost.id);
             }
         } else {
             const errorMessage = await res.text();

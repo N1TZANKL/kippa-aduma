@@ -45,6 +45,7 @@ const styles = (theme: Theme) =>
         },
         shortPanel: {
             flexBasis: "40%",
+            maxWidth: "40%",
         },
         longPanel: {
             flexBasis: "59%",
@@ -80,9 +81,7 @@ function Home({ classes, user }: HomeProps): JSX.Element {
                 </div>
                 <div className={classes.row}>
                     <HomePanels.TasksPanel className={clsx(classes.panel, classes.longPanel)} />
-                    <Panel className={clsx(classes.panel, classes.shortPanel)}>
-                        <PanelTitle>Recently Uploaded Files</PanelTitle>- WIP -
-                    </Panel>
+                    <HomePanels.MilestonesPanel className={clsx(classes.panel, classes.shortPanel)} />
                 </div>
             </div>
         </PageLayout>

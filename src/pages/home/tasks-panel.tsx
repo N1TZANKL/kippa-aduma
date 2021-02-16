@@ -131,7 +131,7 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
     return (
         <Panel className={clsx(className, classes.root)}>
             <PanelTitle className={clsx(classes.center, classes.title)}>
-                Tasks Overview:
+                Tasks Overview
                 <StatusToggleButtons selected={selectedStatus} setSelected={setSelectedStatus} />
             </PanelTitle>
             <div className={classes.tasksWrapper}>
