@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useMemo } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { WithStyles, withStyles, createStyles, Theme } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
@@ -64,7 +64,7 @@ const FilePreview = withStyles(styles)(({ classes, filePath = "" }: FilePreviewP
 
     // fetch file every time path changes
     useEffect(() => {
-        if (loading || !filePath) return;
+        if (!filePath) return;
 
         setLoading(true);
 
@@ -117,6 +117,7 @@ class FilePreviewErrorBoundaryClass extends Component<FilePreviewErrorBoundaryPr
     }
 
     componentDidCatch(e: Error) {
+        // eslint-disable-next-line no-console
         console.error(`Caught error while attempting to read file: ${this.props.filePath}`, e);
     }
 

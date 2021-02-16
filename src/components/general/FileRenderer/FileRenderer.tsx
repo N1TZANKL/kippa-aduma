@@ -1,11 +1,12 @@
 import React from "react";
+import Typography from "@material-ui/core/Typography";
+import { WithStyles, withStyles, createStyles } from "@material-ui/core/styles";
+import DownloadIcon from "@material-ui/icons/GetApp";
+
 import ImageRenderer from "./renderers/image-renderer";
 import PdfRenderer from "./renderers/pdf-renderer";
 import TextRenderer from "./renderers/text-renderer";
 import MediaRenderer from "./renderers/media-renderer";
-import Typography from "@material-ui/core/Typography";
-import { WithStyles, withStyles, createStyles } from "@material-ui/core/styles";
-import DownloadIcon from "@material-ui/icons/GetApp";
 
 const styles = createStyles({
     downloadButton: {
@@ -52,10 +53,15 @@ const EXTENSIONS_TO_RENDERER = new Map([
 ]);
 
 function getRendererByExtension(ext: string) {
-    for (const extArray of Array.from(EXTENSIONS_TO_RENDERER.keys())) {
-        if (extArray.includes(ext)) return EXTENSIONS_TO_RENDERER.get(extArray);
-    }
-    return null;
+    let renderer = null;
+    Array.from(EXTENSIONS_TO_RENDERER.keys()).some((extArray) => {
+        if (extArray.includes(ext)) {
+            renderer = EXTENSIONS_TO_RENDERER.get(extArray);
+            return true;
+        }
+        return false;
+    });
+    return renderer;
 }
 
 function downloadFile(blobPath: string, filename: string) {

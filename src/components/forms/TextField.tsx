@@ -7,11 +7,11 @@ import { firstLetterUppercase } from "src/utils/helpers/strings";
 
 type FormikTextFieldProps = Omit<TextFieldProps, "type"> & { fieldKey: string; type?: "text" | "sensitive" | "multiline" };
 export default function FormikTextField({ fieldKey, type = "text", label, ...props }: FormikTextFieldProps): JSX.Element {
-    const [field, meta, helpers] = useField(fieldKey);
+    const [field, meta, { setTouched }] = useField(fieldKey);
 
     useEffect(() => {
-        if (field.value && !meta.touched) helpers.setTouched(true);
-    }, [field.value]);
+        if (field.value && !meta.touched) setTouched(true);
+    }, [field.value, meta.touched, setTouched]);
 
     const FieldComponent = type === "sensitive" ? SensitiveTextField : TextField;
 

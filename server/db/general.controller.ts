@@ -10,12 +10,11 @@ export async function getHighlights(): Promise<{ cred: Credential | null; post: 
             credModel.find().sort({ _id: -1 }).limit(1).lean(),
             postModel.find().sort({ _id: -1 }).limit(1).populate("author", "-_id -passwordHash").lean(),
         ]);
-    
+
         return { cred: { id: credId, ...cred }, post: { id: postId, ...post } };
-    }
-    // no highlights
-    catch(e) {
-        return {cred: null, post: null};
+    } catch (e) {
+        // no highlights
+        return { cred: null, post: null };
     }
 }
 

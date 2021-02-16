@@ -54,7 +54,9 @@ export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostF
             );
             await Promise.all(promises);
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.error(e);
+
             // show snackbar?
         }
     }

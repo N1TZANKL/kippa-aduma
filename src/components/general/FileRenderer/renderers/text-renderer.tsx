@@ -23,7 +23,7 @@ function TextRenderer({ classes, blobPath }: TextRendererProps) {
         fetch(blobPath)
             .then((res) => res.text().then((blobText) => setText(blobText)))
             .catch(() => setError(true));
-    }, []);
+    }, [blobPath]);
 
     return isError ? (
         <Typography color="error" align="center">

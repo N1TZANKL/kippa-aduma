@@ -22,7 +22,7 @@ const styles = () =>
             alignItems: "center",
             flexWrap: "wrap-reverse",
             justifyContent: "flex-end",
-            //maxWidth: "70%",
+            // maxWidth: "70%",
         },
         metadataIcon: {
             fontSize: 16,

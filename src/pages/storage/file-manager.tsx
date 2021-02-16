@@ -16,7 +16,7 @@ const CUSTOM_FILE_VIEWER_CAPABILITY = {
 
 const unpatchedCapabilities = ["sort", "download"];
 
-export default function FileManager() {
+export default function FileManager(): JSX.Element {
     const [previewedFile, setPreviewedFile] = useState("");
 
     const apiOptions = {
@@ -37,14 +37,14 @@ export default function FileManager() {
                     id="filemanager-1"
                     api={connectorNodeV1.api}
                     apiOptions={apiOptions}
-                    capabilities={(apiOptions, actions) => {
-                        const basicCapabilities = connectorNodeV1.capabilities(apiOptions, actions);
-                        let patchedCapabilities = [];
+                    capabilities={(options, actions) => {
+                        const basicCapabilities = connectorNodeV1.capabilities(options, actions);
+                        const patchedCapabilities = [];
 
                         // This next piece of code makes it impossible UI-wise to make any changes to the
                         // post-attachments directory, making it read-only. The only capabilities that should
                         // work are file download/preview.
-                        for (const capability of basicCapabilities) {
+                        basicCapabilities.forEach((capability) => {
                             if (unpatchedCapabilities.includes(capability.id)) patchedCapabilities.push(capability);
                             else
                                 patchedCapabilities.push({
@@ -65,7 +65,7 @@ export default function FileManager() {
                                         return false;
                                     },
                                 });
-                        }
+                        });
 
                         return [
                             ...patchedCapabilities,

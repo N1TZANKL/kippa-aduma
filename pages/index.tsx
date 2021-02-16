@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { UserSessionObject, withUserSession } from "utils/session";
 import PageLayout from "src/components/layouts/MainLayout";
 import { MuiStyles } from "src/utils/interfaces";
-import Panel, { PanelTitle } from "src/components/general/Panel";
 import * as HomePanels from "src/pages/home";
 import { Get } from "src/utils/helpers/api";
 

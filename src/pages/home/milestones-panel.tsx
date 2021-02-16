@@ -72,7 +72,7 @@ const styles = createStyles({
         position: "absolute",
         bottom: 30,
         height: "65%",
-        //marginLeft: 11,
+        // marginLeft: 11,
     },
     milestoneFlagDiv: {
         marginBottom: 65,
@@ -175,8 +175,9 @@ function MilestonesPanel({ classes, className }: MilestonesPanelProps) {
                         Add Milestone
                     </PanelButton>
                 </PanelTitle>
-                {milestones ? (
-                    milestones.length > 0 ? (
+                {!milestones && <Skeleton height="100px" width="85%" />}
+                {milestones &&
+                    (milestones.length > 0 ? (
                         <>
                             <div className={classes.milestonesTimeline} />
                             <div className={classes.milestonesWrapper}>
@@ -209,10 +210,7 @@ function MilestonesPanel({ classes, className }: MilestonesPanelProps) {
                         <PanelSubtitle className={classes.noMilestonesText} noUnderline>
                             (No milestones to show)
                         </PanelSubtitle>
-                    )
-                ) : (
-                    <Skeleton height="100px" width="85%" />
-                )}
+                    ))}
             </Panel>
             <FormDialog title="Add Milestone" open={isAddPopupOpen} onClose={() => setAddPopupOpen(false)}>
                 <AddMilestoneForm updateMilestones={updateMilestones} onClose={() => setAddPopupOpen(false)} />

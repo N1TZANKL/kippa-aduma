@@ -68,7 +68,7 @@ function initializeChatSocket() {
 
 function initializeFileManager() {
     const config = {
-        fsRoot: __dirname + "/storage",
+        fsRoot: `${__dirname}/storage`,
         rootName: "(Storage root)",
         port: process.env.STORAGE_PORT,
         host: "localhost",
@@ -76,6 +76,7 @@ function initializeFileManager() {
 
     if (!fs.existsSync(config.fsRoot)) fs.mkdirSync(config.fsRoot);
 
+    // eslint-disable-next-line
     const filemanager = require("@opuscapita/filemanager-server");
     filemanager.server.run(config);
 

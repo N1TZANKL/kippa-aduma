@@ -98,18 +98,18 @@ function PostAttachments({ classes, postId, previewAttachment }: PostAttachments
     const [attachments, setAttachments] = useState<StoredAttachment[]>([]);
 
     useEffect(() => {
+        const getAttachmentsForPost = async () => {
+            try {
+                const id = await connectorNodeV1.api.getIdForPath(storageApiOptions, `/post-attachments/${postId}`);
+                const postAttachments = await connectorNodeV1.api.getChildrenForId(storageApiOptions, { id });
+                setAttachments(postAttachments);
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(`Failed fetching attachments for post with ID ${postId}:`, e);
+            }
+        };
         getAttachmentsForPost();
-    }, []);
-
-    async function getAttachmentsForPost() {
-        try {
-            const id = await connectorNodeV1.api.getIdForPath(storageApiOptions, `/post-attachments/${postId}`);
-            const postAttachments = await connectorNodeV1.api.getChildrenForId(storageApiOptions, { id });
-            setAttachments(postAttachments);
-        } catch (e) {
-            console.error(`Failed fetching attachments for post with ID ${postId}:`, e);
-        }
-    }
+    }, [postId]);
 
     if (attachments.length === 0) return null;
 

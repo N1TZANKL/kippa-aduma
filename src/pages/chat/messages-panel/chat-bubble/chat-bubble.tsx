@@ -102,7 +102,7 @@ function renderTextWithEmojis(messageText: string) {
         const emojiRegex = /(?::[^:]+:(?::skin-tone-(?:\d):)?)/gi;
         const matches = messageLine.match(emojiRegex) || [];
         const emojiArray = matches.map((match, index) => <Emoji key={index} emoji={match} size={22} />);
-        return messageLine.split(emojiRegex).reduce((prev, curr, index) => [...prev, curr, emojiArray[index]], [] as any);
+        return messageLine.split(emojiRegex).reduce((prev, curr, index) => [...prev, curr, emojiArray[index]], [] as (string | typeof Emoji)[]);
     };
 
     return messageText.split(/\n/gi).map((messageLine, index) => (

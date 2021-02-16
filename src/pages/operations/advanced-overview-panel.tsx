@@ -59,7 +59,7 @@ function AdvancedOverviewPanel({ classes, className, posts }: AdvancedOverviewPa
         else agg[type] = 1;
         /* eslint-enable no-param-reassign */
         return agg;
-    }, {} as any);
+    }, {} as Record<OperationPostTypes, number>);
 
     const postTypesUsedCount = Object.keys(postsCountByType).length;
 

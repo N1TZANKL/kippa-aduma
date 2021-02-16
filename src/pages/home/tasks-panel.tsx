@@ -135,17 +135,15 @@ function TasksPanel({ classes, className }: TasksPanelProps) {
                 <StatusToggleButtons selected={selectedStatus} setSelected={setSelectedStatus} />
             </PanelTitle>
             <div className={classes.tasksWrapper}>
-                {tasks ? (
-                    displayedTasks.length > 0 ? (
+                {!tasks && <div>{repeatElement(<Skeleton height="35px" />, 4)}</div>}
+                {tasks &&
+                    (displayedTasks.length > 0 ? (
                         displayedTasks.map((task) => <TaskRow key={task.id} task={task} />)
                     ) : (
                         <PanelSubtitle className={classes.noTasksText} noUnderline>
                             (No tasks to show)
                         </PanelSubtitle>
-                    )
-                ) : (
-                    <div>{repeatElement(<Skeleton height="35px" />, 4)}</div>
-                )}
+                    ))}
             </div>
         </Panel>
     );
