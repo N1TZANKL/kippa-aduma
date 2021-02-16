@@ -7,6 +7,7 @@ enum Models {
     OPERATION_POST = "post",
     CREDENTIAL = "cred",
     TASK = "task",
+    MILESTONE = "milestone",
 }
 
 export default Models;

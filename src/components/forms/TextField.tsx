@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useField } from "formik";
 
 import TextField, { TextFieldProps } from "src/components/general/TextField";
@@ -7,7 +7,11 @@ import { firstLetterUppercase } from "src/utils/helpers/strings";
 
 type FormikTextFieldProps = Omit<TextFieldProps, "type"> & { fieldKey: string; type?: "text" | "sensitive" | "multiline" };
 export default function FormikTextField({ fieldKey, type = "text", label, ...props }: FormikTextFieldProps): JSX.Element {
-    const [field, meta] = useField(fieldKey);
+    const [field, meta, helpers] = useField(fieldKey);
+
+    useEffect(() => {
+        if (field.value && !meta.touched) helpers.setTouched(true);
+    }, [field.value]);
 
     const FieldComponent = type === "sensitive" ? SensitiveTextField : TextField;
 
