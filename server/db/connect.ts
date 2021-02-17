@@ -4,9 +4,9 @@ import log, { LogTypes } from "../../utils/logger";
 
 const DEFAULT_DB_NAME = "kippa_aduma";
 
-const dbUrl = `${process.env.DATABASE_URL}/${process.env.DB_NAME || DEFAULT_DB_NAME}${
-    process.env.NODE_ENV === "production" ? "" : "?synchronize=true"
-}`;
+const dbUrl = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:27017/${
+    process.env.DB_NAME || DEFAULT_DB_NAME
+}${process.env.NODE_ENV === "production" ? "" : "?synchronize=true"}`;
 
 export default function connectToDb(): Promise<typeof mongoose> {
     return mongoose
