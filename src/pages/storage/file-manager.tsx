@@ -1,3 +1,7 @@
+// @opuscapita packages are not typed, so this file is ignored.
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import React, { useState } from "react";
 import { FileManager as OrigFileManager, FileNavigator } from "@opuscapita/react-filemanager";
 import connectorNodeV1 from "@opuscapita/react-filemanager-connector-node-v1";

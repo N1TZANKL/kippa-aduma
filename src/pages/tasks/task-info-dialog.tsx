@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { WithStyles, withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 
-import { Task, MuiStyles } from "src/utils/interfaces";
+import { Task } from "src/utils/interfaces";
 import DialogBase from "src/components/general/DialogBase";
 import DeleteButton from "src/components/forms/DeleteButton";
 import { formatDate } from "src/utils/helpers/dates";
@@ -16,9 +16,10 @@ import { SubmitButton } from "src/components/forms";
 import { spaceChildren } from "src/utils/helpers/css";
 import { Delete } from "src/utils/helpers/api";
 import TasksContext from "src/pages/tasks/context";
+import { UserSessionObject } from "utils/session";
 
 import { STATUS_TO_CHANGED_TIMESTAMP_MEANING, STATUS_TO_TEXT } from "./task-utils";
-import CreateTaskForm from "./create-task-form";
+import CreateTaskForm, { EditableTask } from "./create-task-form";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -34,17 +35,6 @@ const styles = (theme: Theme) =>
             gridTemplateColumns: "125px 1fr",
             "& > *": { marginBottom: 10 },
         },
-        title: {
-            fontWeight: "bold",
-            fontFamily: "Inconsolata",
-        },
-        noInfo: {
-            fontStyle: "italic",
-        },
-        info: {
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-        },
         borderTop: {
             paddingTop: 20,
             marginTop: 10,
@@ -59,9 +49,23 @@ const styles = (theme: Theme) =>
         },
     });
 
-type InfoPairProps = MuiStyles & { title: string; info?: React.ReactChild };
+const infoPairStyles = createStyles({
+    title: {
+        fontWeight: "bold",
+        fontFamily: "Inconsolata",
+    },
+    noInfo: {
+        fontStyle: "italic",
+    },
+    info: {
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+    },
+});
 
-const InfoPair = withStyles(styles)(({ classes, title, info }: InfoPairProps) => (
+type InfoPairProps = WithStyles<typeof infoPairStyles> & { title: string; info?: React.ReactNode };
+
+const InfoPair = withStyles(infoPairStyles)(({ classes, title, info }: InfoPairProps) => (
     <>
         <Typography className={classes.title}>{title}:</Typography>
         {info ? (
@@ -76,7 +80,7 @@ const InfoPair = withStyles(styles)(({ classes, title, info }: InfoPairProps) =>
     </>
 ));
 
-type TaskInfoDialogProps = MuiStyles & {
+type TaskInfoDialogProps = WithStyles<typeof styles> & {
     task?: Task;
     onClose: () => void;
 };
@@ -112,7 +116,7 @@ function TaskInfoDialog({ classes, task, onClose }: TaskInfoDialogProps) {
                     <>
                         <DialogContent className={classes.content}>
                             {isEditMode ? (
-                                <CreateTaskForm onClose={editModeOnClose} editedTask={task} />
+                                <CreateTaskForm onClose={editModeOnClose} editedTask={task as EditableTask} />
                             ) : (
                                 <>
                                     <div className={classes.infoGrid}>
@@ -123,7 +127,10 @@ function TaskInfoDialog({ classes, task, onClose }: TaskInfoDialogProps) {
                                         <InfoPair title="Status" info={<DataTypeText>{STATUS_TO_TEXT[task.status]}</DataTypeText>} />
                                         <InfoPair title="Created By" info={<UserListItem {...task.creator} avatarSize={25} />} />
                                         {task.status !== TaskStatuses.TODO && (
-                                            <InfoPair title="Assigned To" info={<UserListItem {...task.assignee} avatarSize={25} />} />
+                                            <InfoPair
+                                                title="Assigned To"
+                                                info={<UserListItem {...(task.assignee as UserSessionObject)} avatarSize={25} />}
+                                            />
                                         )}
                                         <InfoPair
                                             title={`${STATUS_TO_CHANGED_TIMESTAMP_MEANING[task.status]} At`}

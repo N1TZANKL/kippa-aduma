@@ -72,7 +72,7 @@ function Tasks({ classes, user, users = [], tasks = [] }: TasksProps): JSX.Eleme
                         showOwnTasksOnly={showOwnTasksOnly}
                     />
                     <div className={classes.panelsWrapper}>
-                        <TaskBoards tasks={filteredSortedTasks} replaceTask={replaceTask} deleteTask={deleteTask} />
+                        <TaskBoards tasks={filteredSortedTasks} />
                     </div>
                 </TasksContext.Provider>
             </div>

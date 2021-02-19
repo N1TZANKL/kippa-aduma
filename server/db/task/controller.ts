@@ -12,7 +12,7 @@ export enum PatchActions {
 
 type PatchDataKey = keyof TaskModel | "taskId" | "assigneeId";
 
-async function populateTaskWithIds(taskDoc: mongoose.Document): Promise<Task> {
+async function populateTaskWithIds(taskDoc: any): Promise<Task> {
     /* eslint-disable no-underscore-dangle */
     const {
         _doc: {

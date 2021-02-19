@@ -1,9 +1,7 @@
 import React from "react";
-import { withStyles, createStyles } from "@material-ui/core/styles";
+import { WithStyles, withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-
-import { MuiStyles } from "src/utils/interfaces";
 
 const styles = () =>
     createStyles({
@@ -19,7 +17,7 @@ const styles = () =>
         },
     });
 
-type PostTitleProps = MuiStyles & { title: string };
+type PostTitleProps = WithStyles<typeof styles> & { title: string };
 
 function PostTitle({ classes, title }: PostTitleProps) {
     return (

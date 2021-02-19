@@ -10,7 +10,7 @@ import { firstLetterUppercase } from "src/utils/helpers/strings";
 
 type SelectionListItem = {
     label: string;
-    value: unknown;
+    value: string;
     disabled?: boolean;
 };
 

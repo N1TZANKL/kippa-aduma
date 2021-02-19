@@ -49,7 +49,7 @@ function TimelineTopBar({ classes, onSearch, searchString = "", addPost }: Timel
                 <SearchBox
                     placeholder="Search posts by text, type..."
                     value={searchString}
-                    onChange={(e) => onSearch(e.target.value)}
+                    onSearchStringChange={onSearch}
                     padding="2px 10px"
                     width={250}
                 />

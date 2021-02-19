@@ -37,7 +37,7 @@ function Post({ classes, post, previewAttachment }: PostProps) {
     return (
         <Box border={`1px solid ${PostTypeToColor[type]}`} clone>
             <Paper className={classes.root}>
-                {title ? <PostTitle title={title} type={type} /> : null}
+                {title ? <PostTitle title={title} /> : null}
                 <PostContent post={post} />
                 <div className={classes.postBottomBar}>
                     <PostMetadata type={type} author={post.author} writtenTimestamp={post.writtenAt} happenedTimestamp={post.happenedAt} />
