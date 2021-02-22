@@ -6,6 +6,7 @@ import { NextApiResponse } from "next";
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
+import withDBConnection from "utils/middlewares/mongodb";
 
 async function getFile(filePath: string, res: NextApiResponse) {
     const fullPath = path.normalize(path.join(process.cwd(), "/server/storage", filePath));
@@ -20,7 +21,7 @@ async function getFile(filePath: string, res: NextApiResponse) {
 }
 
 // GET /api/file?path=[]
-export default withAuthenticatedUser(async (req, res) => {
+const fileHandler = withAuthenticatedUser(async (req, res) => {
     if (req.method !== "GET") return res.status(404).send("Invalid api call");
 
     const { path: filePath } = req.query;
@@ -36,3 +37,5 @@ export default withAuthenticatedUser(async (req, res) => {
         return res.status(500).send(GeneralErrors.UnknownError);
     }
 });
+
+export default withDBConnection(fileHandler);

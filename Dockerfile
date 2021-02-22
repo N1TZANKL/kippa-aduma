@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=build /build/package*.json ./
 COPY --from=build /build/.next ./.next
 COPY --from=build /build/public ./public
-RUN npm install next
+COPY --from=build /build/node_modules ./node_modules
 
 EXPOSE 3000
-CMD npm run start
+CMD ["node_modules/.bin/next", "start"]

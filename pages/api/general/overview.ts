@@ -2,9 +2,10 @@ import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import { getOverview } from "server/db/general.controller";
+import withDBConnection from "utils/middlewares/mongodb";
 
 // GET /api/general/recent-highlights
-export default withAuthenticatedUser(async (req, res) => {
+const overviewHandler = withAuthenticatedUser(async (req, res) => {
     if (req.method !== "GET") return res.status(404).send("Invalid api call");
 
     try {
@@ -14,3 +15,5 @@ export default withAuthenticatedUser(async (req, res) => {
         return res.status(500).send(GeneralErrors.UnknownError);
     }
 });
+
+export default withDBConnection(overviewHandler);

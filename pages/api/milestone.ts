@@ -3,6 +3,7 @@ import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
 import { APIFunctionObject } from "src/utils/interfaces";
 import { getMilestones, addMilestone } from "server/db/milestone/controller";
+import withDBConnection from "utils/middlewares/mongodb";
 
 // this NextJS config is to prevent the message "API resolved without sending a response"
 export const config = {
@@ -32,8 +33,10 @@ const methodToFunction: APIFunctionObject = {
     },
 };
 
-export default withAuthenticatedUser(async (req, res, user) => {
+const milestoneHandler = withAuthenticatedUser(async (req, res, user) => {
     if (!req.method || !Object.keys(methodToFunction).includes(req.method)) return res.status(404).send("Invalid api call");
 
     return methodToFunction[req.method](res, req, user);
 });
+
+export default withDBConnection(milestoneHandler);

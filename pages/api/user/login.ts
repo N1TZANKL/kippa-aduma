@@ -4,8 +4,9 @@ import { withIronSession } from "utils/session";
 import { LoginErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
 import { getUser } from "server/db/user/controller";
+import withDBConnection from "utils/middlewares/mongodb";
 
-export default withIronSession(async (req, res) => {
+const loginHandler = withIronSession(async (req, res) => {
     if (req.method !== "POST") return res.status(404).send("Invalid api call");
 
     const { username, password } = req.body;
@@ -31,3 +32,5 @@ export default withIronSession(async (req, res) => {
         return res.status(500).send(GeneralErrors.UnknownError);
     }
 });
+
+export default withDBConnection(loginHandler);

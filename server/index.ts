@@ -2,7 +2,9 @@
 /* eslint-disable import/order */
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: `.env${process.env.NODE_ENV === "production" ? "" : ".local"}` });
+
+console.log("ENV", process.env);
 
 import fs from "fs";
 import { parse } from "url";

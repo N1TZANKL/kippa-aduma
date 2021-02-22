@@ -4,6 +4,8 @@ import { withIronSession as wis, SessionOptions } from "next-iron-session";
 import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse } from "next";
 
 import userModel from "server/db/user/model";
+import log, { LogTypes } from "utils/logger";
+import withDBConnection from "utils/middlewares/mongodb";
 
 export type UserSessionObject = {
     id: string;
@@ -15,7 +17,8 @@ export type UserSessionObject = {
 export const SESSION_OPTIONS: SessionOptions = {
     cookieName: process.env.SITE_COOKIE,
     cookieOptions: {
-        secure: process.env.NODE_ENV === "production",
+        secure: false,
+        //secure: process.env.NODE_ENV === "production",
     },
     password: process.env.SECRET,
 };
@@ -53,7 +56,7 @@ export function withUserSession(
     }, SESSION_OPTIONS);
 }
 
-async function assertUser(req: IncomingMessage /* res: ServerResponse */): Promise<UserSessionObject | null> {
+async function assertUserFunc(req: IncomingMessage /* res: ServerResponse */): Promise<UserSessionObject | null> {
     try {
         const id = req.session.get("user_id");
 
@@ -67,6 +70,9 @@ async function assertUser(req: IncomingMessage /* res: ServerResponse */): Promi
             color: dbUser.color,
         };
     } catch (e) {
+        log("Caught error while attempting to assert user session:", LogTypes.ERROR, e);
         return null;
     }
 }
+
+const assertUser = withDBConnection(assertUserFunc);
