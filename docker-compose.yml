@@ -5,8 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        image: nodejs
-        container_name: nodejs
+        # image: nodejs
         restart: unless-stopped
         env_file: .env
         environment:
@@ -21,20 +20,46 @@ services:
             - MONGO_PASSWORD=$MONGO_PASSWORD
         ports:
             - "80:3000"
-        volumes:
-            - .:/home/node/app
-            - node_modules:/home/node/app/node_modules
         networks:
             - app-network
         depends_on:
             db:
                 condition: service_healthy
+
+    nodejs-services:
+        build:
+            context: .
+            dockerfile: services.Dockerfile
+        # image: nodejs
+        restart: unless-stopped
+        env_file: .env
+        environment:
+            - HOST=$HOST
+            - SECRET=$SECRET
+            - SITE_COOKIE=$SITE_COOKIE
+            - CHAT_PORT=$CHAT_PORT
+            - STORAGE_PORT=$STORAGE_PORT
+            - DB_NAME=$DB_NAME
+            - MONGO_HOST=$MONGO_HOST
+            - MONGO_USERNAME=$MONGO_USERNAME
+            - MONGO_PASSWORD=$MONGO_PASSWORD
+        ports:
+            - "${STORAGE_PORT}:${STORAGE_PORT}"
+            - "${CHAT_PORT}:${CHAT_PORT}"
+        expose:
+            - "${STORAGE_PORT}"
+            - "${CHAT_PORT}"
+        networks:
+            - app-network
+        depends_on:
+            db:
+                condition: service_healthy
+
     db:
         build:
             context: .
             dockerfile: mongo.Dockerfile
         image: mongo:4.4.4-bionic
-        container_name: db
         restart: unless-stopped
         env_file: .env
         environment:
@@ -52,9 +77,9 @@ services:
             test: test $$(echo "rs.status().ok" | mongo -u $${MONGO_INITDB_ROOT_USERNAME} -p $${MONGO_INITDB_ROOT_PASSWORD} --quiet) -eq 1
             interval: 10s
             start_period: 30s
-    mongo-client:
+
+    mongo-initializer:
         image: mongo:4.4.4-bionic
-        container_name: mongo-initializer
         restart: on-failure
         depends_on:
             db:

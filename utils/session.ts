@@ -15,12 +15,12 @@ export type UserSessionObject = {
 };
 
 export const SESSION_OPTIONS: SessionOptions = {
-    cookieName: process.env.SITE_COOKIE,
+    cookieName: process.env.SITE_COOKIE as string,
     cookieOptions: {
         secure: false,
-        //secure: process.env.NODE_ENV === "production",
+        // secure: process.env.NODE_ENV === "production",
     },
-    password: process.env.SECRET,
+    password: process.env.SECRET as string,
 };
 
 export function withIronSession(handler: NextApiHandler): (...args: any[]) => Promise<void> {

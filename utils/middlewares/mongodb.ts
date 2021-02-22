@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserSessionObject } from "../session";
 
 const connectionString =
     process.env.MONGO_CONNECTION_STRING ||
@@ -8,8 +7,8 @@ const connectionString =
         process.env.NODE_ENV === "production" ? "" : "?synchronize=true"
     }`;
 
-export function connectToDb() {
-    if (mongoose.connections[0].readyState) return;
+export function connectToDb(): Promise<typeof mongoose> | null {
+    if (mongoose.connections[0].readyState) return null;
 
     return mongoose.connect(connectionString, {
         useUnifiedTopology: true,
@@ -19,9 +18,13 @@ export function connectToDb() {
     });
 }
 
-type HandlerFunc = (req: NextApiRequest, res?: NextApiResponse, user?: UserSessionObject) => Promise<any>;
+type HandlerFunc = (
+    req: NextApiRequest,
+    res?: NextApiResponse,
+    user?: unknown /* it's actually UserSessionObject, but this prevents a dependency cycle */
+) => Promise<any>;
 
-const withDBConnection = (handler: HandlerFunc) => async (req: NextApiRequest, res?: NextApiResponse, user?: UserSessionObject) => {
+const withDBConnection = (handler: HandlerFunc) => async (req: NextApiRequest, res?: NextApiResponse, user?: unknown): Promise<any> => {
     if (mongoose.connections[0].readyState) {
         // Use current db connection
         return handler(req, res, user);

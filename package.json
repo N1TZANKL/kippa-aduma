@@ -6,6 +6,7 @@
         "dev": "npx next dev",
         "dev-services": "nodemon",
         "build": "next build",
+        "build-services": "npx tsc --build tsconfig.server.json",
         "start": "next start",
         "type-check": "tsc",
         "lint": "npx eslint --ext .ts,.tsx --color .",
