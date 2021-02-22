@@ -4,54 +4,32 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: `.env${process.env.NODE_ENV === "production" ? "" : ".local"}` });
 
-console.log("ENV", process.env);
-
 import fs from "fs";
-import { parse } from "url";
-import http, { createServer } from "http";
-
-import next from "next";
+import { createServer } from "http";
 import socketIO from "socket.io";
+import { connectToDb } from "../utils/middlewares/mongodb";
 
 import log, { LogTypes } from "../utils/logger";
-import connectToDb from "./db";
 import messageModel from "./db/message/model";
+import userModel from "./db/user/model";
 
-const host = process.env.HOST || "localhost";
-const port = parseInt(process.env.PORT || "3000", 10);
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+initServices();
 
-// server "main"
-
-app.prepare().then(() => {
-    createServer((req, res) => {
-        const parsedUrl = parse(req.url!, true);
-        const { pathname, query } = parsedUrl;
-
-        if (pathname === "/a") app.render(req, res, "/a", query);
-        else if (pathname === "/b") app.render(req, res, "/b", query);
-        else handle(req, res, parsedUrl);
-    }).listen(port);
-
-    // tslint:disable-next-line:no-console
-    log(`Server listening at http://${host}:${port} as ${dev ? "development" : process.env.NODE_ENV}`, LogTypes.SUCCESS);
-
-    connectToDb();
-    const io = initializeChatSocket();
-    distributeNewChatMessages(io);
+async function initServices() {
     initializeFileManager();
-
-    // Promise.all([getDb(), initializeChatSocket()]).then(([db, io]) => watchNewChatMessages(db, io));
-});
+    const io = initializeChatSocket();
+    await connectToDb();
+    distributeNewChatMessages(io);
+}
 
 function distributeNewChatMessages(io: socketIO.Server) {
     const changeStream = messageModel.watch([{ $match: { operationType: "insert" } }], { fullDocument: "updateLookup" });
 
     changeStream.on("change", async (change) => {
         if (change.operationType === "insert") {
-            const populatedDocument = await new messageModel(change.fullDocument).populate("user", "-_id -passwordHash").execPopulate();
+            const populatedDocument = await new messageModel(change.fullDocument)
+                .populate({ path: "user", select: "-_id -passwordHash", model: userModel })
+                .execPopulate();
             io.sockets.emit("new message", populatedDocument);
         }
     });
@@ -60,7 +38,7 @@ function distributeNewChatMessages(io: socketIO.Server) {
 }
 
 function initializeChatSocket() {
-    const server = http.createServer();
+    const server = createServer();
     const io = socketIO(server);
 
     // io.on("connection", (socket) => { console.log("new connection", socket.conn.remoteAddress); });
@@ -74,7 +52,7 @@ function initializeFileManager() {
         fsRoot: `${__dirname}/storage`,
         rootName: "(Storage root)",
         port: process.env.STORAGE_PORT,
-        host,
+        host: process.env.HOST,
     };
 
     if (!fs.existsSync(config.fsRoot)) fs.mkdirSync(config.fsRoot);

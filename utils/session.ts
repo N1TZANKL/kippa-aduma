@@ -1,11 +1,11 @@
 import { IncomingMessage } from "http";
 
 import { withIronSession as wis, SessionOptions } from "next-iron-session";
-import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler, GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 
-import userModel from "server/db/user/model";
-import log, { LogTypes } from "utils/logger";
-import withDBConnection from "utils/middlewares/mongodb";
+import userModel from "../server/db/user/model";
+import log, { LogTypes } from "./logger";
+import withDBConnection from "./middlewares/mongodb";
 
 export type UserSessionObject = {
     id: string;

@@ -3,6 +3,7 @@ import mongoose, { Document } from "mongoose";
 import { ChatMessage } from "src/utils/interfaces";
 
 import messageModel, { ChatMessageModel } from "./model";
+import userModel from "../user/model";
 
 type FileMessage = {
     name: string;
@@ -11,7 +12,7 @@ type FileMessage = {
 };
 
 export async function getChatMessages(): Promise<ChatMessage[]> {
-    return messageModel.find({}, "-_id").populate("user", "-_id -passwordHash").lean();
+    return messageModel.find({}, "-_id").populate({ path: "user", select: "-_id -passwordHash", model: userModel }).lean();
 }
 
 export async function createMessage(userId: string, message: string | FileMessage): Promise<Document> {

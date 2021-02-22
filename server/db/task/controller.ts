@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { Task } from "src/utils/interfaces";
 
 import taskModel, { TaskModel, TaskStatuses } from "./model";
+import userModel from "../user/model";
 
 export enum PatchActions {
     EDIT = "edit",
@@ -23,7 +24,7 @@ async function populateTaskWithIds(taskDoc: any): Promise<Task> {
             },
             ...task
         },
-    } = await taskDoc.populate("creator assignee", "-passwordHash").execPopulate();
+    } = await taskDoc.populate({ path: "creator assignee", select: "-passwordHash", model: userModel }).execPopulate();
 
     const baseTask: Task = { ...task, id: id.toString(), creator: { ...creator, id: creatorId.toString() } };
     if (assignee) {

@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "npx next dev",
+        "dev-services": "nodemon",
         "build": "next build",
         "start": "next start",
         "type-check": "tsc",
