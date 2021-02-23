@@ -13,5 +13,6 @@ declare namespace NodeJS {
         readonly MONGO_USERNAME: string;
         readonly MONGO_PASSWORD: string;
         readonly MONGO_CONNECTION_STRING: string; // created by us for mongodb middleware, no need to supply
+        readonly SERVICES_HOST: string; // created by us in docker-compose, no need to supply
     }
 }

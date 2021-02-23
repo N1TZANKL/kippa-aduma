@@ -1,5 +1,6 @@
 module.exports = {
     env: {
+        SERVICES_HOST: process.env.SERVICES_HOST,
         CHAT_PORT: process.env.CHAT_PORT,
         STORAGE_PORT: process.env.STORAGE_PORT,
         HOST: process.env.HOST,

@@ -6,9 +6,11 @@ services:
             context: .
             dockerfile: Dockerfile
         # image: nodejs
+        container_name: app
         restart: unless-stopped
         env_file: .env
         environment:
+            - SERVICES_HOST=app_services
             - HOST=$HOST
             - SECRET=$SECRET
             - SITE_COOKIE=$SITE_COOKIE
@@ -31,9 +33,11 @@ services:
             context: .
             dockerfile: services.Dockerfile
         # image: nodejs
+        container_name: app_services
         restart: unless-stopped
         env_file: .env
         environment:
+            - SERVICES_HOST=app_services
             - HOST=$HOST
             - SECRET=$SECRET
             - SITE_COOKIE=$SITE_COOKIE
@@ -46,9 +50,6 @@ services:
         ports:
             - "${STORAGE_PORT}:${STORAGE_PORT}"
             - "${CHAT_PORT}:${CHAT_PORT}"
-        expose:
-            - "${STORAGE_PORT}"
-            - "${CHAT_PORT}"
         networks:
             - app-network
         depends_on:
@@ -58,8 +59,9 @@ services:
     db:
         build:
             context: .
-            dockerfile: mongo.Dockerfile
+            dockerfile: mongo.Dockerfile # mount keyfile instead of using dockerfile
         image: mongo:4.4.4-bionic
+        container_name: db
         restart: unless-stopped
         env_file: .env
         environment:
@@ -78,8 +80,9 @@ services:
             interval: 10s
             start_period: 30s
 
-    mongo-initializer:
+    mongo_initializer:
         image: mongo:4.4.4-bionic
+        container_name: mongo_initializer
         restart: on-failure
         depends_on:
             db:

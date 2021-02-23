@@ -52,7 +52,7 @@ function initializeFileManager() {
         fsRoot: `${__dirname}/storage`,
         rootName: "(Storage root)",
         port: process.env.STORAGE_PORT,
-        host: process.env.HOST,
+        host: process.env.SERVICES_HOST || "localhost",
     };
 
     if (!fs.existsSync(config.fsRoot)) fs.mkdirSync(config.fsRoot);
