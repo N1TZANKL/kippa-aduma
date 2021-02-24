@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/N1TZANKL/kippa-aduma/master/public/favicon.ico" style="width: 200px; border-radius: 50%; background-color: whitesmoke" alt="Kippa-Aduma"></p>
+<p align="center"><img src="./public/readme-logo.png" alt="Kippa-Aduma"></p>
 
 # Kippa Aduma
 

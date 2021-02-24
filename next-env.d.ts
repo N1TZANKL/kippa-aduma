@@ -3,6 +3,11 @@
 
 declare namespace NodeJS {
     interface ProcessEnv {
+        // Do not supply the variables below - these are handled by the code / docker-compose file
+        readonly MONGO_CONNECTION_STRING: string;
+        readonly SERVICES_HOST: string;
+
+        // Supply the variables below in a .env / .env.local file:
         readonly HOST: string;
         readonly SECRET: string;
         readonly SITE_COOKIE: string;
@@ -12,7 +17,21 @@ declare namespace NodeJS {
         readonly MONGO_HOST: string;
         readonly MONGO_USERNAME: string;
         readonly MONGO_PASSWORD: string;
-        readonly MONGO_CONNECTION_STRING: string; // created by us for mongodb middleware, no need to supply
-        readonly SERVICES_HOST: string; // created by us in docker-compose, no need to supply
     }
 }
+
+/**
+ * 
+ * Example .env file contents (DO NOT COPY, ONLY USE AS REFERENCE):
+
+        HOST=kippa
+        SECRET=REALLY_BIG_SECRET_FOR_PROD_ENVIRONMENT
+        SITE_COOKIE=kippa_aduma_token
+        CHAT_PORT=1336
+        STORAGE_PORT=1338
+        DB_NAME=kippa
+        MONGO_HOST=db
+        MONGO_USERNAME=admin
+        MONGO_PASSWORD=Aa123456
+
+ */
