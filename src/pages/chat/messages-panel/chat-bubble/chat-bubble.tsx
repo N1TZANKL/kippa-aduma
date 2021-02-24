@@ -98,11 +98,14 @@ const styles = () =>
 type ChatBubbleProps = MuiStyles & { message: ChatMessage; isCurrentUser: boolean; withArrow: boolean; withMargin: boolean };
 
 function renderTextWithEmojis(messageText: string) {
-    const handleEmojis = (messageLine: string): (string | typeof Emoji)[] => {
+    const handleEmojis = (messageLine: string): string | (string | typeof Emoji)[] => {
         const emojiRegex = /(?::[^:]+:(?::skin-tone-(?:\d):)?)/gi;
         const matches = messageLine.match(emojiRegex) || [];
-        const emojiArray = matches.map((match, index) => <Emoji key={index} emoji={match} size={22} />);
-        return messageLine.split(emojiRegex).reduce((prev, curr, index) => [...prev, curr, emojiArray[index]], [] as (string | typeof Emoji)[]);
+        const emojiArray = matches.map((match, index) => <Emoji key={index} emoji={match} size={22} />) as unknown[];
+
+        return messageLine
+            .split(emojiRegex)
+            .reduce((prev, curr, index) => [...prev, curr, emojiArray[index] as typeof Emoji], [] as (string | typeof Emoji)[]);
     };
 
     return messageText.split(/\n/gi).map((messageLine, index) => (

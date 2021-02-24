@@ -5,8 +5,9 @@ import { withIronSession } from "utils/session";
 import { RegisterErrors, GeneralErrors } from "server/errors";
 import log, { LogTypes } from "utils/logger";
 import { addUser } from "server/db/user/controller";
+import withDBConnection from "utils/middlewares/mongodb";
 
-export default withIronSession(async (req, res) => {
+const registerHandler = withIronSession(async (req, res) => {
     const { username, nickname, password } = req.body;
 
     if (!username || !nickname || !password) return res.status(400).send(RegisterErrors.MissingFields);
@@ -36,3 +37,5 @@ export default withIronSession(async (req, res) => {
         return res.status(500).send(GeneralErrors.UnknownError);
     }
 });
+
+export default withDBConnection(registerHandler);

@@ -37,10 +37,12 @@ interface TaskFormValues {
     assigneeId?: string;
 }
 
+export type EditableTask = Omit<Task, "status"> & { status: TaskStatuses.TODO | TaskStatuses.IN_PROGRESS };
+
 type CreateTaskFormProps = {
     onClose?: () => void;
     // a non-finished task
-    editedTask?: Omit<Task, "status"> & { status: TaskStatuses.TODO | TaskStatuses.IN_PROGRESS };
+    editedTask?: EditableTask;
 };
 
 export default function CreateTaskForm({ onClose, editedTask }: CreateTaskFormProps): JSX.Element {

@@ -20,7 +20,7 @@ const styles = createStyles({
     },
 });
 
-const EXTENSIONS_TO_RENDERER = new Map([
+const EXTENSIONS_TO_RENDERER = new Map<string[], React.ElementType<{ blobPath: string }>>([
     [["pdf"], PdfRenderer],
     // [["csv", "xlsx", "xls"], "<ExcelRenderer>"],
     // [["docx", "doc"], "<WordRenderer>"],
@@ -52,7 +52,7 @@ const EXTENSIONS_TO_RENDERER = new Map([
     ],
 ]);
 
-function getRendererByExtension(ext: string) {
+function getRendererByExtension(ext: string): React.ElementType<{ blobPath: string }> | null {
     let renderer = null;
     Array.from(EXTENSIONS_TO_RENDERER.keys()).some((extArray) => {
         if (extArray.includes(ext)) {

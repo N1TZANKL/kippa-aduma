@@ -16,7 +16,7 @@ const paddingStyle = style({
 
 const styles = compose(fontSizeStyle, paddingStyle);
 
-const StyledIconButton = styled(MuiIconButton)`
+const StyledIconButton = styled(MuiIconButton)<{ p?: number | string; fontSize?: number | string }>`
     ${styles}
 `;
 

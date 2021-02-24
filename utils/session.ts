@@ -1,9 +1,11 @@
 import { IncomingMessage } from "http";
 
 import { withIronSession as wis, SessionOptions } from "next-iron-session";
-import { NextApiHandler, GetServerSideProps, GetServerSidePropsResult, NextApiRequest, NextApiResponse, GetServerSidePropsContext } from "next";
+import { NextApiHandler, GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 
-import userModel from "server/db/user/model";
+import userModel from "../server/db/user/model";
+import log, { LogTypes } from "./logger";
+import withDBConnection from "./middlewares/mongodb";
 
 export type UserSessionObject = {
     id: string;
@@ -13,11 +15,12 @@ export type UserSessionObject = {
 };
 
 export const SESSION_OPTIONS: SessionOptions = {
-    cookieName: process.env.SITE_COOKIE,
+    cookieName: process.env.SITE_COOKIE as string,
     cookieOptions: {
-        secure: process.env.NODE_ENV === "production",
+        secure: false,
+        // secure: process.env.NODE_ENV === "production",
     },
-    password: process.env.SECRET,
+    password: process.env.SECRET as string,
 };
 
 export function withIronSession(handler: NextApiHandler): (...args: any[]) => Promise<void> {
@@ -28,37 +31,32 @@ type NextHandlerWithUser = (req: NextApiRequest, res: NextApiResponse, user: Use
 
 export function withAuthenticatedUser(handler: NextHandlerWithUser): (...args: any[]) => Promise<void> {
     return wis(async (req, res: NextApiResponse) => {
-        const user = await assertUser(req, res);
+        const user = await assertUser(req);
         if (!user) return res.status(400).send("User is not authenticated");
 
         return handler(req, res, user);
     }, SESSION_OPTIONS);
 }
 
-export type WithUser<T> = T & { user: UserSessionObject };
+export function withUserSession(
+    handler?: () => Promise<{ props: Record<string, unknown> }>
+): GetServerSideProps<{ props: Record<string, unknown> & { user: UserSessionObject } }> {
+    return wis(async (ctx) => {
+        const user = await assertUser(ctx.req);
+        if (!user) {
+            ctx.res.writeHead(302, { Location: "/login" }).end();
+            return { props: {} };
+        }
 
-type ServerSidePropsWithUser<T> = (context: GetServerSidePropsContext, user: UserSessionObject) => Promise<GetServerSidePropsResult<T>>;
+        if (!handler) return { props: { user } };
 
-export function withUserSession<T = any>(handler?: ServerSidePropsWithUser<T>): GetServerSideProps<WithUser<T>> {
-    return wis(
-        (async (ctx) => {
-            const user = await assertUser(ctx.req /* , ctx.res */);
-            if (!user) {
-                ctx.res.writeHead(302, { Location: "/login" }).end();
-                return { props: {} };
-            }
-
-            if (!handler) return { props: { user } };
-
-            const result: GetServerSidePropsResult<WithUser<T>> = (await handler(ctx, user)) as any;
-            result.props.user = user;
-            return result;
-        }) as GetServerSideProps,
-        SESSION_OPTIONS
-    );
+        const result = await handler();
+        result.props.user = user;
+        return result;
+    }, SESSION_OPTIONS);
 }
 
-async function assertUser(req: IncomingMessage /* res: ServerResponse */): Promise<UserSessionObject | null> {
+async function assertUserFunc(req: IncomingMessage /* res: ServerResponse */): Promise<UserSessionObject | null> {
     try {
         const id = req.session.get("user_id");
 
@@ -72,6 +70,9 @@ async function assertUser(req: IncomingMessage /* res: ServerResponse */): Promi
             color: dbUser.color,
         };
     } catch (e) {
+        log("Caught error while attempting to assert user session:", LogTypes.ERROR, e);
         return null;
     }
 }
+
+const assertUser = withDBConnection(assertUserFunc);

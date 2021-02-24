@@ -1,3 +1,7 @@
+// @opuscapita packages are not typed, so this file is ignored.
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import React, { useState } from "react";
 import { FileManager as OrigFileManager, FileNavigator } from "@opuscapita/react-filemanager";
 import connectorNodeV1 from "@opuscapita/react-filemanager-connector-node-v1";
@@ -21,7 +25,7 @@ export default function FileManager(): JSX.Element {
 
     const apiOptions = {
         ...connectorNodeV1.apiOptions,
-        apiRoot: `http://${process.env.HOST}:${process.env.STORAGE_PORT}`,
+        apiRoot: `http://${process.env.SERVICES_HOST || "localhost"}:${process.env.STORAGE_PORT}`,
     };
 
     function onDoubleClickItem({ rowData }) {

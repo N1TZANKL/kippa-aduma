@@ -33,7 +33,7 @@ export default function TasksTopBar(props: TasksTopBarProps): JSX.Element {
             <SearchBox
                 placeholder="Search task by text, assignee..."
                 value={searchString}
-                onChange={(e) => onSearch(e.target.value)}
+                onSearchStringChange={onSearch}
                 width={350}
                 margin="0 10px 0 20px"
             />

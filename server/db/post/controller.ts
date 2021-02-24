@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 import { OperationPost } from "src/utils/interfaces";
 
 import postModel, { OperationPostModel } from "./model";
+import userModel from "../user/model";
 
 export async function getAllPosts(): Promise<OperationPost[]> {
     return postModel
         .find({})
-        .populate("author", "-passwordHash")
+        .populate({ path: "author", select: "-passwordHash", model: userModel })
         .then((posts) =>
             posts.map(({ id, _doc: { _id, __v, author: { _doc: { _id: authorId, ...author } }, ...post } }) => ({
                 id,
@@ -36,7 +37,7 @@ export async function createPost(userId: string, postData: Omit<OperationPostMod
             },
             ...post
         },
-    } = await newPostDoc.populate("author", "-passwordHash").execPopulate();
+    } = await newPostDoc.populate({ path: "author", select: "-passwordHash", model: userModel }).execPopulate();
 
     return { id, ...post, author: { id: authorId, ...author } };
 }

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import Models from "server/db/models";
+import Models from "../models";
 
 export type UserModel = {
     username: string;

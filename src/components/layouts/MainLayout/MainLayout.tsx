@@ -30,7 +30,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-type MainLayoutProps = MuiStyles & { children: React.ReactChild; noPadding?: boolean; user?: UserSessionObject };
+type MainLayoutProps = MuiStyles & { children: React.ReactNode; noPadding?: boolean; user?: UserSessionObject };
 
 function MainLayout({ classes, children, noPadding, user }: MainLayoutProps) {
     return (

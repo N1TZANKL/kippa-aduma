@@ -46,7 +46,7 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
 
     // Socket connection initialization
     useEffect(() => {
-        const socket = socketIOClient(`http://${process.env.HOST}:${process.env.CHAT_PORT}`);
+        const socket = socketIOClient(`http://${process.env.SERVICES_HOST || "localhost"}:${process.env.CHAT_PORT}`);
         socket.on("new message", onReceiveNewMessage);
         return () => {
             socket.disconnect();

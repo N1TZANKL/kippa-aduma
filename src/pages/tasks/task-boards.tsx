@@ -50,7 +50,7 @@ export default function TaskBoards({ tasks }: TaskBoardsProps): JSX.Element {
         if (!task) return;
 
         try {
-            replaceTask({ ...task, status: newStatus }); // for UI smoothness - we will assume it worked
+            replaceTask({ ...task, status: newStatus as TaskStatuses }); // for UI smoothness - we will assume it worked
             const patchedTask = await patchTask(draggableId, matchedAction as PatchActions);
             replaceTask(patchedTask);
         } catch (e) {

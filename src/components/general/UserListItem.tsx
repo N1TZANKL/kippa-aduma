@@ -1,10 +1,9 @@
 import clsx from "clsx";
 import React, { MouseEventHandler } from "react";
-import { withStyles, createStyles } from "@material-ui/core/styles";
+import { WithStyles, withStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { green } from "@material-ui/core/colors";
 
-import { MuiStyles } from "src/utils/interfaces";
 import UserAvatar from "src/components/general/UserAvatar";
 import { UserSessionObject } from "utils/session";
 
@@ -59,7 +58,7 @@ const styles = () =>
         },
     });
 
-type UserListItemProps = MuiStyles &
+type UserListItemProps = WithStyles<typeof styles> &
     UserSessionObject & {
         isCurrentUser?: boolean;
         online?: boolean;

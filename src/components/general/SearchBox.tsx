@@ -26,17 +26,17 @@ type SearchBoxProps = MuiStyles &
     BoxProps & {
         inputProps?: Omit<InputProps, "value" | "onChange" | "placeholder">;
         value?: string;
-        onChange: (e: React.ChangeEvent) => void;
+        onSearchStringChange: (newSearchString: string) => void;
         placeholder?: string;
     };
 
-function SearchBox({ classes, inputProps, value = "", onChange, placeholder = "Search anything...", ...boxProps }: SearchBoxProps) {
+function SearchBox({ classes, inputProps, value = "", onSearchStringChange, placeholder = "Search anything...", ...boxProps }: SearchBoxProps) {
     return (
         <Box {...boxProps} clone>
             <Input
                 placeholder={placeholder}
                 value={value}
-                onChange={onChange}
+                onChange={(e) => onSearchStringChange(e.target.value)}
                 disableUnderline
                 autoFocus
                 className={classes.searchTextField}

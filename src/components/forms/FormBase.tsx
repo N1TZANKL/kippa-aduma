@@ -29,7 +29,7 @@ type FormBaseProps = MuiStyles & {
     onClose?: () => void;
 };
 
-type FormRef = MutableRefObject<FormikProps<any> | null>;
+type FormRef = MutableRefObject<FormikProps<any> | null> | ((instance: FormikProps<any> | null) => void) | null;
 
 function FormBase({ classes, initialValues, validationSchema, onSubmit, children, onClose }: FormBaseProps, ref: FormRef) {
     const [formError, setFormError] = useState<string>("");

@@ -88,7 +88,7 @@ function useQuickAction(users: UserSessionObject[], user: UserSessionObject): [(
         [SupportedQuickActions.ADD_CREDENTIAL]: <CreateCredForm />,
         [SupportedQuickActions.WRITE_POST]: <CreatePostForm />,
         [SupportedQuickActions.CREATE_TASK]: (
-            <TasksContext.Provider value={{ users, user }}>
+            <TasksContext.Provider value={{ users, user, addTask: () => {}, replaceTask: () => {}, deleteTask: () => {} }}>
                 <CreateTaskForm />
             </TasksContext.Provider>
         ),
@@ -96,13 +96,11 @@ function useQuickAction(users: UserSessionObject[], user: UserSessionObject): [(
 
     const [openFormTitle, setOpenFormTitle] = useState<SupportedQuickActions | null>(null);
 
-    const DialogComponent = openFormTitle
-        ? () => (
-              <FormDialog open title={openFormTitle} onClose={() => setOpenFormTitle(null)}>
-                  {ActionToFormComponent[openFormTitle]}
-              </FormDialog>
-          )
-        : null;
+    const DialogComponent = openFormTitle ? (
+        <FormDialog open title={openFormTitle} onClose={() => setOpenFormTitle(null)}>
+            {ActionToFormComponent[openFormTitle]}
+        </FormDialog>
+    ) : null;
 
     return [setOpenFormTitle, DialogComponent];
 }
@@ -153,7 +151,7 @@ function GreetingPanel({ classes, className, user, users = [] }: GreetingPanelPr
                     </div>
                 </span>
             </Panel>
-            {OpenFormDialog && <OpenFormDialog />}
+            {OpenFormDialog}
         </>
     );
 }
