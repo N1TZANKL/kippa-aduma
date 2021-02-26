@@ -87,4 +87,4 @@ These files should contain the environment variables as described in the file [n
 
     -   MongoDB v4.4.3
 
-    -   Node v14.15.15 + NPM 6.14.11
+    -   Node v14.15.5 + NPM 7.6.0
