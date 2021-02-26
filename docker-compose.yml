@@ -1,16 +1,16 @@
 version: "3"
 
 services:
-    nodejs:
+    web:
         build:
             context: .
             dockerfile: Dockerfile
         # image: nodejs
-        container_name: app
+        container_name: web
         restart: unless-stopped
         env_file: .env
         environment:
-            - SERVICES_HOST=app_services
+            - SERVICES_HOST=web-services
             - HOST=$HOST
             - SECRET=$SECRET
             - SITE_COOKIE=$SITE_COOKIE
@@ -28,16 +28,16 @@ services:
             db:
                 condition: service_healthy
 
-    nodejs-services:
+    web-services:
         build:
             context: .
             dockerfile: services.Dockerfile
         # image: nodejs
-        container_name: app_services
+        container_name: web-services
         restart: unless-stopped
         env_file: .env
         environment:
-            - SERVICES_HOST=app_services
+            - SERVICES_HOST=web-services
             - HOST=$HOST
             - SECRET=$SECRET
             - SITE_COOKIE=$SITE_COOKIE
@@ -80,9 +80,9 @@ services:
             interval: 10s
             start_period: 30s
 
-    mongo_initializer:
+    db-initializer:
         image: mongo:4.4.4-bionic
-        container_name: mongo_initializer
+        container_name: db-initializer
         restart: on-failure
         depends_on:
             db:
@@ -102,4 +102,3 @@ networks:
 
 volumes:
     dbdata:
-    node_modules:
