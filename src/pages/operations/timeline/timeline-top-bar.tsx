@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
 import clsx from "clsx";
@@ -9,7 +10,9 @@ import { MuiStyles, OperationPost, SetState } from "src/utils/interfaces";
 import FormDialog from "src/components/dialogs/FormDialog";
 import SearchBox from "src/components/general/SearchBox";
 
-import CreatePostForm from "../create-post-form";
+const CreatePostForm = dynamic(() => import("../create-post-form"), {
+    ssr: false,
+});
 
 const styles = createStyles({
     flexCenter: {

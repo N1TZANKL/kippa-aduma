@@ -6,11 +6,13 @@ import { NextApiResponse } from "next";
 import { withAuthenticatedUser } from "utils/session";
 import log, { LogTypes } from "utils/logger";
 import { GeneralErrors } from "server/errors";
-import withDBConnection from "utils/middlewares/mongodb";
+
+const fsRoot = process.env.NODE_ENV === "production" ? "/storage" : `${process.cwd()}/server/storage`;
 
 async function getFile(filePath: string, res: NextApiResponse) {
-    const fullPath = path.normalize(path.join(process.cwd(), "/server/storage", filePath));
+    const fullPath = path.normalize(path.join(fsRoot, filePath));
     if (!fs.existsSync(fullPath)) res.status(400).send("File does not exist");
+    // TODO: Check file size and decline if too big?
     else {
         const fileStream = fs.createReadStream(fullPath);
         await new Promise((resolve) => {
@@ -38,4 +40,4 @@ const fileHandler = withAuthenticatedUser(async (req, res) => {
     }
 });
 
-export default withDBConnection(fileHandler);
+export default fileHandler;

@@ -1,21 +1,28 @@
 import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
+import log, { LogTypes } from "../logger";
 
-const connectionString =
-    process.env.MONGO_CONNECTION_STRING ||
-    `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:27017/${process.env.DB_NAME}${
-        process.env.NODE_ENV === "production" ? "" : "?synchronize=true"
-    }`;
+const mongoHost = process.env.NODE_ENV === "production" ? process.env.MONGO_HOST : "localhost";
+const connectionString = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${mongoHost}:27017/${process.env.DB_NAME}${
+    process.env.NODE_ENV === "production" ? "" : "?synchronize=true"
+}`;
 
 export function connectToDb(): Promise<typeof mongoose> | null {
     if (mongoose.connections[0].readyState) return null;
 
-    return mongoose.connect(connectionString, {
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-        useNewUrlParser: true,
-    });
+    log(`Connecting to mongo database running at ${mongoHost}...`, LogTypes.INFO);
+
+    return mongoose
+        .connect(connectionString, {
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+            useCreateIndex: true,
+            useNewUrlParser: true,
+        })
+        .then((res) => {
+            log(`Successfully connected to mongo database!`, LogTypes.SUCCESS);
+            return res;
+        });
 }
 
 type HandlerFunc = (

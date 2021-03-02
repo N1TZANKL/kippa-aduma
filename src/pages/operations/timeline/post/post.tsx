@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -8,8 +9,11 @@ import { OperationPost } from "src/utils/interfaces";
 import PostMetadata from "./post-metadata";
 import PostTitle from "./post-title";
 import PostContent from "./post-content";
-import PostAttachments from "./post-attachments";
 import { PostTypeToColor } from "./post-type-indicator";
+
+const PostAttachments = dynamic(() => import("./post-attachments"), {
+    ssr: false,
+});
 
 const styles = () =>
     createStyles({

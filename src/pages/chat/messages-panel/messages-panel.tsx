@@ -1,5 +1,5 @@
-import socketIOClient from "socket.io-client";
 import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 
 import { ChatMessage, MuiStyles } from "src/utils/interfaces";
@@ -13,6 +13,10 @@ import NewMessageLine from "./new-message-line";
 import ContainerTitleBar from "./container-title-bar";
 import ChatDivider from "./chat-divider";
 import ScrollDownButton from "./scroll-down-button";
+
+const SocketHandler = dynamic(() => import("./socket-handler"), {
+    ssr: false,
+});
 
 const styles = () =>
     createStyles({
@@ -44,15 +48,6 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
     const [showScrollButton, setShowScrollButton] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Socket connection initialization
-    useEffect(() => {
-        const socket = socketIOClient(`http://${process.env.SERVICES_HOST || "localhost"}:${process.env.CHAT_PORT}`);
-        socket.on("new message", onReceiveNewMessage);
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
-
     function scrollToBottom() {
         if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
@@ -75,10 +70,6 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
 
         return () => el.removeEventListener("scroll", toggleScrollButtonAccordingToScrollPosition);
     }, [containerRef]);
-
-    function onReceiveNewMessage(newMessage: ChatMessage) {
-        setMessages((prevMessages) => [...prevMessages, newMessage]); // TODO: read about Mutable
-    }
 
     function sendMessage(message: string) {
         Post("chat", message);
@@ -106,30 +97,33 @@ function MessagesPanel({ classes, messages, user, className }: MessagesPanelProp
     }
 
     return (
-        <Panel className={className} fullHeight>
-            <ContainerTitleBar />
-            <div className={classes.panelContent}>
-                <div className={classes.messagesContainer} ref={containerRef}>
-                    {allMessages.map((message, index) => {
-                        const prevMessage = index === 0 ? null : allMessages[index - 1];
+        <>
+            <SocketHandler setMessages={setMessages} />
+            <Panel className={className} fullHeight>
+                <ContainerTitleBar />
+                <div className={classes.panelContent}>
+                    <div className={classes.messagesContainer} ref={containerRef}>
+                        {allMessages.map((message, index) => {
+                            const prevMessage = index === 0 ? null : allMessages[index - 1];
 
-                        return (
-                            <React.Fragment key={`${message.user.username}_${message.timestamp}_${index}`}>
-                                {shouldShowDivider(message, prevMessage) && <ChatDivider timestamp={message.timestamp} />}
-                                <ChatBubble
-                                    message={message}
-                                    isCurrentUser={user.username === message.user.username}
-                                    withArrow={shouldAddArrowToMessage(message, prevMessage)}
-                                    withMargin={shouldAddArrowToMessage(message, prevMessage)}
-                                />
-                            </React.Fragment>
-                        );
-                    })}
+                            return (
+                                <React.Fragment key={`${message.user.username}_${message.timestamp}_${index}`}>
+                                    {shouldShowDivider(message, prevMessage) && <ChatDivider timestamp={message.timestamp} />}
+                                    <ChatBubble
+                                        message={message}
+                                        isCurrentUser={user.username === message.user.username}
+                                        withArrow={shouldAddArrowToMessage(message, prevMessage)}
+                                        withMargin={shouldAddArrowToMessage(message, prevMessage)}
+                                    />
+                                </React.Fragment>
+                            );
+                        })}
+                    </div>
+                    <ScrollDownButton show={showScrollButton} onClick={scrollToBottom} />
+                    <NewMessageLine sendMessage={sendMessage} />
                 </div>
-                <ScrollDownButton show={showScrollButton} onClick={scrollToBottom} />
-                <NewMessageLine sendMessage={sendMessage} />
-            </div>
-        </Panel>
+            </Panel>
+        </>
     );
 }
 

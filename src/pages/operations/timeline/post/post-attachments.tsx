@@ -9,8 +9,6 @@ import Hidden from "@material-ui/core/Hidden";
 import { usePopoverState } from "src/utils/hooks";
 import Menu from "src/components/general/Menu";
 
-const storageApiOptions = { apiRoot: `http://${process.env.HOST}:${process.env.STORAGE_PORT}` };
-
 const styles = (theme: Theme) =>
     createStyles({
         root: {
@@ -95,6 +93,8 @@ const AttachmentsPreviewChip = withStyles(styles)(({ classes, onClickAttachment,
 type PostAttachmentsProps = WithStyles<typeof styles> & { postId: string; previewAttachment: (attachmentPath: string) => void };
 
 function PostAttachments({ classes, postId, previewAttachment }: PostAttachmentsProps) {
+    const storageApiOptions = { apiRoot: `http://${window.location.hostname}:${process.env.STORAGE_PORT}` };
+
     const [attachments, setAttachments] = useState<StoredAttachment[]>([]);
 
     useEffect(() => {

@@ -1,11 +1,9 @@
 module.exports = {
     env: {
-        SERVICES_HOST: process.env.SERVICES_HOST,
         CHAT_PORT: process.env.CHAT_PORT,
         STORAGE_PORT: process.env.STORAGE_PORT,
-        HOST: process.env.HOST,
-        MONGO_CONNECTION_STRING: `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:27017/${
-            process.env.DB_NAME
-        }${process.env.NODE_ENV === "production" ? "" : "?synchronize=true"}`,
+        MONGO_CONNECTION_STRING: `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${
+            process.env.NODE_ENV === "production" ? process.env.MONGO_HOST : "localhost"
+        }:27017/${process.env.DB_NAME}${process.env.NODE_ENV === "production" ? "" : "?synchronize=true"}`,
     },
 };

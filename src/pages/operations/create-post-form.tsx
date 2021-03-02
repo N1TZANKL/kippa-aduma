@@ -10,8 +10,6 @@ import { Post } from "src/utils/helpers/api";
 import { FormBaseOnSubmit } from "src/components/forms/FormBase";
 import FileUploadField from "src/components/forms/FileUploadField";
 
-const storageApiOptions = { apiRoot: `http://${process.env.HOST}:${process.env.STORAGE_PORT}` };
-
 const validationSchema = Yup.object({
     title: Yup.string(),
     description: Yup.string().required("Required"),
@@ -24,6 +22,8 @@ const validationSchema = Yup.object({
 type CreatePostFormProps = { onSubmitSuccess?: (newPost: OperationPost) => void; onClose?: () => void };
 
 export default function CreatePostForm({ onSubmitSuccess, onClose }: CreatePostFormProps): JSX.Element {
+    const storageApiOptions = { apiRoot: `http://${window.location.hostname}:${process.env.STORAGE_PORT}` };
+
     const [attachmentsFolderId, setAttachmentsFolderId] = useState("");
 
     useEffect(() => {

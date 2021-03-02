@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: `.env${process.env.NODE_ENV === "production" ? "" : ".local"}` });
 
 import fs from "fs";
+import path from "path";
 import { createServer } from "http";
 import socketIO from "socket.io";
 import { connectToDb } from "../utils/middlewares/mongodb";
@@ -48,18 +49,23 @@ function initializeChatSocket() {
 }
 
 function initializeFileManager() {
+    const fsRoot = `${process.env.NODE_ENV === "production" ? "" : __dirname}/storage`;
+
     const config = {
-        fsRoot: `${__dirname}/storage`,
+        fsRoot,
         rootName: "(Storage root)",
         port: process.env.STORAGE_PORT,
-        host: process.env.SERVICES_HOST || "localhost",
+        host: "0.0.0.0",
     };
 
     if (!fs.existsSync(config.fsRoot)) fs.mkdirSync(config.fsRoot);
+
+    const attachmentsFolder = path.join(config.fsRoot, "/post-attachments");
+    if (!fs.existsSync(attachmentsFolder)) fs.mkdirSync(attachmentsFolder);
 
     // eslint-disable-next-line
     const filemanager = require("@opuscapita/filemanager-server");
     filemanager.server.run(config);
 
-    log(`Storage API listening on port ${process.env.STORAGE_PORT}`, LogTypes.INFO);
+    log(`Storage API listening on 0.0.0.0:${process.env.STORAGE_PORT} from folder ${fsRoot}`, LogTypes.INFO);
 }

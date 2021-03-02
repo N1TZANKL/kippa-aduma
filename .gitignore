@@ -45,6 +45,9 @@ todo.txt
 /server/storage/post-attachments/*
 !/server/storage/post-attachments/.gitkeep
 
+# production storage folder
+/storage/*
+
 # deployment scripts - ignore mongo keyfile
 !/deployment-scripts/etc
 /deployment-scripts/etc/*

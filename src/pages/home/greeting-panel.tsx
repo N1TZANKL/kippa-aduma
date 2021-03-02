@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import { mdiEmoticonCool, mdiWhiteBalanceSunny, mdiRedhat, mdiRobotExcited, mdiKeyPlus, mdiNotebookEdit, mdiNotePlus } from "@mdi/js";
 import SvgIcon from "@material-ui/core/SvgIcon";
@@ -12,10 +13,13 @@ import { getTodaysData } from "src/utils/helpers/dates";
 import { spaceChildren } from "src/utils/helpers/css";
 import FormDialog from "src/components/dialogs/FormDialog";
 
-import CreatePostForm from "../operations/create-post-form";
 import CreateCredForm from "../creds/create-cred-form";
 import CreateTaskForm from "../tasks/create-task-form";
 import TasksContext from "../tasks/context";
+
+const CreatePostForm = dynamic(() => import("../operations/create-post-form"), {
+    ssr: false,
+});
 
 const styles = createStyles({
     root: {

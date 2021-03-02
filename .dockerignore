@@ -16,3 +16,7 @@
 **/.editorconfig
 **/.eslintignore
 **/.eslintrc.js
+
+# ignore storage
+/server/storage/*
+/storage/*
