@@ -84,6 +84,14 @@ const FilePreview = withStyles(styles)(({ classes, filePath = "" }: FilePreviewP
                 setLoading(false);
             })
             .catch((e) => triggerErrorBoundary(e.message));
+
+        return () => {
+            try {
+                URL.revokeObjectURL(fileBlobPath);
+            } catch (e) {
+                console.error("Failed revoking blob URL: ", e.message);
+            }
+        };
     }, [filePath]);
 
     if (!filePath)
