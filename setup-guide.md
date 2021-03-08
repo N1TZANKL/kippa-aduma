@@ -9,10 +9,11 @@
 
 <br/>
 
-> **Host Requirements:**
->
-> -   Docker + Docker-Compose
-> -   **Active internet connection!**
+**Host Requirements:**
+
+-   Docker + Docker-Compose
+
+> **IMPORTANT NOTE**: The steps below require you to have an active internet connection. If you're building the project offline - refer to the [offline setup guide](./deployment/offline-build/setup-guide.md) instead.
 
 Steps:
 
@@ -32,16 +33,16 @@ Steps:
 
 <br/>
 
-> **Host Requirements:**
->
-> -   MongoDB
-> -   NodeJS + NPM
-> -   Git
+**Host Requirements:**
 
-> **Recommended development tools:**
->
-> -   Visual Studio Code (with extention [_Prettier_](https://github.com/prettier/prettier)),
-> -   Robo 3T / MongoDB Compass
+-   MongoDB
+-   NodeJS + NPM
+-   Git
+
+**Recommended development tools:**
+
+-   Visual Studio Code (with extention [_Prettier_](https://github.com/prettier/prettier)),
+-   Robo 3T / MongoDB Compass
 
 Steps:
 
