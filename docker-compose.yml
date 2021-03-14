@@ -91,7 +91,7 @@ services:
             db:
                 condition: service_started
         volumes:
-            - ./deployment-scripts:/deployment-scripts
+            - ./deployment/scripts:/deployment-scripts
         env_file: .env
         entrypoint:
             - /deployment-scripts/docker-initialize-mongo.sh

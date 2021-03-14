@@ -49,6 +49,6 @@ todo.txt
 /storage/*
 
 # deployment scripts - ignore mongo keyfile
-!/deployment-scripts/etc
-/deployment-scripts/etc/*
-!/deployment-scripts/etc/.gitkeep
+!/deployment/scripts/etc
+/deployment/scripts/etc/*
+!/deployment/scripts/etc/.gitkeep

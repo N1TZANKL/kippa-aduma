@@ -1,0 +1,21 @@
+**/.git
+**/README.md
+**/LICENSE
+**/.vscode
+**/npm-debug.log
+**/.env.*
+**/.editorconfig
+**/.prettierignore
+**/.prettierrc.js
+**/cypress.json
+**/cypress
+**/.github
+**/.editorconfig
+**/.eslintignore
+**/.eslintrc.js
+/.next
+/dist
+
+# ignore storage
+/server/storage/*
+/storage/*
