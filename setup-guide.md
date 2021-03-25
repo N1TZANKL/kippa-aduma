@@ -23,11 +23,20 @@ Steps:
 
     > Refer to the [Configuration](#configuration) section below for more details about the `.env` file contents.
 
-3. From inside the extracted project folder, run the following command: `docker-compose up`.
+3. From inside the extracted project folder, run the following command: `./deployment/scripts/create-key-file.sh`.
+
+    > **NOTE:** If running from ubuntu, make sure you have execution permissions to the script before running it! If not, add with _`chmod`_.
+
+4. From that same terminal, run the following command: `docker-compose up`.
 
     This will build the docker images and start them afterwards, so it might take a while.
 
-4. Browse to `http://localhost`. Kippa Aduma should be up!
+    > **NOTE:** If running from ubuntu, follow the steps below instead:
+    >
+    > 1. Run the following command: `chmod o+x ./deployment/scripts/docker-initialize-mongo.sh`.
+    > 2. Now run: `sudo docker-compose up`. It will not work without the `sudo`!
+
+5. Browse to `http://localhost`. Kippa Aduma should be up!
 
 ## Local clone
 
@@ -89,3 +98,11 @@ These files should contain the environment variables as described in the file [n
     -   MongoDB v4.4.3
 
     -   Node v14.15.5 + NPM 7.6.0
+
+-   **Tested on an Ubuntu 20.04 (Focal) host with the following tools + versions:**
+
+    -   Docker v19.03.8 + Docker-Compose v1.28.6
+
+    -   MongoDB v4.4.1
+
+    -   Node v12.21.0 + NPM 6.14.11
